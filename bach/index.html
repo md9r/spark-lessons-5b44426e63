@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meet Johann Sebastian Bach!</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet Bach */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Keyboard */
+  .kb-wrap{overflow-x:auto;padding-bottom:6px}
+  .keyboard{position:relative;height:220px;margin:16px auto;user-select:none;-webkit-user-select:none;touch-action:none}
+  .key{position:absolute;top:0;border-radius:0 0 10px 10px;display:flex;align-items:flex-end;justify-content:center;font-weight:bold;padding-bottom:8px;cursor:pointer}
+  .key.white{height:220px;background:#fff;border:2px solid #555;color:#666;z-index:1}
+  .key.black{height:135px;background:#222;color:#bbb;z-index:2;font-size:13px}
+  .key.white.lit{background:var(--gold);color:#000}
+  .key.black.lit{background:var(--orange);color:#fff}
+  .controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center}
+  .note-box{background:#fff;border-radius:14px;padding:12px 16px;margin-top:12px}
+  .nowplaying{font-size:30px;font-weight:bold;color:var(--purple);min-height:45px;text-align:center}
+  /* Canon */
+  .voices{display:grid;gap:12px;margin:14px 0}
+  .voice{display:flex;align-items:center;gap:12px;background:#fff;border-radius:16px;padding:10px 14px;flex-wrap:wrap}
+  .voice .toggle{min-width:170px}
+  .voice .toggle.off{background:#999 !important}
+  .voice .bars{display:flex;gap:4px;flex:1 1 300px}
+  .voice .bar{flex:1;height:34px;border-radius:8px;background:#eee;display:flex;align-items:center;justify-content:center;font-size:14px;color:#888;transition:background .1s}
+  .voice .singer{font-size:34px;transition:transform .15s}
+  .voice .singer.sing{transform:scale(1.35) rotate(-8deg)}
+  .v1 .toggle,.v1 .bar.on{background:var(--red);color:#fff}
+  .v2 .toggle,.v2 .bar.on{background:var(--blue);color:#fff}
+  .v3 .toggle,.v3 .bar.on{background:var(--green);color:#fff}
+  .explain{background:#fff3c4;border-radius:16px;padding:14px 18px;margin:10px 0;border:3px solid var(--gold)}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>🎼 Johann Sebastian Bach 🎹</h1>
+  <p>The music genius who wove melodies together like a braid!</p>
+</header>
+<nav>
+  <a href="#meet">👋 Meet Bach</a>
+  <a href="#timeline">📜 Timeline</a>
+  <a href="#play">🎹 Play Music</a>
+  <a href="#layers">🎶 Layer Melodies</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#funfacts">⭐ Fun Facts</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+
+<!-- 1. MEET BACH -->
+<section id="meet">
+  <h2>👋 Meet Bach</h2>
+  <div class="meet">
+    <svg viewBox="0 0 260 300" width="260" height="300" role="img" aria-label="Cartoon drawing of Bach with a curly white wig">
+      <rect x="0" y="0" width="260" height="300" rx="30" fill="#d8e7ff"/>
+      <!-- music notes floating -->
+      <text x="20" y="50" font-size="34" fill="#8338ec">♪</text>
+      <text x="215" y="70" font-size="34" fill="#ef476f">♫</text>
+      <text x="25" y="200" font-size="28" fill="#06a2a8">♩</text>
+      <!-- coat -->
+      <path d="M50 300 Q60 215 130 205 Q200 215 210 300 Z" fill="#3b3b6d"/>
+      <path d="M115 210 L130 260 L145 210 Z" fill="#fff"/>
+      <circle cx="130" cy="275" r="4" fill="#f5b700"/><circle cx="130" cy="290" r="4" fill="#f5b700"/>
+      <!-- wig back curls -->
+      <g fill="#f4f1ea" stroke="#cfc8b8" stroke-width="2">
+        <circle cx="70" cy="150" r="22"/><circle cx="190" cy="150" r="22"/>
+        <circle cx="68" cy="185" r="20"/><circle cx="192" cy="185" r="20"/>
+        <circle cx="75" cy="115" r="22"/><circle cx="185" cy="115" r="22"/>
+      </g>
+      <!-- face -->
+      <ellipse cx="130" cy="140" rx="52" ry="60" fill="#ffd7b5"/>
+      <!-- wig top -->
+      <g fill="#f4f1ea" stroke="#cfc8b8" stroke-width="2">
+        <circle cx="95" cy="88" r="24"/><circle cx="130" cy="78" r="26"/><circle cx="165" cy="88" r="24"/>
+      </g>
+      <!-- eyes -->
+      <ellipse cx="110" cy="135" rx="6" ry="7" fill="#2b2140"/><ellipse cx="150" cy="135" rx="6" ry="7" fill="#2b2140"/>
+      <circle cx="112" cy="133" r="2" fill="#fff"/><circle cx="152" cy="133" r="2" fill="#fff"/>
+      <path d="M100 120 Q110 114 120 120" stroke="#8a6d55" stroke-width="3" fill="none"/>
+      <path d="M140 120 Q150 114 160 120" stroke="#8a6d55" stroke-width="3" fill="none"/>
+      <!-- cheeks, nose, smile -->
+      <circle cx="98" cy="158" r="9" fill="#ffb3b3" opacity=".7"/><circle cx="162" cy="158" r="9" fill="#ffb3b3" opacity=".7"/>
+      <path d="M130 140 Q137 155 128 157" stroke="#c98e6b" stroke-width="3" fill="none"/>
+      <path d="M112 172 Q130 188 148 172" stroke="#b04a4a" stroke-width="4" fill="none" stroke-linecap="round"/>
+    </svg>
+    <div class="facts">
+      <ul>
+        <li class="readable">🎂 Born in <b>1685</b> in the town of <b>Eisenach, Germany</b>.</li>
+        <li class="readable">👨‍👩‍👧‍👦 His family was <b>FULL of musicians</b> — dads, uncles, cousins, and brothers!</li>
+        <li class="readable">🎹 He was an amazing <b>organ</b> player (the giant instrument with pipes in churches).</li>
+        <li class="readable">⛪ For 27 years he was the <b>music director for churches in Leipzig</b>, writing new music almost every week.</li>
+        <li class="readable">👶 He had <b>20 children</b>! Sadly, many died young, but several grew up to be famous composers too.</li>
+        <li class="readable">🏰 His style is called <b>Baroque</b> (say "ba-ROKE") music. He died in <b>1750</b>.</li>
+      </ul>
+      <div class="bubble readable">"Wait — what does 'Bach' mean?" In German, <b>Bach</b> means <b>"brook"</b> — a little stream of water! 🏞️</div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. TIMELINE -->
+<section id="timeline">
+  <h2>📜 Bach's Life Timeline</h2>
+  <p>Tap a year to travel through Bach's life! ⏳</p>
+  <div class="tl-track" id="tlTrack"></div>
+  <div class="tl-card" id="tlCard" aria-live="polite"></div>
+  <div class="tl-nav">
+    <button id="tlPrev">⬅ Back</button>
+    <button id="tlNext">Next ➡</button>
+  </div>
+</section>
+
+<!-- 3. PLAY MUSIC -->
+<section id="play">
+  <h2>🎹 Make Some Music!</h2>
+  <p>Tap the keys (or use your computer keys <b>A S D F G H J K L ;</b>) to play. Then press the big button to hear a famous little dance called the <b>Minuet in G</b>. Watch the keys light up so you can learn it!</p>
+  <div class="controls">
+    <button id="playMinuet" style="background:var(--purple)">▶ Play Minuet in G</button>
+    <button id="stopMinuet" style="background:var(--red)">⏹ Stop</button>
+    <label style="font-weight:bold">Speed 🐢 <input type="range" id="speed" min="60" max="140" value="100"> 🐇</label>
+  </div>
+  <div class="nowplaying" id="nowPlaying">🎵</div>
+  <div class="kb-wrap"><div class="keyboard" id="keyboard"></div></div>
+  <div class="note-box readable">
+    🕵️ <b>Music mystery!</b> This minuet is in a music notebook Bach made for his wife, <b>Anna Magdalena</b>. For a long time everyone thought Bach wrote it. But music detectives found clues that it was <b>probably written by his friend Christian Petzold</b>! It's still known as one of "Bach's" most famous tunes.
+  </div>
+</section>
+
+<!-- 4. LAYER MELODIES -->
+<section id="layers">
+  <h2>🎶 Layer the Melodies!</h2>
+  <div class="explain readable">
+    🧵 <b>Counterpoint</b> means playing two or more different melodies <b>at the same time</b> so they fit together like a braid. A <b>fugue</b> is a puzzle-piece of counterpoint: one voice starts a tune, then other voices come in one by one copying it, while the first keeps going!
+  </div>
+  <p>Here's a <b>round</b> (also called a <b>canon</b>): every singer sings the <i>same</i> tune ("Frère Jacques"), but each one starts a little later. Turn the singers on or off — even while it plays — and hear how the melodies stack up!</p>
+  <div class="voices">
+    <div class="voice v1"><button class="toggle" data-v="0">🎻 Voice 1: ON</button><span class="singer" id="s0">🐦</span><div class="bars" id="bars0"></div></div>
+    <div class="voice v2"><button class="toggle" data-v="1">🎺 Voice 2: ON</button><span class="singer" id="s1">🐸</span><div class="bars" id="bars1"></div></div>
+    <div class="voice v3"><button class="toggle" data-v="2">🎷 Voice 3: ON</button><span class="singer" id="s2">🐻</span><div class="bars" id="bars2"></div></div>
+  </div>
+  <div class="controls">
+    <button id="playCanon" style="background:var(--green)">▶ Start the Round</button>
+    <button id="stopCanon" style="background:var(--red)">⏹ Stop</button>
+  </div>
+  <p style="margin-top:14px">💡 <b>Try this:</b> Play just Voice 1. Then play all three. Can you still pick out each melody? That's what Bach's listeners did! Bach loved canons — in his famous <i>Goldberg Variations</i>, every third piece is a canon.</p>
+</section>
+
+<!-- 5. QUIZ -->
+<section id="quiz">
+  <h2>❓ Bach Quiz Challenge</h2>
+  <div id="quizBox"></div>
+</section>
+
+<!-- 6. FUN FACTS -->
+<section id="funfacts">
+  <h2>⭐ Fun Facts (tap a card to flip!)</h2>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+</main>
+<footer>Made for curious kids 🎶 · All music here is very old and free for everyone to play!</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+/* ---------- AUDIO ENGINE (starts only after a click) ---------- */
+let ctx = null, master = null;
+function getCtx(){
+  if(!ctx){
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if(!AC){ alert("Sorry, this browser can't play sound."); return null; }
+    ctx = new AC();
+    master = ctx.createGain(); master.gain.value = 0.5; master.connect(ctx.destination);
+  }
+  if(ctx.state === "suspended") ctx.resume();
+  return ctx;
+}
+const NOTE_INDEX = {C:0,"C#":1,D:2,"D#":3,E:4,F:5,"F#":6,G:7,"G#":8,A:9,"A#":10,B:11};
+function midi(name){
+  const m = /^([A-G]#?)(\d)$/.exec(name);
+  return (parseInt(m[2],10)+1)*12 + NOTE_INDEX[m[1]];
+}
+function freq(n){ return 440*Math.pow(2,(n-69)/12); }
+// play a tone; returns oscillator
+function tone(m, start, dur, opts){
+  opts = opts || {};
+  const c = getCtx(); if(!c) return;
+  const osc = c.createOscillator(), g = c.createGain();
+  osc.type = opts.type || "triangle";
+  osc.frequency.value = freq(m);
+  const vol = opts.vol || 0.35;
+  g.gain.setValueAtTime(0.0001, start);
+  g.gain.exponentialRampToValueAtTime(vol, start+0.02);
+  g.gain.exponentialRampToValueAtTime(vol*0.6, start+Math.min(0.15,dur*0.5));
+  g.gain.exponentialRampToValueAtTime(0.0001, start+dur*0.95);
+  osc.connect(g); g.connect(opts.out || master);
+  osc.start(start); osc.stop(start+dur);
+  return osc;
+}
+// a "session" lets us stop everything scheduled for one player
+function makeSession(){
+  const c = getCtx(); if(!c) return null;
+  const bus = c.createGain(); bus.connect(master);
+  return {bus, timers:[], oscs:[], stop(){
+    this.timers.forEach(clearTimeout); this.timers=[];
+    try{ bus.gain.setValueAtTime(0, c.currentTime); }catch(e){}
+    this.oscs.forEach(o=>{try{o.stop();}catch(e){}});
+    setTimeout(()=>{try{bus.disconnect();}catch(e){}},200);
+  }};
+}
+
+/* ---------- TIMELINE ---------- */
+const EVENTS = [
+  {year:"1685", icon:"👶", title:"A Baby Musician Is Born", text:"Johann Sebastian Bach is born in Eisenach, Germany, into a family where almost everyone plays music."},
+  {year:"1695", icon:"🏠", title:"Living With His Big Brother", text:"By age 10, both of Bach's parents had died. He moved in with his older brother Johann Christoph, an organist, who taught him more music."},
+  {year:"1703", icon:"🎹", title:"First Organ Job", text:"At just 18, Bach becomes the organist at a church in the town of Arnstadt. Wow!"},
+  {year:"1705", icon:"🥾", title:"The Super-Long Walk", text:"Bach walks about 250 miles (400 km) to the city of Lübeck to hear the famous organist Buxtehude. He stays for months — way longer than his boss allowed!"},
+  {year:"1717", icon:"👑", title:"Music for a Prince", text:"Bach goes to work for a music-loving prince in Köthen. He writes lots of music for instruments, like the famous Brandenburg Concertos."},
+  {year:"1723", icon:"⛪", title:"Off to Leipzig", text:"Bach becomes music director (called the \"Thomaskantor\") in Leipzig. He teaches choir boys and writes church music for the rest of his life."},
+  {year:"1750", icon:"🕯️", title:"Goodbye, Bach", text:"Bach dies in Leipzig at age 65. Years later, in 1829, the composer Felix Mendelssohn helped make the world fall in love with Bach's music all over again."}
+];
+let tlIndex = 0;
+const tlTrack = document.getElementById("tlTrack"), tlCard = document.getElementById("tlCard");
+EVENTS.forEach((e,i)=>{
+  const b = document.createElement("button");
+  b.className = "tl-dot"; b.textContent = e.icon+" "+e.year;
+  b.addEventListener("click",()=>showEvent(i));
+  tlTrack.appendChild(b);
+});
+function showEvent(i){
+  tlIndex = Math.max(0, Math.min(EVENTS.length-1, i));
+  const e = EVENTS[tlIndex];
+  tlCard.innerHTML = '<div class="big">'+e.icon+'</div><div><h3>'+e.year+' — '+e.title+'</h3><p>'+e.text+'</p></div>';
+  if(window.ReadAloud){ ReadAloud.stopIf(tlCard); ReadAloud.mark(tlCard); }
+  [...tlTrack.children].forEach((b,j)=>b.classList.toggle("active", j===tlIndex));
+  tlTrack.children[tlIndex].scrollIntoView({behavior:"smooth", block:"nearest", inline:"center"});
+  document.getElementById("tlPrev").disabled = tlIndex===0;
+  document.getElementById("tlNext").disabled = tlIndex===EVENTS.length-1;
+}
+document.getElementById("tlPrev").addEventListener("click",()=>showEvent(tlIndex-1));
+document.getElementById("tlNext").addEventListener("click",()=>showEvent(tlIndex+1));
+// initial render without scrolling the page
+(function(){ const e=EVENTS[0]; tlCard.innerHTML='<div class="big">'+e.icon+'</div><div><h3>'+e.year+' — '+e.title+'</h3><p>'+e.text+'</p></div>';
+  tlTrack.children[0].classList.add("active"); document.getElementById("tlPrev").disabled=true; })();
+
+/* ---------- KEYBOARD ---------- */
+const KB_START = midi("C4"), KB_END = midi("G5");
+const keyboard = document.getElementById("keyboard");
+const keyEls = {};
+const NAMES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+const WHITE_W = 64, BLACK_W = 40;
+let whiteCount = 0;
+for(let m=KB_START; m<=KB_END; m++){ if(NAMES[m%12].length===1) whiteCount++; }
+keyboard.style.width = (whiteCount*WHITE_W)+"px";
+let wi = 0;
+const comp = ["a","s","d","f","g","h","j","k","l",";","'"]; // white keys
+const compBlack = {"w":midi("C#4"),"e":midi("D#4"),"t":midi("F#4"),"y":midi("G#4"),"u":midi("A#4"),"o":midi("C#5"),"p":midi("D#5")};
+const compMap = {};
+for(let m=KB_START; m<=KB_END; m++){
+  const n = NAMES[m%12], octave = Math.floor(m/12)-1;
+  const el = document.createElement("div");
+  if(n.length===1){
+    el.className="key white"; el.style.left=(wi*WHITE_W)+"px"; el.style.width=WHITE_W+"px";
+    el.textContent = n; if(comp[wi]) compMap[comp[wi]] = m; wi++;
+  } else {
+    el.className="key black"; el.style.left=(wi*WHITE_W-BLACK_W/2)+"px"; el.style.width=BLACK_W+"px";
+    el.textContent = n;
+  }
+  el.dataset.m = m; el.title = n+octave;
+  keyEls[m] = el; keyboard.appendChild(el);
+}
+Object.assign(compMap, compBlack);
+function flash(m, ms){
+  const el = keyEls[m]; if(!el) return;
+  el.classList.add("lit"); setTimeout(()=>el.classList.remove("lit"), ms);
+}
+function pressKey(m){
+  const c = getCtx(); if(!c) return;
+  tone(m, c.currentTime, 0.6, {type:"triangle", vol:0.4});
+  flash(m, 250);
+  document.getElementById("nowPlaying").textContent = "🎵 "+keyEls[m].title.replace("#","♯");
+}
+keyboard.addEventListener("pointerdown", e=>{
+  const k = e.target.closest(".key"); if(!k) return;
+  e.preventDefault(); pressKey(parseInt(k.dataset.m,10));
+});
+document.addEventListener("keydown", e=>{
+  if(e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
+  const tag = (e.target.tagName||"").toLowerCase(); if(tag==="input" && e.target.type!=="range") return;
+  const m = compMap[e.key.toLowerCase()]; if(m!==undefined) pressKey(m);
+});
+
+/* ---------- MINUET IN G (BWV Anh. 114), first section, melody ---------- */
+// format: note:beats (3/4 time, 1 = quarter note)
+const MINUET_TEXT =
+ "D5:1 G4:.5 A4:.5 B4:.5 C5:.5 | D5:1 G4:1 G4:1 | E5:1 C5:.5 D5:.5 E5:.5 F#5:.5 | G5:1 G4:1 G4:1 | "+
+ "C5:1 D5:.5 C5:.5 B4:.5 A4:.5 | B4:1 C5:.5 B4:.5 A4:.5 G4:.5 | F#4:1 G4:.5 A4:.5 B4:.5 G4:.5 | A4:3 | "+
+ "D5:1 G4:.5 A4:.5 B4:.5 C5:.5 | D5:1 G4:1 G4:1 | E5:1 C5:.5 D5:.5 E5:.5 F#5:.5 | G5:1 G4:1 G4:1 | "+
+ "C5:1 D5:.5 C5:.5 B4:.5 A4:.5 | B4:1 C5:.5 B4:.5 A4:.5 G4:.5 | A4:1 B4:.5 A4:.5 G4:.5 F#4:.5 | G4:3";
+function parseTune(txt){
+  return txt.split(/\s+/).filter(t=>t && t!=="|").map(t=>{ const [n,b]=t.split(":"); return {m:midi(n), name:n, beats:parseFloat(b||"1")}; });
+}
+const MINUET = parseTune(MINUET_TEXT);
+let minuetSession = null;
+document.getElementById("playMinuet").addEventListener("click", ()=>{
+  const c = getCtx(); if(!c) return;
+  if(minuetSession) minuetSession.stop();
+  const s = minuetSession = makeSession();
+  const bpm = 132 * (document.getElementById("speed").value/100);
+  const beat = 60/bpm;
+  let t = c.currentTime + 0.1, offsetMs = 100;
+  MINUET.forEach(n=>{
+    const d = n.beats*beat;
+    s.oscs.push(tone(n.m, t, d*0.98, {type:"triangle", vol:0.4, out:s.bus}));
+    s.timers.push(setTimeout(()=>{ flash(n.m, d*900); document.getElementById("nowPlaying").textContent="🎵 "+n.name.replace(/\d/,"").replace("#","♯"); }, offsetMs));
+    t += d; offsetMs += d*1000;
+  });
+  s.timers.push(setTimeout(()=>{ document.getElementById("nowPlaying").textContent="👏 Bravo!"; }, offsetMs+200));
+});
+document.getElementById("stopMinuet").addEventListener("click", ()=>{ if(minuetSession){ minuetSession.stop(); minuetSession=null; } document.getElementById("nowPlaying").textContent="🎵"; });
+
+/* ---------- CANON / ROUND: Frère Jacques ---------- */
+// 8 bars of 4/4. Each voice enters 2 bars (8 beats) after the previous one and sings the tune twice.
+const JACQUES_BARS = [
+  "C4 D4 E4 C4", "C4 D4 E4 C4", "E4 F4 G4:2", "E4 F4 G4:2",
+  "G4:.5 A4:.5 G4:.5 F4:.5 E4 C4", "G4:.5 A4:.5 G4:.5 F4:.5 E4 C4", "C4 G3 C4:2", "C4 G3 C4:2"
+];
+const BARS_PER_TUNE = 8, REPEATS = 2, ENTRY_BARS = 2;
+const VOICES = [
+  {transpose:12, type:"triangle", vol:0.30, on:true},
+  {transpose:0,  type:"square",   vol:0.12, on:true},
+  {transpose:-12,type:"sawtooth", vol:0.13, on:true}
+];
+const jBars = JACQUES_BARS.map(b=>parseTune(b));
+// build bar boxes
+VOICES.forEach((v,i)=>{
+  const holder = document.getElementById("bars"+i);
+  for(let b=0;b<BARS_PER_TUNE;b++){ const d=document.createElement("div"); d.className="bar"; d.textContent=b+1; holder.appendChild(d); }
+});
+let canonSession = null, voiceGains = [];
+function setToggle(i){
+  const btn = document.querySelector('.toggle[data-v="'+i+'"]');
+  const v = VOICES[i];
+  btn.textContent = btn.textContent.replace(/ON|OFF/, v.on?"ON":"OFF");
+  btn.classList.toggle("off", !v.on);
+  if(voiceGains[i] && ctx){ voiceGains[i].gain.setTargetAtTime(v.on?1:0, ctx.currentTime, 0.02); }
+}
+document.querySelectorAll(".toggle").forEach(btn=>btn.addEventListener("click",()=>{
+  const i = parseInt(btn.dataset.v,10); VOICES[i].on = !VOICES[i].on; setToggle(i);
+}));
+function clearBars(){ document.querySelectorAll(".voice .bar").forEach(b=>b.classList.remove("on")); document.querySelectorAll(".singer").forEach(s=>s.classList.remove("sing")); }
+document.getElementById("playCanon").addEventListener("click", ()=>{
+  const c = getCtx(); if(!c) return;
+  if(canonSession) canonSession.stop();
+  clearBars();
+  const s = canonSession = makeSession();
+  const beat = 0.42, barDur = 4*beat, t0 = c.currentTime + 0.15;
+  voiceGains = VOICES.map(v=>{ const g=c.createGain(); g.gain.value = v.on?1:0; g.connect(s.bus); return g; });
+  let lastEnd = 0;
+  VOICES.forEach((v,i)=>{
+    const startBar = i*ENTRY_BARS;
+    for(let r=0;r<REPEATS;r++){
+      jBars.forEach((bar,bi)=>{
+        const barIndex = startBar + r*BARS_PER_TUNE + bi;
+        let t = t0 + barIndex*barDur;
+        const ms = (t - c.currentTime)*1000;
+        s.timers.push(setTimeout(()=>{
+          const boxes = document.getElementById("bars"+i).children;
+          [...boxes].forEach((b,k)=>b.classList.toggle("on", k===bi));
+          const singer = document.getElementById("s"+i);
+          singer.classList.toggle("sing", VOICES[i].on);
+        }, ms));
+        bar.forEach(n=>{
+          const d = n.beats*beat;
+          s.oscs.push(tone(n.m+v.transpose, t, d*0.95, {type:v.type, vol:v.vol, out:voiceGains[i]}));
+          t += d;
+        });
+        lastEnd = Math.max(lastEnd, t);
+      });
+    }
+    // voice finished
+    const endMs = (t0 + (startBar + REPEATS*BARS_PER_TUNE)*barDur - c.currentTime)*1000;
+    s.timers.push(setTimeout(()=>{
+      [...document.getElementById("bars"+i).children].forEach(b=>b.classList.remove("on"));
+      document.getElementById("s"+i).classList.remove("sing");
+    }, endMs));
+  });
+});
+document.getElementById("stopCanon").addEventListener("click", ()=>{ if(canonSession){ canonSession.stop(); canonSession=null; } clearBars(); });
+
+/* ---------- QUIZ ---------- */
+const QUIZ = [
+  {q:"Where was Bach born?", a:["Paris, France","Eisenach, Germany","London, England","Rome, Italy"], c:1,
+   yes:"Yes! Eisenach, Germany, in 1685. 🇩🇪", no:"Not quite — he was born in Eisenach, Germany."},
+  {q:"Which giant instrument with pipes was Bach a superstar at playing?", a:["Electric guitar","Drums","Organ","Tuba"], c:2,
+   yes:"Correct! Bach was one of the best organ players ever. 🎹", no:"Oops! It was the pipe organ."},
+  {q:"About how far did young Bach WALK to hear the organist Buxtehude?", a:["2 miles","25 miles","250 miles","2,500 miles"], c:2,
+   yes:"Yes! About 250 miles — talk about a long hike! 🥾", no:"Nope — it was about 250 miles! His feet must have been sore."},
+  {q:"What do we call it when two or more melodies play at the same time and fit together?", a:["Counterpoint","Countdown","Copycat","Cartwheel"], c:0,
+   yes:"Brilliant! Counterpoint — melodies woven like a braid. 🧵", no:"Close! It's called counterpoint."},
+  {q:"In which city was Bach the music director for the last 27 years of his life?", a:["Leipzig","Vienna","New York","Madrid"], c:0,
+   yes:"Right! Leipzig, Germany, from 1723 to 1750. ⛪", no:"It was Leipzig, Germany!"},
+  {q:"Bach's music is on the Golden Record that flew into space in 1977. Which spacecraft carried it?", a:["Apollo 11","Voyager","The Hubble Telescope","Sputnik"], c:1,
+   yes:"Out of this world! The Voyager probes carry Bach's music beyond our solar system. 🚀", no:"Not that one — it's the Voyager spacecraft! 🚀"}
+];
+const quizBox = document.getElementById("quizBox");
+let qi = 0, score = 0;
+const CHEERS = ["🎉","⭐","🎵","🎶","🥳","🎹","✨"];
+function confetti(n){
+  for(let i=0;i<n;i++){
+    const s=document.createElement("div"); s.className="confetti";
+    s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+    s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s";
+    document.body.appendChild(s); setTimeout(()=>s.remove(),4200);
+  }
+}
+function chime(good){
+  const c=getCtx(); if(!c) return; const t=c.currentTime;
+  if(good){ ["C5","E5","G5","C6"].forEach((n,i)=>tone(midi(n), t+i*0.09, 0.25, {type:"triangle",vol:0.3})); }
+  else { tone(midi("E4"), t, 0.25, {type:"square",vol:0.1}); tone(midi("C4"), t+0.2, 0.4, {type:"square",vol:0.1}); }
+}
+function renderQ(){
+  const item = QUIZ[qi];
+  if(window.ReadAloud) ReadAloud.stop();
+  quizBox.innerHTML = '<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div>'+
+    '<div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+  const qEl = quizBox.querySelector(".q-text");
+  qEl.dataset.say = item.q + " Is it: " + item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ") + "?";
+  if(window.ReadAloud) ReadAloud.mark(qEl);
+  const ans = quizBox.querySelector(".answers"), fb = quizBox.querySelector(".feedback");
+  item.a.forEach((txt,i)=>{
+    const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+    b.addEventListener("click",()=>{
+      [...ans.children].forEach(x=>x.disabled=true);
+      if(i===item.c){ score++; b.classList.add("right"); fb.textContent="✅ "+item.yes; fb.style.color="var(--green)"; chime(true); confetti(12); }
+      else { b.classList.add("wrong"); ans.children[item.c].classList.add("right"); fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; chime(false); }
+      if(window.ReadAloud){ ReadAloud.mark(fb); ReadAloud.speakEl(fb); }
+      const next=document.createElement("button"); next.style.background="var(--purple)";
+      next.textContent = qi<QUIZ.length-1 ? "Next question ➡" : "See my score 🏆";
+      next.addEventListener("click",()=>{ qi++; qi<QUIZ.length ? renderQ() : renderEnd(); });
+      fb.after(next);
+    });
+    ans.appendChild(b);
+  });
+}
+function renderEnd(){
+  const stars = "⭐".repeat(score) + "☆".repeat(QUIZ.length-score);
+  const msg = score===QUIZ.length ? "PERFECT! You're a true Bach expert! 🏆" :
+              score>=4 ? "Awesome job! You really know your Bach! 🎉" :
+              score>=2 ? "Nice work! Explore the page and try again! 🎵" : "Good try! Check out the timeline and try again! 💪";
+  if(window.ReadAloud) ReadAloud.stop();
+  quizBox.innerHTML = '<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+  const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--green)";
+  again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+  const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); quizBox.appendChild(wrap);
+  const cel = quizBox.querySelector(".celebrate");
+  cel.dataset.say = "You got "+score+" out of "+QUIZ.length+"! "+msg;
+  if(window.ReadAloud) ReadAloud.mark(cel);
+  confetti(score*8+10);
+  const c=getCtx(); if(c){ const t=c.currentTime; ["G4","B4","D5","G5","D5","G5"].forEach((n,i)=>tone(midi(n), t+i*0.13, i===5?0.8:0.2, {type:"triangle",vol:0.3})); }
+}
+renderQ();
+
+/* ---------- FUN FACTS ---------- */
+const FACTS = [
+  ["🥾 The Big Walk","As a young man, Bach walked about 250 miles (400 km) to Lübeck to hear the organist Buxtehude play. That's like walking for weeks!"],
+  ["🔒 Locked Up!","In 1717, Bach wanted to quit his job in Weimar. The Duke got so angry he put Bach in jail for almost a month before letting him go!"],
+  ["☕ A Song About Coffee","Bach wrote a funny mini-opera called the Coffee Cantata, about a girl who loves coffee SO much her dad can't make her stop."],
+  ["🚀 Bach in Space","In 1977, NASA's Voyager spacecraft launched carrying a Golden Record with Bach's music on it. It's still traveling through space today!"],
+  ["📚 Super Busy Composer","Bach wrote more than 1,000 pieces of music: songs for church, music for organ, keyboard, violin, cello, orchestra and more."],
+  ["👨‍👦 Famous Kids","Several of Bach's sons became famous composers too, like Carl Philipp Emanuel Bach and Johann Christian Bach."],
+  ["🌙 Copying by Moonlight","A story told about Bach says that as a boy he secretly copied his brother's music book at night by moonlight! (It's an old story, so we can't be 100% sure.)"]
+];
+const strip = document.getElementById("factsStrip");
+FACTS.forEach(([front,back])=>{
+  const d=document.createElement("div"); d.className="ff"; d.tabIndex=0; d.setAttribute("role","button");
+  d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+  const flip=()=>d.classList.toggle("flipped");
+  d.classList.add("readable");
+  d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); }); d.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); } });
+  strip.appendChild(d);
+});
+
+/* ---------- READ ALOUD (Web Speech API) ---------- */
+// defined after content above; render functions check window.ReadAloud, so mark existing items now
+ReadAloud.markAll();
+ReadAloud.mark(tlCard);
+ReadAloud.mark(quizBox.querySelector(".q-text"));
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leonardo da Vinci: Artist, Inventor, Explorer of Ideas</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet Bach */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- da Vinci theme: color-blind-safe (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800; --sepia:#7a4a1e; --paper:#f6ead2 }
+  body{background:linear-gradient(180deg,#f6ead2 0%,#efe0c0 40%,#dfe9f3 75%,#f3e6f1 100%)}
+  header h1{color:var(--sepia);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  nav a:nth-child(7){background:#8a5a00} nav a:nth-child(8){background:var(--sepia)} nav a:nth-child(9){background:#444}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--teal)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .card2:nth-child(3n+2){border-left-color:var(--orange)} .card2:nth-child(3n){border-left-color:var(--purple)}
+  .sketch{background:var(--paper);border-radius:12px;display:block;margin:0 auto 8px;max-width:100%}
+  /* mirror */
+  .mirror-box{background:#fff;border-radius:18px;padding:16px;border:4px solid var(--purple);margin-top:14px}
+  .mirror-box input[type=text]{font-size:26px;padding:10px 14px;border-radius:12px;border:3px solid var(--purple);width:min(100%,420px);font-family:inherit}
+  .mirror-out{font-size:clamp(30px,6vw,52px);font-family:"Brush Script MT","Segoe Script",cursive,serif;color:var(--sepia);background:var(--paper);border-radius:14px;padding:14px 20px;margin-top:12px;text-align:center;min-height:80px;transition:transform .5s;word-break:break-word}
+  .mirror-out.flip{transform:scaleX(-1)}
+  /* matching game */
+  .match{display:grid;grid-template-columns:1.4fr 1fr;gap:16px;align-items:start}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #b9a27f;border-radius:16px;padding:10px 12px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard svg{flex:0 0 96px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default;opacity:.9}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold;justify-content:center;text-align:center}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  /* flying lab */
+  .lab{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:800px){.lab{grid-template-columns:1fr}}
+  .choice-group{background:#fff;border-radius:16px;padding:10px 14px;margin-bottom:10px}
+  .choice-group h4{margin:0 0 6px;font-size:20px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{background:#fff;color:var(--ink);border:3px solid #999;box-shadow:none;padding:10px 14px;font-size:18px;min-height:48px}
+  .chip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+  .chip.on::before{content:"✔ "}
+  .verdict{background:#fff;border-radius:18px;padding:16px;border:4px solid var(--blue)}
+  .verdict h3{margin:0 0 6px;font-size:26px}
+  .liftbar{height:30px;border-radius:15px;background:repeating-linear-gradient(45deg,#eee,#eee 10px,#e3e3e3 10px,#e3e3e3 20px);overflow:hidden;margin:8px 0;border:2px solid #999}
+  .liftbar > div{height:100%;width:0;background:linear-gradient(90deg,#56B4E9,#0072B2);transition:width .5s}
+  /* sfumato */
+  .sfu{display:flex;gap:20px;align-items:center;flex-wrap:wrap;background:#fff;border-radius:18px;padding:16px;margin-top:14px}
+  .sfu svg{flex:0 0 200px}
+  .sfu .txt{flex:1 1 280px}
+  .curious-q{font-size:26px;font-weight:bold;color:var(--purple);min-height:44px;text-align:center;margin:10px 0}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>🎨 Leonardo da Vinci 🔭</h1>
+  <p>Painter, inventor, scientist — and the most curious person ever!</p>
+</header>
+<nav>
+  <a href="#meet">👋 Meet</a>
+  <a href="#timeline">📜 Timeline</a>
+  <a href="#notebooks">📓 Notebooks</a>
+  <a href="#inventions">⚙️ Inventions</a>
+  <a href="#lab">🪽 Flying Lab</a>
+  <a href="#art">🖼️ Art</a>
+  <a href="#bigideas">💡 Big Ideas</a>
+  <a href="#quiz">✅ Check</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+
+<!-- MEET -->
+<section id="meet">
+  <h2>👋 Meet Leonardo</h2>
+  <div class="meet">
+    <svg viewBox="0 0 260 300" width="260" height="300" role="img" aria-label="Cartoon drawing of Leonardo with a long beard and a cap, holding a paintbrush">
+      <rect x="0" y="0" width="260" height="300" rx="30" fill="#f6ead2"/>
+      <g stroke="#b9a27f" stroke-width="2" fill="none" opacity=".7">
+        <circle cx="210" cy="50" r="22"/><path d="M188 50 H232 M210 28 V72"/>
+        <path d="M20 70 Q40 50 60 70 Q40 60 20 70"/>
+      </g>
+      <path d="M50 300 Q60 215 130 205 Q200 215 210 300 Z" fill="#6a3d9a"/>
+      <!-- hair -->
+      <path d="M72 110 Q62 200 90 215 L170 215 Q198 200 188 110 Z" fill="#9d9d9d"/>
+      <ellipse cx="130" cy="135" rx="48" ry="55" fill="#ffd7b5"/>
+      <!-- beard -->
+      <path d="M86 150 Q90 250 130 270 Q170 250 174 150 Q160 185 130 185 Q100 185 86 150 Z" fill="#c8c8c8"/>
+      <path d="M112 172 Q130 180 148 172" stroke="#8a5a5a" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- cap -->
+      <path d="M76 105 Q80 60 130 62 Q182 60 186 105 Z" fill="#7a2e2e"/>
+      <ellipse cx="112" cy="132" rx="6" ry="7" fill="#2b2140"/><ellipse cx="148" cy="132" rx="6" ry="7" fill="#2b2140"/>
+      <circle cx="114" cy="130" r="2" fill="#fff"/><circle cx="150" cy="130" r="2" fill="#fff"/>
+      <path d="M100 118 Q112 112 122 118" stroke="#777" stroke-width="4" fill="none"/>
+      <path d="M138 118 Q148 112 160 118" stroke="#777" stroke-width="4" fill="none"/>
+      <path d="M130 136 Q137 150 128 152" stroke="#c98e6b" stroke-width="3" fill="none"/>
+      <!-- brush -->
+      <g transform="translate(200 200) rotate(30)"><rect x="-4" y="-50" width="8" height="70" rx="3" fill="#8d5a2b"/><path d="M-6 -50 Q0 -75 6 -50 Z" fill="#E6A800"/></g>
+    </svg>
+    <div class="facts">
+      <ul>
+        <li>🎂 Born in <b>1452</b> in the little town of <b>Vinci</b>, near the city of <b>Florence</b> in what is now Italy.</li>
+        <li>🏷️ "Da Vinci" isn't really a last name. It means <b>"from Vinci"</b> — so he was "Leonardo from Vinci"!</li>
+        <li>🖌️ As a teenager he trained in the workshop of a famous artist named <b>Verrocchio</b> (say "vuh-ROH-kee-oh").</li>
+        <li>🎨 He painted two of the most famous paintings in the world: the <b>Mona Lisa</b> and <b>The Last Supper</b>.</li>
+        <li>⚙️ He filled notebooks with ideas for <b>machines</b>, drawings of the <b>human body</b>, <b>birds</b>, <b>water</b>, and more.</li>
+        <li>✍️ He was <b>left-handed</b> and often wrote <b>backwards</b>, from right to left!</li>
+      </ul>
+      <div class="bubble">He lived during the <b>Renaissance</b> (say "REN-uh-sahns"), a time when people in Europe got super excited about art, science, and learning new things.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <h2>📜 Leonardo's Life Timeline</h2>
+  <p>Tap a year to travel through his life! ⏳</p>
+  <div class="tl-track" id="tlTrack"></div>
+  <div class="tl-card" id="tlCard" aria-live="polite"></div>
+  <div class="tl-nav">
+    <button id="tlPrev">⬅ Back</button>
+    <button id="tlNext">Next ➡</button>
+  </div>
+</section>
+
+<!-- NOTEBOOKS -->
+<section id="notebooks">
+  <h2>📓 Leonardo's Notebooks</h2>
+  <div class="grid">
+    <div class="card2"><h3>📚 Thousands of Pages</h3><p>Leonardo carried a little notebook everywhere. More than <b>7,000 pages</b> of his notes and drawings still exist today — and many more were lost!</p></div>
+    <div class="card2"><h3>🪞 Mirror Writing</h3><p>He usually wrote <b>backwards</b>, from right to left. To read it easily, you hold it up to a mirror! Nobody knows for sure why — one idea is that, as a lefty, it kept him from smudging the ink.</p></div>
+    <div class="card2"><h3>🫀 The Human Body</h3><p>He studied how bodies work: bones, muscles, and even the heart. His drawings were so careful that doctors still admire them today.</p></div>
+    <div class="card2"><h3>🐦 Birds</h3><p>He watched birds for hours and drew how their wings move and how they use the wind and their tails to steer. He wrote a whole little notebook about how birds fly.</p></div>
+    <div class="card2"><h3>🌊 Water</h3><p>He was fascinated by water: how it swirls, makes waves, and flows around rocks. He drew whirlpools that look a lot like curly hair!</p></div>
+    <div class="card2"><h3>📏 Vitruvian Man</h3><p>His famous drawing of a man inside a circle and a square shows how the parts of the human body fit together in neat proportions.</p></div>
+  </div>
+  <div class="mirror-box">
+    <h3 style="margin:0 0 8px">🪞 Mirror-Writing Machine</h3>
+    <p class="mirror-help">Type your name (or a secret message) and see it written backwards, the way Leonardo wrote. Then press the mirror button to read it the normal way!</p>
+    <label for="mirrorIn" style="font-weight:bold">✏️ Your words: </label><input type="text" id="mirrorIn" maxlength="40" value="Leonardo" autocomplete="off">
+    <div class="mirror-out flip" id="mirrorOut" aria-live="polite">Leonardo</div>
+    <div class="row" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px">
+      <button id="mirrorBtn" style="background:var(--purple)">🪞 Hold up a mirror</button>
+    </div>
+  </div>
+</section>
+
+<!-- INVENTIONS -->
+<section id="inventions">
+  <h2>⚙️ Inventions on Paper</h2>
+  <p class="note-box">Leonardo drew <b>designs</b> — ideas and plans — for amazing machines. Most of them were <b>never built</b> while he was alive, and some would not have worked. Many were built as models hundreds of years later, so people could test his ideas!</p>
+  <h3>🧩 Matching Game</h3>
+  <p class="match-help">Tap a sketch on the left, then tap the name that goes with it on the right. Tap the 🔊 to hear a clue.</p>
+  <div class="match">
+    <div class="match-col" id="matchLeft"></div>
+    <div class="match-col" id="matchRight"></div>
+  </div>
+  <div class="match-status" id="matchStatus" aria-live="polite">Matched: 0 of 5</div>
+  <div class="row" style="display:flex;gap:10px;flex-wrap:wrap"><button id="matchReset" style="background:var(--teal)">🔀 Shuffle and play again</button></div>
+</section>
+
+<!-- FLYING LAB -->
+<section id="lab">
+  <h2>🪽 Design Your Own Flying Machine</h2>
+  <p class="lab-help">Leonardo dreamed of people flying. Pick the parts for your machine and find out if it could <b>really</b> carry a person. (No wrong answers — scientists learn from every try!)</p>
+  <div class="lab">
+    <div>
+      <div class="choice-group"><h4>1️⃣ How does it lift?</h4><div class="chips" data-key="w">
+        <button class="chip" data-v="flap">🦇 Flapping wings</button><button class="chip" data-v="glide">🪁 Still glider wings</button><button class="chip" data-v="screw">🌀 Spinning screw</button><button class="chip" data-v="none">🚫 No wings</button></div></div>
+      <div class="choice-group"><h4>2️⃣ How big?</h4><div class="chips" data-key="size">
+        <button class="chip" data-v="small">🐭 Small</button><button class="chip" data-v="medium">🐴 Medium</button><button class="chip" data-v="giant">🐋 Giant</button></div></div>
+      <div class="choice-group"><h4>3️⃣ What powers it?</h4><div class="chips" data-key="power">
+        <button class="chip" data-v="arms">💪 Arms</button><button class="chip" data-v="legs">🦵 Legs (pedals)</button><button class="chip" data-v="wind">🏔️ Wind (jump off a hill)</button><button class="chip" data-v="engine">⚙️ Modern engine</button></div></div>
+      <div class="choice-group"><h4>4️⃣ What's it made of?</h4><div class="chips" data-key="mat">
+        <button class="chip" data-v="wood">🪵 Wood and cloth (Leonardo's time)</button><button class="chip" data-v="light">🪶 Super-light modern materials</button></div></div>
+    </div>
+    <div>
+      <svg id="labSvg" viewBox="0 0 400 220" class="sketch" style="width:100%;height:auto" role="img" aria-label="Drawing of your flying machine"></svg>
+      <div class="verdict" id="verdict"></div>
+    </div>
+  </div>
+  <div class="card2" style="margin-top:14px;border-left-color:var(--gold)"><h3>🐦 What Leonardo Learned From Birds</h3><p>Leonardo noticed that birds push air <b>down</b> with their wings to stay <b>up</b>, steer with their tails, and often <b>glide</b> on the wind without flapping. His flapping machines needed a person's muscles, and human muscles are just too weak for our weight. In his later notes he paid more and more attention to how birds glide — and gliding is how people first really flew, hundreds of years later.</p></div>
+</section>
+
+<!-- ART -->
+<section id="art">
+  <h2>🖼️ Leonardo the Artist</h2>
+  <div class="grid">
+    <div class="card2"><h3>😊 The Mona Lisa</h3><p>A portrait of a woman with a famous, mysterious smile. Leonardo worked on it for many years. Today it hangs in the <b>Louvre</b> (say "LOOV") museum in <b>Paris, France</b>, behind special protective glass.</p></div>
+    <div class="card2"><h3>🍞 The Last Supper</h3><p>A giant painting on a <b>wall</b> of a dining hall in <b>Milan, Italy</b>. It shows Jesus and his followers at a meal, at the exact moment everyone reacts to surprising news.</p></div>
+    <div class="card2"><h3>🧪 An Experiment That Flaked</h3><p>Wall paintings were usually painted fast on <b>wet</b> plaster. Leonardo wanted more time, so he tried a new way of painting on a <b>dry</b> wall. Sadly, the paint didn't stick well and started <b>flaking off</b> while he was still alive. Experts have repaired it many times.</p></div>
+    <div class="card2"><h3>🔢 Very Few Paintings</h3><p>Only about <b>15 to 20</b> paintings are thought to be by Leonardo. He often took a long time and left many projects unfinished, because he was always busy with new ideas!</p></div>
+  </div>
+  <div class="sfu">
+    <svg viewBox="0 0 200 220" width="200" height="220" role="img" aria-label="Simple face showing soft or sharp edges">
+      <defs><filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur id="softBlur" stdDeviation="0"/></filter></defs>
+      <rect width="200" height="220" rx="16" fill="#5b4a2e"/>
+      <g filter="url(#soft)">
+        <path d="M30 220 Q40 150 100 145 Q160 150 170 220 Z" fill="#2e2a1e"/>
+        <ellipse cx="100" cy="95" rx="52" ry="64" fill="#3b2f1e"/>
+        <ellipse cx="100" cy="100" rx="38" ry="50" fill="#e0b98a"/>
+        <ellipse cx="86" cy="92" rx="5" ry="3" fill="#3b2f1e"/><ellipse cx="114" cy="92" rx="5" ry="3" fill="#3b2f1e"/>
+        <path d="M86 124 Q100 131 114 124" stroke="#8a5a3e" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </g>
+    </svg>
+    <div class="txt">
+      <h3 style="margin:0 0 6px">🌫️ Try "Sfumato"</h3>
+      <p class="sfu-text">Leonardo blended colors so softly that you can't see hard lines — like smoke. This is called <b>sfumato</b> (say "sfoo-MAH-toe"), which means "smoky" in Italian. Slide to make the edges softer!</p>
+      <p><b>Sharp</b> ✏️ <input type="range" id="sfuSlider" min="0" max="6" step="0.5" value="0" aria-label="Softness"> 🌫️ <b>Smoky</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- BIG IDEAS -->
+<section id="bigideas">
+  <h2>💡 Big Ideas</h2>
+  <div class="grid">
+    <div class="card2"><h3>🔍 Super Observer</h3><p>Leonardo didn't just look — he <b>observed</b>. He studied things again and again, drew them, and asked "why?" and "how?" One item on one of his to-do lists was to describe the tongue of a woodpecker!</p></div>
+    <div class="card2"><h3>🎨 + 🔬 Art Meets Science</h3><p>To paint people better, he studied muscles and bones. To paint water and sky, he studied how light and water behave. For Leonardo, art and science helped each other.</p></div>
+    <div class="card2"><h3>🌅 The Renaissance</h3><p>"Renaissance" means "rebirth." It was a time, starting in Italy, when people rediscovered old Greek and Roman ideas and made new discoveries in art and science. Leonardo is one of its most famous people.</p></div>
+    <div class="card2"><h3>🌍 Why He Matters Today</h3><p>Leonardo shows that being curious about <b>everything</b> is a superpower. Scientists, engineers, and artists still study his notebooks for ideas and inspiration.</p></div>
+  </div>
+  <div class="card2" style="margin-top:14px;border-left-color:var(--purple)">
+    <h3>❓ Be Curious Like Leonardo</h3>
+    <p class="curious-help">Press the button for a curious question. Then go outside or look closely, sketch it, and write down your own answer — like a real Leonardo notebook!</p>
+    <div class="curious-q" id="curiousQ">🤔 …</div>
+    <div style="text-align:center"><button id="curiousBtn" style="background:var(--purple)">🎲 Give me a question!</button></div>
+  </div>
+  <h3 style="margin-top:20px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<!-- CHECK -->
+<section id="quiz">
+  <h2>✅ Check Your Understanding</h2>
+  <div id="quizBox"></div>
+</section>
+
+<!-- GROWN-UPS -->
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>Who Leonardo da Vinci was and where he fits in history (the Renaissance, 1452–1519).</li>
+      <li>The difference between a <b>design</b> and a <b>built invention</b>, using his notebooks as a real primary source.</li>
+      <li>Early physics of flight: lift, weight, and power, and why human muscles weren't enough.</li>
+      <li>Observation and curiosity as skills, and how art and science connect.</li>
+    </ul>
+    <h3>Grade band</h3><p>About grades 3–5. Strong 2nd-grade readers can use the read-aloud buttons.</p>
+    <h3>Time</h3><p>About 30–45 minutes to do everything (roughly 15–20 minutes of reading and 15–25 minutes of games). It works fine split across two sittings.</p>
+    <h3>Follow-up activity</h3><p><b>Keep a "Leonardo notebook" for a week.</b> Each day, pick one thing (a bird, a leaf, running water, a bike chain), sketch it closely for 5 minutes, and write one "why" or "how" question beside it. At the end of the week, pick one question to look up together.</p>
+  </div>
+</section>
+</main>
+<footer>Made for curious kids 🎨 · All drawings made just for this page · Works offline</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+/* ---------- small sound helper (only after clicks) ---------- */
+let actx = null;
+function beep(notes, type){
+  try{
+    const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return;
+    if(!actx) actx = new AC(); if(actx.state==="suspended") actx.resume();
+    const t0 = actx.currentTime;
+    notes.forEach((f,i)=>{
+      const o=actx.createOscillator(), g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f;
+      const t=t0+i*0.1; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.2,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3);
+      o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32);
+    });
+  }catch(e){}
+}
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS = ["🎉","⭐","🎨","⚙️","🥳","🪽","✨"];
+function confetti(n){
+  for(let i=0;i<n;i++){
+    const s=document.createElement("div"); s.className="confetti";
+    s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+    s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s";
+    document.body.appendChild(s); setTimeout(()=>s.remove(),4200);
+  }
+}
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+/* ---------- TIMELINE ---------- */
+const EVENTS = [
+  {year:"1452", icon:"👶", title:"Born Near Vinci", text:"Leonardo is born in or near the small town of Vinci, in the hills outside Florence, in what is now Italy."},
+  {year:"Teen", icon:"🖌️", title:"Art School, Workshop Style", text:"As a teenager, Leonardo starts training in Florence in the busy workshop of the artist Andrea del Verrocchio. He learns painting, sculpture, and even metalwork."},
+  {year:"1482", icon:"🏰", title:"Off to Milan", text:"Leonardo moves to Milan to work for its ruler, Ludovico Sforza. He plans festivals, designs machines, and works on a giant horse statue that was never finished."},
+  {year:"1495", icon:"🍞", title:"The Last Supper", text:"Leonardo begins The Last Supper on a dining-hall wall in Milan, finishing around 1498. His new painting method starts to flake within his lifetime."},
+  {year:"1503", icon:"😊", title:"Starting the Mona Lisa", text:"Back in Florence, Leonardo starts painting the Mona Lisa. He keeps working on it for many years and keeps it with him for the rest of his life."},
+  {year:"1516", icon:"👑", title:"Moving to France", text:"King Francis I of France invites Leonardo to come live near his castle in Amboise. The king greatly admires him."},
+  {year:"1519", icon:"🕯️", title:"Goodbye, Leonardo", text:"Leonardo dies in Amboise, France, at age 67. He leaves behind amazing paintings and thousands of notebook pages."}
+];
+let tlIndex = 0;
+const tlTrack = document.getElementById("tlTrack"), tlCard = document.getElementById("tlCard");
+EVENTS.forEach((e,i)=>{
+  const b = document.createElement("button");
+  b.className = "tl-dot"; b.textContent = e.icon+" "+e.year;
+  b.addEventListener("click",()=>showEvent(i, true));
+  tlTrack.appendChild(b);
+});
+function showEvent(i, scroll){
+  tlIndex = Math.max(0, Math.min(EVENTS.length-1, i));
+  const e = EVENTS[tlIndex];
+  tlCard.innerHTML = '<div class="big">'+e.icon+'</div><div><h3>'+(e.year==="Teen"?"Teen years":e.year)+' — '+e.title+'</h3><p>'+e.text+'</p></div>';
+  ReadAloud.stopIf(tlCard); ReadAloud.mark(tlCard);
+  [...tlTrack.children].forEach((b,j)=>b.classList.toggle("active", j===tlIndex));
+  if(scroll) tlTrack.children[tlIndex].scrollIntoView({behavior:"smooth", block:"nearest", inline:"center"});
+  document.getElementById("tlPrev").disabled = tlIndex===0;
+  document.getElementById("tlNext").disabled = tlIndex===EVENTS.length-1;
+}
+document.getElementById("tlPrev").addEventListener("click",()=>showEvent(tlIndex-1, true));
+document.getElementById("tlNext").addEventListener("click",()=>showEvent(tlIndex+1, true));
+showEvent(0, false);
+
+/* ---------- MIRROR WRITING ---------- */
+const mIn = document.getElementById("mirrorIn"), mOut = document.getElementById("mirrorOut"), mBtn = document.getElementById("mirrorBtn");
+mIn.addEventListener("input",()=>{ mOut.textContent = mIn.value || "…"; });
+mBtn.addEventListener("click",()=>{
+  const flipped = mOut.classList.toggle("flip");
+  mBtn.textContent = flipped ? "🪞 Hold up a mirror" : "↩️ Back to Leonardo style";
+});
+
+/* ---------- INVENTION SKETCHES (simple line drawings) ---------- */
+const S = 'stroke="#7a4a1e" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"';
+const SKETCH = {
+  ornithopter: '<svg viewBox="0 0 120 80" class="sketch"><path '+S+' d="M60 40 Q35 10 8 22 Q20 30 14 40 Q30 36 40 46 Q50 40 60 40 Q70 40 80 46 Q90 36 106 40 Q100 30 112 22 Q85 10 60 40"/><path '+S+' d="M30 22 L40 46 M90 22 L80 46"/><circle cx="60" cy="52" r="5" '+S+'/><path '+S+' d="M60 57 V70 M52 64 H68"/></svg>',
+  screw: '<svg viewBox="0 0 120 80" class="sketch"><path '+S+' d="M60 8 V62"/><path '+S+' d="M22 28 Q60 6 98 28 Q60 40 22 28"/><path '+S+' d="M30 42 Q60 22 90 42"/><rect x="34" y="62" width="52" height="8" '+S+'/><path '+S+' d="M44 62 L40 74 M76 62 L80 74"/></svg>',
+  tank: '<svg viewBox="0 0 120 80" class="sketch"><path '+S+' d="M14 58 Q60 0 106 58 Z"/><path '+S+' d="M60 14 V4 M54 4 H66"/><circle cx="34" cy="64" r="8" '+S+'/><circle cx="86" cy="64" r="8" '+S+'/><path '+S+' d="M8 52 H18 M102 52 H112 M30 38 L22 34 M90 38 L98 34"/></svg>',
+  diver: '<svg viewBox="0 0 120 80" class="sketch"><path '+S+' d="M0 20 Q15 14 30 20 T60 20 T90 20 T120 20"/><ellipse cx="96" cy="16" rx="12" ry="6" '+S+'/><path '+S+' d="M92 22 Q80 45 54 48"/><circle cx="44" cy="52" r="10" '+S+'/><circle cx="40" cy="50" r="3" fill="#7a4a1e"/><circle cx="48" cy="50" r="3" fill="#7a4a1e"/><path '+S+' d="M44 62 V76 M34 68 H54"/></svg>',
+  parachute: '<svg viewBox="0 0 120 80" class="sketch"><path '+S+' d="M60 4 L22 44 H98 Z"/><path '+S+' d="M60 4 L60 44"/><path '+S+' d="M22 44 L56 64 M98 44 L64 64"/><circle cx="60" cy="62" r="4" '+S+'/><path '+S+' d="M60 66 V76"/></svg>'
+};
+const INVENTIONS = [
+  {id:"ornithopter", name:"Ornithopter (flying machine)", clue:"Big wings shaped like a bat's or bird's, meant to flap using a person's own muscles.", purpose:"A machine to let a person fly by flapping wings like a bird."},
+  {id:"screw", name:"Aerial screw", clue:"A big spiral, like a screw made of cloth, meant to spin around and twist up into the air.", purpose:"An idea for lifting off by spinning — a bit like a helicopter."},
+  {id:"tank", name:"Armored vehicle", clue:"A covered, cone-shaped cart with cannons pointing out all around, moved by people turning cranks inside.", purpose:"A protected war machine — a bit like an early idea for a tank."},
+  {id:"diver", name:"Diving apparatus", clue:"A mask with breathing tubes that run up to a float on top of the water.", purpose:"A way for a person to breathe and work under water."},
+  {id:"parachute", name:"Parachute", clue:"A tent shaped like a pyramid, made of cloth stretched over wooden poles, with a person hanging below.", purpose:"A way to fall gently through the air. In the year 2000, a skydiver built one from his design and it really worked!"}
+];
+const mLeft=document.getElementById("matchLeft"), mRight=document.getElementById("matchRight"), mStatus=document.getElementById("matchStatus");
+let selLeft=null, selRight=null, matched=0;
+function makeMCard(html, say){
+  const d=document.createElement("div"); d.className="mcard"; d.tabIndex=0; d.setAttribute("role","button");
+  d.innerHTML=html; d.dataset.say=say; return d;
+}
+function buildMatch(){
+  ReadAloud.stop(); mLeft.innerHTML=""; mRight.innerHTML=""; selLeft=selRight=null; matched=0;
+  mStatus.textContent="Matched: 0 of "+INVENTIONS.length; mStatus.style.color=""; ReadAloud.mark(mStatus);
+  shuffle(INVENTIONS).forEach(inv=>{
+    const c=makeMCard(SKETCH[inv.id]+'<span class="clue">'+inv.clue+'</span>', "Sketch clue: "+inv.clue);
+    c.dataset.id=inv.id; c.dataset.side="L"; mLeft.appendChild(c); ReadAloud.mark(c);
+  });
+  shuffle(INVENTIONS).forEach(inv=>{
+    const c=makeMCard('<span>'+inv.name+'</span>', inv.name);
+    c.classList.add("name-card"); c.dataset.id=inv.id; c.dataset.side="R"; mRight.appendChild(c); ReadAloud.mark(c);
+  });
+}
+function pick(c){
+  if(c.classList.contains("done")) return;
+  const side=c.dataset.side;
+  if(side==="L"){ if(selLeft) selLeft.classList.remove("sel"); selLeft = selLeft===c ? null : c; if(selLeft) c.classList.add("sel"); }
+  else { if(selRight) selRight.classList.remove("sel"); selRight = selRight===c ? null : c; if(selRight) c.classList.add("sel"); }
+  if(selLeft && selRight){
+    const a=selLeft, b=selRight; selLeft=selRight=null;
+    a.classList.remove("sel"); b.classList.remove("sel");
+    if(a.dataset.id===b.dataset.id){
+      a.classList.add("done"); b.classList.add("done"); matched++;
+      const inv=INVENTIONS.find(x=>x.id===a.dataset.id);
+      a.dataset.say = inv.name+". "+inv.purpose;
+      mStatus.textContent="✔ Match! "+inv.name+": "+inv.purpose+" ("+matched+" of "+INVENTIONS.length+")"; mStatus.style.color="var(--blue)";
+      beep(HAPPY);
+      if(matched===INVENTIONS.length){ mStatus.textContent="🏆 You matched all "+INVENTIONS.length+" of Leonardo's designs! Remember: they were ideas on paper — most were never built in his time."; confetti(20); }
+      mStatus.classList.add("readable"); ReadAloud.mark(mStatus); setTimeout(()=>ReadAloud.speakEl(mStatus),0); // after the card-tap read so the result wins
+    } else {
+      [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+      mStatus.textContent="✘ Not quite — read the clue again and try another name!"; mStatus.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(mStatus);
+    }
+  }
+}
+// selection: tap anywhere on the card except the speaker icon (the card is also read aloud by the read-aloud system)
+[mLeft,mRight].forEach(col=>{
+  col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+  col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard") && (e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+});
+document.getElementById("matchReset").addEventListener("click",buildMatch);
+buildMatch();
+
+/* ---------- FLYING LAB ---------- */
+const lab = {w:"flap", size:"medium", power:"arms", mat:"wood"};
+document.querySelectorAll(".chips").forEach(group=>{
+  const key=group.dataset.key;
+  group.querySelectorAll(".chip").forEach(ch=>{
+    ch.classList.toggle("on", lab[key]===ch.dataset.v); ch.setAttribute("aria-pressed", lab[key]===ch.dataset.v);
+    ch.addEventListener("click",()=>{ lab[key]=ch.dataset.v; group.querySelectorAll(".chip").forEach(x=>{ x.classList.toggle("on",x===ch); x.setAttribute("aria-pressed",x===ch); }); updateLab(true); });
+  });
+});
+function judge(o){
+  const {w,size,power,mat}=o;
+  if(w==="none") return [0,"⛔ It won't get off the ground","To stay up, something has to push air down — like wings or a spinning screw. Leonardo learned this by watching birds push down on the air with their wings."];
+  if(size==="small") return [15,"🤏 Only as a toy model","Wings this small can't hold up a person. But a small model might flutter or glide for a moment — a great way to test an idea, just like Leonardo sketching before building."];
+  if(power==="engine"){
+    if(w==="glide") return [95,"✈️ Yes, it could fly!","That's a lot like the Wright brothers' airplane of 1903 — made of wood and cloth, with an engine and a propeller. But engines like that weren't invented until almost 400 years after Leonardo."];
+    if(w==="screw") return [85,"🚁 Yes — that's basically a helicopter!","Real helicopters first flew in the 1900s. They need a powerful engine, and usually a small tail rotor so the whole machine doesn't spin around the other way."];
+    return [55,"🦅 Maybe, but it's tricky","Engine-powered flapping machines have been built, but flapping is complicated and shaky. That's why airplanes use still wings and propellers instead."];
+  }
+  if(power==="wind"){
+    if(w==="glide") return [mat==="light"?85:75,"🪂 Yes, it could glide!","Like a hang glider, you'd run off a hill and ride the air down. In the 1890s, Otto Lilienthal flew gliders made of willow wood and cloth! Leonardo's later notes studied how birds glide without flapping."];
+    if(w==="flap") return [40,"🪂 Only a bumpy glide","If you held the wings still you might glide down a little, but flapping with your own muscles wouldn't keep you up."];
+    return [5,"⛔ It won't get off the ground","A screw only lifts if it spins very fast. Wind alone won't spin it hard enough to lift a person."];
+  }
+  if(power==="arms"){
+    if(w==="flap") return [10,"⛔ Too weak to fly","For our size, human arm muscles are much weaker than a bird's flying muscles. Leonardo's flapping designs tried to use the pilot's legs too, but it still wasn't enough."];
+    if(w==="glide") return [25,"😓 Arms can't keep you up","You could glide down from a hill, but arms can't push you forward through the air. Try legs or the wind!"];
+    return [5,"⛔ It won't get off the ground","Arms can't spin a big screw nearly fast enough — and the whole machine would twist around the other way."];
+  }
+  // legs
+  if(mat==="wood"){
+    if(w==="glide") return [20,"⛔ Too heavy","Legs are our strongest muscles, but a machine of wood and cloth is too heavy for pedal power. Pedal planes have to be super light."];
+    return [10,"⛔ Too heavy","Legs are our strongest muscles, but a wood-and-cloth "+(w==="flap"?"flapping machine":"spinning screw")+" is far too heavy for one person to power."];
+  }
+  if(w==="glide") return size==="giant" ? [80,"🚴 Yes — just barely!","In 1977, the Gossamer Condor — a giant, super-light airplane — flew using only its pilot pedaling. It needed enormous wings and had to fly slowly and low."] : [40,"🤔 Almost!","Pedal-powered planes need huge, super-light wings. Try making it giant!"];
+  if(w==="flap") return size==="giant" ? [50,"🦅 Just barely — for a few seconds!","In 2010, a team in Canada flew a giant, super-light, pedal-powered flapping machine called Snowbird for about 19 seconds. That shows how hard Leonardo's dream really was!"] : [15,"⛔ Not enough","Even with light materials, flapping a medium machine with your legs isn't enough. Try giant wings."];
+  return size==="giant" ? [40,"🚁 Barely a hover","In 2013, a pedal-powered helicopter called Atlas, with four giant rotors, hovered for about a minute, only about 3 meters (10 feet) off the ground. That's it!"] : [10,"⛔ Not enough","A pedal-powered spinning machine needs gigantic, super-light rotors. Try making it giant!"];
+}
+const labSvg=document.getElementById("labSvg"), verdict=document.getElementById("verdict");
+function drawLab(){
+  const sc = {small:.5, medium:.8, giant:1.15}[lab.size];
+  const wood = lab.mat==="wood" ? "#7a4a1e" : "#0072B2";
+  const fill = lab.mat==="wood" ? "#e9d9b3" : "#d6ecf8";
+  let wings = "";
+  if(lab.w==="flap") wings = '<path d="M0 0 Q-90 -70 -170 -30 Q-130 -20 -140 5 Q-90 -10 -60 10 Q-30 0 0 0 Q30 0 60 10 Q90 -10 140 5 Q130 -20 170 -30 Q90 -70 0 0Z" fill="'+fill+'" stroke="'+wood+'" stroke-width="4"/><path d="M-80 -40 L-60 10 M80 -40 L60 10" stroke="'+wood+'" stroke-width="3"/>';
+  if(lab.w==="glide") wings = '<path d="M-170 -10 Q0 -45 170 -10 L170 0 Q0 -30 -170 0 Z" fill="'+fill+'" stroke="'+wood+'" stroke-width="4"/>';
+  if(lab.w==="screw") wings = '<path d="M0 -90 V0" stroke="'+wood+'" stroke-width="4"/><path d="M-120 -50 Q0 -110 120 -50 Q0 -20 -120 -50Z" fill="'+fill+'" stroke="'+wood+'" stroke-width="4"/><path d="M-80 -20 Q0 -60 80 -20" fill="none" stroke="'+wood+'" stroke-width="4"/>';
+  const powerIcon = {arms:"💪",legs:"🦵",wind:"🌬️",engine:"⚙️"}[lab.power];
+  labSvg.innerHTML = '<rect width="400" height="220" fill="#f6ead2"/>'+
+    '<path d="M0 205 Q100 190 200 205 T400 200 V220 H0Z" fill="#b9d7a8"/>'+
+    '<g transform="translate(200 120) scale('+sc+')">'+wings+'</g>'+
+    '<g transform="translate(200 130)"><circle cx="0" cy="0" r="10" fill="#ffd7b5" stroke="#555" stroke-width="2"/><path d="M0 10 V40 M-14 22 H14 M0 40 L-10 60 M0 40 L10 60" stroke="#555" stroke-width="4" stroke-linecap="round"/></g>'+
+    '<text x="20" y="40" font-size="34">'+powerIcon+'</text>';
+}
+function updateLab(speak){
+  drawLab();
+  const [score,title,text]=judge(lab);
+  ReadAloud.stopIf(verdict);
+  verdict.innerHTML='<h3>'+title+'</h3><div class="liftbar" aria-hidden="true"><div style="width:'+score+'%"></div></div><p style="margin:0 0 6px;font-size:16px"><b>Lift-o-meter:</b> '+score+' out of 100</p><p style="margin:0">'+text+'</p>';
+  verdict.dataset.say = title+". "+text;
+  ReadAloud.mark(verdict);
+}
+updateLab(false);
+
+/* ---------- SFUMATO ---------- */
+document.getElementById("sfuSlider").addEventListener("input",e=>{ document.getElementById("softBlur").setAttribute("stdDeviation", e.target.value); });
+
+/* ---------- CURIOUS QUESTIONS ---------- */
+const QUESTIONS = ["Why do birds' wings make them go up?","How does water swirl down a drain?","Why do leaves have lines in them?","How does your elbow bend?","Why do shadows get longer in the evening?","How does a cat land on its feet?","Why do clouds float?","How does a bike chain make the wheel turn?","Why do ripples spread out in a circle?","How do ants find their way home?"];
+let lastQ=-1;
+document.getElementById("curiousBtn").addEventListener("click",()=>{
+  let i; do{ i=Math.floor(Math.random()*QUESTIONS.length); }while(i===lastQ); lastQ=i;
+  const q=document.getElementById("curiousQ"); q.textContent="🤔 "+QUESTIONS[i];
+  ReadAloud.mark(q); ReadAloud.speakEl(q);
+});
+
+/* ---------- CHECK FOR UNDERSTANDING ---------- */
+const QUIZ = [
+  {q:"Leonardo drew plans for a flying machine with flapping wings. What's true about it?", a:["It flew all over Italy","It was a design on paper that wasn't built in his time","It was his most famous painting","It was built by the king of France"], c:1,
+   yes:"Yes! It was an idea on paper. Human muscles were too weak to flap it.", no:"Not quite. It was a design on paper — it wasn't built in his time."},
+  {q:"Why did Leonardo write backwards in his notebooks?", a:["Nobody knows for sure — maybe so a lefty wouldn't smudge the ink","Because computers did it","Because it was the law","To win a contest"], c:0,
+   yes:"Right! It's a mystery, but smudge-free writing is one good idea.", no:"Actually, nobody knows for sure. One idea is that as a lefty, it kept him from smudging the ink."},
+  {q:"How did Leonardo connect art and science?", a:["He only painted fruit","He studied bodies, light, and water to make his art better","He never studied science","He used a camera"], c:1,
+   yes:"Exactly! His science helped his art, and his art helped his science.", no:"Not quite. He studied bodies, light, and water to make his art better."}
+];
+const quizBox = document.getElementById("quizBox");
+let qi = 0, score = 0;
+function renderQ(){
+  const item = QUIZ[qi];
+  ReadAloud.stop();
+  quizBox.innerHTML = '<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div>'+
+    '<div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+  const qEl = quizBox.querySelector(".q-text");
+  qEl.dataset.say = item.q + " Is it: " + item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ") + "?";
+  ReadAloud.mark(qEl);
+  const ans = quizBox.querySelector(".answers"), fb = quizBox.querySelector(".feedback");
+  item.a.forEach((txt,i)=>{
+    const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+    b.addEventListener("click",()=>{
+      [...ans.children].forEach(x=>x.disabled=true);
+      if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+      else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+      ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+      const next=document.createElement("button"); next.style.background="var(--purple)";
+      next.textContent = qi<QUIZ.length-1 ? "Next question ➡" : "See my score 🏆";
+      next.addEventListener("click",()=>{ qi++; qi<QUIZ.length ? renderQ() : renderEnd(); });
+      fb.after(next);
+    });
+    ans.appendChild(b);
+  });
+}
+function renderEnd(){
+  ReadAloud.stop();
+  const stars = "⭐".repeat(score) + "☆".repeat(QUIZ.length-score);
+  const msg = score===QUIZ.length ? "PERFECT! You think like Leonardo! 🏆" : score>=2 ? "Great thinking! 🎉" : "Good try! Explore the page and try again! 💪";
+  quizBox.innerHTML = '<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+  const cel2 = quizBox.querySelector(".celebrate");
+  cel2.dataset.say = "You got "+score+" out of "+QUIZ.length+"! "+msg;
+  ReadAloud.mark(cel2);
+  const again=document.createElement("button"); again.textContent="🔁 Try again"; again.style.background="var(--teal)";
+  again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+  const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); quizBox.appendChild(wrap);
+  confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+}
+renderQ();
+
+/* ---------- FUN FACTS ---------- */
+const FACTS = [
+  ["🕵️ The Great Painting Robbery","In 1911, the Mona Lisa was stolen from the Louvre museum! It was missing for about two years before it was found and returned."],
+  ["🪵 Painted on Wood","The Mona Lisa isn't painted on canvas — it's painted on a thin board of poplar wood."],
+  ["🪂 A Parachute That Worked","In the year 2000, a skydiver built a parachute from Leonardo's pyramid design and floated down with it from high in the sky. It worked! (He switched to a modern parachute for the very end, just to be safe.)"],
+  ["💻 A Very Pricey Notebook","One of Leonardo's notebooks, about water and the Moon, was bought in 1994 by Bill Gates, who started Microsoft."],
+  ["🐴 The Giant Horse","Leonardo built a huge clay model for a bronze horse statue in Milan, but the metal was used to make cannons instead, and the statue was never cast."],
+  ["🌙 Moon Glow","Leonardo correctly figured out that the faint glow on the dark part of a crescent Moon is sunlight bouncing off the Earth!"]
+];
+const strip = document.getElementById("factsStrip");
+FACTS.forEach(([front,back])=>{
+  const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+  d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+  const flip=()=>d.classList.toggle("flipped");
+  d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+  d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+  strip.appendChild(d);
+});
+
+/* ---------- mark static readable cards ---------- */
+document.querySelectorAll("#meet li, #meet .bubble, .card2, .note-box, .mirror-help, .match-help, .lab-help, .sfu-text, .curious-help, .grownups").forEach(n=>n.classList.add("readable"));
+ReadAloud.markAll();
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Johannes Vermeer — Spark Lessons</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- color-blind-safe theme (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e9eef5 0%,#f4efe6 50%,#eaf3ea 100%)}
+  header h1{color:#3b4a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--blue)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+  .chip{background:#fff;color:var(--ink);border:4px solid #888;box-shadow:none;padding:10px 14px;font-size:19px;min-height:56px;display:flex;align-items:center;gap:8px}
+  .chip .num{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;color:#000;font-weight:900;border:2px solid #222}
+  .chip.on{background:#2b2140;color:#fff;border-color:#2b2140}
+  .chip.on::after{content:" ✔"}
+  .zoom-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .zoom-row button{font-size:18px;padding:10px 14px;min-height:52px}
+  .zoom-row .z-on{outline:4px solid var(--gold);outline-offset:2px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  .pin{cursor:pointer}
+  .map-caption{margin-top:10px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px 14px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  .round-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .round-row .r-on{outline:4px solid var(--gold);outline-offset:2px}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+  /* ---- saints lessons ---- */
+  nav a:nth-child(7){background:#8b2c00} nav a:nth-child(8){background:#8a5a00} nav a:nth-child(9){background:#444}
+  .meet svg{flex:0 0 280px}
+  .tl-dot{min-height:56px;font-weight:bold;font-size:19px}
+  .tl-dot.active::before{content:"📍 "}
+  .tl-nav{align-items:center;gap:10px}
+  .tl-card{border-color:var(--theme)}
+  .tl-card h3{color:var(--theme)}
+  .tl-dot{border-color:var(--theme)} .tl-dot.active{background:var(--theme)}
+  .step-count{font-weight:bold;font-size:20px;align-self:center}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .stepc{background:#fff;border-radius:18px;padding:14px;border-top:12px solid var(--theme)}
+  .stepc .lvl{display:inline-block;font-size:16px;font-weight:bold;background:#2b2140;color:#fff;border-radius:999px;padding:2px 10px}
+  .stepc h3{margin:6px 0 4px;font-size:23px}
+  .stepc p{margin:0 0 6px}
+  .be-like{margin-top:12px}
+  svg text{font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif}
+  .pin:focus{outline:none} .pin:focus circle.dot,.pin:focus rect.dot{stroke:#E6A800;stroke-width:5}
+
+  :root{ --theme:#2a4d8f }
+  body{background:linear-gradient(180deg,#eef2f8 0%,#f7f1e1 55%,#eef2f8 100%)}
+  header h1{color:#2a4d8f;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  .gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+  .art{background:#fff;border-radius:18px;padding:12px;border:4px solid #c9a24a}
+  .art svg{width:100%;height:auto;display:block;border:8px solid #6b4b2a;border-radius:4px;background:#222}
+  .art h3{margin:8px 0 2px;font-size:22px}
+  .art .meta{font-size:16px;color:#444;margin:0 0 6px}
+  .art p{margin:0 0 6px;font-size:18px}
+  .note{font-size:16px;color:#555}
+  .lab-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  #room,#mortar,#cam{width:100%;max-width:680px;height:auto;display:block;margin:0 auto}
+  #room{touch-action:none;cursor:pointer}
+  .ctrl-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:10px 0}
+  .ctrl-row button{min-height:56px}
+  .ctrl-row label{font-weight:bold;font-size:19px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  input[type=range]{width:220px;height:40px;accent-color:#2a4d8f}
+  .readout{font-weight:bold;font-size:21px;margin:6px 0}
+  .shelf{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .pig{background:#fff;color:var(--ink);border:4px solid #9aa5b8;box-shadow:none;border-radius:16px;text-align:left;padding:10px 12px;display:flex;gap:10px;align-items:flex-start;font-size:17px;font-weight:normal;min-height:96px}
+  .pig .sw{flex:0 0 46px;height:46px;border-radius:50%;border:3px solid #222}
+  .pig b{font-size:19px}
+  .pig.slotA,.pig.slotB{border-color:#2a4d8f;background:#e8f0fb}
+  .pig.slotA::after{content:"A ✔";font-weight:900;margin-left:auto;color:#2a4d8f}
+  .pig.slotB::after{content:"B ✔";font-weight:900;margin-left:auto;color:#2a4d8f}
+  .mixer{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;background:#fff;border-radius:18px;padding:14px;border:4px dashed #2a4d8f;margin-top:12px}
+  .blob{width:84px;height:84px;border-radius:50%;border:4px solid #222;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:26px;color:#fff;text-shadow:0 0 4px #000}
+  .blob.big{width:110px;height:110px}
+  .op{font-size:40px;font-weight:900}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>🎨 Johannes Vermeer 💡</h1>
+  <p>The Dutch painter of quiet rooms and glowing light · 1632–1675</p>
+</header>
+<nav>
+  <a href="#meet">👋 Meet</a>
+  <a href="#story">📜 Timeline</a>
+  <a href="#gallery">🖼️ Gallery</a>
+  <a href="#light">💡 Light</a>
+  <a href="#lab">🧪 Pigment Lab</a>
+  <a href="#camera">📷 Camera</a>
+  <a href="#mysteries">🕵️ Mysteries</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+
+<section id="meet">
+  <h2>👋 Meet Johannes Vermeer</h2>
+  <div class="meet">
+    <svg viewBox="0 0 280 300" role="img" aria-label="Drawing of a painter's easel and palette with a big question mark, because no one knows for sure what Vermeer looked like">
+      <rect width="280" height="300" rx="24" fill="#f4ecd8"/>
+      <rect x="0" y="0" width="70" height="300" rx="0" fill="#e9dfc5"/>
+      <rect x="14" y="30" width="44" height="90" fill="#fdf8e8" stroke="#6b4b2a" stroke-width="4"/>
+      <path d="M36 30 V120 M14 75 H58" stroke="#6b4b2a" stroke-width="3"/>
+      <path d="M70 0 L130 300" stroke="#fff6c8" stroke-width="40" opacity=".5"/>
+      <path d="M120 270 L160 70 L200 270 M160 70 L160 285" stroke="#6b4b2a" stroke-width="7" stroke-linecap="round" fill="none"/>
+      <rect x="110" y="80" width="100" height="120" fill="#fff" stroke="#6b4b2a" stroke-width="5"/>
+      <text x="160" y="170" text-anchor="middle" font-size="90" font-weight="bold" fill="#2a4d8f">?</text>
+      <ellipse cx="80" cy="240" rx="52" ry="34" fill="#c9a26b" stroke="#6b4b2a" stroke-width="3"/>
+      <circle cx="58" cy="230" r="9" fill="#1f3f9a"/><circle cx="80" cy="220" r="9" fill="#f2d34a"/><circle cx="102" cy="230" r="9" fill="#d43a1a"/><circle cx="72" cy="252" r="9" fill="#f3efe6"/>
+      <circle cx="98" cy="252" r="8" fill="#f4ecd8"/>
+    </svg>
+    <div class="facts">
+      <ul>
+        <li>🏙️ Born in <b>1632</b> in the Dutch city of <b>Delft</b>, where he lived his whole known life. He died there in <b>1675</b>.</li>
+        <li>🌷 He painted during the <b>Dutch Golden Age</b>, the 1600s, when the Netherlands was rich from trade, science, and art.</li>
+        <li>🐢 He was a <b>slow, careful painter</b>. Only about <b>34 to 37</b> of his paintings survive today.</li>
+        <li>🪟 He loved painting <b>quiet rooms</b>, with soft light pouring in from a <b>window on the left</b>.</li>
+        <li>💙 He used <b>ultramarine</b>, a very costly blue made from a stone called <b>lapis lazuli</b>.</li>
+        <li>❓ We know very little about his life, and <b>no one knows for sure what he looked like</b>. No portrait of him is known.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="story">
+  <h2>📜 Vermeer's Timeline</h2>
+  <p>Tap a year, or use the buttons, to walk through his story.</p>
+  <div id="tlBox"></div>
+</section>
+
+<section id="gallery">
+  <h2>🖼️ The Gallery</h2>
+  <p class="g-help">These are <b>simplified drawings made for this page</b>, not the real paintings, so you can spot the big ideas. Ask a grown-up to show you the real ones. They are much more amazing!</p>
+  <div class="gallery" id="galleryBox"></div>
+</section>
+
+<section id="light">
+  <h2>💡 Paint with Light</h2>
+  <p class="l-help">Vermeer was a master of light. Drag the glowing window (or tap anywhere in the room) to move the light. Watch how the shadows and the shiny spots change!</p>
+  <div class="lab-wrap"><svg id="room" viewBox="0 0 600 400" role="img" aria-label="A simple room with a table, a jug, a bowl, and bread. A window light can be moved around."></svg></div>
+  <div class="ctrl-row">
+    <button id="lLeft" style="background:#3b4a6b" aria-label="Move light left">◀ Left</button>
+    <button id="lRight" style="background:#3b4a6b" aria-label="Move light right">Right ▶</button>
+    <button id="lUp" style="background:#3b4a6b" aria-label="Move light higher">▲ Higher</button>
+    <button id="lDown" style="background:#3b4a6b" aria-label="Move light lower">▼ Lower</button>
+    <button id="lVermeer" style="background:var(--theme)">🪟 Vermeer's window</button>
+  </div>
+  <div class="ctrl-row"><label>🪟 Curtain: <input type="range" id="curtain" min="10" max="100" value="100" aria-label="How far the curtain is open"> <span id="curtainTxt">open</span></label></div>
+  <div class="readout" id="lightReadout" aria-live="polite"></div>
+  <div class="card2 readable" id="lightCaption" style="border-left-color:var(--gold)"></div>
+</section>
+
+<section id="lab">
+  <h2>🧪 Pigment Lab</h2>
+  <p class="p-help">In Vermeer's time, there were no paint tubes! Painters made paint by grinding colored stones, earth, and other things into powder, called <b>pigment</b>, and mixing it with oil. Some pigments were cheap. Some cost a fortune!</p>
+  <h3>💎 Step 1: Make Ultramarine Blue</h3>
+  <div class="lab-wrap"><svg id="mortar" viewBox="0 0 600 260" role="img" aria-label="A stone mortar where lapis lazuli is ground into blue powder and made into paint"></svg></div>
+  <div class="ctrl-row">
+    <button id="uGrind" style="background:var(--theme)">🔨 Grind the lapis</button>
+    <button id="uWash" style="background:var(--teal)">🧼 Knead and wash</button>
+    <button id="uOil" style="background:#8a5a00">🫗 Mix with linseed oil</button>
+    <button id="uReset" style="background:#666">🔁 Start over</button>
+  </div>
+  <div class="card2 readable" id="uCaption" style="border-left-color:#1f3f9a"></div>
+
+  <h3 style="margin-top:22px">🎨 Step 2: The Pigment Shelf and Mixer</h3>
+  <p class="m-help">Each pigment shows what it was made from and how costly it was (🪙 = cheap, 🪙🪙🪙🪙🪙 = super costly). Tap two pigments to mix them on the palette!</p>
+  <div class="shelf" id="shelf"></div>
+  <div class="mixer" aria-live="polite">
+    <div class="blob" id="mixA" aria-label="Pigment A">A</div><div class="op">+</div>
+    <div class="blob" id="mixB" aria-label="Pigment B">B</div><div class="op">=</div>
+    <div class="blob big" id="mixC" aria-label="Mixed color">?</div>
+  </div>
+  <div class="card2 readable" id="mixCaption" style="margin-top:10px;border-left-color:var(--purple)"><h3>🎨 Your Palette</h3><p>Tap any two pigments on the shelf to mix them.</p></div>
+  <p class="note">⚠️ Some old pigments, like lead white, lead-tin yellow, and vermilion, are poisonous. Artists today use safer paints. Prices here are approximate, for comparing.</p>
+</section>
+
+<section id="camera">
+  <h2>📷 The Camera Obscura Mystery</h2>
+  <p class="c-help">A <b>camera obscura</b> (Latin for “dark room”) is a dark box or room with a tiny hole. Light from outside shines through the hole and makes a picture on the wall, <b>upside down!</b> Some experts think Vermeer may have used one to study light. Others disagree. No one has proven it, so it is still <b>debated</b>.</p>
+  <div class="lab-wrap"><svg id="cam" viewBox="0 0 640 300" role="img" aria-label="Diagram of a camera obscura: a tree and house outside, light passing through a small hole, and an upside-down picture on the inside wall"></svg></div>
+  <div class="ctrl-row">
+    <label>🕳️ Hole size: <input type="range" id="hole" min="1" max="6" value="1" aria-label="Pinhole size"> <span id="holeTxt"></span></label>
+    <button id="lensBtn" style="background:var(--theme)" aria-pressed="false">🔍 Add a lens</button>
+  </div>
+  <div class="card2 readable" id="camCaption" style="border-left-color:var(--theme)"></div>
+  <div class="grid" style="margin-top:12px">
+    <div class="card2 readable" style="border-left-color:var(--orange)"><h3>👍 Why some experts think he used one</h3><p>Some of his paintings have soft, blurry edges and tiny sparkly dots of light, a bit like what you see through a lens that isn't perfectly focused.</p></div>
+    <div class="card2 readable" style="border-left-color:var(--purple)"><h3>🤔 Why others aren't sure</h3><p>No letter or record says he used one, and the list of things in his house after he died does not mention one. A great painter could also create these effects just by looking carefully.</p></div>
+  </div>
+</section>
+
+<section id="mysteries">
+  <h2>🕵️ Mysteries and Fame</h2>
+  <div class="grid">
+    <div class="card2" style="border-left-color:var(--gold)"><h3>📂 A Mystery Man</h3><p>Vermeer left no letters or diaries. Almost everything we know comes from city records: when he was baptized, married, joined the painters' guild, and owed money.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>👨‍👩‍👧‍👦 A Big Family</h3><p>He married Catharina Bolnes in 1653. When Vermeer died, eleven of their children were still living, many of them young. The family was left with big debts.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>💤 Forgotten…</h3><p>After he died, Vermeer was mostly forgotten for about 200 years. Some of his paintings were even sold as the work of other artists.</p></div>
+    <div class="card2" style="border-left-color:var(--blue)"><h3>🔎 …and Rediscovered!</h3><p>In the 1860s, a French art critic named Théophile Thoré-Bürger tracked down his paintings and wrote about them. Soon Vermeer became famous all over the world.</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>🎟️ The Biggest Show</h3><p>In 2023, the Rijksmuseum in Amsterdam gathered 28 of his paintings, the most ever shown together. Tickets sold out!</p></div>
+    <div class="card2" style="border-left-color:var(--red)"><h3>🚨 A Stolen Painting</h3><p>In 1990, thieves stole Vermeer's painting <b>The Concert</b> from the Isabella Stewart Gardner Museum in Boston. It has never been found. Its empty frame still hangs on the wall, waiting for it to come home.</p></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>❓ Quiz Challenge</h2>
+  <div id="quizBox"></div>
+  <h3 style="margin-top:22px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>Johannes Vermeer (1632–1675), Delft, and the Dutch Golden Age, with four famous works and the stolen <i>Concert</i>.</li>
+      <li>Art science: how light direction shapes shadows and highlights, how pigments were made (and why ultramarine was so costly), and how a camera obscura works.</li>
+      <li>How historians know things, and why some questions (like the camera obscura) are still open.</li>
+    </ul>
+    <h3>Grade band</h3><p>About grades 3–5. Read-aloud helps younger readers.</p>
+    <h3>Accuracy notes</h3>
+    <ul>
+      <li>The pictures are simplified SVG impressions drawn for this page, not reproductions, and the page says so. It's worth looking at the real paintings together; the Rijksmuseum and Mauritshuis websites have very high-resolution images.</li>
+      <li>Painting dates are approximate (“about”). The number of surviving works is given as 34–37 because experts disagree about a few.</li>
+      <li>The camera obscura question is presented as debated. The “Girl” is a <i>tronie</i> (a study of a face or character), and no one knows who the model was. The novel and film about her are fiction.</li>
+      <li>Pigment “prices” are relative and approximate. Ultramarine really was among the most expensive pigments, sometimes compared to gold.</li>
+    </ul>
+    <h3>Sensitive topics</h3><p>Very light: the family's debts, the deaths of some of his children are implied (“eleven still living”), the 1654 Delft explosion, and an art theft. A note warns that historical pigments (lead, mercury) are poisonous.</p>
+    <h3>Time</h3><p>About 40–50 minutes. Easy to split: story and gallery; then the light, pigment, and camera labs.</p>
+    <h3>Follow-up activities</h3><p><b>Window-light drawing:</b> set a cup by a window, turn off the lamps, and draw where the light and shadows fall. <b>Pinhole viewer:</b> make one from a shoebox, foil, and wax paper (with an adult, and never look at the sun). <b>See a real Vermeer:</b> the Metropolitan Museum and the Frick Collection in New York, and the National Gallery of Art in Washington, D.C., all have his paintings.</p>
+  </div>
+</section>
+</main>
+<footer>Made for curious artists 🎨 · All drawings made just for this page (simplified, not the real paintings) · Works offline</footer>
+
+<script>
+(function(){
+"use strict";
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- sound + confetti ---------- */
+let actx=null;
+function beep(notes,type){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; notes.forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f; const t=t0+i*0.1;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.18,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32); }); }catch(e){} }
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS=["🎨","⭐","💙","💛","✨","🖌️","🖼️"];
+function confetti(n){ for(let i=0;i<n;i++){ const s=document.createElement("div"); s.className="confetti"; s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s"; document.body.appendChild(s); setTimeout(()=>s.remove(),4200); } }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function makeQuiz(box, QUIZ, praise){
+  let qi=0, score=0;
+  function renderQ(){
+    const item=QUIZ[qi]; ReadAloud.stop();
+    box.innerHTML='<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div><div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+    const qEl=box.querySelector(".q-text"); qEl.dataset.say=item.q+" Is it: "+item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ")+"?"; ReadAloud.mark(qEl);
+    const ans=box.querySelector(".answers"), fb=box.querySelector(".feedback");
+    item.a.forEach((txt,i)=>{ const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+      b.addEventListener("click",()=>{ [...ans.children].forEach(x=>x.disabled=true);
+        if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+        else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+        ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+        const next=document.createElement("button"); next.style.background="var(--purple)"; next.textContent=qi<QUIZ.length-1?"Next question ➡":"See my score 🏆";
+        next.addEventListener("click",()=>{ qi++; qi<QUIZ.length?renderQ():renderEnd(); }); fb.after(next); });
+      ans.appendChild(b); });
+  }
+  function renderEnd(){
+    ReadAloud.stop(); const stars="⭐".repeat(score)+"☆".repeat(QUIZ.length-score);
+    const msg=score===QUIZ.length?praise:score>=Math.ceil(QUIZ.length*0.6)?"Awesome job! 🎉":score>=2?"Nice work! Explore more and try again! 📜":"Good try! Explore and try again! 💪";
+    box.innerHTML='<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+    const c=box.querySelector(".celebrate"); c.dataset.say="You got "+score+" out of "+QUIZ.length+"! "+msg; ReadAloud.mark(c);
+    const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--teal)"; again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+    const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); box.appendChild(wrap); confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+  }
+  renderQ();
+}
+
+/* ---------- TIMELINE ---------- */
+function makeTimeline(root, EVENTS){
+  let i=0;
+  root.innerHTML='<div class="tl-track" role="list"></div><div class="tl-card readable" aria-live="polite"><div class="big"></div><div><h3></h3><p></p></div></div>'+
+    '<div class="tl-nav"><button class="tl-prev" style="background:#666">◀ Earlier</button><span class="step-count tl-count"></span><button class="tl-next" style="background:var(--theme)">Later ▶</button></div>';
+  const track=root.querySelector(".tl-track"), card=root.querySelector(".tl-card"), prev=root.querySelector(".tl-prev"), next=root.querySelector(".tl-next"), count=root.querySelector(".tl-count");
+  EVENTS.forEach((e,k)=>{ const b=document.createElement("button"); b.className="tl-dot"; b.textContent=e.year; b.setAttribute("aria-label",e.year+": "+e.title);
+    b.addEventListener("click",()=>show(k,true)); track.appendChild(b); });
+  function show(k,speak){
+    i=k; const e=EVENTS[k]; ReadAloud.stopIf(card);
+    [...track.children].forEach((b,j)=>{ b.classList.toggle("active",j===k); b.setAttribute("aria-current",j===k?"true":"false"); });
+    card.querySelector(".big").textContent=e.icon; card.querySelector("h3").textContent=e.year+" — "+e.title; card.querySelector("p").textContent=e.text;
+    prev.disabled=k===0; next.disabled=k===EVENTS.length-1; count.textContent=(k+1)+" of "+EVENTS.length;
+    const b=track.children[k]; track.scrollLeft=b.offsetLeft-track.clientWidth/2+b.offsetWidth/2;
+    ReadAloud.mark(card); if(speak) ReadAloud.speakEl(card);
+  }
+  prev.addEventListener("click",()=>{ if(i>0) show(i-1,true); });
+  next.addEventListener("click",()=>{ if(i<EVENTS.length-1) show(i+1,true); });
+  show(0,false);
+  return {show};
+}
+
+/* ---------- MATCHING GAME ---------- */
+function makeMatch(o){ // o: {left,right,status,pairs:[{id,l,r,tip}], doneMsg, onDone}
+  let selL=null, selR=null, matched=0;
+  const N=o.pairs.length;
+  function build(){
+    selL=selR=null; matched=0; ReadAloud.stop();
+    o.left.innerHTML=""; o.right.innerHTML="";
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="L";
+      c.innerHTML='<span>'+p.l+'</span>'; o.left.appendChild(c); ReadAloud.mark(c); });
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard name-card readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="R";
+      c.innerHTML='<span>'+p.r+'</span>'; o.right.appendChild(c); ReadAloud.mark(c); });
+    o.status.textContent="Matched: 0 of "+N; o.status.style.color=""; o.status.classList.add("readable"); ReadAloud.mark(o.status);
+    if(o.onReset) o.onReset();
+  }
+  function pick(c){
+    if(c.classList.contains("done")) return;
+    if(c.dataset.side==="L"){ if(selL) selL.classList.remove("sel"); selL = selL===c?null:c; if(selL) c.classList.add("sel"); }
+    else { if(selR) selR.classList.remove("sel"); selR = selR===c?null:c; if(selR) c.classList.add("sel"); }
+    if(selL && selR){
+      const a=selL,b=selR; selL=selR=null; a.classList.remove("sel"); b.classList.remove("sel");
+      const p=o.pairs.find(x=>x.id===a.dataset.id);
+      if(a.dataset.id===b.dataset.id){
+        a.classList.add("done"); b.classList.add("done"); matched++; beep(HAPPY);
+        o.status.textContent="✔ Yes! "+p.tip+" ("+matched+" of "+N+")"; o.status.style.color="var(--blue)";
+        if(matched===N){ o.status.textContent=o.doneMsg; confetti(24); if(o.onDone) o.onDone(); }
+        ReadAloud.mark(o.status); setTimeout(()=>ReadAloud.speakEl(o.status),0);
+      } else {
+        [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+        o.status.textContent="✘ Not quite — read it again and try another one!"; o.status.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(o.status);
+      }
+    }
+  }
+  [o.left,o.right].forEach(col=>{
+    col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+    col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard")&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+  });
+  build();
+  return {build};
+}
+
+/* ---------- FUN FACTS ---------- */
+function makeFacts(strip, FACTS){
+  FACTS.forEach(([front,back])=>{ const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+    d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+    const flip=()=>d.classList.toggle("flipped");
+    d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+    d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+    strip.appendChild(d); ReadAloud.mark(d); });
+}
+
+/* ---------- a soft bell sound ---------- */
+function bell(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; [[392,0.16],[784,0.07],[1176,0.04],[1568,0.02]].forEach(([f,a])=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type="sine"; o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(a,t0+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t0+1.8); o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0+1.9); }); }catch(e){} }
+
+function projector(lon0,lon1,lat0,lat1,W,H){ return (lon,lat)=>[ +((lon-lon0)/(lon1-lon0)*W).toFixed(1), +((lat1-lat)/(lat1-lat0)*H).toFixed(1) ]; }
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs,parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+
+/* ---------- TIMELINE ---------- */
+makeTimeline(document.getElementById("tlBox"), [
+  {year:"1632",icon:"👶",title:"Born in Delft",text:"Johannes Vermeer was baptized on October 31, 1632, in Delft, in the Dutch Republic. His father made silk cloth, ran an inn, and sold paintings."},
+  {year:"1653",icon:"💍",title:"Married and a Master",text:"Vermeer married Catharina Bolnes. The same year, he joined the Guild of Saint Luke, Delft's club for painters, as a master painter."},
+  {year:"1654",icon:"💥",title:"The Delft Thunderclap",text:"A huge gunpowder store exploded in Delft, destroying part of the city. A talented painter named Carel Fabritius was killed."},
+  {year:"About 1657–58",icon:"🥛",title:"The Milkmaid",text:"Vermeer painted a kitchen maid carefully pouring milk, with soft window light and sparkly dots of paint on the bread."},
+  {year:"About 1658",icon:"🏘️",title:"The Little Street",text:"He painted a quiet street in Delft with brick houses, a woman sewing in a doorway, and children playing."},
+  {year:"About 1660–61",icon:"🌇",title:"View of Delft",text:"He painted his hometown from across the water, with sunlight breaking through the clouds and shining on the rooftops."},
+  {year:"About 1665",icon:"🦪",title:"Girl with a Pearl Earring",text:"He painted a girl looking over her shoulder, wearing a blue and yellow turban and a big, shining pearl. It may be his most famous painting."},
+  {year:"1672",icon:"⚔️",title:"The Disaster Year",text:"War came to the Dutch Republic. People stopped buying art, and Vermeer could not sell paintings. His family fell into debt."},
+  {year:"1675",icon:"🕯️",title:"Vermeer Dies",text:"Vermeer died in December 1675, at age 43. Eleven of his children were still living, and his wife was left with large debts."},
+  {year:"1860s",icon:"🔎",title:"Rediscovered!",text:"After about 200 years of being mostly forgotten, a French critic, Théophile Thoré-Bürger, wrote about Vermeer's paintings and made him famous again."},
+  {year:"1990",icon:"🚨",title:"The Concert Is Stolen",text:"Thieves stole The Concert from the Isabella Stewart Gardner Museum in Boston. It is still missing."},
+  {year:"2023",icon:"🎟️",title:"The Biggest Vermeer Show",text:"The Rijksmuseum in Amsterdam showed 28 of his paintings together, the most ever. Tickets sold out."}
+]);
+
+/* ---------- GALLERY (simplified impressions, drawn by hand in SVG) ---------- */
+const ART=[
+  {title:"Girl with a Pearl Earring",meta:"About 1665 · Mauritshuis, The Hague",text:"A girl turns to look at us, with a blue and yellow turban and a glowing pearl. It's a <b>tronie</b>, a study of a face or character, not a portrait of a known person. No one knows who she was.",look:"Look for: the pearl is made of just a few brushstrokes!",
+   svg:'<rect width="200" height="240" fill="#16140f"/><path d="M45 240 C55 190 90 175 120 178 C155 180 175 205 182 240 Z" fill="#a8823a"/><path d="M70 200 C90 190 115 190 128 196 L120 206 C105 200 88 202 76 210 Z" fill="#f3efe6"/><ellipse cx="108" cy="128" rx="36" ry="46" fill="#ecd0ad"/><path d="M66 100 C70 60 140 52 150 92 C140 84 120 80 100 84 C86 86 74 92 66 100 Z" fill="#2747a0"/><path d="M66 100 C70 88 80 82 92 80 L96 92 C84 94 74 98 68 108 Z" fill="#1c3477"/><path d="M140 80 C160 90 160 140 150 170 C146 150 142 120 136 96 Z" fill="#e2c15b"/><circle cx="96" cy="124" r="4" fill="#2b2140"/><circle cx="124" cy="122" r="4" fill="#2b2140"/><path d="M104 150 Q112 156 120 150" stroke="#b5463a" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="78" cy="160" r="8" fill="#cfd3d6"/><circle cx="76" cy="157" r="2.6" fill="#fff"/>'},
+  {title:"The Milkmaid",meta:"About 1657–58 · Rijksmuseum, Amsterdam",text:"A kitchen maid slowly pours milk into a bowl. Window light falls from the left, and the bread sparkles with tiny dots of paint. Her bright blue apron is ultramarine.",look:"Look for: little nail holes in the wall, and a foot warmer on the floor.",
+   svg:'<rect width="200" height="240" fill="#d8cfb6"/><rect x="14" y="14" width="56" height="86" fill="#eef3f6" stroke="#6b4b2a" stroke-width="4"/><path d="M42 14 V100 M14 57 H70" stroke="#6b4b2a" stroke-width="2"/><path d="M70 30 L160 120" stroke="#fffbe8" stroke-width="30" opacity=".35"/><circle cx="120" cy="40" r="2" fill="#6b5a3a"/><circle cx="160" cy="70" r="2" fill="#6b5a3a"/><rect x="5" y="160" width="110" height="80" fill="#3c5a6b"/><ellipse cx="40" cy="160" rx="26" ry="10" fill="#8a5a2a"/><circle cx="32" cy="156" r="2" fill="#fff"/><circle cx="44" cy="154" r="2" fill="#fff"/><circle cx="52" cy="158" r="2" fill="#fff"/><path d="M110 80 C96 90 92 130 96 170 L150 170 C156 130 148 90 132 80 Z" fill="#d9b23a"/><path d="M98 160 L150 160 L160 240 L92 240 Z" fill="#a2412a"/><path d="M104 150 L146 150 L150 236 L106 236 Z" fill="#2a4d9a"/><circle cx="122" cy="62" r="16" fill="#ecd0ad"/><path d="M104 60 C106 40 140 40 140 60 C130 50 112 50 104 60 Z" fill="#f3efe6"/><path d="M80 128 C88 120 104 120 110 130" stroke="#ecd0ad" stroke-width="10" fill="none" stroke-linecap="round"/><path d="M72 124 L92 124 L90 140 L74 140 Z" fill="#8a5a2a"/><path d="M78 140 L76 160" stroke="#fff" stroke-width="3"/><ellipse cx="76" cy="162" rx="12" ry="4" fill="#9a6b3a"/><rect x="160" y="222" width="26" height="16" fill="#6b4b2a"/>'},
+  {title:"View of Delft",meta:"About 1660–61 · Mauritshuis, The Hague",text:"Vermeer's hometown seen across the water. Clouds shade the front of the city, while sunlight lights up rooftops and a church tower in the back.",look:"Look for: the bright, sunny tower peeking over the city.",
+   svg:'<defs><linearGradient id="skyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7f9fbd"/><stop offset="1" stop-color="#cfdbe4"/></linearGradient></defs><rect width="200" height="240" fill="url(#skyG)"/><ellipse cx="60" cy="40" rx="50" ry="18" fill="#f2f2ee"/><ellipse cx="140" cy="60" rx="56" ry="16" fill="#e4e4de"/><ellipse cx="110" cy="30" rx="40" ry="12" fill="#9aa0a6"/><rect x="0" y="118" width="200" height="34" fill="#5a4636"/><rect x="10" y="104" width="22" height="20" fill="#6b4b2a"/><rect x="40" y="110" width="30" height="14" fill="#4a3a2c"/><rect x="78" y="100" width="18" height="24" fill="#6b4b2a"/><rect x="128" y="86" width="12" height="38" fill="#e6c25a"/><path d="M126 86 L134 70 L142 86 Z" fill="#e6c25a"/><rect x="150" y="106" width="34" height="18" fill="#4a3a2c"/><rect x="100" y="112" width="24" height="12" fill="#c98a4a"/><rect x="0" y="152" width="200" height="50" fill="#6d8796"/><rect x="0" y="160" width="200" height="4" fill="#7f9aa8"/><rect x="0" y="202" width="200" height="38" fill="#c9b48a"/><rect x="30" y="196" width="34" height="10" fill="#3b2a1e"/><circle cx="150" cy="210" r="4" fill="#2a4d9a"/><rect x="147" y="213" width="6" height="12" fill="#2a4d9a"/>'},
+  {title:"The Little Street",meta:"About 1658 · Rijksmuseum, Amsterdam",text:"An ordinary street in Delft: old brick houses, a woman sewing in a doorway, another busy in a narrow alley, and two children playing on the pavement.",look:"Look for: the green vine climbing the wall on the left.",
+   svg:'<rect width="200" height="240" fill="#c5d4e0"/><ellipse cx="150" cy="30" rx="40" ry="14" fill="#fff"/><path d="M40 240 V70 L60 70 V50 L80 50 V30 L110 30 V50 L130 50 V70 L150 70 V240 Z" fill="#8f3b22"/><rect x="65" y="90" width="22" height="30" fill="#2b2b2b" stroke="#f3efe6" stroke-width="3"/><rect x="103" y="90" width="22" height="30" fill="#2b2b2b" stroke="#f3efe6" stroke-width="3"/><rect x="85" y="60" width="20" height="22" fill="#2b2b2b" stroke="#f3efe6" stroke-width="3"/><rect x="62" y="150" width="28" height="60" fill="#1f1f1f"/><circle cx="76" cy="170" r="6" fill="#f3efe6"/><rect x="70" y="176" width="12" height="20" fill="#d9b23a"/><rect x="150" y="150" width="24" height="70" fill="#3a3a3a"/><circle cx="162" cy="190" r="5" fill="#f3efe6"/><rect x="156" y="195" width="12" height="16" fill="#a2412a"/><rect x="174" y="80" width="26" height="160" fill="#a24a2a"/><rect x="0" y="80" width="40" height="160" fill="#f0ebe0"/><path d="M36 240 C30 200 44 170 34 130" stroke="#3d6b3d" stroke-width="8" fill="none"/><rect x="0" y="214" width="200" height="26" fill="#9a9a96"/><circle cx="100" cy="222" r="5" fill="#f3efe6"/><circle cx="114" cy="224" r="5" fill="#f3efe6"/>'},
+  {title:"The Concert (stolen!)",meta:"About 1664 · Stolen in 1990 · Still missing",text:"This painting showed three people making music together. It was stolen from the Isabella Stewart Gardner Museum in Boston in 1990 and has never been found. The museum still hangs the empty frame.",look:"If you ever hear where it is, tell the museum. There's a big reward!",
+   svg:'<rect width="200" height="240" fill="#e9e2cf"/><rect x="24" y="30" width="152" height="140" fill="none" stroke="#c9a24a" stroke-width="14"/><rect x="38" y="44" width="124" height="112" fill="#efe8d4"/><text x="100" y="96" text-anchor="middle" font-size="44">🖼️</text><text x="100" y="132" text-anchor="middle" font-size="15" font-weight="bold" fill="#5a4636">EMPTY FRAME</text><text x="100" y="205" text-anchor="middle" font-size="15" font-weight="bold" fill="#8b2c00">Stolen 1990</text><text x="100" y="225" text-anchor="middle" font-size="14" fill="#5a4636">Still missing</text>'}
+];
+const gb=document.getElementById("galleryBox");
+ART.forEach(a=>{ const d=document.createElement("div"); d.className="art readable";
+  d.innerHTML='<svg class="no-read" viewBox="0 0 200 240" role="img" aria-label="Simplified drawing inspired by '+a.title+'">'+a.svg+'</svg><h3>'+a.title+'</h3><p class="meta">'+a.meta+'</p><p>'+a.text+'</p><p>🔍 '+a.look+'</p><p class="note no-read">✏️ Simplified drawing, not the real painting</p>';
+  gb.appendChild(d); });
+
+/* ---------- PAINT WITH LIGHT ---------- */
+const room=document.getElementById("room");
+room.innerHTML='<defs>'+
+ '<radialGradient id="wallG" gradientUnits="userSpaceOnUse" cx="90" cy="110" r="520"><stop offset="0" stop-color="#fbf3dc"/><stop offset=".45" stop-color="#d6c9ac"/><stop offset="1" stop-color="#4f483c"/></radialGradient>'+
+ '<radialGradient id="floorG" gradientUnits="userSpaceOnUse" cx="90" cy="300" r="520"><stop offset="0" stop-color="#e9e2d0"/><stop offset=".5" stop-color="#a59c88"/><stop offset="1" stop-color="#3e382f"/></radialGradient>'+
+ '<linearGradient id="jugG" x1="0" y1="0" x2="1" y2="0"><stop id="jugS0" offset="0" stop-color="#d9a066"/><stop id="jugS1" offset="1" stop-color="#5a3518"/></linearGradient>'+
+ '<linearGradient id="bowlG" x1="0" y1="0" x2="1" y2="0"><stop id="bowlS0" offset="0" stop-color="#8fb4d6"/><stop id="bowlS1" offset="1" stop-color="#1f3f6a"/></linearGradient>'+
+ '<filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="5"/></filter>'+
+ '<pattern id="tiles" width="60" height="30" patternUnits="userSpaceOnUse"><path d="M0 15 L30 0 L60 15 L30 30 Z" fill="#000" opacity=".28"/></pattern>'+
+ '</defs>'+
+ '<rect id="wall" x="0" y="0" width="600" height="300" fill="url(#wallG)"/>'+
+ '<rect x="0" y="300" width="600" height="100" fill="url(#floorG)"/><rect x="0" y="300" width="600" height="100" fill="url(#tiles)"/>'+
+ '<g id="wallShadows" filter="url(#soft)"></g>'+
+ '<rect x="440" y="60" width="110" height="80" fill="#8a7a5a" stroke="#4a3a2c" stroke-width="6"/><path d="M450 120 L475 90 L500 110 L520 80 L540 120 Z" fill="#5a6b4a"/>'+
+ '<g id="tableShadow" filter="url(#soft)"></g>'+
+ '<rect x="210" y="250" width="280" height="18" rx="3" fill="#7a2e1a"/><path d="M210 268 L218 330 L232 330 L228 268 Z M472 268 L468 330 L482 330 L490 268 Z" fill="#4a2a1a"/><rect x="210" y="262" width="280" height="40" fill="#7a2e1a" opacity=".85"/>'+
+ '<g id="objShadows" filter="url(#soft)"></g>'+
+ '<path id="jug" d="M300 250 C286 236 286 196 300 186 L304 168 L336 168 L340 186 C354 196 354 236 340 250 Z" fill="url(#jugG)" stroke="#3a2210" stroke-width="2"/>'+
+ '<path d="M342 196 C362 196 362 226 344 230" stroke="#5a3518" stroke-width="6" fill="none"/>'+
+ '<path id="bowl" d="M372 236 L438 236 C434 252 376 252 372 236 Z" fill="url(#bowlG)" stroke="#1f2f4a" stroke-width="2"/>'+
+ '<ellipse id="bread" cx="250" cy="242" rx="30" ry="10" fill="#b9813f" stroke="#6b4b2a" stroke-width="2"/>'+
+ '<circle id="jugHi" cx="310" cy="200" r="7" fill="#fff"/><circle id="bowlHi" cx="385" cy="240" r="4" fill="#fff"/>'+
+ '<g id="sparkles"></g>'+
+ '<rect id="dim" x="0" y="0" width="600" height="400" fill="#000" opacity="0" pointer-events="none"/>'+
+ '<g id="lamp" style="cursor:grab"><rect x="-32" y="-44" width="64" height="88" fill="#fffbe0" stroke="#6b4b2a" stroke-width="5"/><path d="M0 -44 V44 M-32 0 H32" stroke="#6b4b2a" stroke-width="3"/><circle r="56" fill="#fff6a8" opacity=".25"/><text y="66" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2140" stroke="#fff" stroke-width="3" paint-order="stroke">window light</text></g>';
+const L={x:70,y:110}; let curtain=1;
+const OBJ=[{id:"jug",cx:320,top:168,base:250,w:56,shape:"M300 250 C286 236 286 196 300 186 L304 168 L336 168 L340 186 C354 196 354 236 340 250 Z"},
+           {id:"bowl",cx:405,top:236,base:250,w:66,shape:"M372 236 L438 236 C434 252 376 252 372 236 Z"},
+           {id:"bread",cx:250,top:232,base:252,w:60,shape:"M220 242 A30 10 0 1 0 280 242 A30 10 0 1 0 220 242 Z"}];
+const $id=id=>document.getElementById(id);
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+function lightSide(){ return L.x<200?"left":L.x>400?"right":"middle"; }
+function updateLight(){
+  L.x=clamp(L.x,30,570); L.y=clamp(L.y,40,280);
+  $id("lamp").setAttribute("transform","translate("+L.x+" "+L.y+")");
+  ["wallG"].forEach(g=>{ $id(g).setAttribute("cx",L.x); $id(g).setAttribute("cy",L.y); });
+  $id("floorG").setAttribute("cx",L.x); $id("floorG").setAttribute("cy",300+(L.y-150)*0.3);
+  $id("dim").setAttribute("opacity",((1-curtain)*0.6).toFixed(2));
+  const op=(0.18+0.42*curtain).toFixed(2);
+  const ws=$id("wallShadows"), os=$id("objShadows"), ts=$id("tableShadow"); ws.innerHTML=""; os.innerHTML=""; ts.innerHTML="";
+  const low=(L.y-40)/240; // 0 = high light, 1 = low light
+  OBJ.forEach(o=>{
+    const dx=(o.cx-L.x)*(0.12+0.25*low), dy=-(L.y-o.top)*0.08;
+    svgEl("path",{d:o.shape,transform:"translate("+dx.toFixed(1)+" "+(dy-6).toFixed(1)+")",fill:"#2b2418",opacity:(op*0.6).toFixed(2)},ws);
+    const len=o.w*(0.35+1.4*low), sx=(o.cx-L.x)>0?1:-1, cx=o.cx+sx*len*0.5;
+    svgEl("ellipse",{cx:cx.toFixed(1),cy:o.base-1,rx:(o.w*0.45+len*0.5).toFixed(1),ry:5,fill:"#1a120c",opacity:op},os);
+  });
+  svgEl("ellipse",{cx:(350+(350-L.x)*0.25).toFixed(1),cy:340,rx:170,ry:14,fill:"#1a120c",opacity:(op*0.8).toFixed(2)},ts);
+  const left=L.x<320;
+  [["jugS0","jugS1","#e2ad73","#4a2a10"],["bowlS0","bowlS1","#a9c8e6","#1b3460"]].forEach(([a,b,lt,dk])=>{ $id(a).setAttribute("stop-color",left?lt:dk); $id(b).setAttribute("stop-color",left?dk:lt); });
+  const hx=clamp((L.x-320)/260,-1,1), hy=clamp((L.y-200)/200,-1,1);
+  $id("jugHi").setAttribute("cx",(320+hx*16).toFixed(1)); $id("jugHi").setAttribute("cy",(205+hy*14).toFixed(1)); $id("jugHi").setAttribute("opacity",(0.3+0.7*curtain).toFixed(2));
+  $id("bowlHi").setAttribute("cx",(405+hx*24).toFixed(1)); $id("bowlHi").setAttribute("opacity",(0.3+0.7*curtain).toFixed(2));
+  const sp=$id("sparkles"); sp.innerHTML="";
+  if(curtain>0.5){ [[-14,-4],[-4,-7],[8,-6],[16,-2],[0,-1]].forEach(([x,y])=>svgEl("circle",{cx:250+x+hx*4,cy:242+y,r:2.2,fill:"#fff",opacity:(curtain*0.9).toFixed(2)},sp)); }
+  const side=lightSide();
+  $id("curtainTxt").textContent= curtain>0.8?"open":curtain>0.4?"half open":"almost closed";
+  $id("lightReadout").textContent = "💡 Light from the "+side.toUpperCase()+(side==="left"?" ✔ just like Vermeer!":"")+" · "+(L.y<110?"high":L.y>210?"low":"middle")+" window";
+  let msg;
+  if(side==="left") msg="Light from the left, just like most of Vermeer's paintings! See how the shadows fall to the right, and the shiny spots face the window.";
+  else if(side==="right") msg="Light from the right. Vermeer almost always put his window on the left. Can you see how all the shadows flipped to the other side?";
+  else msg="Light from the middle. The shadows fall almost straight behind the objects.";
+  if(L.y>210) msg+=" A low light makes long shadows.";
+  else if(L.y<110) msg+=" A high light makes short shadows.";
+  if(curtain<=0.5) msg+=" With the curtain almost closed, the room is dim and the sparkles on the bread disappear.";
+  else msg+=" Look for the tiny white sparkles on the bread. Vermeer painted little dots of light like these!";
+  $id("lightCaption").innerHTML='<h3>🔦 What do you notice?</h3><p>'+msg+'</p>'; ReadAloud.mark($id("lightCaption"));
+}
+function toSvg(e){ const pt=room.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY; const m=room.getScreenCTM(); return m?pt.matrixTransform(m.inverse()):{x:L.x,y:L.y}; }
+let dragging=false;
+room.addEventListener("pointerdown",e=>{ dragging=true; try{ room.setPointerCapture(e.pointerId); }catch(_){} const p=toSvg(e); L.x=p.x; L.y=p.y; updateLight(); });
+room.addEventListener("pointermove",e=>{ if(!dragging) return; const p=toSvg(e); L.x=p.x; L.y=p.y; updateLight(); });
+["pointerup","pointercancel"].forEach(t=>room.addEventListener(t,()=>{ dragging=false; }));
+$id("lLeft").addEventListener("click",()=>{ L.x-=60; updateLight(); });
+$id("lRight").addEventListener("click",()=>{ L.x+=60; updateLight(); });
+$id("lUp").addEventListener("click",()=>{ L.y-=40; updateLight(); });
+$id("lDown").addEventListener("click",()=>{ L.y+=40; updateLight(); });
+$id("lVermeer").addEventListener("click",()=>{ L.x=70; L.y=110; curtain=1; $id("curtain").value=100; updateLight(); ReadAloud.speakEl($id("lightCaption")); });
+$id("curtain").addEventListener("input",e=>{ curtain=e.target.value/100; updateLight(); });
+
+/* ---------- PIGMENT LAB: ULTRAMARINE ---------- */
+const mortar=$id("mortar");
+mortar.innerHTML='<rect width="600" height="260" fill="#efe8d4"/>'+
+ '<path d="M150 150 L330 150 C320 220 160 220 150 150 Z" fill="#9aa0a6" stroke="#5a5f66" stroke-width="5"/><ellipse cx="240" cy="150" rx="90" ry="14" fill="#7a7f86"/>'+
+ '<g id="stone"><polygon points="-34,-10 -12,-30 22,-26 36,0 18,26 -20,24" fill="#1f3f9a" stroke="#14286a" stroke-width="3"/><circle cx="-6" cy="-8" r="3" fill="#E6A800"/><circle cx="12" cy="8" r="2.5" fill="#E6A800"/><circle cx="-16" cy="10" r="2" fill="#f3efe6"/></g>'+
+ '<ellipse id="powder" cx="240" cy="150" rx="0" ry="0" fill="#5b6f9e"/>'+
+ '<g id="pestle"><rect x="300" y="40" width="24" height="100" rx="12" fill="#c9b48a" stroke="#6b4b2a" stroke-width="3" transform="rotate(25 312 90)"/></g>'+
+ '<g id="dough" opacity="0"><ellipse cx="450" cy="150" rx="60" ry="30" fill="#7d86a0"/><path d="M400 190 C420 210 480 210 500 190" stroke="#56B4E9" stroke-width="5" fill="none"/><text x="450" y="235" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2140">wax + resin + oil dough</text></g>'+
+ '<g id="paint" opacity="0"><ellipse cx="450" cy="150" rx="80" ry="44" fill="#c9a26b" stroke="#6b4b2a" stroke-width="3"/><path d="M420 140 C430 115 480 118 486 140 C492 162 440 172 420 140 Z" fill="#1f3f9a"/><circle cx="440" cy="132" r="5" fill="#8fb0ff"/><text x="450" y="225" text-anchor="middle" font-size="18" font-weight="bold" fill="#1f3f9a">ultramarine paint!</text></g>'+
+ '<text id="gCount" x="240" y="245" text-anchor="middle" font-size="18" font-weight="bold" fill="#2b2140"></text>';
+const GRIND_MAX=8; let ground=0, uStage=0; // 0 grinding, 1 washed, 2 paint
+const uCap=$id("uCaption");
+function drawU(speak){
+  const s=1-ground/GRIND_MAX*0.85;
+  $id("stone").setAttribute("transform","translate(240 "+(110+ground*3)+") scale("+s.toFixed(2)+")");
+  $id("stone").setAttribute("opacity", ground>=GRIND_MAX?0:1);
+  $id("powder").setAttribute("rx",(ground*9).toFixed(0)); $id("powder").setAttribute("ry",(ground*1.8).toFixed(1));
+  $id("powder").setAttribute("fill", uStage>=1?"#2a4fb8":"#5b6f9e");
+  $id("dough").setAttribute("opacity", uStage===1?1:0); $id("paint").setAttribute("opacity", uStage===2?1:0);
+  $id("pestle").setAttribute("transform", ground%2?"translate(-30 14)":"");
+  $id("gCount").textContent= uStage===0 ? "Ground: "+ground+" of "+GRIND_MAX : "";
+  $id("uGrind").disabled = ground>=GRIND_MAX; $id("uWash").disabled = !(ground>=GRIND_MAX && uStage===0); $id("uOil").disabled = uStage!==1;
+  let h,p;
+  if(uStage===0 && ground===0){ h="💎 Lapis lazuli"; p="This blue stone came from mines far away in Afghanistan. It traveled thousands of miles to reach painters in Europe, which is one reason it cost so much. Tap Grind to crush it into powder!"; }
+  else if(uStage===0 && ground<GRIND_MAX){ h="🔨 Grinding…"; p="Keep grinding! Ground: "+ground+" of "+GRIND_MAX+"."; }
+  else if(uStage===0){ h="🌫️ Hmm, grayish blue"; p="Plain ground lapis looks dull and grayish, because the stone has other minerals mixed in. Tap Knead and wash to pull out the pure blue."; }
+  else if(uStage===1){ h="🧼 Kneading and washing"; p="Painters mixed the powder into a sticky dough of wax, resin, and oil. Then they kneaded it in a bowl of weak lye water. The pure blue bits washed out and sank to the bottom. This took days! Now tap Mix with linseed oil."; }
+  else { h="💙 Ultramarine paint!"; p="The pure blue powder is mixed with linseed oil to make paint. Ultramarine was one of the most expensive colors of all, sometimes compared to the price of gold! Vermeer used it anyway, even in shadows and under other colors."; }
+  uCap.innerHTML='<h3>'+h+'</h3><p>'+p+'</p>'; ReadAloud.mark(uCap); if(speak) ReadAloud.speakEl(uCap);
+}
+$id("uGrind").addEventListener("click",()=>{ if(ground<GRIND_MAX){ ground++; beep([220+ground*20],"square"); drawU(ground===GRIND_MAX); } });
+$id("uWash").addEventListener("click",()=>{ uStage=1; beep([440,523.25]); drawU(true); });
+$id("uOil").addEventListener("click",()=>{ uStage=2; beep(HAPPY); confetti(16); drawU(true); });
+$id("uReset").addEventListener("click",()=>{ ground=0; uStage=0; ReadAloud.stop(); drawU(false); });
+
+/* ---------- PIGMENT SHELF + MIXER ---------- */
+const PIGS=[
+  {id:"ultra",name:"Ultramarine",rgb:[31,63,154],cost:5,from:"Ground lapis lazuli, a blue stone from Afghanistan. Super costly!"},
+  {id:"azur",name:"Azurite",rgb:[47,111,159],cost:3,from:"A blue copper mineral. Cheaper than ultramarine, and a little greener."},
+  {id:"verm",name:"Vermilion",rgb:[212,58,26],cost:3,from:"A bright red made from mercury and sulfur. Poisonous!"},
+  {id:"lake",name:"Red lake",rgb:[163,18,58],cost:3,from:"A see-through red made from plant dye (madder) or tiny insects (cochineal)."},
+  {id:"ltyel",name:"Lead-tin yellow",rgb:[242,211,74],cost:2,from:"Made by heating lead and tin together. Poisonous!"},
+  {id:"ochre",name:"Yellow ochre",rgb:[201,154,59],cost:1,from:"Colored earth, dug from the ground. Cheap!"},
+  {id:"white",name:"Lead white",rgb:[243,239,230],cost:1,from:"Made from lead. The most-used white. Poisonous!"},
+  {id:"black",name:"Bone black",rgb:[29,27,26],cost:1,from:"Made by burning animal bones. Cheap!"}
+];
+const MIXNAMES={"ultra+white":"a soft sky blue","azur+white":"a pale blue","ltyel+ultra":"green! Painters mixed blue and yellow to make greens","azur+ltyel":"a leafy green","azur+ochre":"an olive green","ochre+ultra":"a dark olive green",
+  "verm+white":"a rosy pink, good for cheeks","lake+white":"a cool pink","lake+ultra":"purple","azur+lake":"a dusky purple","black+white":"gray, for shadows on a wall","ochre+white":"a warm cream, like a sunny wall",
+  "ltyel+white":"a pale butter yellow","ltyel+verm":"orange","ochre+verm":"a warm brown-orange","black+ultra":"a deep night blue","black+ochre":"a brown, like old wood","ltyel+ochre":"a golden yellow","lake+verm":"a deep, rich red"};
+const shelf=$id("shelf"); let slotA=null, slotB=null;
+const css=c=>"rgb("+c.join(",")+")";
+PIGS.forEach(p=>{ const b=document.createElement("button"); b.className="pig"; b.dataset.id=p.id;
+  b.innerHTML='<span class="sw" style="background:'+css(p.rgb)+'"></span><span><b>'+p.name+'</b><br>'+p.from+'<br><span aria-label="Cost '+p.cost+' of 5">'+"🪙".repeat(p.cost)+'</span></span>';
+  b.addEventListener("click",()=>pickPig(p,b)); shelf.appendChild(b); });
+function pickPig(p,b){
+  if(!slotA || (slotA && slotB)){ slotA=p; slotB=null; } else { slotB=p; }
+  shelf.querySelectorAll(".pig").forEach(x=>{ x.classList.toggle("slotA",slotA&&x.dataset.id===slotA.id); x.classList.toggle("slotB",slotB&&x.dataset.id===slotB.id&&!(slotA&&slotA.id===slotB.id)); });
+  const A=$id("mixA"), B=$id("mixB"), C=$id("mixC"), cap=$id("mixCaption");
+  A.style.background=css(slotA.rgb); A.textContent="A";
+  if(!slotB){ B.style.background=""; B.textContent="B"; C.style.background=""; C.textContent="?"; cap.innerHTML='<h3>🎨 '+slotA.name+'</h3><p>Now tap a second pigment to mix with '+slotA.name+'.</p>'; ReadAloud.mark(cap); beep([392]); return; }
+  B.style.background=css(slotB.rgb); B.textContent="B";
+  const mix=slotA.rgb.map((v,i)=>Math.round(Math.sqrt(v*slotB.rgb[i])));
+  C.style.background=css(mix); C.textContent="";
+  const key=[slotA.id,slotB.id].sort().join("+");
+  const same = slotA.id===slotB.id;
+  const made = same ? "That's the same pigment twice, so it's just more "+slotA.name+"!" : "You made "+(MIXNAMES[key]||"a brand-new mix")+".";
+  const cost=Math.max(slotA.cost,slotB.cost);
+  const costTxt = cost>=5 ? "Costly! Any mix with ultramarine was expensive." : cost>=3 ? "Fairly costly." : "Cheap. Great for everyday painting!";
+  cap.innerHTML='<h3>🎨 '+slotA.name+' + '+slotB.name+'</h3><p>'+made+'</p><p>💰 '+costTxt+'</p>';
+  ReadAloud.mark(cap); beep(HAPPY); ReadAloud.speakEl(cap);
+}
+
+/* ---------- CAMERA OBSCURA ---------- */
+const cam=$id("cam");
+const SCENE='<rect x="0" y="0" width="200" height="200" fill="#cfe4f2"/><rect x="0" y="150" width="200" height="50" fill="#7fb77e"/><rect x="40" y="90" width="20" height="60" fill="#6b4b2a"/><circle cx="50" cy="70" r="36" fill="#007a5a"/><rect x="110" y="100" width="70" height="50" fill="#f4e6cf" stroke="#6b4b2a" stroke-width="3"/><path d="M104 100 L145 66 L186 100 Z" fill="#C24E00"/><rect x="138" y="120" width="16" height="30" fill="#6b4b2a"/>';
+cam.innerHTML='<defs><filter id="blurF" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur id="blurN" stdDeviation="2"/></filter></defs>'+
+ '<rect width="640" height="300" fill="#f7f1e1"/>'+
+ '<g transform="translate(20 50)">'+SCENE+'</g><text x="120" y="275" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2140">Outside</text>'+
+ '<rect x="300" y="30" width="320" height="240" fill="#1d1b1a" stroke="#000" stroke-width="4"/>'+
+ '<rect id="holeR" x="296" y="146" width="8" height="8" fill="#fffbe0"/>'+
+ '<g id="camRays" stroke="#E6A800" stroke-width="2.5" stroke-dasharray="6 5" opacity=".9"><line x1="70" y1="84" x2="300" y2="150"/><line x1="300" y1="150" x2="590" y2="233"/><line x1="70" y1="250" x2="300" y2="150"/><line x1="300" y1="150" x2="575" y2="31"/></g>'+
+ '<g id="camImg" filter="url(#blurF)"><g transform="translate(600 255) rotate(180) scale(1.05)">'+SCENE+'</g></g>'+
+ '<rect x="596" y="30" width="6" height="240" fill="#3a3a3a"/>'+
+ '<text x="460" y="22" text-anchor="middle" font-size="16" font-weight="bold" fill="#2b2140">Inside the dark box</text>'+
+ '<g id="lensG" opacity="0"><ellipse cx="300" cy="150" rx="6" ry="26" fill="#9ad0f5" stroke="#00557a" stroke-width="2"/></g>';
+let lens=false;
+function drawCam(speak){
+  const h=+$id("hole").value;
+  $id("holeR").setAttribute("y",150-h*3); $id("holeR").setAttribute("height",h*6);
+  $id("blurN").setAttribute("stdDeviation", lens?0:((h-1)*1.7+0.3).toFixed(1));
+  $id("camImg").setAttribute("opacity", lens?0.95:(0.25+h*0.12).toFixed(2));
+  $id("lensG").setAttribute("opacity", lens?1:0);
+  $id("lensBtn").textContent = lens?"🔍 Remove the lens":"🔍 Add a lens"; $id("lensBtn").setAttribute("aria-pressed",lens?"true":"false");
+  $id("holeTxt").textContent = h<=2?"tiny":h<=4?"medium":"big";
+  let p = "The tree and the house show up upside down and backward on the inside wall! Light travels in straight lines, so light from the top of the tree goes down through the hole, and light from the bottom goes up. ";
+  if(lens) p+="A lens bends the light so the picture is bright AND sharp. Later cameras work this way!";
+  else if(h<=2) p+="A tiny hole makes a sharp picture, but it's dim.";
+  else if(h<=4) p+="A medium hole makes a brighter picture, but it gets a little blurry.";
+  else p+="A big hole makes a bright picture, but it's very blurry.";
+  const c=$id("camCaption"); c.innerHTML='<h3>📷 What do you see?</h3><p>'+p+'</p>'; ReadAloud.mark(c); if(speak) ReadAloud.speakEl(c);
+}
+$id("hole").addEventListener("input",()=>drawCam(false));
+$id("hole").addEventListener("change",()=>drawCam(true));
+$id("lensBtn").addEventListener("click",()=>{ lens=!lens; drawCam(true); });
+
+/* ---------- QUIZ ---------- */
+makeQuiz($id("quizBox"), [
+  {q:"In which Dutch city did Vermeer live and paint?", a:["Amsterdam","Delft","Paris","London"], c:1, yes:"Yes! Delft, his hometown, which he painted in View of Delft.", no:"It was Delft."},
+  {q:"About how many of Vermeer's paintings survive today?", a:["About 3","About 35","About 350","About 3,500"], c:1, yes:"Right! Only about 34 to 37. He was a slow, careful painter.", no:"Only about 34 to 37 survive."},
+  {q:"In most of Vermeer's room scenes, where does the light come from?", a:["A window on the left","A candle on the floor","A lamp on the ceiling","There is no light"], c:0, yes:"Correct! Soft light from a window on the left.", no:"It usually comes from a window on the left."},
+  {q:"Ultramarine blue paint was made from which stone?", a:["Granite","Lapis lazuli","Marble","Diamond"], c:1, yes:"Yes! Lapis lazuli came from Afghanistan and was super costly.", no:"It was made from lapis lazuli, a blue stone."},
+  {q:"Which painting is a \"tronie\", a study of a face, in the Mauritshuis museum?", a:["The Milkmaid","The Little Street","Girl with a Pearl Earring","View of Delft"], c:2, yes:"Right! No one knows who the girl was.", no:"It's Girl with a Pearl Earring."},
+  {q:"Did Vermeer use a camera obscura?", a:["Yes, he wrote about it","No, they didn't exist yet","Experts still debate it","He invented it"], c:2, yes:"Exactly! Some experts think so, others don't, and no one has proven it.", no:"Experts still debate it. No one has proven it either way."},
+  {q:"What happened to Vermeer's painting The Concert in 1990?", a:["It was stolen, and it's still missing","It was sold for one dollar","It was painted over","It went to the Moon"], c:0, yes:"Sadly, yes. Its empty frame still hangs in the museum in Boston.", no:"It was stolen from a Boston museum and is still missing."}
+], "PERFECT! You have a painter's eye! 🏆");
+
+/* ---------- FUN FACTS ---------- */
+makeFacts($id("factsStrip"), [
+  ["🦁 The Sphinx of Delft","Because so little was known about him, the critic who rediscovered him called Vermeer the “Sphinx of Delft.”"],
+  ["🦪 A Painted Trick","The pearl in Girl with a Pearl Earring is just a few brushstrokes. There isn't even a hook drawn to hold it to her ear! Some experts think it's too big to be a real pearl."],
+  ["📏 Small Paintings","Many of his paintings are small. The Milkmaid is only about 18 by 16 inches, and The Lacemaker is about the size of a sheet of paper!"],
+  ["🔍 Found It!","In 2015, a researcher used old tax records to find the probable spot in Delft where The Little Street was painted."],
+  ["💙 Blue and White","Delft is also famous for blue-and-white pottery called Delftware, made since Vermeer's time."],
+  ["🖼️ Hidden Changes","Scientists have used X-rays and scans to peek under Vermeer's paint. They found things he changed or painted over, like a jug rack on the wall and a basket on the floor in The Milkmaid that he later painted over."],
+  ["💰 A Big Reward","The Gardner Museum offers a reward of millions of dollars for information that helps bring back The Concert and the other stolen artworks."],
+  ["📚 A Story, Not History","There's a famous novel and movie about the Girl with a Pearl Earring, but their story is made up. No one knows who she really was."]
+]);
+
+/* ---------- INIT ---------- */
+document.querySelectorAll("#meet .facts li, #mysteries .card2, .g-help, .l-help, .p-help, .m-help, .c-help, .grownups").forEach(n=>n.classList.add("readable"));
+ReadAloud.markAll();
+updateLight(); drawU(false); drawCam(false);
+})();
+</script>
+</body>
+</html>

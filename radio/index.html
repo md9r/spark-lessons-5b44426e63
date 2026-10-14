@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Radio Waves Carry Music — Spark Lessons</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- color-blind-safe theme (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e9eef5 0%,#f4efe6 50%,#eaf3ea 100%)}
+  header h1{color:#3b4a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--blue)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+  .chip{background:#fff;color:var(--ink);border:4px solid #888;box-shadow:none;padding:10px 14px;font-size:19px;min-height:56px;display:flex;align-items:center;gap:8px}
+  .chip .num{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;color:#000;font-weight:900;border:2px solid #222}
+  .chip.on{background:#2b2140;color:#fff;border-color:#2b2140}
+  .chip.on::after{content:" ✔"}
+  .zoom-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .zoom-row button{font-size:18px;padding:10px 14px;min-height:52px}
+  .zoom-row .z-on{outline:4px solid var(--gold);outline-offset:2px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  .pin{cursor:pointer}
+  .map-caption{margin-top:10px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px 14px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  .round-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .round-row .r-on{outline:4px solid var(--gold);outline-offset:2px}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+  /* ---- saints lessons ---- */
+  nav a:nth-child(7){background:#8b2c00} nav a:nth-child(8){background:#8a5a00} nav a:nth-child(9){background:#444}
+  .meet svg{flex:0 0 280px}
+  .tl-dot{min-height:56px;font-weight:bold;font-size:19px}
+  .tl-dot.active::before{content:"📍 "}
+  .tl-nav{align-items:center;gap:10px}
+  .tl-card{border-color:var(--theme)}
+  .tl-card h3{color:var(--theme)}
+  .tl-dot{border-color:var(--theme)} .tl-dot.active{background:var(--theme)}
+  .step-count{font-weight:bold;font-size:20px;align-self:center}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .stepc{background:#fff;border-radius:18px;padding:14px;border-top:12px solid var(--theme)}
+  .stepc .lvl{display:inline-block;font-size:16px;font-weight:bold;background:#2b2140;color:#fff;border-radius:999px;padding:2px 10px}
+  .stepc h3{margin:6px 0 4px;font-size:23px}
+  .stepc p{margin:0 0 6px}
+  .be-like{margin-top:12px}
+  svg text{font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif}
+  .pin:focus{outline:none} .pin:focus circle.dot,.pin:focus rect.dot{stroke:#E6A800;stroke-width:5}
+
+  :root{ --theme:#0072B2 }
+  body{background:linear-gradient(180deg,#e6f1fb 0%,#f4efe6 50%,#e8f7f0 100%)}
+  header h1{color:#00557a;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  .lab-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:8px}
+  canvas.wave{width:100%;height:auto;display:block;background:#0e1a2b;border-radius:12px;touch-action:none}
+  .ctrl-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:10px 0}
+  .ctrl-row button{min-height:56px}
+  .ctrl-row label{font-weight:bold;font-size:19px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  input[type=range]{width:min(260px,70vw);height:40px;accent-color:#0072B2}
+  .readout{font-weight:bold;font-size:20px;margin:4px 0}
+  .side{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:700px){.side{grid-template-columns:1fr}}
+  .panel{background:#fff;border-radius:16px;padding:12px;border:4px solid #9aa5b8}
+  .panel h3{margin:0 0 8px;font-size:22px}
+  .panel.am{border-color:#B86E00} .panel.fm{border-color:#00788a}
+  .dial-wrap{position:relative;background:#2b2140;border-radius:18px;padding:18px;color:#fff}
+  .dial-face{width:100%;max-width:520px;height:auto;display:block;margin:0 auto}
+  .stations{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:12px}
+  .stations button{background:#fff;color:var(--ink);border:4px solid #9aa5b8;box-shadow:none;font-size:18px;min-height:64px}
+  .stations button.on{border-color:#E6A800;background:#fff8dc;outline:4px solid #E6A800}
+  .stations button.on::after{content:" ✔"}
+  .journey{display:grid;grid-template-columns:minmax(260px,1.2fr) 1fr;gap:14px;align-items:start}
+  @media (max-width:760px){.journey{grid-template-columns:1fr}}
+  #journeySvg{width:100%;height:auto;display:block}
+  .vol-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;background:#fff;border:4px solid #2b2140;border-radius:999px;padding:10px 18px;margin:12px 0;position:sticky;top:58px;z-index:5}
+  .vol-bar button{min-height:52px;font-size:18px}
+  .sig{display:inline-flex;align-items:center;gap:8px;font-weight:bold}
+  .sig .dot{width:14px;height:14px;border-radius:50%;background:#888}
+  .sig.on .dot{background:#007a5a;box-shadow:0 0 0 4px rgba(0,122,90,.25)}
+  .chain{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}
+  .chain .box{background:#fff;border:3px solid #0072B2;border-radius:14px;padding:8px 12px;font-weight:bold;font-size:17px}
+  .chain .arr{font-size:24px;font-weight:900;color:#2b2140}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>📡 How Music Travels on Radio Waves 🎵</h1>
+  <p>From a singer's voice to your speaker — riding on invisible waves</p>
+</header>
+<nav>
+  <a href="#meet">👋 Start</a>
+  <a href="#sound">🔊 Sound</a>
+  <a href="#waves">🌊 Waves</a>
+  <a href="#mod">📻 AM / FM</a>
+  <a href="#tune">🎛️ Tune In</a>
+  <a href="#journey">🚀 Journey</a>
+  <a href="#history">📜 History</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+
+<div class="vol-bar no-read" role="group" aria-label="Sound controls">
+  <button id="stopAll" style="background:#C24E00">⏹ Stop sounds</button>
+  <label>🔊 Volume <input type="range" id="vol" min="0" max="100" value="40" aria-label="Master volume"> <span id="volTxt">40%</span></label>
+  <span class="sig" id="sig"><span class="dot"></span> <span id="sigTxt">Sounds off</span></span>
+</div>
+
+<section id="meet">
+  <h2>👋 The Big Idea</h2>
+  <div class="grid">
+    <div class="card2"><h3>🎵 Music at Home… From Far Away</h3><p>When you listen to the radio, the singer is not in your room. The music is riding on invisible waves that race through the air at the speed of light!</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>📡 What Is Radio?</h3><p>A <b>radio</b> is a way of sending sounds (and pictures, and data) across long distances without wires. The “waves” that carry them are called <b>radio waves</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🧩 The Puzzle Pieces</h3><p>We'll learn: how sound becomes electricity, how electricity rides on a radio wave, how your radio picks one station, and how the speaker turns it back into sound.</p></div>
+  </div>
+  <div class="chain" aria-hidden="true">
+    <span class="box">🎤 Mic</span><span class="arr">→</span><span class="box">📡 Tower</span><span class="arr">→</span><span class="box">🌊 Radio waves</span><span class="arr">→</span><span class="box">📻 Antenna</span><span class="arr">→</span><span class="box">🔈 Speaker</span>
+  </div>
+</section>
+
+<section id="sound">
+  <h2>🔊 Sound Is Vibration</h2>
+  <div class="grid">
+    <div class="card2"><h3>🥁 What Is Sound?</h3><p>Sound happens when something <b>vibrates</b> (moves back and forth very fast) and pushes the air. Those pushes travel to your ear as a sound wave.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>👂 Your Eardrum</h3><p>Inside your ear is a thin skin called the <b>eardrum</b>. Sound waves make it vibrate. Nerves send the message to your brain: “That's a song!”</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>🎤 The Microphone</h3><p>A <b>microphone</b> works a bit like an eardrum. Sound makes a tiny part inside it vibrate, and that vibration is turned into a changing <b>electrical signal</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🔈 The Speaker</h3><p>A <b>speaker</b> does the opposite. An electrical signal makes a cone vibrate, which pushes the air and makes sound again.</p></div>
+  </div>
+  <div class="card2 readable" style="margin-top:12px;border-left-color:var(--gold)"><h3>⚡ Electricity Is Not Sound</h3><p>The electrical signal from a microphone looks like the sound wave, but it is not sound yet. It's a pattern of electricity that can be sent through wires — or, with a clever trick, sent without wires on radio waves.</p></div>
+</section>
+
+<section id="waves">
+  <h2>🌊 Meet Radio Waves</h2>
+  <div class="grid">
+    <div class="card2"><h3>🌌 Invisible Light-Speed Waves</h3><p><b>Radio waves</b> are a kind of <b>electromagnetic wave</b> — the same big family as visible light, microwaves, and X-rays. You can't see them, but they zip through the air (and space!) at the <b>speed of light</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>📏 Two Important Measurements</h3><p><b>Amplitude</b> is how tall or strong a wave is (like how loud a sound is). <b>Frequency</b> is how many waves pass by each second. We measure frequency in <b>hertz (Hz)</b>: 1 Hz = 1 wave per second.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>📻 Station Numbers</h3><p>An FM station like <b>101.1</b> means about <b>101.1 million waves per second</b> (101.1 megahertz, or MHz). AM stations use <b>kilohertz (kHz)</b>, which are thousands of waves per second.</p></div>
+  </div>
+
+  <h3 style="margin-top:18px">🎛️ Wave Explorer</h3>
+  <p class="w-help">Move the sliders to change the wave. Then tap <b>Play tone</b> to hear it (only after you tap — nothing plays by itself).</p>
+  <div class="lab-wrap"><canvas class="wave" id="waveCanvas" width="900" height="260" role="img" aria-label="A moving wave whose height and speed change with the sliders"></canvas></div>
+  <div class="ctrl-row">
+    <label>↕️ Amplitude (height) <input type="range" id="amp" min="10" max="100" value="70" aria-label="Amplitude"> <span id="ampTxt">70%</span></label>
+    <label>⏩ Frequency (how fast) <input type="range" id="freq" min="1" max="12" value="4" aria-label="Frequency"> <span id="freqTxt">4 waves</span></label>
+  </div>
+  <div class="ctrl-row">
+    <button id="playTone" style="background:var(--theme)">▶ Play tone</button>
+    <button id="stopTone" style="background:#666">⏹ Stop tone</button>
+  </div>
+  <div class="card2 readable" id="waveCap" style="border-left-color:var(--theme)"></div>
+</section>
+
+<section id="mod">
+  <h2>📻 Hiding Music in a Carrier Wave</h2>
+  <div class="grid">
+    <div class="card2"><h3>🛰️ The Carrier Wave</h3><p>A radio station sends out a strong, steady wave called a <b>carrier wave</b>. By itself it has no music. Think of it as an empty truck ready to carry a song.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>🎛️ Modulation</h3><p><b>Modulation</b> means changing the carrier a little so it “holds” the music signal. There are two famous ways:</p></div>
+    <div class="card2" style="border-left-color:#B86E00"><h3>🅰️ AM — Amplitude Modulation</h3><p>AM changes the <b>height</b> (amplitude) of the carrier to match the music. AM radio uses numbers in <b>kHz</b>.</p></div>
+    <div class="card2" style="border-left-color:#00788a"><h3>🅵 FM — Frequency Modulation</h3><p>FM changes how <b>close together</b> the waves are (the frequency) to match the music. FM radio uses numbers in <b>MHz</b>. FM often sounds clearer and picks up less crackly noise.</p></div>
+  </div>
+
+  <h3 style="margin-top:18px">🎚️ AM vs FM Side by Side</h3>
+  <p class="m-help">We'll use a simple <b>pretend melody</b> as the “music” signal. Watch how the same carrier changes for AM and for FM. Tap Play to hear the music signal (not the real radio wave — those are far too fast for our ears!).</p>
+  <div class="ctrl-row">
+    <button id="modPlay" style="background:var(--theme)">▶ Play music signal</button>
+    <button id="modStop" style="background:#666">⏹ Stop</button>
+    <label>Music loudness <input type="range" id="modDepth" min="10" max="90" value="55" aria-label="How strongly the music modulates the carrier"> <span id="depthTxt">55%</span></label>
+  </div>
+  <div class="side">
+    <div class="panel am"><h3>🅰️ AM — height changes</h3><canvas class="wave" id="amCanvas" width="440" height="180" role="img" aria-label="Amplitude-modulated carrier wave"></canvas><p class="readout" id="amRead">The carrier gets taller and shorter with the music.</p></div>
+    <div class="panel fm"><h3>🅵 FM — spacing changes</h3><canvas class="wave" id="fmCanvas" width="440" height="180" role="img" aria-label="Frequency-modulated carrier wave"></canvas><p class="readout" id="fmRead">The carrier waves squeeze together, then stretch apart.</p></div>
+  </div>
+  <div class="card2 readable" id="modCap" style="margin-top:10px;border-left-color:var(--purple)"><h3>🧠 Remember</h3><p>At the radio station, the music signal from the microphone is used to modulate the carrier. At your radio, the electronics do the opposite: they remove the carrier and keep the music.</p></div>
+</section>
+
+<section id="tune">
+  <h2>🎛️ Tune a Radio (Pretend Stations!)</h2>
+  <p class="t-help">A radio's antenna catches lots of stations at once. <b>Tuning</b> picks the one whose frequency you want — like picking one conversation in a noisy room. Drag the dial (or tap a station button). Between stations you'll hear pretend static. Each station plays a short made-up tune. These are <b>not real stations</b>!</p>
+  <div class="dial-wrap">
+    <canvas class="dial-face" id="dial" width="520" height="220" role="img" aria-label="A radio tuning dial from 88 to 108 megahertz"></canvas>
+    <div class="ctrl-row" style="justify-content:center">
+      <button id="dLeft" style="background:#666" aria-label="Tune lower">◀ Lower</button>
+      <button id="dRight" style="background:#666" aria-label="Tune higher">Higher ▶</button>
+      <button id="dStop" style="background:#C24E00">⏹ Stop radio</button>
+    </div>
+    <div class="readout" id="dialRead" style="text-align:center;color:#E6A800"></div>
+  </div>
+  <div class="stations" id="stationBtns"></div>
+  <div class="card2 readable" id="tuneCap" style="margin-top:12px;border-left-color:var(--theme)"></div>
+</section>
+
+<section id="journey">
+  <h2>🚀 The Journey of a Song</h2>
+  <p class="j-help">Follow one song from a singer all the way to your ears. Use Next and Back, or tap a numbered step.</p>
+  <div class="zoom-row">
+    <button id="jPrev" style="background:#666">◀ Back</button>
+    <button id="jNext" style="background:var(--theme)">Next ▶</button>
+    <span class="step-count" id="jCount"></span>
+  </div>
+  <div class="journey">
+    <div class="lab-wrap"><svg id="journeySvg" viewBox="0 0 640 300" role="img" aria-label="Animation of a song traveling from a microphone to a tower to a radio to a speaker"></svg></div>
+    <div class="card2 readable" id="jCap" style="border-left-color:var(--theme)"></div>
+  </div>
+</section>
+
+<section id="history">
+  <h2>📜 A Short History — and Space!</h2>
+  <p>Tap a year, or use the buttons.</p>
+  <div id="tlBox"></div>
+  <div class="grid" style="margin-top:14px">
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🚀 Radio in Space</h3><p>Astronauts talk to Earth with radio. The Voyager spacecraft, launched in 1977 and now far beyond our solar system, still send tiny radio messages home. Radio works even in the emptiness of space!</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>📶 Wi-Fi and Phones Too</h3><p>Wi-Fi, Bluetooth, and cell phones also use radio waves — just at different frequencies from the ones your car radio uses.</p></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>❓ Quiz Challenge</h2>
+  <div id="quizBox"></div>
+  <h3 style="margin-top:22px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>Sound as vibration; microphones and speakers as transducers between sound and electricity.</li>
+      <li>Radio waves as electromagnetic waves (same family as light), traveling at light speed; frequency (Hz, kHz, MHz) and amplitude.</li>
+      <li>Carrier waves and modulation: AM changes amplitude, FM changes frequency; tuning selects one carrier.</li>
+      <li>A brief history (Maxwell, Hertz, Marconi, Fessenden, KDKA, Armstrong) and a tie to space communications.</li>
+    </ul>
+    <h3>Grade band</h3><p>About grades 3–5. Read-aloud helps younger readers.</p>
+    <h3>Accuracy notes</h3>
+    <ul>
+      <li>The AM/FM canvases and audible tones are teaching models. Real radio carriers are far above hearing (hundreds of kHz to ~100 MHz). The lesson says so.</li>
+      <li>Fessenden's Christmas Eve 1906 voice/music broadcast is the commonly told first; historians debate some details, so the lesson says “is said to.”</li>
+      <li>KDKA's 1920 election-night broadcast is often called the first commercial radio broadcast in the U.S.; earlier experimental broadcasts existed.</li>
+      <li>The dial stations (Starfish 91.5, etc.) are made-up kid stations for the activity.</li>
+      <li>“Removes the carrier” is a kid-level summary of demodulation / detection.</li>
+    </ul>
+    <h3>Audio</h3><p>No sound plays until a button is tapped. Use the sticky volume bar (and Stop sounds) anytime. Keep volume modest on tablets with headphones.</p>
+    <h3>Time</h3><p>About 35–50 minutes. Easy to split: sound and waves; then AM/FM and the dial; then journey, history, and quiz.</p>
+    <h3>Follow-up</h3><p>Hold a balloon lightly against a speaker playing music and feel the vibrations. Look up a real local FM frequency and say it in megahertz (“101.1 million waves per second”). NASA's Eyes on the Solar System can show Voyager's distance from Earth.</p>
+  </div>
+</section>
+</main>
+<footer>Made for curious scientists 📡 · Sounds play only after you tap · Works offline</footer>
+
+<script>
+(function(){
+"use strict";
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- sound + confetti ---------- */
+let actx=null;
+function beep(notes,type){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; notes.forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f; const t=t0+i*0.1;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.18,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3); o.connect(g); g.connect(window.__master||actx.destination); o.start(t); o.stop(t+0.32); }); }catch(e){} }
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS=["📡","🎵","⭐","📻","✨","🚀","🔊"];
+function confetti(n){ for(let i=0;i<n;i++){ const s=document.createElement("div"); s.className="confetti"; s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s"; document.body.appendChild(s); setTimeout(()=>s.remove(),4200); } }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function makeQuiz(box, QUIZ, praise){
+  let qi=0, score=0;
+  function renderQ(){
+    const item=QUIZ[qi]; ReadAloud.stop();
+    box.innerHTML='<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div><div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+    const qEl=box.querySelector(".q-text"); qEl.dataset.say=item.q+" Is it: "+item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ")+"?"; ReadAloud.mark(qEl);
+    const ans=box.querySelector(".answers"), fb=box.querySelector(".feedback");
+    item.a.forEach((txt,i)=>{ const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+      b.addEventListener("click",()=>{ [...ans.children].forEach(x=>x.disabled=true);
+        if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+        else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+        ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+        const next=document.createElement("button"); next.style.background="var(--purple)"; next.textContent=qi<QUIZ.length-1?"Next question ➡":"See my score 🏆";
+        next.addEventListener("click",()=>{ qi++; qi<QUIZ.length?renderQ():renderEnd(); }); fb.after(next); });
+      ans.appendChild(b); });
+  }
+  function renderEnd(){
+    ReadAloud.stop(); const stars="⭐".repeat(score)+"☆".repeat(QUIZ.length-score);
+    const msg=score===QUIZ.length?praise:score>=Math.ceil(QUIZ.length*0.6)?"Awesome job! 🎉":score>=2?"Nice work! Explore more and try again! 📜":"Good try! Explore and try again! 💪";
+    box.innerHTML='<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+    const c=box.querySelector(".celebrate"); c.dataset.say="You got "+score+" out of "+QUIZ.length+"! "+msg; ReadAloud.mark(c);
+    const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--teal)"; again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+    const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); box.appendChild(wrap); confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+  }
+  renderQ();
+}
+
+/* ---------- TIMELINE ---------- */
+function makeTimeline(root, EVENTS){
+  let i=0;
+  root.innerHTML='<div class="tl-track" role="list"></div><div class="tl-card readable" aria-live="polite"><div class="big"></div><div><h3></h3><p></p></div></div>'+
+    '<div class="tl-nav"><button class="tl-prev" style="background:#666">◀ Earlier</button><span class="step-count tl-count"></span><button class="tl-next" style="background:var(--theme)">Later ▶</button></div>';
+  const track=root.querySelector(".tl-track"), card=root.querySelector(".tl-card"), prev=root.querySelector(".tl-prev"), next=root.querySelector(".tl-next"), count=root.querySelector(".tl-count");
+  EVENTS.forEach((e,k)=>{ const b=document.createElement("button"); b.className="tl-dot"; b.textContent=e.year; b.setAttribute("aria-label",e.year+": "+e.title);
+    b.addEventListener("click",()=>show(k,true)); track.appendChild(b); });
+  function show(k,speak){
+    i=k; const e=EVENTS[k]; ReadAloud.stopIf(card);
+    [...track.children].forEach((b,j)=>{ b.classList.toggle("active",j===k); b.setAttribute("aria-current",j===k?"true":"false"); });
+    card.querySelector(".big").textContent=e.icon; card.querySelector("h3").textContent=e.year+" — "+e.title; card.querySelector("p").textContent=e.text;
+    prev.disabled=k===0; next.disabled=k===EVENTS.length-1; count.textContent=(k+1)+" of "+EVENTS.length;
+    const b=track.children[k]; track.scrollLeft=b.offsetLeft-track.clientWidth/2+b.offsetWidth/2;
+    ReadAloud.mark(card); if(speak) ReadAloud.speakEl(card);
+  }
+  prev.addEventListener("click",()=>{ if(i>0) show(i-1,true); });
+  next.addEventListener("click",()=>{ if(i<EVENTS.length-1) show(i+1,true); });
+  show(0,false);
+  return {show};
+}
+
+/* ---------- MATCHING GAME ---------- */
+function makeMatch(o){ // o: {left,right,status,pairs:[{id,l,r,tip}], doneMsg, onDone}
+  let selL=null, selR=null, matched=0;
+  const N=o.pairs.length;
+  function build(){
+    selL=selR=null; matched=0; ReadAloud.stop();
+    o.left.innerHTML=""; o.right.innerHTML="";
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="L";
+      c.innerHTML='<span>'+p.l+'</span>'; o.left.appendChild(c); ReadAloud.mark(c); });
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard name-card readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="R";
+      c.innerHTML='<span>'+p.r+'</span>'; o.right.appendChild(c); ReadAloud.mark(c); });
+    o.status.textContent="Matched: 0 of "+N; o.status.style.color=""; o.status.classList.add("readable"); ReadAloud.mark(o.status);
+    if(o.onReset) o.onReset();
+  }
+  function pick(c){
+    if(c.classList.contains("done")) return;
+    if(c.dataset.side==="L"){ if(selL) selL.classList.remove("sel"); selL = selL===c?null:c; if(selL) c.classList.add("sel"); }
+    else { if(selR) selR.classList.remove("sel"); selR = selR===c?null:c; if(selR) c.classList.add("sel"); }
+    if(selL && selR){
+      const a=selL,b=selR; selL=selR=null; a.classList.remove("sel"); b.classList.remove("sel");
+      const p=o.pairs.find(x=>x.id===a.dataset.id);
+      if(a.dataset.id===b.dataset.id){
+        a.classList.add("done"); b.classList.add("done"); matched++; beep(HAPPY);
+        o.status.textContent="✔ Yes! "+p.tip+" ("+matched+" of "+N+")"; o.status.style.color="var(--blue)";
+        if(matched===N){ o.status.textContent=o.doneMsg; confetti(24); if(o.onDone) o.onDone(); }
+        ReadAloud.mark(o.status); setTimeout(()=>ReadAloud.speakEl(o.status),0);
+      } else {
+        [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+        o.status.textContent="✘ Not quite — read it again and try another one!"; o.status.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(o.status);
+      }
+    }
+  }
+  [o.left,o.right].forEach(col=>{
+    col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+    col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard")&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+  });
+  build();
+  return {build};
+}
+
+/* ---------- FUN FACTS ---------- */
+function makeFacts(strip, FACTS){
+  FACTS.forEach(([front,back])=>{ const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+    d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+    const flip=()=>d.classList.toggle("flipped");
+    d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+    d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+    strip.appendChild(d); ReadAloud.mark(d); });
+}
+
+/* ---------- a soft bell sound ---------- */
+function bell(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; [[392,0.16],[784,0.07],[1176,0.04],[1568,0.02]].forEach(([f,a])=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type="sine"; o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(a,t0+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t0+1.8); o.connect(g); g.connect(window.__master||actx.destination); o.start(t0); o.stop(t0+1.9); }); }catch(e){} }
+
+function projector(lon0,lon1,lat0,lat1,W,H){ return (lon,lat)=>[ +((lon-lon0)/(lon1-lon0)*W).toFixed(1), +((lat1-lat)/(lat1-lat0)*H).toFixed(1) ]; }
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs,parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+
+/* ---------- MASTER AUDIO (user-gesture only) ---------- */
+let master=null, volNode=null, sounding=false;
+const active=new Set();
+function ensureAudio(){
+  const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return null;
+  if(!actx) actx=new AC();
+  if(!master){ master=actx.createGain(); volNode=actx.createGain(); window.__master=master;
+    volNode.gain.value=(+$id("vol").value)/100*0.35; master.connect(volNode); volNode.connect(actx.destination); }
+  if(actx.state==="suspended") actx.resume();
+  return actx;
+}
+function setVol(p){ if(volNode) volNode.gain.setTargetAtTime(p*0.35, actx?actx.currentTime:0, 0.02); $id("volTxt").textContent=Math.round(p*100)+"%"; }
+function track(node){ active.add(node); try{ node.onended=()=>{ active.delete(node); refreshSig(); }; }catch(e){} sounding=true; refreshSig(); }
+function stopAllAudio(){
+  active.forEach(n=>{ try{ n.stop(); }catch(e){} try{ n.disconnect(); }catch(e){} }); active.clear();
+  if(toneOsc){ try{ toneOsc.stop(); }catch(e){} toneOsc=null; }
+  if(modNodes){ modNodes.forEach(n=>{ try{ n.stop(); }catch(e){} }); modNodes=null; }
+  if(radioNodes){ radioNodes.forEach(n=>{ try{ n.stop(); }catch(e){} }); radioNodes=null; }
+  sounding=false; refreshSig();
+}
+function kill(n){ try{ n.stop(); }catch(e){} active.delete(n); }
+function refreshSig(){ const on=active.size>0; $id("sig").classList.toggle("on",on); $id("sigTxt").textContent=on?"Playing…":"Sounds off"; }
+const $id=id=>document.getElementById(id), $$=q=>[...document.querySelectorAll(q)];
+$id("vol").addEventListener("input",e=>setVol(e.target.value/100));
+$id("stopAll").addEventListener("click",()=>{ stopAllAudio(); });
+
+/* ---------- TIMELINE ---------- */
+makeTimeline($id("tlBox"), [
+  {year:"1860s",icon:"📐",title:"Maxwell's Prediction",text:"James Clerk Maxwell's math said electricity and magnetism could make waves that travel at the speed of light — including waves we cannot see."},
+  {year:"1887",icon:"⚡",title:"Hertz Proves It",text:"Heinrich Hertz made and detected radio waves in his lab. The unit of frequency, the hertz (Hz), is named after him."},
+  {year:"1890s–1901",icon:"📡",title:"Marconi's Wireless",text:"Guglielmo Marconi built early wireless telegraph systems that sent Morse code (dots and dashes) without wires, even across the Atlantic in 1901."},
+  {year:"1906",icon:"🎄",title:"Voice on the Air",text:"Reginald Fessenden is said to have made the first voice and music radio broadcast on Christmas Eve 1906, from Brant Rock, Massachusetts. Ships at sea may have heard him play the violin and read from the Bible."},
+  {year:"1920",icon:"📻",title:"KDKA Goes on the Air",text:"Station KDKA in Pittsburgh broadcast the U.S. election results. It is often called the first commercial radio broadcast in the United States."},
+  {year:"1933",icon:"🅵",title:"Armstrong Invents FM",text:"American engineer Edwin Armstrong invented a practical FM system that sounded clearer and had less crackle than AM."},
+  {year:"1969–today",icon:"🚀",title:"Radio to the Moon — and Beyond",text:"Radio linked Apollo astronauts to Earth. Voyager 1 and 2, launched in 1977, still talk to Earth by radio from billions of miles away."}
+]);
+
+/* ---------- WAVE EXPLORER ---------- */
+const wc=$id("waveCanvas"), wx=wc.getContext("2d");
+let amp=0.7, waves=4, phase=0, toneOsc=null, toneGain=null;
+function drawWave(){
+  const W=wc.width, H=wc.height; wx.fillStyle="#0e1a2b"; wx.fillRect(0,0,W,H);
+  wx.strokeStyle="#345"; wx.lineWidth=1; wx.beginPath(); wx.moveTo(0,H/2); wx.lineTo(W,H/2); wx.stroke();
+  wx.strokeStyle="#56B4E9"; wx.lineWidth=3; wx.beginPath();
+  for(let x=0;x<=W;x++){ const y=H/2 - Math.sin((x/W)*waves*Math.PI*2 + phase)*amp*(H*0.42); x===0?wx.moveTo(x,y):wx.lineTo(x,y); }
+  wx.stroke();
+  // amplitude guides
+  wx.strokeStyle="#E6A800"; wx.setLineDash([6,6]); wx.beginPath(); wx.moveTo(0,H/2-amp*H*0.42); wx.lineTo(80,H/2-amp*H*0.42); wx.stroke(); wx.setLineDash([]);
+  wx.fillStyle="#E6A800"; wx.font="bold 16px Trebuchet MS,sans-serif"; wx.fillText("amplitude", 8, H/2-amp*H*0.42-8);
+  wx.fillStyle="#fff"; wx.fillText(waves+" waves across the screen", 12, H-12);
+}
+function waveCap(){
+  const f=220*Math.pow(2,(waves-1)/4);
+  $id("waveCap").innerHTML='<h3>🌊 Your wave</h3><p><b>Amplitude</b> is '+Math.round(amp*100)+'% — '+(amp>0.7?"a tall, strong wave (a louder tone).":amp<0.35?"a short wave (a quieter tone).":"a medium wave.")+' <b>Frequency</b> shows '+waves+' waves on the screen — '+(waves>=8?"high and fast (a higher pitch).":waves<=3?"low and slow (a lower pitch).":"a mid pitch.")+' When you press Play, you hear about '+Math.round(f)+' hertz.</p>';
+  ReadAloud.mark($id("waveCap"));
+}
+$id("amp").addEventListener("input",e=>{ amp=e.target.value/100; $id("ampTxt").textContent=e.target.value+"%"; if(toneGain&&actx) toneGain.gain.setTargetAtTime(0.0001+amp*0.25,actx.currentTime,0.02); waveCap(); });
+$id("freq").addEventListener("input",e=>{ waves=+e.target.value; $id("freqTxt").textContent=waves+" wave"+(waves>1?"s":""); if(toneOsc&&actx) toneOsc.frequency.setTargetAtTime(220*Math.pow(2,(waves-1)/4),actx.currentTime,0.03); waveCap(); });
+$id("playTone").addEventListener("click",()=>{
+  if(!ensureAudio()) return; stopToneOnly();
+  const f=220*Math.pow(2,(waves-1)/4);
+  toneOsc=actx.createOscillator(); toneGain=actx.createGain();
+  toneOsc.type="sine"; toneOsc.frequency.value=f; toneGain.gain.value=0.0001+amp*0.25;
+  toneOsc.connect(toneGain); toneGain.connect(master); toneOsc.start(); track(toneOsc); waveCap(); ReadAloud.speakEl($id("waveCap"));
+});
+function stopToneOnly(){ if(toneOsc){ kill(toneOsc); toneOsc=null; toneGain=null; refreshSig(); } }
+$id("stopTone").addEventListener("click",stopToneOnly);
+(function anim(){ phase+=0.04+waves*0.01; drawWave(); requestAnimationFrame(anim); })();
+waveCap();
+
+/* ---------- AM / FM ---------- */
+const amC=$id("amCanvas"), fmC=$id("fmCanvas"), amx=amC.getContext("2d"), fmx=fmC.getContext("2d");
+let modT=0, modDepth=0.55, modNodes=null;
+const melody=[0,2,4,5,4,2,0,-3,0]; // scale degrees
+function musicAt(t){ // slow, smooth "music" shape for drawing (-1..1)
+  return 0.65*Math.sin(2*Math.PI*0.9*t) + 0.35*Math.sin(2*Math.PI*2.1*t+1);
+}
+function drawMod(ctx,c,mode){
+  const W=c.width, H=c.height; ctx.fillStyle="#0e1a2b"; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle="#345"; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(0,H*0.62); ctx.lineTo(W,H*0.62); ctx.stroke();
+  // music signal, small on top
+  ctx.strokeStyle="#E6A800"; ctx.lineWidth=2.5; ctx.beginPath();
+  for(let x=0;x<=W;x++){ const t=modT+x/W*2; const y=30-musicAt(t)*14; x===0?ctx.moveTo(x,y):ctx.lineTo(x,y); }
+  ctx.stroke(); ctx.fillStyle="#E6A800"; ctx.font="bold 13px Trebuchet MS,sans-serif"; ctx.fillText("music signal",8,13);
+  // carrier
+  ctx.strokeStyle=mode==="am"?"#F0A060":"#5ec4d4"; ctx.lineWidth=2.5; ctx.beginPath();
+  const car=16, dt=2/W; let ph=2*Math.PI*car*modT;
+  for(let x=0;x<=W;x++){
+    const t=modT+x/W*2, m=musicAt(t); let y;
+    if(mode==="am"){ const A=1-modDepth*0.8*(0.5-0.5*m); y=H*0.62 - Math.sin(2*Math.PI*car*t)*A*(H*0.3); }
+    else { ph+=2*Math.PI*(car*(1+modDepth*0.7*m))*dt; y=H*0.62 - Math.sin(ph)*(H*0.3); }
+    x===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  if(mode==="am"){ ctx.strokeStyle="#E6A800"; ctx.setLineDash([5,5]); ctx.lineWidth=1.5; ctx.beginPath();
+    for(let x=0;x<=W;x+=2){ const t=modT+x/W*2; const A=1-modDepth*0.8*(0.5-0.5*musicAt(t)); const y=H*0.62-A*H*0.3; x===0?ctx.moveTo(x,y):ctx.lineTo(x,y); } ctx.stroke(); ctx.setLineDash([]); }
+  ctx.fillStyle="#fff"; ctx.font="bold 14px Trebuchet MS,sans-serif"; ctx.fillText(mode.toUpperCase()+" carrier",8,H-8);
+}
+function tickMod(){ modT+=0.004; drawMod(amx,amC,"am"); drawMod(fmx,fmC,"fm"); requestAnimationFrame(tickMod); }
+tickMod();
+$id("modDepth").addEventListener("input",e=>{ modDepth=e.target.value/100; $id("depthTxt").textContent=e.target.value+"%"; });
+$id("modPlay").addEventListener("click",()=>{
+  if(!ensureAudio()) return; if(modNodes){ modNodes.forEach(kill); }
+  const now=actx.currentTime; const g=actx.createGain(); g.gain.value=0.18; g.connect(master);
+  const nodes=[]; melody.forEach((deg,i)=>{
+    const o=actx.createOscillator(), eg=actx.createGain();
+    o.type="triangle"; o.frequency.value=220*Math.pow(2,deg/12);
+    const t0=now+i*0.42; eg.gain.setValueAtTime(0.0001,t0); eg.gain.exponentialRampToValueAtTime(0.9,t0+0.03); eg.gain.exponentialRampToValueAtTime(0.0001,t0+0.4);
+    o.connect(eg); eg.connect(g); o.start(t0); o.stop(t0+0.42); nodes.push(o); track(o);
+  });
+  modNodes=nodes;
+  $id("modCap").innerHTML='<h3>🎵 That was the music signal</h3><p>You heard the simple melody. On the screens, that same pattern is changing the AM carrier\'s <b>height</b> and the FM carrier\'s <b>spacing</b>. Real radio carriers vibrate millions of times per second — way too fast to hear — so these drawings are slowed way down for learning.</p>';
+  ReadAloud.mark($id("modCap")); ReadAloud.speakEl($id("modCap"));
+});
+$id("modStop").addEventListener("click",()=>{ if(modNodes){ modNodes.forEach(kill); modNodes=null; refreshSig(); } });
+
+/* ---------- TUNE-A-RADIO ---------- */
+const STATIONS=[
+  {mhz:91.5, name:"Starfish FM", color:"#E69F00", tune:[[0,0.35],[4,0.35],[7,0.35],[12,0.55],[7,0.35],[4,0.55]]},
+  {mhz:96.3, name:"Rocket Radio", color:"#56B4E9", tune:[[7,0.3],[5,0.3],[4,0.3],[2,0.3],[0,0.5],[2,0.3],[4,0.6]]},
+  {mhz:101.1, name:"Panda Pop", color:"#009E73", tune:[[0,0.25],[2,0.25],[4,0.25],[5,0.25],[4,0.25],[2,0.25],[0,0.25],[-1,0.45]]},
+  {mhz:104.7, name:"Thunder FM", color:"#CC79A7", tune:[[12,0.2],[7,0.2],[12,0.2],[7,0.2],[16,0.35],[12,0.5]]}
+];
+let dialFreq=94.0, radioNodes=null, staticNode=null, dialDragging=false;
+const dial=$id("dial"), dx=dial.getContext("2d");
+function nearest(){ let best=null,bd=1e9; STATIONS.forEach(s=>{ const d=Math.abs(s.mhz-dialFreq); if(d<bd){bd=d;best=s;} }); return {s:best,d:bd}; }
+function drawDial(){
+  const W=dial.width, H=dial.height; dx.fillStyle="#1a1428"; dx.fillRect(0,0,W,H);
+  // scale 88–108
+  dx.fillStyle="#fff"; dx.font="bold 16px Trebuchet MS,sans-serif";
+  for(let f=88;f<=108;f+=2){ const x=(f-88)/(108-88)*(W-40)+20; dx.fillStyle="#9aa5b8"; dx.fillRect(x,40,2,f%10===0?40:24); if(f%4===0){ dx.fillStyle="#fff"; dx.fillText(String(f), x-12, 100); } }
+  dx.fillStyle="#E6A800"; dx.font="bold 18px Trebuchet MS,sans-serif"; dx.fillText("FM MHz  (pretend stations)", 20, 28);
+  STATIONS.forEach(s=>{ const x=(s.mhz-88)/(108-88)*(W-40)+20; dx.fillStyle=s.color; dx.beginPath(); dx.arc(x,55,8,0,Math.PI*2); dx.fill(); dx.fillStyle="#fff"; dx.font="bold 13px Trebuchet MS,sans-serif"; dx.fillText(s.name.split(" ")[0], x-22, 130); });
+  const nx=(dialFreq-88)/(108-88)*(W-40)+20;
+  dx.fillStyle="#E6A800"; dx.fillRect(nx-3,35,6,70);
+  dx.beginPath(); dx.moveTo(nx,110); dx.lineTo(nx-10,128); dx.lineTo(nx+10,128); dx.closePath(); dx.fill();
+  dx.fillStyle="#fff"; dx.font="bold 28px Trebuchet MS,sans-serif"; dx.fillText(dialFreq.toFixed(1)+" FM", 20, H-24);
+  const n=nearest();
+  dx.fillStyle=n.d<=0.35?n.s.color:"#9aa5b8"; dx.font="bold 20px Trebuchet MS,sans-serif";
+  dx.fillText(n.d<=0.35?("✔ "+n.s.name):"⚡ Static — keep tuning…", 220, H-24);
+}
+function freqFromX(clientX){ const r=dial.getBoundingClientRect(); const x=(clientX-r.left)/r.width; return Math.max(88,Math.min(108,88+x*20)); }
+function setDial(f, speak){
+  dialFreq=Math.round(f*10)/10; drawDial();
+  $$(".stations button").forEach(b=>b.classList.toggle("on", Math.abs(+b.dataset.mhz-dialFreq)<=0.35 && nearest().d<=0.35));
+  const n=nearest();
+  if(n.d<=0.35){ playStation(n.s); $id("dialRead").textContent="Tuned to "+n.s.name+" · "+n.s.mhz+" FM (pretend)";
+    $id("tuneCap").innerHTML='<h3>📻 Locked on '+n.s.name+'!</h3><p>Your dial is at <b>'+n.s.mhz+' MHz</b> — about '+(n.s.mhz)+' million waves per second. The radio is keeping this station\'s carrier and turning the music back into sound. (Pretend station for this lesson.)</p>'; }
+  else { playStatic(); $id("dialRead").textContent=dialFreq.toFixed(1)+" FM · static between stations";
+    $id("tuneCap").innerHTML='<h3>⚡ Between stations</h3><p>At <b>'+dialFreq.toFixed(1)+' MHz</b> you are not lined up with a station\'s frequency, so you hear static — a jumble of noise. Nudge the dial toward a colored station marker!</p>'; }
+  ReadAloud.mark($id("tuneCap")); if(speak) ReadAloud.speakEl($id("tuneCap"));
+}
+function stopRadio(){ if(radioNodes){ radioNodes.forEach(kill); radioNodes=null; } if(staticNode){ kill(staticNode); staticNode=null; } refreshSig(); }
+function playStatic(){
+  if(!ensureAudio()) return; stopRadio();
+  const len=actx.sampleRate*2, buf=actx.createBuffer(1,len,actx.sampleRate), d=buf.getChannelData(0);
+  for(let i=0;i<len;i++) d[i]=(Math.random()*2-1)*0.4;
+  const src=actx.createBufferSource(); src.buffer=buf; src.loop=true;
+  const g=actx.createGain(); g.gain.value=0.08; src.connect(g); g.connect(master); src.start(); staticNode=src; radioNodes=[src]; track(src);
+}
+function playStation(s){
+  if(!ensureAudio()) return; stopRadio();
+  const now=actx.currentTime, g=actx.createGain(); g.gain.value=0.2; g.connect(master);
+  const nodes=[]; let t=now;
+  s.tune.forEach(([deg,dur])=>{
+    const o=actx.createOscillator(), eg=actx.createGain();
+    o.type="square"; o.frequency.value=246.94*Math.pow(2,deg/12);
+    eg.gain.setValueAtTime(0.0001,t); eg.gain.exponentialRampToValueAtTime(0.7,t+0.02); eg.gain.exponentialRampToValueAtTime(0.0001,t+dur*0.95);
+    o.connect(eg); eg.connect(g); o.start(t); o.stop(t+dur); nodes.push(o); track(o); t+=dur;
+  });
+  // soft bed
+  const bed=actx.createOscillator(), bg=actx.createGain(); bed.type="sine"; bed.frequency.value=110; bg.gain.value=0.04; bed.connect(bg); bg.connect(g); bed.start(now); bed.stop(t+0.05); nodes.push(bed); track(bed);
+  radioNodes=nodes;
+}
+dial.addEventListener("pointerdown",e=>{ dialDragging=true; try{dial.setPointerCapture(e.pointerId);}catch(_){} setDial(freqFromX(e.clientX),false); });
+dial.addEventListener("pointermove",e=>{ if(!dialDragging) return; setDial(freqFromX(e.clientX),false); });
+["pointerup","pointercancel"].forEach(t=>dial.addEventListener(t,()=>{ if(dialDragging){ dialDragging=false; setDial(dialFreq,true); } }));
+$id("dLeft").addEventListener("click",()=>setDial(dialFreq-0.2,true));
+$id("dRight").addEventListener("click",()=>setDial(dialFreq+0.2,true));
+$id("dStop").addEventListener("click",()=>{ stopRadio(); $id("dialRead").textContent="Radio stopped"; });
+const btns=$id("stationBtns");
+STATIONS.forEach(s=>{ const b=document.createElement("button"); b.dataset.mhz=s.mhz; b.innerHTML='<span style="display:inline-block;width:14px;height:14px;border-radius:50%;background:'+s.color+';margin-right:8px"></span>'+s.name+'<br><small>'+s.mhz+' FM</small>';
+  b.addEventListener("click",()=>setDial(s.mhz,true)); btns.appendChild(b); });
+drawDial(); $id("tuneCap").innerHTML='<h3>🎛️ Ready to tune</h3><p>Drag the yellow pointer, use the arrows, or tap a station button. Stations light up when you are close enough. Remember: these stations are pretend!</p>'; ReadAloud.mark($id("tuneCap"));
+
+/* ---------- JOURNEY ---------- */
+const STEPS=[
+  {icon:"🎤",title:"Someone Sings",text:"A singer's voice vibrates the air. Those vibrations are sound waves, racing toward a microphone at about 340 meters per second — fast, but much slower than light.",say:"Someone sings. Sound waves race toward a microphone."},
+  {icon:"🎙️",title:"The Microphone",text:"The microphone turns the sound into a changing electrical signal that matches the music — louder parts make a stronger signal.",say:"The microphone turns sound into an electrical signal."},
+  {icon:"🎛️",title:"Modulation",text:"At the radio station, that music signal is used to change a strong carrier wave (AM or FM). Now the carrier is carrying the song!",say:"The music signal modulates the carrier wave."},
+  {icon:"📡",title:"Up the Tower",text:"A big antenna on a tower pushes the modulated radio wave out into the world. The wave spreads in all directions at the speed of light.",say:"The tower antenna sends radio waves at the speed of light."},
+  {icon:"🌊",title:"Across Town (or Farther!)",text:"The invisible radio wave zips through the air. It can bounce, bend, and travel for many miles — or, in space, for billions of miles.",say:"Radio waves travel through the air or through space."},
+  {icon:"📶",title:"Your Antenna + Tuning",text:"Your radio's antenna shakes a tiny bit in the radio wave and makes a tiny electrical copy. Tuning circuits keep the station you want and ignore the rest.",say:"Your antenna and tuner pick one station."},
+  {icon:"🔊",title:"Back to Sound!",text:"The radio removes the carrier and keeps the music signal. The speaker cone vibrates, pushes the air, and your eardrum hears the song!",say:"The speaker turns the signal back into sound."}
+];
+const jsvg=$id("journeySvg");
+jsvg.innerHTML='<rect width="640" height="300" fill="#0e1a2b"/>'+
+  '<g id="jScene"></g><g id="jPulse"></g>';
+let jStep=0;
+function drawJourney(speak){
+  const sc=$id("jScene"), pu=$id("jPulse"); sc.innerHTML=""; pu.innerHTML="";
+  const s=STEPS[jStep];
+  // shared landscape
+  svgEl("rect",{x:0,y:220,width:640,height:80,fill:"#1e3a2f"},sc);
+  // mic
+  const micOn=jStep>=0; svgEl("circle",{cx:70,cy:160,r:22,fill:micOn?"#f3efe6":"#445",stroke:"#E6A800","stroke-width":4},sc);
+  svgEl("rect",{x:64,y:182,width:12,height:40,fill:"#888"},sc); svgEl("text",{x:70,y:166,"text-anchor":"middle","font-size":20},sc).textContent="🎤";
+  // station box + tower
+  svgEl("rect",{x:160,y:150,width:70,height:70,fill:"#3b4a6b",rx:8},sc);
+  svgEl("text",{x:195,y:192,"text-anchor":"middle","font-size":14,fill:"#fff","font-weight":"bold"},sc).textContent="AM/FM";
+  svgEl("rect",{x:280,y:60,width:10,height:160,fill:"#9aa5b8"},sc);
+  svgEl("polygon",{points:"285,40 270,70 300,70",fill:"#E6A800"},sc);
+  svgEl("line",{x1:260,y1:90,x2:310,y2:90,stroke:"#9aa5b8","stroke-width":3},sc);
+  svgEl("line",{x1:255,y1:120,x2:315,y2:120,stroke:"#9aa5b8","stroke-width":3},sc);
+  // house + radio + speaker
+  svgEl("rect",{x:480,y:140,width:120,height:80,fill:"#f4e6cf",stroke:"#6b4b2a","stroke-width":3},sc);
+  svgEl("path",{d:"M470 140 L540 100 L610 140 Z",fill:"#C24E00"},sc);
+  svgEl("rect",{x:510,y:165,width:60,height:35,rx:6,fill:"#2b2140"},sc);
+  svgEl("circle",{cx:540,cy:182,r:10,fill:"#56B4E9"},sc);
+  // progress glow
+  const spots=[[70,160],[195,170],[285,80],[400,100],[540,182]];
+  spots.forEach((p,i)=>{ if(i<=jStep && i<spots.length){ svgEl("circle",{cx:p[0],cy:p[1],r:28,fill:"#E6A800",opacity:.2},pu); } });
+  if(jStep>=3 && jStep<=5){
+    for(let i=0;i<4;i++){ const r=30+i*28+(jStep*5); svgEl("ellipse",{cx:285,cy:70,rx:r,ry:r*0.45,fill:"none",stroke:"#56B4E9","stroke-width":2,opacity:Math.max(0.15,0.7-i*0.15)},pu); }
+  }
+  if(jStep>=1){ svgEl("path",{d:"M95 160 C120 140 140 160 160 170",fill:"none",stroke:"#E6A800","stroke-width":4,"stroke-dasharray":"8 6"},pu); }
+  if(jStep>=2){ svgEl("path",{d:"M230 160 C250 120 260 100 280 80",fill:"none",stroke:"#E6A800","stroke-width":4,"stroke-dasharray":"8 6"},pu); }
+  if(jStep>=5){ svgEl("path",{d:"M400 120 C450 140 480 170 510 180",fill:"none",stroke:"#E6A800","stroke-width":4,"stroke-dasharray":"8 6"},pu); }
+  if(jStep>=6){ svgEl("text",{x:540,y:130,"text-anchor":"middle","font-size":28},pu).textContent="🎵"; }
+  // step markers
+  STEPS.forEach((_,i)=>{ const x=40+i*90; const g=svgEl("g",{class:"pin",tabindex:0,role:"button","aria-label":"Step "+(i+1)},sc);
+    svgEl("circle",{cx:x,cy:270,r:26,fill:"#fff","fill-opacity":0.01},g);
+    svgEl("circle",{class:"dot",cx:x,cy:270,r:i===jStep?16:12,fill:i===jStep?"#E6A800":i<jStep?"#0072B2":"#445",stroke:"#fff","stroke-width":2},g);
+    const t=svgEl("text",{x:x,y:275,"text-anchor":"middle","font-size":13,"font-weight":"bold",fill:"#fff"},g); t.textContent=i+1;
+    g.addEventListener("click",()=>{ jStep=i; drawJourney(true); });
+  });
+  $id("jCap").innerHTML='<h3>'+s.icon+' Step '+(jStep+1)+': '+s.title+'</h3><p>'+s.text+'</p>';
+  $id("jCap").dataset.say=s.say+". "+s.text;
+  $id("jCount").textContent="Step "+(jStep+1)+" of "+STEPS.length;
+  $id("jPrev").disabled=jStep===0; $id("jNext").disabled=jStep===STEPS.length-1;
+  ReadAloud.mark($id("jCap")); if(speak){ ReadAloud.speakEl($id("jCap")); if(jStep===STEPS.length-1){ beep(HAPPY); confetti(14); } }
+}
+$id("jPrev").addEventListener("click",()=>{ if(jStep>0){ jStep--; drawJourney(true);} });
+$id("jNext").addEventListener("click",()=>{ if(jStep<STEPS.length-1){ jStep++; drawJourney(true);} });
+
+/* ---------- QUIZ ---------- */
+makeQuiz($id("quizBox"), [
+  {q:"What is sound, at the most basic level?", a:["Invisible light","A vibration that pushes the air","A smell","A radio tower"], c:1, yes:"Yes! Vibrations push the air and make sound waves.", no:"Sound is a vibration that pushes the air."},
+  {q:"What does a microphone do?", a:["Turns sound into an electrical signal","Turns electricity into light","Makes radio waves by itself","Cools the air"], c:0, yes:"Right! It turns sound into a changing electrical signal.", no:"It turns sound into an electrical signal."},
+  {q:"Radio waves belong to the same family as…", a:["Ocean waves only","Visible light (electromagnetic waves)","Sound waves in air","Train tracks"], c:1, yes:"Correct! They are electromagnetic waves, like light, and travel at light speed.", no:"They are electromagnetic waves — the same family as visible light."},
+  {q:"What does AM change on the carrier wave?", a:["Its color","Its height (amplitude)","Its smell","The day of the week"], c:1, yes:"Yes! AM = Amplitude Modulation — height changes.", no:"AM changes the height, or amplitude."},
+  {q:"What does FM change on the carrier wave?", a:["How close together the waves are (frequency)","The size of the tower","The singer's birthday","Nothing"], c:0, yes:"Yes! FM = Frequency Modulation.", no:"FM changes the frequency — how close together the waves are."},
+  {q:"A station at 101.1 FM means about how many waves per second?", a:["101.1 waves","101.1 thousand waves","101.1 million waves","101.1 billion waves"], c:2, yes:"Right! 101.1 megahertz ≈ 101.1 million waves per second.", no:"It's about 101.1 million waves per second (megahertz)."},
+  {q:"Who invented a practical FM radio system?", a:["Edwin Armstrong","Christopher Columbus","Johannes Vermeer","Albert Einstein"], c:0, yes:"Yes! Edwin Armstrong, in the 1930s.", no:"It was Edwin Armstrong."}
+], "PERFECT! You're a radio wizard! 🏆");
+
+/* ---------- FUN FACTS ---------- */
+makeFacts($id("factsStrip"), [
+  ["⚡ Speed of Light","Radio waves travel at about 300,000 kilometers per second — fast enough to go around Earth more than 7 times in one second!"],
+  ["🎧 Why FM Sounds Clearer","FM was designed to ignore many kinds of crackly electrical noise that bother AM. That's one reason music stations often use FM."],
+  ["🛰️ Voyager's Whisper","Voyager's radio signal reaching Earth is incredibly tiny — less power than a refrigerator light bulb, spread across billions of miles — so giant dish antennas listen for it."],
+  ["📶 Same Family","Wi-Fi, Bluetooth, oven microwaves, and rainbow colors are all electromagnetic waves. They just have different frequencies."],
+  ["🔢 Odd Endings","In the United States, FM station numbers end in an odd decimal, like 88.1, 101.1, or 107.9."],
+  ["🌙 AM at Night","After sunset, AM radio waves can bounce off a high layer of the sky and travel hundreds of miles farther than in the daytime."],
+  ["📐 Named for Hertz","When we say “440 hertz,” we honor Heinrich Hertz, who first proved radio waves exist in a laboratory."],
+  ["🌙 Moon Phone","When Apollo astronauts spoke from the Moon, their voices rode radio waves that took about 1.3 seconds to reach Earth."],
+  ["🔇 Sound Needs Air","Sound cannot travel through empty space, but radio can — that's why astronauts use radios, not shouting!"]
+]);
+
+/* ---------- INIT ---------- */
+document.querySelectorAll("#meet .card2, #sound .card2, #waves > .grid .card2, #mod > .grid .card2, #history .card2, .w-help, .m-help, .t-help, .j-help, .grownups").forEach(n=>n.classList.add("readable"));
+ReadAloud.markAll();
+drawJourney(false);
+// stop audio when leaving? keep sticky stop button
+window.addEventListener("pagehide", stopAllAudio);
+})();
+</script>
+</body>
+</html>

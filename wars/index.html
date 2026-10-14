@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Big Wars in History</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet Bach */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- color-blind-safe theme (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e9eef5 0%,#f4efe6 50%,#eaf3ea 100%)}
+  header h1{color:#3b4a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  nav a:nth-child(6){background:#8b2c00} nav a:nth-child(7){background:var(--green)} nav a:nth-child(8){background:#8a5a00} nav a:nth-child(9){background:#444}
+  .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 14px}
+  .tab{background:#fff;color:var(--ink);border:4px solid #8b2c00;box-shadow:none;font-size:18px;padding:10px 14px;min-height:56px}
+  .tab[aria-selected="true"]{background:#8b2c00;color:#fff}
+  .tab[aria-selected="true"]::after{content:" ✔"}
+  .step-count{font-weight:bold;font-size:20px;align-self:center}
+  .cipher{background:#fff;border-radius:18px;padding:16px;border:4px solid var(--purple)}
+  .secret,.decoded{font-family:"Courier New",monospace;font-size:clamp(24px,5vw,40px);font-weight:900;text-align:center;letter-spacing:4px;padding:10px;border-radius:12px;word-break:break-word}
+  .secret{background:#2b2140;color:#E6A800}
+  .decoded{background:#f3ecff;color:#2b2140;margin-top:10px}
+  .decoded.solved{background:#d9ecf8;outline:4px solid var(--blue)}
+  .shift{font-size:24px;font-weight:bold;min-width:180px;text-align:center;align-self:center}
+  .deeper{display:inline-block;margin-top:12px;background:#8b2c00;color:#fff;text-decoration:none;font-weight:bold;font-size:20px;padding:12px 18px;border-radius:14px}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--blue)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+  .chip{background:#fff;color:var(--ink);border:4px solid #888;box-shadow:none;padding:10px 14px;font-size:19px;min-height:56px;display:flex;align-items:center;gap:8px}
+  .chip .num{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;color:#000;font-weight:900;border:2px solid #222}
+  .chip.on{background:#2b2140;color:#fff;border-color:#2b2140}
+  .chip.on::after{content:" ✔"}
+  .war-head{display:flex;align-items:center;gap:14px;background:#fff;border-radius:20px;padding:14px 18px;border:5px solid #2b2140;margin-bottom:12px}
+  .war-head .big{font-size:60px}
+  .war-head h3{margin:0;font-size:30px}
+  .war-head p{margin:2px 0 0}
+  .detail .card2 h3 .ic{font-size:26px}
+  /* timeline */
+  .tl-svg-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px;overflow:hidden}
+  #tl{width:100%;height:auto;display:block;touch-action:pan-y}
+  .zoom-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .zoom-row button{font-size:18px;padding:10px 14px;min-height:52px}
+  .zoom-row .z-on{outline:4px solid var(--gold);outline-offset:2px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  #map{width:100%;height:auto;display:block}
+  .pin{cursor:pointer}
+  .map-caption{margin-top:10px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px 14px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  .round-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .round-row .r-on{outline:4px solid var(--gold);outline-offset:2px}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>🏰 Big Wars in History 🕊️</h1>
+  <p>Why wars started, who led them, how they ended — and what changed afterward.</p>
+</header>
+<nav>
+  <a href="#intro">👋 Start</a>
+  <a href="#explore">🔎 Explore</a>
+  <a href="#timeline">📜 Timeline</a>
+  <a href="#map">🗺️ Map</a>
+  <a href="#game">🧩 Causes Game</a>
+  <a href="#ww2">🌍 WWII Deep Dive</a>
+  <a href="#peace">🕊️ Peace</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+
+<section id="intro">
+  <h2>👋 Before We Start</h2>
+  <div class="grid">
+    <div class="card2"><h3>🤔 Why Learn About Wars?</h3><p>Wars are some of the biggest events in history. They changed maps, created new countries, and changed how people live. Learning about them helps us understand the world today — and how to keep peace.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>💙 A Gentle Reminder</h3><p>Wars are very sad. In every war, many people were hurt or died, and many families lost their homes. It's okay to feel sad or have questions. Talking with a grown-up about it is a great idea.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🔍 Five Big Questions</h3><p>For each war, we'll ask: <b>Why</b> did it start? <b>Who</b> were the key people? What was the <b>turning point</b>? <b>How</b> did it end? And what <b>changed</b> afterward?</p></div>
+  </div>
+</section>
+
+<section id="explore">
+  <h2>🔎 Explore the Wars</h2>
+  <p>Tap a war to learn about it. (You can also tap the timeline or map below!)</p>
+  <div class="chips" id="warChips"></div>
+  <div id="detail" class="detail" aria-live="polite"></div>
+  <div class="card2" style="margin-top:14px;border-left-color:var(--gold)"><h3>🐴 Legend or History? The Trojan War</h3><p>You might hear about the Trojan War and the giant wooden horse. That story comes from very old Greek poems by a poet named Homer. There really was an ancient city called Troy, in what is now Turkey, but historians aren't sure the war happened the way the poems tell it. So we call it a <b>legend</b>, not history we can prove.</p></div>
+</section>
+
+<section id="timeline">
+  <h2>📜 Timeline of the Wars</h2>
+  <p>Zoom in and out to see how far apart the wars were. Tap a bar to learn about that war.</p>
+  <div class="zoom-row" id="zoomRow">
+    <button data-z="-350,2030" style="background:var(--blue)">🌍 All (350 BC–today)</button>
+    <button data-z="1300,2030" style="background:var(--teal)">🏰 1300–today</button>
+    <button data-z="1750,2000" style="background:var(--purple)">🇺🇸 1750–2000</button>
+    <button data-z="1900,2000" style="background:var(--orange)">✈️ 1900–2000</button>
+  </div>
+  <div class="zoom-row">
+    <button id="zIn" style="background:#3b4a6b">🔍 Zoom in</button>
+    <button id="zOut" style="background:#3b4a6b">🔭 Zoom out</button>
+    <button id="pLeft" style="background:#666">◀ Earlier</button>
+    <button id="pRight" style="background:#666">Later ▶</button>
+  </div>
+  <div class="tl-svg-wrap"><svg id="tl" viewBox="0 0 900 230" role="img" aria-label="Timeline of wars"></svg></div>
+</section>
+
+<section id="map">
+  <h2>🗺️ Where Did They Happen?</h2>
+  <p>Each numbered pin shows an important place. Tap a pin, or pick a war above, to light up its places.</p>
+  <div class="map-wrap"><svg id="mapSvg" viewBox="0 0 840 400" role="img" aria-label="Simple world map with war locations"></svg></div>
+  <div class="card2 map-caption" id="mapCaption"><h3>📍 Tap a pin!</h3><p>Find out what happened at each place.</p></div>
+</section>
+
+<section id="game">
+  <h2>🧩 Causes and Changes Game</h2>
+  <div class="round-row">
+    <button id="roundCause" style="background:var(--blue)">🔥 Round 1: What started it?</button>
+    <button id="roundChange" style="background:var(--purple)">🌱 Round 2: What changed?</button>
+  </div>
+  <p class="match-help" id="matchHelp"></p>
+  <div class="match">
+    <div class="match-col" id="matchLeft"></div>
+    <div class="match-col" id="matchRight"></div>
+  </div>
+  <div class="match-status" id="matchStatus" aria-live="polite"></div>
+</section>
+
+<section id="ww2">
+  <h2>🌍 World War II Deep Dive</h2>
+  <p class="ww2-help">World War II (1939–1945) was the biggest war in history. Pick a topic to dig deeper. Some parts are sad, so take your time and ask a grown-up any questions.</p>
+  <div class="tabs" id="ww2Tabs" role="tablist"></div>
+  <div id="ww2Panel" class="grid" aria-live="polite"></div>
+
+  <h3 style="margin-top:24px">🗺️ WWII Step-by-Step Map</h3>
+  <p class="step-help">Follow the war in Europe and the Pacific, one big moment at a time.</p>
+  <div class="zoom-row">
+    <button id="stPrev" style="background:#666">◀ Back</button>
+    <button id="stNext" style="background:var(--blue)">Next ▶</button>
+    <span class="step-count" id="stCount"></span>
+  </div>
+  <div class="map-wrap"><svg id="ww2Map" viewBox="0 0 840 400" role="img" aria-label="World map showing key moments of World War Two"></svg></div>
+  <div class="card2 readable" id="stCaption" style="margin-top:10px;border-left-color:#D55E00"></div>
+
+  <h3 style="margin-top:24px">🔐 Be a Code Breaker!</h3>
+  <div class="cipher">
+    <p class="cipher-help">During the war, both sides sent secret messages in code. Here's a simple code: every letter was moved forward in the alphabet by the same number of steps. Turn the decoder wheel until the message makes sense! (Real wartime codes were MUCH harder.)</p>
+    <div class="secret" id="cSecret"></div>
+    <div class="zoom-row" style="justify-content:center">
+      <button id="cMinus" style="background:var(--purple)" aria-label="Turn decoder back">◀ −1</button>
+      <span class="shift" id="cShift"></span>
+      <button id="cPlus" style="background:var(--purple)" aria-label="Turn decoder forward">+1 ▶</button>
+    </div>
+    <div class="decoded" id="cOut" aria-live="polite"></div>
+    <div class="match-status" id="cStatus" aria-live="polite" style="text-align:center"></div>
+    <div style="text-align:center"><button id="cNext" style="background:var(--teal)">🔁 New secret message</button></div>
+  </div>
+
+  <h3 style="margin-top:24px">✅ WWII Quick Quiz</h3>
+  <div id="ww2Quiz"></div>
+</section>
+
+<section id="peace">
+  <h2>🕊️ How Wars End — and the Peacemakers</h2>
+  <div class="grid">
+    <div class="card2"><h3>📜 Treaties</h3><p>A <b>treaty</b> is a written agreement between countries. The Treaty of Paris (1783) ended the American Revolution. The Treaty of Versailles (1919) ended World War I.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>🤝 Ceasefires and Surrenders</h3><p>An <b>armistice</b> or <b>ceasefire</b> means both sides agree to stop fighting. A <b>surrender</b> is when one side gives up, like when General Lee surrendered to General Grant in 1865.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🌐 The United Nations</h3><p>After World War II, countries started the <b>United Nations</b> in 1945 so they could talk out problems instead of fighting. Today 193 countries are members.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>⚖️ A Fair Peace Lasts Longer</h3><p>The Treaty of Versailles was very harsh on Germany. Many historians think the anger it caused helped lead to World War II. Peacemakers learned that a fair peace is more likely to last.</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>🏅 Peacemakers</h3><p><b>Diplomats</b> are people whose job is to help countries solve problems by talking. Every year, the <b>Nobel Peace Prize</b> honors people who work for peace.</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>💛 Enemies Can Become Friends</h3><p>Many countries that once fought are now close friends — like the United States and Britain, France and Germany, and the United States and Japan.</p></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>❓ Quiz Challenge</h2>
+  <div id="quizBox"></div>
+  <h3 style="margin-top:22px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>Eight major wars from ancient Rome to the Cold War (including the War of 1812), using one simple frame: causes, key people, turning points, endings, and what changed.</li>
+      <li>A World War II deep dive: the road to war, Europe, the Pacific, the home front, heroes and helpers, the Holocaust, science and technology, and how the world changed — with a step-by-step map, a code-breaking puzzle, and a short quiz.</li>
+      <li>Chronology (how far apart events are) with a zoomable timeline, and geography with a simple world map.</li>
+      <li>Cause and effect, and how wars end: treaties, ceasefires, surrenders, and the United Nations.</li>
+    </ul>
+    <h3>Grade band</h3><p>About grades 3–5. Read-aloud helps younger readers.</p>
+    <h3>Sensitive topics</h3><p>Deaths and suffering are mentioned honestly but without graphic detail. Please preview: slavery (Civil War); the loss of Native lands (War of 1812); and in the WWII deep dive, the <b>Holocaust</b> tab (Anne Frank, about six million Jewish people and millions of others killed — no images or graphic details), the atomic bombs, and the forced removal of Japanese Americans to camps (Home Front tab). Being nearby for questions is a good idea.</p>
+    <h3>Time</h3><p>About 60–90 minutes for everything: roughly 40–60 minutes for the eight wars and games, plus 25–35 minutes for the WWII deep dive. Best split into three or four sittings (for example, one era at a time, with WWII on its own day).</p>
+    <h3>Follow-up activity</h3><p><b>Make a cause-and-change chain.</b> Pick one war and draw three linked boxes: "Why it started" → "Turning point" → "What changed." If you can, talk with a grandparent, neighbor, or veteran about what they remember or learned about a war from their lifetime.</p><p><b>WWII extra:</b> plant a small "victory garden" pot (beans or herbs) and talk about why families grew their own food during the war.</p>
+  </div>
+</section>
+</main>
+<footer>Made for curious historians 🕊️ · All drawings and maps made just for this page · Works offline</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- sound + confetti ---------- */
+let actx=null;
+function beep(notes,type){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; notes.forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f; const t=t0+i*0.1;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.18,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32); }); }catch(e){} }
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS=["🎉","⭐","🕊️","📜","🥳","🏅","✨"];
+function confetti(n){ for(let i=0;i<n;i++){ const s=document.createElement("div"); s.className="confetti"; s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s"; document.body.appendChild(s); setTimeout(()=>s.remove(),4200); } }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function yr(y){ return y<0 ? (-y)+" BC" : String(y); }
+
+/* ---------- WAR DATA ---------- */
+// colors: Okabe–Ito palette; every war also has a number and an icon so color is never the only clue
+const WARS = [
+  {id:"punic", n:1, icon:"🐘", color:"#E69F00", name:"The Punic Wars", start:-264, end:-146, when:"264 BC – 146 BC (three wars over about 120 years)",
+   who:"Ancient Rome against Carthage, a rich trading city in North Africa (today's Tunisia).",
+   why:"Rome and Carthage both wanted to control the islands and sea trade of the Mediterranean Sea.",
+   people:"Hannibal, a brilliant general from Carthage, famously marched an army with war elephants over the snowy Alps to attack Rome. Scipio Africanus was the Roman general who finally beat him.",
+   turning:"At the Battle of Zama in 202 BC, Scipio defeated Hannibal near Carthage.",
+   ended:"In 146 BC, Rome destroyed the city of Carthage. Many people died or were forced from their homes.",
+   changed:"Rome became the most powerful power around the Mediterranean Sea, on its way to becoming a huge empire.",
+   pins:[[10.3,36.85,"Carthage","The great trading city of Carthage, in today's Tunisia."],[12.5,41.9,"Rome","The city of Rome, Carthage's rival."],[7,45.8,"The Alps","Hannibal crossed these snowy mountains with elephants in 218 BC."]]},
+  {id:"hundred", n:2, icon:"🛡️", color:"#56B4E9", name:"The Hundred Years' War", start:1337, end:1453, when:"1337 – 1453 (actually 116 years, with breaks)",
+   who:"England against France.",
+   why:"English kings owned land in France and claimed they should be kings of France too.",
+   people:"Joan of Arc, a teenage farm girl, said she was guided to help France. She led French troops and helped crown King Charles VII. Sadly she was captured and put to death in 1431, but she is remembered as a hero and a saint. King Henry V of England won a famous battle at Agincourt in 1415.",
+   turning:"In 1429, Joan of Arc helped break the siege of the city of Orléans, giving France new hope.",
+   ended:"France won the last battles in 1453. England lost almost all its land in France. Many soldiers and villagers suffered during the long fighting.",
+   changed:"England and France each grew a stronger sense of being one nation. Cannons and gunpowder became important in battles, and castles became less useful.",
+   pins:[[1.9,47.9,"Orléans","Joan of Arc helped free this city in 1429."],[2.1,50.5,"Agincourt","King Henry V of England won a famous battle here in 1415."]]},
+  {id:"amrev", n:3, icon:"🔔", color:"#009E73", name:"The American Revolution", start:1775, end:1783, when:"1775 – 1783",
+   who:"Thirteen American colonies against Great Britain. France later helped the Americans.",
+   why:"Many colonists were angry about paying taxes to Britain when they had no vote in Britain's Parliament: \"No taxation without representation!\"",
+   people:"George Washington led the American army. Thomas Jefferson wrote most of the Declaration of Independence. Benjamin Franklin convinced France to help. King George III ruled Britain.",
+   turning:"Americans won the Battle of Saratoga in 1777, and France then joined their side. In 1781, the British army surrendered at Yorktown.",
+   ended:"The Treaty of Paris in 1783 made the United States an independent country. Thousands of soldiers died, many from sickness.",
+   changed:"A brand-new country was born, and it wrote the U.S. Constitution in 1787. But its promise of freedom did not yet include everyone — enslaved people, women, and Native Americans were left out.",
+   pins:[[-71.06,42.36,"Boston","The fighting began near Boston in 1775."],[-75.16,39.95,"Philadelphia","The Declaration of Independence was signed here in 1776."],[-76.5,37.24,"Yorktown","The British army surrendered here in 1781."]]},
+  {id:"w1812", n:4, icon:"⚓", color:"#A6A6A6", name:"The War of 1812", start:1812, end:1815, when:"1812 – 1815",
+   who:"The United States against Great Britain and its colony of Canada, along with Native nations who sided with the British.",
+   why:"Britain was at war with France and blocked American ships from trading with France. The British navy also forced thousands of American sailors to work on British ships, called \"impressment.\" At the same time, Americans were moving west onto Native lands, and Britain supported Native nations who resisted — including a group led by the Shawnee leader Tecumseh.",
+   people:"President James Madison led the United States. Tecumseh, a Shawnee leader, united many Native nations to defend their lands; he died in battle in 1813. First Lady Dolley Madison made sure a famous portrait of George Washington was saved from the White House, with help from others, including Paul Jennings, a young enslaved man in the household. Andrew Jackson led the Americans at New Orleans. Francis Scott Key wrote a famous poem.",
+   turning:"Early on, the warship USS Constitution beat a British ship, and cannonballs seemed to bounce off its strong oak sides, earning it the nickname \"Old Ironsides.\" In August 1814, British troops burned the White House and the Capitol in Washington. But weeks later, Fort McHenry in Baltimore held strong, and Francis Scott Key saw the American flag still flying at dawn — he wrote the poem that became \"The Star-Spangled Banner.\" The Battle of New Orleans, a big American win, was fought in January 1815, after the peace treaty had already been signed, because news traveled slowly by ship!",
+   ended:"The Treaty of Ghent was signed in December 1814. It mostly put things back the way they were before the war — no land changed hands. Thousands of soldiers died, and many Native families lost their homes.",
+   changed:"Americans felt a new sense of national pride, and Key's poem later became the national anthem. Native nations lost much of their land and power after losing Tecumseh and British support. Over time, the United States and Canada became peaceful neighbors who share one of the longest borders in the world.",
+   pins:[[-76.58,39.26,"Fort McHenry","In Baltimore, Maryland. The fort held strong in 1814, inspiring \"The Star-Spangled Banner.\""],[-77.03,38.9,"Washington, D.C.","British troops burned the White House and the Capitol here in August 1814."],[-90.07,29.95,"New Orleans","Andrew Jackson's army won here in January 1815, after the peace treaty was already signed."],[-81.9,42.5,"Thames River (Canada)","Tecumseh died in a battle here in 1813."]]},
+  {id:"civil", n:5, icon:"⛓️", color:"#F0E442", name:"The U.S. Civil War", start:1861, end:1865, when:"1861 – 1865",
+   who:"The United States (the Union, in the North) against eleven Southern states that tried to form their own country (the Confederacy).",
+   why:"The country was split over slavery. Southern states wanted to keep and spread slavery, and after Abraham Lincoln was elected president, they tried to leave the United States.",
+   people:"President Abraham Lincoln led the Union. Frederick Douglass, who had escaped slavery, spoke out for freedom. Harriet Tubman led people to freedom and worked as a Union scout. Ulysses S. Grant led the Union army, and Robert E. Lee led the Confederate army.",
+   turning:"In 1863, Lincoln's Emancipation Proclamation declared enslaved people in the Confederate states free, and the Union won the huge Battle of Gettysburg.",
+   ended:"General Lee surrendered to General Grant at Appomattox, Virginia, in April 1865. Hundreds of thousands of soldiers died, more than in any other American war. Days later, President Lincoln was killed.",
+   changed:"The 13th Amendment ended slavery in the United States in 1865. The country stayed together, but the struggle for equal rights for Black Americans continued for many years.",
+   pins:[[-79.87,32.75,"Fort Sumter","The war began here in South Carolina in April 1861."],[-77.23,39.83,"Gettysburg","A huge Union victory in July 1863, and where Lincoln gave his famous Gettysburg Address."],[-78.8,37.35,"Appomattox","General Lee surrendered to General Grant here in April 1865."]]},
+  {id:"ww1", n:5, icon:"🪖", color:"#0072B2", name:"World War I", start:1914, end:1918, when:"1914 – 1918",
+   who:"The Allies (including France, Britain, Russia, and later the United States) against the Central Powers (including Germany, Austria-Hungary, and the Ottoman Empire).",
+   why:"Countries had promised to defend each other. When Archduke Franz Ferdinand, next in line to rule Austria-Hungary, was killed in 1914, those promises pulled one country after another into war.",
+   people:"Archduke Franz Ferdinand, whose death started the war. President Woodrow Wilson brought the United States in and later pushed for a League of Nations to keep peace.",
+   turning:"The United States joined in 1917, bringing fresh soldiers and supplies to the Allies.",
+   ended:"The fighting stopped with an armistice on November 11, 1918, and the Treaty of Versailles was signed in 1919. Millions of soldiers and ordinary people died.",
+   changed:"Old empires broke apart and new countries appeared on the map. New machines like tanks and airplanes changed warfare. November 11 is now Veterans Day in the U.S.",
+   pins:[[18.4,43.86,"Sarajevo","Archduke Franz Ferdinand was killed here in 1914."],[5.4,49.16,"Verdun","One of the longest battles on the Western Front, in France."]]},
+  {id:"ww2", n:6, icon:"✈️", color:"#D55E00", name:"World War II", start:1939, end:1945, when:"1939 – 1945",
+   who:"The Allies (including Britain, the Soviet Union, the United States, and China) against the Axis (Germany, Italy, and Japan).",
+   why:"Adolf Hitler and the Nazis took over Germany and invaded Poland in 1939. Japan was also taking over lands in Asia, and in 1941 it attacked the U.S. Navy at Pearl Harbor, Hawaii.",
+   people:"Winston Churchill (Britain) and Franklin D. Roosevelt (United States) led the Allies. General Dwight D. Eisenhower led D-Day. Anne Frank, a Jewish girl who hid with her family, kept a diary that people still read today.",
+   turning:"On D-Day, June 6, 1944, Allied soldiers landed on the beaches of Normandy, France, and began freeing Western Europe. Earlier battles at Midway and Stalingrad also turned the war against the Axis.",
+   ended:"Germany surrendered in May 1945. Japan surrendered in August 1945, after the United States dropped two atomic bombs on Japanese cities. It was the deadliest war in history. During the war, the Nazis also murdered about six million Jewish people, and many others, in what we call the Holocaust. We remember them so it never happens again.",
+   changed:"Countries created the United Nations to work for peace. The United States and the Soviet Union became the world's two superpowers.",
+   pins:[[21,52.2,"Poland","Germany invaded Poland in September 1939, starting the war in Europe."],[-0.6,49.35,"Normandy","D-Day landings on June 6, 1944."],[44.5,48.7,"Stalingrad","A giant battle in the Soviet Union, 1942–1943, that turned the war."],[-157.95,21.35,"Pearl Harbor","Japan attacked here on December 7, 1941, bringing the U.S. into the war."],[-177.4,28.2,"Midway","A key U.S. Navy victory in the Pacific in 1942."]]},
+  {id:"cold", n:7, icon:"🚀", color:"#CC79A7", name:"The Cold War & Space Race", start:1947, end:1991, when:"about 1947 – 1991",
+   who:"The United States and its friends against the Soviet Union and its friends.",
+   why:"The two superpowers disagreed about how countries should be run — the U.S. favored elections and free markets, while the Soviet government controlled almost everything. Each was afraid of the other.",
+   people:"Yuri Gagarin (Soviet) was the first person in space in 1961. President John F. Kennedy set the goal of reaching the Moon. Neil Armstrong and Buzz Aldrin walked on the Moon in 1969. Leaders Ronald Reagan and Mikhail Gorbachev later worked to calm things down.",
+   turning:"In the Cuban Missile Crisis of 1962, the world came scarily close to war — but the leaders solved it by talking. In 1989, people tore down the Berlin Wall.",
+   ended:"It was called \"cold\" because the two superpowers never fought each other directly, although there were real wars in other places, like Korea and Vietnam. It ended when the Soviet Union broke apart in 1991.",
+   changed:"The Space Race sent the first satellite, the first person, and the first Moon walkers into space! Germany became one country again, and later the U.S. and Russia worked together on the International Space Station.",
+   pins:[[13.4,52.5,"Berlin","The Berlin Wall split this city from 1961 until 1989."],[37.6,55.75,"Moscow","Capital of the Soviet Union."],[-77,38.9,"Washington, D.C.","Capital of the United States."],[-80.6,28.4,"Cape Canaveral","Apollo 11 launched from Florida to the Moon in 1969."],[63.3,45.9,"Baikonur","Yuri Gagarin launched from here as the first person in space in 1961."],[-79.5,22,"Cuba","Center of the Cuban Missile Crisis in 1962."]]}
+];
+WARS.forEach((w,i)=>{ w.n=i+1; });   // keep numbering chronological
+
+/* ---------- EXPLORE ---------- */
+const chips=document.getElementById("warChips"), detail=document.getElementById("detail");
+let selected=-1;
+WARS.forEach((w,i)=>{
+  const b=document.createElement("button"); b.className="chip";
+  b.innerHTML='<span class="num" style="background:'+w.color+'">'+w.n+'</span>'+w.icon+' '+w.name;
+  b.addEventListener("click",()=>selectWar(i,false)); chips.appendChild(b);
+});
+function selectWar(i, scroll){
+  selected=i; const w=WARS[i];
+  [...chips.children].forEach((c,j)=>{ c.classList.toggle("on",j===i); c.setAttribute("aria-pressed",j===i); });
+  ReadAloud.stop();
+  const sec=(ic,t,txt,col)=>'<div class="card2 readable" style="border-left-color:'+col+'"><h3><span class="ic">'+ic+'</span> '+t+'</h3><p>'+txt+'</p></div>';
+  detail.innerHTML='<div class="war-head readable" style="border-color:'+w.color+'"><div class="big">'+w.icon+'</div><div><h3>'+w.n+'. '+w.name+'</h3><p><b>When:</b> '+w.when+'</p><p><b>Who:</b> '+w.who+'</p></div></div>'+
+    '<div class="grid">'+sec("🔥","Why it started",w.why,"#C24E00")+sec("🧑‍🤝‍🧑","Key people",w.people,"#6a3d9a")+sec("↪️","Turning point",w.turning,"#B86E00")+
+    sec("🏁","How it ended",w.ended,"#3b4a6b")+sec("🌱","What changed",w.changed,"#0072B2")+'</div>';
+  if(w.id==="ww2") detail.insertAdjacentHTML("beforeend",'<a class="deeper" href="#ww2">🌍 Go deeper into World War II ▼</a>');
+  detail.querySelectorAll(".readable").forEach(n=>ReadAloud.mark(n));
+  drawTimeline(); drawPins();
+  if(scroll) document.getElementById("explore").scrollIntoView({behavior:"smooth"});
+}
+
+/* ---------- TIMELINE (zoomable) ---------- */
+const NS="http://www.w3.org/2000/svg";
+function el(tag,attrs,parent){ const n=document.createElementNS(NS,tag); for(const k in attrs) n.setAttribute(k,attrs[k]); if(parent) parent.appendChild(n); return n; }
+const tl=document.getElementById("tl");
+let view=[-350,2030];
+const TL_L=30, TL_R=870;
+function tx(y){ return TL_L+(y-view[0])/(view[1]-view[0])*(TL_R-TL_L); }
+function niceStep(span){ const steps=[1,2,5,10,20,25,50,100,200,250,500]; for(const s of steps) if(span/s<=10) return s; return 1000; }
+function drawTimeline(){
+  tl.innerHTML="";
+  el("rect",{x:0,y:0,width:900,height:230,fill:"#f8f6f0"},tl);
+  el("line",{x1:TL_L,y1:180,x2:TL_R,y2:180,stroke:"#3b4a6b","stroke-width":4},tl);
+  const span=view[1]-view[0], step=niceStep(span);
+  for(let y=Math.ceil(view[0]/step)*step; y<=view[1]; y+=step){
+    const x=tx(y); el("line",{x1:x,y1:172,x2:x,y2:188,stroke:"#3b4a6b","stroke-width":2},tl);
+    const t=el("text",{x:x,y:210,"text-anchor":"middle","font-size":15,fill:"#3b4a6b","font-weight":"bold"},tl); t.textContent = y===0 ? "BC | AD" : yr(y);
+    el("line",{x1:x,y1:20,x2:x,y2:172,stroke:"#3b4a6b","stroke-width":1,opacity:.12},tl);
+  }
+  const nowY=new Date().getFullYear();
+  if(nowY>=view[0] && nowY<=view[1]){ const x=tx(nowY); el("line",{x1:x,y1:20,x2:x,y2:180,stroke:"#444","stroke-width":2,"stroke-dasharray":"4 4"},tl); const t=el("text",{x:x-4,y:16,"text-anchor":"end","font-size":13,fill:"#444"},tl); t.textContent="Today 📍"; }
+  WARS.forEach((w,i)=>{
+    if(w.end<view[0] || w.start>view[1]) return;
+    let x1=tx(Math.max(w.start,view[0])), x2=tx(Math.min(w.end,view[1]));
+    if(x2-x1<10){ const m=(x1+x2)/2; x1=m-5; x2=m+5; }
+    const y=20+i*19;
+    const g=el("g",{class:"pin",tabindex:0,role:"button","aria-label":w.name+", "+w.when},tl);
+    el("rect",{x:x1-2,y:y-2,width:Math.max(x2-x1,10)+4,height:20,fill:"transparent"},g);
+    el("rect",{x:x1,y:y,width:x2-x1,height:16,rx:5,fill:w.color,stroke:i===selected?"#000":"#333","stroke-width":i===selected?3.5:1.5},g);
+    el("line",{x1:(x1+x2)/2,y1:y+16,x2:(x1+x2)/2,y2:180,stroke:w.color,"stroke-width":2,opacity:.6},g);
+    const label=w.n+" "+w.icon+" "+w.name.replace(/^The /,"")+"  ("+yr(w.start)+"–"+yr(w.end)+")";
+    const approxW=label.length*7.6, right=x2+8+approxW<TL_R+25;
+    const lbl=el("text",{x:right?x2+8:x1-8,y:y+13,"text-anchor":right?"start":"end","font-size":13.5,"font-weight":i===selected?"900":"bold",fill:"#000",stroke:"#f8f6f0","stroke-width":4,"paint-order":"stroke"},g);
+    lbl.textContent=label;
+    g.addEventListener("click",()=>selectWar(i,true));
+    g.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); selectWar(i,true); } });
+  });
+}
+function setView(a,b){
+  const minSpan=20, maxSpan=2400;
+  let span=Math.max(minSpan,Math.min(maxSpan,b-a)), mid=(a+b)/2;
+  a=mid-span/2; b=mid+span/2;
+  if(a<-400){ b+=-400-a; a=-400; } if(b>2040){ a-=b-2040; b=2040; }
+  view=[Math.round(a),Math.round(b)];
+  document.querySelectorAll("#zoomRow button").forEach(z=>{ const [za,zb]=z.dataset.z.split(",").map(Number); z.classList.toggle("z-on", za===view[0]&&zb===view[1]); });
+  drawTimeline();
+}
+document.querySelectorAll("#zoomRow button").forEach(b=>b.addEventListener("click",()=>{ const [a,c]=b.dataset.z.split(",").map(Number); setView(a,c); }));
+document.getElementById("zIn").addEventListener("click",()=>{ const m=(view[0]+view[1])/2, s=(view[1]-view[0])/2; setView(m-s/2,m+s/2); });
+document.getElementById("zOut").addEventListener("click",()=>{ const m=(view[0]+view[1])/2, s=(view[1]-view[0]); setView(m-s,m+s); });
+document.getElementById("pLeft").addEventListener("click",()=>{ const s=(view[1]-view[0])*0.3; setView(view[0]-s,view[1]-s); });
+document.getElementById("pRight").addEventListener("click",()=>{ const s=(view[1]-view[0])*0.3; setView(view[0]+s,view[1]+s); });
+
+/* ---------- WORLD MAP ---------- */
+const mapSvg=document.getElementById("mapSvg");
+function P(lon,lat){ return [(lon+170)*2.4,(75-lat)*3.2]; }
+function poly(c){ return c.map(p=>P(p[0],p[1]).map(v=>v.toFixed(1)).join(",")).join(" "); }
+const LANDS=[
+  [[-168,66],[-162,70],[-140,70],[-120,72],[-95,72],[-80,73],[-65,62],[-55,52],[-66,45],[-70,42],[-75,38],[-81,31],[-80,25.5],[-82,28],[-84,30],[-90,29],[-97,27],[-97,22],[-92,18.5],[-87,21],[-88,16],[-83,10],[-79,9],[-80,8],[-85,11],[-92,15],[-105,20],[-110,24],[-112,30],[-117,32],[-120,34],[-124,40],[-124,48],[-130,55],[-140,60],[-150,60],[-158,57],[-165,60]],
+  [[-55,60],[-45,60],[-20,70],[-20,75],[-60,75],[-72,75]],
+  [[-79,9],[-75,11],[-62,11],[-50,0],[-35,-5],[-39,-15],[-48,-26],[-58,-38],[-65,-42],[-68,-50],[-75,-50],[-72,-30],[-71,-18],[-81,-5],[-80,0]],
+  [[-9.5,43],[-2,43.5],[-4.5,48.5],[2,51],[5,53],[8,57],[10,54],[14,54],[20,55],[22,60],[18,60],[21,65],[25,71],[30,70],[40,67],[45,68],[60,70],[80,73],[100,75],[110,74],[130,72],[140,72],[160,70],[180,68],[180,65],[170,60],[160,55],[156,51],[142,55],[140,48],[135,43],[130,42],[127,39],[126,35],[122,40],[118,38],[122,31],[120,25],[111,21],[108,16],[109,12],[105,9],[100,13],[100,6],[103,1.5],[98,8],[98,16],[92,22],[87,22],[80,15],[77,8],[73,17],[73,22],[67,25],[60,25],[57,26],[52,28],[48,30],[50,26],[56,24],[59,22],[53,16],[45,13],[43,15],[39,22],[35,28],[34,31],[36,36],[30,36.5],[27,37],[26,40],[23,36.5],[21,38],[19.5,41],[16,40],[18,40],[15.5,38],[12.5,41.5],[10,44],[7,43.6],[3,43],[0,39],[-2,36.7],[-5.6,36],[-9,37],[-9.5,39]],
+  [[-5,50],[1.5,51],[0,53],[-2,56],[-5,58.5],[-6,56],[-3,54.5],[-4.5,52]],
+  [[-10,52],[-6,52.2],[-6,55],[-8.5,55]],
+  [[-17,21],[-16,28],[-10,30],[-6,36],[10,37.3],[11,33],[20,31],[32,31.5],[34,27],[39,16],[43,12],[51,12],[48,5],[40,-3],[40,-10],[35,-24],[32,-29],[20,-35],[18,-32],[12,-17],[13,-6],[9,0],[9,4],[0,5.5],[-8,4.5],[-13,8],[-17,14.5]],
+  [[114,-22],[122,-18],[130,-12],[137,-12],[142,-11],[146,-19],[153,-25],[150,-37],[141,-38],[135,-35],[131,-31.5],[115,-34]],
+  [[130,31],[134,34],[140,36],[142,40],[141,45],[144,44],[140,41],[136,35],[131,34]],
+  [[44,-25],[47,-25],[50,-15],[49,-12],[44,-17]],
+  [[172,-34],[178,-38],[174,-41],[167,-46],[171,-44]],
+  [[-85,22],[-80,23],[-74,20],[-78,20]]
+];
+el("rect",{x:0,y:0,width:840,height:400,fill:"#cfe6f5"},mapSvg);
+LANDS.forEach(c=>el("polygon",{points:poly(c),fill:"#e8e2cf",stroke:"#8a7d5a","stroke-width":1.5,"stroke-linejoin":"round"},mapSvg));
+[["NORTH AMERICA",-105,48],["SOUTH AMERICA",-62,-15],["EUROPE",15,58],["AFRICA",20,8],["ASIA",95,50],["AUSTRALIA",134,-26]].forEach(([t,lo,la])=>{ const [x,y]=P(lo,la); const n=el("text",{x:x,y:y,"text-anchor":"middle","font-size":14,"font-weight":"bold",fill:"#6b5d3a",opacity:.8},mapSvg); n.textContent=t; });
+[["Atlantic Ocean",-40,20],["Pacific Ocean",-140,10],["Indian Ocean",75,-20]].forEach(([t,lo,la])=>{ const [x,y]=P(lo,la); const n=el("text",{x:x,y:y,"text-anchor":"middle","font-size":13,"font-style":"italic",fill:"#3d6d8f"},mapSvg); n.textContent=t; });
+const pinLayer=el("g",{},mapSvg);
+const mapCaption=document.getElementById("mapCaption");
+function drawPins(){
+  pinLayer.innerHTML="";
+  const order=WARS.map((w,i)=>i).sort((a,b)=>(a===selected)-(b===selected)); // selected war on top
+  order.forEach(i=>{
+    const w=WARS[i], on=(selected===-1||selected===i);
+    w.pins.forEach(p=>{
+      const [x,y]=P(p[0],p[1]);
+      const g=el("g",{class:"pin",tabindex:0,role:"button","aria-label":w.name+": "+p[2],opacity:on?1:.35},pinLayer);
+      const r = selected===i ? 13 : 10;
+      el("circle",{cx:x,cy:y,r:r+8,fill:"transparent"},g);   // bigger tap area
+      el("circle",{cx:x,cy:y,r:r,fill:w.color,stroke:"#000","stroke-width":2},g);
+      const t=el("text",{x:x,y:y+5,"text-anchor":"middle","font-size":r+3,"font-weight":"bold",fill:"#000"},g); t.textContent=w.n;
+      if(selected===i){ const lb=el("text",{x:x+16,y:y-10,"font-size":14,"font-weight":"bold",fill:"#000",stroke:"#fff","stroke-width":4,"paint-order":"stroke"},g); lb.textContent=p[2]; }
+      const act=()=>{ ReadAloud.stopIf(mapCaption); mapCaption.innerHTML='<h3>📍 '+p[2]+' <span style="font-size:18px">('+w.n+'. '+w.icon+' '+w.name+')</span></h3><p>'+p[3]+'</p>';
+        mapCaption.dataset.say=p[2]+". "+w.name+". "+p[3]; ReadAloud.mark(mapCaption); ReadAloud.speakEl(mapCaption); };
+      g.addEventListener("click",act);
+      g.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); act(); } });
+    });
+  });
+}
+
+/* ---------- CAUSES & CHANGES GAME ---------- */
+const CAUSE={punic:"Two powers both wanted to control the islands and sea trade of the Mediterranean.",hundred:"English kings said they should also be kings of France.",amrev:"Colonists were angry about paying taxes without having a vote.",w1812:"Britain forced American sailors onto its ships and blocked American trade.",civil:"The country split over slavery, and Southern states tried to leave the United States.",ww1:"An archduke was killed, and promises between countries pulled many nations into war.",ww2:"Nazi Germany invaded Poland, and Japan later attacked Pearl Harbor.",cold:"Two superpowers disagreed about how countries should be run, and each feared the other."};
+const CHANGE={punic:"Rome became the most powerful power around the Mediterranean Sea.",hundred:"England lost almost all its land in France, and cannons became important in battle.",amrev:"A new country was born and wrote its own Constitution.",w1812:"A poem written during it later became the U.S. national anthem, and Native nations lost much of their land.",civil:"Slavery was ended in the United States by the 13th Amendment.",ww1:"Old empires broke apart, and November 11 became a day to honor soldiers.",ww2:"Countries created the United Nations to work for peace.",cold:"People walked on the Moon, and the Berlin Wall came down."};
+const mLeft=document.getElementById("matchLeft"), mRight=document.getElementById("matchRight"), mStatus=document.getElementById("matchStatus"), mHelp=document.getElementById("matchHelp");
+let round="cause", selL=null, selR=null, matched=0;
+function buildGame(r){
+  round=r; ReadAloud.stop(); selL=selR=null; matched=0;
+  document.getElementById("roundCause").classList.toggle("r-on",r==="cause"); document.getElementById("roundChange").classList.toggle("r-on",r==="change");
+  mHelp.textContent = r==="cause" ? "Round 1: Tap a cause on the left, then tap the war it started on the right." : "Round 2: Tap a change on the left, then tap the war that led to it on the right.";
+  mHelp.classList.add("readable"); ReadAloud.mark(mHelp);
+  const clues = r==="cause"?CAUSE:CHANGE;
+  mLeft.innerHTML=""; mRight.innerHTML="";
+  shuffle(WARS).forEach(w=>{ const c=document.createElement("div"); c.className="mcard readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=w.id; c.dataset.side="L";
+    c.innerHTML='<span>'+(r==="cause"?"🔥 ":"🌱 ")+clues[w.id]+'</span>'; c.dataset.say=clues[w.id]; mLeft.appendChild(c); ReadAloud.mark(c); });
+  shuffle(WARS).forEach(w=>{ const c=document.createElement("div"); c.className="mcard name-card readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=w.id; c.dataset.side="R";
+    c.innerHTML='<span class="num" style="display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;border:2px solid #222;background:'+w.color+'">'+w.n+'</span><span>'+w.icon+' '+w.name+'</span>'; c.dataset.say=w.name; mRight.appendChild(c); ReadAloud.mark(c); });
+  mStatus.textContent="Matched: 0 of "+WARS.length; mStatus.style.color=""; ReadAloud.mark(mStatus);
+}
+function pick(c){
+  if(c.classList.contains("done")) return;
+  if(c.dataset.side==="L"){ if(selL) selL.classList.remove("sel"); selL = selL===c?null:c; if(selL) c.classList.add("sel"); }
+  else { if(selR) selR.classList.remove("sel"); selR = selR===c?null:c; if(selR) c.classList.add("sel"); }
+  if(selL && selR){
+    const a=selL,b=selR; selL=selR=null; a.classList.remove("sel"); b.classList.remove("sel");
+    const w=WARS.find(x=>x.id===a.dataset.id);
+    if(a.dataset.id===b.dataset.id){
+      a.classList.add("done"); b.classList.add("done"); matched++; beep(HAPPY);
+      mStatus.textContent="✔ Yes! That goes with "+w.name+". ("+matched+" of "+WARS.length+")"; mStatus.style.color="var(--blue)";
+      if(matched===WARS.length){ mStatus.textContent = round==="cause" ? "🏆 All causes matched! Try Round 2: What changed?" : "🏆 You matched every change! You're a real historian!"; confetti(24); }
+      mStatus.classList.add("readable"); ReadAloud.mark(mStatus); setTimeout(()=>ReadAloud.speakEl(mStatus),0);
+    } else {
+      [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+      mStatus.textContent="✘ Not quite — read the clue again and try another war!"; mStatus.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(mStatus);
+    }
+  }
+}
+[mLeft,mRight].forEach(col=>{
+  col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+  col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard")&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+});
+document.getElementById("roundCause").addEventListener("click",()=>buildGame("cause"));
+document.getElementById("roundChange").addEventListener("click",()=>buildGame("change"));
+
+/* ---------- QUIZ ---------- */
+const QUIZ=[
+  {q:"Which general marched an army with elephants over the Alps to attack Rome?", a:["Hannibal","Napoleon","George Washington","Julius Caesar"], c:0, yes:"Yes! Hannibal of Carthage crossed the Alps in 218 BC.", no:"It was Hannibal, a general from Carthage."},
+  {q:"Which teenage girl helped France during the Hundred Years' War?", a:["Anne Frank","Joan of Arc","Harriet Tubman","Queen Elizabeth"], c:1, yes:"Correct! Joan of Arc helped free the city of Orléans in 1429.", no:"It was Joan of Arc."},
+  {q:"In what year did the American colonies declare independence?", a:["1492","1776","1865","1945"], c:1, yes:"Right! The Declaration of Independence was adopted on July 4, 1776.", no:"It was 1776 — that's why we celebrate the Fourth of July."},
+  {q:"Which famous song was written during the War of 1812?", a:["Yankee Doodle","The Star-Spangled Banner","Happy Birthday","Jingle Bells"], c:1, yes:"Yes! Francis Scott Key wrote it after watching Fort McHenry hold strong in 1814.", no:"It was The Star-Spangled Banner, written by Francis Scott Key in 1814."},
+  {q:"Which president led the Union and issued the Emancipation Proclamation?", a:["George Washington","Abraham Lincoln","John F. Kennedy","Franklin D. Roosevelt"], c:1, yes:"Yes! Abraham Lincoln, in 1863.", no:"It was Abraham Lincoln, in 1863."},
+  {q:"What happened on D-Day, June 6, 1944?", a:["The first Moon landing","Allied soldiers landed on the beaches of Normandy, France","The Berlin Wall fell","The Declaration of Independence was signed"], c:1, yes:"Correct! D-Day began the freeing of Western Europe.", no:"On D-Day, Allied soldiers landed in Normandy, France."},
+  {q:"Why was the Cold War called \"cold\"?", a:["It only happened in winter","It was fought in Antarctica","The U.S. and Soviet Union never fought each other directly","Soldiers threw snowballs"], c:2, yes:"Exactly! The superpowers never fought each other head-on.", no:"It's because the U.S. and the Soviet Union never fought each other directly."}
+];
+function makeQuiz(box, QUIZ, praise){
+  let qi=0, score=0;
+  function renderQ(){
+    const item=QUIZ[qi]; ReadAloud.stop();
+    box.innerHTML='<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div><div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+    const qEl=box.querySelector(".q-text"); qEl.dataset.say=item.q+" Is it: "+item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ")+"?"; ReadAloud.mark(qEl);
+    const ans=box.querySelector(".answers"), fb=box.querySelector(".feedback");
+    item.a.forEach((txt,i)=>{ const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+      b.addEventListener("click",()=>{ [...ans.children].forEach(x=>x.disabled=true);
+        if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+        else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+        ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+        const next=document.createElement("button"); next.style.background="var(--purple)"; next.textContent=qi<QUIZ.length-1?"Next question ➡":"See my score 🏆";
+        next.addEventListener("click",()=>{ qi++; qi<QUIZ.length?renderQ():renderEnd(); }); fb.after(next); });
+      ans.appendChild(b); });
+  }
+  function renderEnd(){
+    ReadAloud.stop(); const stars="⭐".repeat(score)+"☆".repeat(QUIZ.length-score);
+    const msg=score===QUIZ.length?praise:score>=Math.ceil(QUIZ.length*0.6)?"Awesome job! 🎉":score>=2?"Nice work! Explore more and try again! 📜":"Good try! Explore and try again! 💪";
+    box.innerHTML='<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+    const c=box.querySelector(".celebrate"); c.dataset.say="You got "+score+" out of "+QUIZ.length+"! "+msg; ReadAloud.mark(c);
+    const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--teal)"; again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+    const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); box.appendChild(wrap); confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+  }
+  renderQ();
+}
+
+/* ---------- FUN FACTS ---------- */
+const FACTS=[
+  ["⏳ Not Quite 100","The Hundred Years' War actually lasted 116 years, from 1337 to 1453 — with some long breaks."],
+  ["🎄 The Christmas Truce","At Christmas in 1914, during World War I, soldiers on both sides in some places stopped fighting, sang carols, and even met and shook hands between the trenches."],
+  ["🤝 A Handshake in Space","In 1975, during the Cold War, an American spacecraft and a Soviet spacecraft linked up in orbit, and their crews shook hands in space!"],
+  ["🛰️ Beep, Beep!","In 1957, the Soviet Union launched Sputnik, the first satellite. It sent out a beeping radio signal that people around the world could hear. This started the Space Race."],
+  ["🎉 Juneteenth","On June 19, 1865, Union soldiers brought the news to Galveston, Texas, that enslaved people there were free. Today, Juneteenth is a national holiday."],
+  ["⏱️ The Shortest War","In 1896, Britain and Zanzibar fought what is often called the shortest war in history — it lasted less than an hour!"],
+  ["⛵ Old Ironsides Still Floats","The USS Constitution, \"Old Ironsides\" from the War of 1812, was launched in 1797 and still floats in Boston. It's the oldest commissioned warship afloat in the world!"],
+  ["🕚 The 11th Hour","World War I's fighting stopped at 11 o'clock on the 11th day of the 11th month: November 11, 1918."]
+];
+const strip=document.getElementById("factsStrip");
+FACTS.forEach(([front,back])=>{ const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+  d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+  const flip=()=>d.classList.toggle("flipped");
+  d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+  d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+  strip.appendChild(d); });
+
+/* ---------- WWII DEEP DIVE ---------- */
+const WW2_TOPICS = [
+  {id:"road", icon:"🛣️", title:"Road to War", cards:[
+    ["📉","The Great Depression","In the 1930s, much of the world fell into the Great Depression. Banks and businesses failed, and millions of people lost their jobs and savings. Many people felt scared and angry, and some looked for strong leaders who promised quick fixes."],
+    ["⚠️","Hitler's Rise","In 1933, Adolf Hitler and his Nazi Party took power in Germany. He made himself a dictator, which means one person with total control. He built a huge army and unfairly blamed Jewish people for Germany's problems."],
+    ["🗺️","Taking Over","Germany took over Austria and part of Czechoslovakia in 1938. Other countries hoped that letting him have those places would keep the peace. Then, on September 1, 1939, Germany invaded Poland. Britain and France declared war on Germany."],
+    ["⚖️","Two Sides","The Axis powers were Germany, Italy, and Japan. The Allies included Britain, France, China, and later the Soviet Union and the United States, along with many other countries."]]},
+  {id:"europe", icon:"🏰", title:"War in Europe", cards:[
+    ["✈️","Battle of Britain and the Blitz","In 1940, Germany conquered France and then sent planes to bomb Britain. In London, families slept in subway stations to stay safe, and many children were sent to live in the countryside. Britain's pilots held on, and Prime Minister Winston Churchill encouraged people never to give up."],
+    ["❄️","Stalingrad","In 1942 and 1943, the Soviet army stopped a huge German army at the city of Stalingrad, during a freezing winter. It was one of the biggest turning points of the war."],
+    ["🌊","D-Day","On June 6, 1944, about 156,000 Allied soldiers crossed the sea and landed on the beaches of Normandy, France. It was the largest invasion by sea in history, and it began freeing Western Europe."],
+    ["🎉","VE Day","On May 8, 1945, Germany surrendered. People celebrated \"Victory in Europe\" Day, or VE Day, with parades and dancing in the streets."]]},
+  {id:"pacific", icon:"🌺", title:"War in the Pacific", cards:[
+    ["⚓","Pearl Harbor","On December 7, 1941, Japan made a surprise attack on the U.S. Navy base at Pearl Harbor, Hawaii. President Franklin D. Roosevelt called it \"a date which will live in infamy,\" and the United States joined the war."],
+    ["🛳️","Midway","In June 1942, American code breakers figured out Japan's plan. At the Battle of Midway, the U.S. Navy sank four Japanese aircraft carriers. It was a turning point in the Pacific."],
+    ["🏝️","Island Hopping","American forces captured one Pacific island after another, like stepping stones, to get closer to Japan. Famous battles happened at places like Guadalcanal and Iwo Jima."],
+    ["🕊️","VJ Day","In August 1945, the United States dropped two atomic bombs on the Japanese cities of Hiroshima and Nagasaki, and Japan surrendered soon after. Japan signed the surrender on September 2, 1945, on the battleship USS Missouri, and World War II was over."]]},
+  {id:"home", icon:"🏡", title:"Home Front", cards:[
+    ["🎟️","Rationing","Food like sugar, meat, butter, and coffee, and things like gasoline and tires, were needed for the war, so they were rationed — each family could only buy a limited amount, using stamps from ration books."],
+    ["🥕","Victory Gardens","Millions of families planted \"victory gardens\" in backyards, schoolyards, and parks. They grew a big share of the country's fresh vegetables, so more food could go to soldiers."],
+    ["🔧","Women at Work","With so many men away fighting, millions of women took jobs in factories, building airplanes, ships, and tanks. \"Rosie the Riveter\" became a famous symbol of these hard-working women."],
+    ["♻️","Scrap Drives","Kids collected old metal, rubber, and paper so they could be recycled into war supplies. Even old pots and pans helped!"],
+    ["💔","An Unfair Choice","After Pearl Harbor, the U.S. government forced about 120,000 Japanese Americans, most of them U.S. citizens, to leave their homes and live in guarded camps. It was wrong. In 1988, the government formally apologized and paid the survivors."]]},
+  {id:"heroes", icon:"🦸", title:"Heroes & Helpers", cards:[
+    ["🗣️","Navajo Code Talkers","Navajo Marines sent secret messages using a code based on their own Navajo language. The enemy never broke it! Their code helped win battles like Iwo Jima."],
+    ["🛩️","Tuskegee Airmen","The Tuskegee Airmen were the first Black military pilots in the U.S. Army Air Forces. They flew bravely to protect American bombers, even though they were treated unfairly at home because of their race."],
+    ["🔐","Bletchley Park","At a secret place in England called Bletchley Park, thousands of code breakers, many of them women, worked to crack Germany's \"Enigma\" codes. A math genius named Alan Turing helped design machines to speed up the work."],
+    ["🤲","People Who Helped","Some brave people risked their own safety to hide and rescue Jewish people. Miep Gies helped hide Anne Frank's family. In 1943, people in Denmark helped over 7,000 Jewish people escape by boat to safety in Sweden."]]},
+  {id:"holocaust", icon:"🕯️", title:"The Holocaust", cards:[
+    ["💙","A Hard Topic","This part of history is very sad. It's okay to take a break, and it's a good idea to talk about it with a grown-up."],
+    ["🚫","Hate and Unfair Rules","The Nazis spread hateful lies about Jewish people. They passed unfair rules that took away Jewish people's jobs, schools, homes, and freedom."],
+    ["🕯️","What Happened","During the war, the Nazis forced Jewish people and others into camps. About six million Jewish people were killed, along with millions of other people, such as Roma people and people with disabilities. This is called the Holocaust."],
+    ["📔","Anne Frank's Diary","Anne Frank was a Jewish girl who hid with her family in secret rooms in Amsterdam for about two years. She wrote a diary about her hopes and feelings. Sadly, she was found and died in a camp in 1945, when she was 15. Her father survived and shared her diary, which people all over the world still read."],
+    ["🌷","Why We Remember","We remember the Holocaust to honor the people who were killed, and to learn to stand up against hate, bullying, and unfairness — so it never happens again."]]},
+  {id:"science", icon:"🔬", title:"Science & Technology", cards:[
+    ["📡","Radar","Radar uses radio waves to spot airplanes and ships far away. It got much better during the war — and today it helps pilots, ships, and weather forecasters."],
+    ["💊","Penicillin","Penicillin, a medicine that fights infections, was made in huge amounts for the first time during the war. It saved many soldiers' lives, and it still saves lives today."],
+    ["🖥️","Early Computers","Code breakers and scientists built some of the first electronic computers, like Colossus in Britain and ENIAC in the United States."],
+    ["🚀","Rockets to Space","Germany built the first large rockets as weapons. After the war, some of the same rocket scientists helped the United States build rockets for its space program — including the giant rocket that took astronauts to the Moon."],
+    ["⚛️","Atomic Energy","Scientists learned to release the huge energy inside atoms. It was first used for terrible bombs. Later, people also used atomic energy to make electricity."]]},
+  {id:"after", icon:"🌱", title:"How the World Changed", cards:[
+    ["🌐","The United Nations","In 1945, countries created the United Nations so they could solve problems by talking. In 1948, a team led by Eleanor Roosevelt wrote the Universal Declaration of Human Rights."],
+    ["🏗️","Rebuilding","Many cities in Europe and Asia were in ruins. The United States helped rebuild Europe with a plan called the Marshall Plan, and Japan and Germany rebuilt too."],
+    ["🧱","A Divided World","Germany was split into East and West, and the United States and the Soviet Union became rivals. That was the start of the Cold War."],
+    ["🤝","Enemies Become Friends","Over time, former enemies like the United States, Germany, and Japan became close friends and partners."]]}
+];
+const ww2Tabs=document.getElementById("ww2Tabs"), ww2Panel=document.getElementById("ww2Panel");
+function showTopic(i){
+  ReadAloud.stop();
+  [...ww2Tabs.children].forEach((t,j)=>t.setAttribute("aria-selected", j===i));
+  const tp=WW2_TOPICS[i];
+  ww2Panel.innerHTML = tp.cards.map(c=>'<div class="card2 readable" style="border-left-color:#8b2c00"><h3>'+c[0]+' '+c[1]+'</h3><p>'+c[2]+'</p></div>').join("");
+  ww2Panel.querySelectorAll(".readable").forEach(n=>ReadAloud.mark(n));
+}
+WW2_TOPICS.forEach((tp,i)=>{ const b=document.createElement("button"); b.className="tab"; b.setAttribute("role","tab"); b.textContent=tp.icon+" "+tp.title; b.addEventListener("click",()=>showTopic(i)); ww2Tabs.appendChild(b); });
+
+/* WWII step-by-step map */
+const STEPS = [
+  [21,52.2,"September 1939","Germany invades Poland","Britain and France declare war on Germany. World War II begins in Europe.","eu"],
+  [-0.13,51.5,"1940","The Battle of Britain","German planes bomb British cities in the Blitz, but Britain's pilots hold on and Germany can't invade.","eu"],
+  [-157.95,21.35,"December 7, 1941","Pearl Harbor","Japan attacks the U.S. Navy base in Hawaii. The United States joins the war.","pa"],
+  [-177.4,28.2,"June 1942","The Battle of Midway","The U.S. Navy wins a huge battle near Midway Island — a turning point in the Pacific.","pa"],
+  [160,-9.5,"1942–1943","Guadalcanal","American forces win their first big island battle, starting the island-hopping path toward Japan.","pa"],
+  [44.5,48.7,"1942–1943","Stalingrad","The Soviet army stops a huge German army in a freezing winter — a turning point in Europe.","eu"],
+  [-0.6,49.35,"June 6, 1944","D-Day","Allied soldiers land on the beaches of Normandy, France, and begin freeing Western Europe.","eu"],
+  [141.3,24.8,"February–March 1945","Iwo Jima","U.S. Marines capture this small island after a long, hard battle. Navajo Code Talkers helped send messages.","pa"],
+  [13.4,52.5,"May 8, 1945","VE Day","Germany surrenders. People celebrate Victory in Europe Day!","eu"],
+  [139.8,35.5,"August – September 2, 1945","Japan surrenders","After two atomic bombs are dropped on Japanese cities, Japan surrenders. The surrender is signed in Tokyo Bay on September 2, 1945. World War II is over.","pa"]
+];
+const ww2Map=document.getElementById("ww2Map"), stCaption=document.getElementById("stCaption");
+el("rect",{x:0,y:0,width:840,height:400,fill:"#cfe6f5"},ww2Map);
+LANDS.forEach(c=>el("polygon",{points:poly(c),fill:"#e8e2cf",stroke:"#8a7d5a","stroke-width":1.5,"stroke-linejoin":"round"},ww2Map));
+[["EUROPE",15,58],["ASIA",95,50],["Pacific Ocean",-150,0],["Atlantic Ocean",-40,25]].forEach(([t,lo,la])=>{ const [x,y]=P(lo,la); const n=el("text",{x:x,y:y,"text-anchor":"middle","font-size":14,"font-weight":"bold",fill:"#6b5d3a",opacity:.8},ww2Map); n.textContent=t; });
+const legend=el("g",{transform:"translate(14 330)"},ww2Map);
+el("rect",{x:0,y:0,width:190,height:58,rx:8,fill:"#fff",opacity:.9},legend);
+el("rect",{x:10,y:10,width:16,height:16,fill:"#0072B2",stroke:"#000"},legend); const l1=el("text",{x:32,y:23,"font-size":14,fill:"#000"},legend); l1.textContent="Europe (square)";
+el("circle",{cx:18,cy:42,r:8,fill:"#D55E00",stroke:"#000"},legend); const l2=el("text",{x:32,y:47,"font-size":14,fill:"#000"},legend); l2.textContent="Pacific (circle)";
+const stLayer=el("g",{},ww2Map);
+let step=0;
+function drawStep(speak){
+  stLayer.innerHTML="";
+  STEPS.forEach((s,i)=>{
+    if(i>step) return;
+    const [x,y]=P(s[0],s[1]), cur=i===step, r=cur?12:8, col=s[5]==="eu"?"#0072B2":"#D55E00";
+    const g=el("g",{opacity:cur?1:.55},stLayer);
+    if(s[5]==="eu") el("rect",{x:x-r,y:y-r,width:2*r,height:2*r,fill:col,stroke:"#000","stroke-width":2},g);
+    else el("circle",{cx:x,cy:y,r:r,fill:col,stroke:"#000","stroke-width":2},g);
+    const t=el("text",{x:x,y:y+5,"text-anchor":"middle","font-size":cur?14:11,"font-weight":"bold",fill:"#fff"},g); t.textContent=i+1;
+    if(cur){ const lb=el("text",{x:x+16,y:y-12,"font-size":15,"font-weight":"bold",fill:"#000",stroke:"#fff","stroke-width":4,"paint-order":"stroke"},g); lb.textContent=s[3]; if(x>650){ lb.setAttribute("x",x-16); lb.setAttribute("text-anchor","end"); } }
+  });
+  const s=STEPS[step];
+  ReadAloud.stopIf(stCaption);
+  stCaption.innerHTML='<h3>'+(s[5]==="eu"?"■ Europe":"● Pacific")+' · '+s[2]+' — '+s[3]+'</h3><p>'+s[4]+'</p>';
+  stCaption.dataset.say=s[2]+". "+s[3]+". "+s[4];
+  ReadAloud.mark(stCaption);
+  document.getElementById("stCount").textContent="Step "+(step+1)+" of "+STEPS.length;
+  document.getElementById("stPrev").disabled=step===0;
+  document.getElementById("stNext").disabled=step===STEPS.length-1;
+  if(speak) ReadAloud.speakEl(stCaption);
+}
+document.getElementById("stPrev").addEventListener("click",()=>{ if(step>0){ step--; drawStep(true); } });
+document.getElementById("stNext").addEventListener("click",()=>{ if(step<STEPS.length-1){ step++; drawStep(true); if(step===STEPS.length-1){ confetti(10); } } });
+
+/* code-breaking puzzle (Caesar shift) */
+const MESSAGES=["VICTORY GARDENS GROW FOOD","SAVE YOUR SCRAP METAL","MEET AT THE HARBOR AT DAWN","THE CODE IS SAFE","LOOSE LIPS SINK SHIPS"];
+let mIdx=-1, key=3, dial=0, solved=false;
+function shiftText(t,k){ return t.replace(/[A-Z]/g,ch=>String.fromCharCode((ch.charCodeAt(0)-65+k+26*10)%26+65)); }
+function newMessage(){
+  let i; do{ i=Math.floor(Math.random()*MESSAGES.length); }while(i===mIdx); mIdx=i;
+  key=1+Math.floor(Math.random()*9); dial=0; solved=false;
+  document.getElementById("cSecret").textContent="🔒 "+shiftText(MESSAGES[mIdx],key);
+  updateCipher(false);
+}
+function updateCipher(speak){
+  const out=shiftText(MESSAGES[mIdx],key-dial), o=document.getElementById("cOut"), st=document.getElementById("cStatus");
+  o.textContent=out; document.getElementById("cShift").textContent="Decoder: "+dial+" step"+(dial===1?"":"s")+" back";
+  const ok = dial===key; o.classList.toggle("solved",ok);
+  if(ok && !solved){ solved=true; st.textContent="🔓 Code cracked! The message says: "+MESSAGES[mIdx]; st.style.color="var(--blue)"; st.classList.add("readable"); st.dataset.say="Code cracked! The message says: "+MESSAGES[mIdx].toLowerCase(); ReadAloud.mark(st); beep(HAPPY); confetti(12); if(speak) ReadAloud.speakEl(st); }
+  else if(!ok){ solved=false; st.textContent = dial===0 ? "Use the buttons to turn the decoder." : "Keep turning… does it make sense yet?"; st.style.color=""; st.classList.remove("readable"); }
+}
+document.getElementById("cPlus").addEventListener("click",()=>{ dial=(dial+1)%26; updateCipher(true); });
+document.getElementById("cMinus").addEventListener("click",()=>{ dial=(dial+25)%26; updateCipher(true); });
+document.getElementById("cNext").addEventListener("click",newMessage);
+
+const WW2_QUIZ=[
+  {q:"What were victory gardens?", a:["Gardens where soldiers trained","Vegetable gardens families grew so more food could go to soldiers","Flower gardens for parades","Gardens on battleships"], c:1, yes:"Yes! Families grew their own vegetables to help.", no:"Victory gardens were vegetable gardens families grew so more food could go to soldiers."},
+  {q:"Who were the Navajo Code Talkers?", a:["Marines who sent secret messages using a code based on the Navajo language","Radio announcers","Spies for the Axis","Pilots from England"], c:0, yes:"Correct! And the enemy never broke their code.", no:"They were Navajo Marines who sent secret messages using a code based on their language."},
+  {q:"Which 1942 battle was a big U.S. Navy victory in the Pacific?", a:["Gettysburg","Midway","Agincourt","Yorktown"], c:1, yes:"Right! Code breakers helped the Navy win at Midway.", no:"It was the Battle of Midway."},
+  {q:"Why do we remember the Holocaust?", a:["To honor the people who were killed and to stand up against hate","Because it was a holiday","Because it was a battle Germany won","We don't need to remember it"], c:0, yes:"Yes. Remembering helps make sure it never happens again.", no:"We remember to honor the people who were killed and to learn to stand up against hate."}
+];
+
+/* ---------- init ---------- */
+document.querySelectorAll("#intro .card2, #explore > .card2, #peace .card2, .grownups, .ww2-help, .step-help, .cipher-help").forEach(n=>n.classList.add("readable"));
+ReadAloud.markAll();
+selectWar(0,false); setView(-350,2030); buildGame("cause");
+makeQuiz(document.getElementById("quizBox"), QUIZ, "PERFECT! You're a true historian! 🏆");
+showTopic(0); drawStep(false); newMessage();
+makeQuiz(document.getElementById("ww2Quiz"), WW2_QUIZ, "PERFECT! You're a WWII expert! 🏆");
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Christopher Columbus: Voyage of 1492</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet Bach */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- Columbus theme overrides ---- */
+  body{background:linear-gradient(180deg,#d6f0ff 0%,#bfe3f5 30%,#fff1c9 65%,#ffe0cc 100%)}
+  header h1{color:#0b5d8c;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a:nth-child(7){background:#0b5d8c} nav a:nth-child(8){background:#8d5a2b}
+  nav a{font-size:17px;padding:8px 12px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:22px;padding:10px;border:4px solid #0b5d8c}
+  #map{width:100%;height:auto;display:block;border-radius:14px}
+  .map-caption{margin-top:12px;background:#fff;border-radius:18px;padding:14px 18px;border:4px solid var(--teal);min-height:90px}
+  .map-caption h3{margin:0 0 4px;color:#0b5d8c;font-size:24px}
+  .map-caption p{margin:0}
+  .ships{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:16px}
+  .ship-btn{background:#fff;color:var(--ink);border:4px solid #0b5d8c;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .ship-btn.active{background:#0b5d8c;color:#fff}
+  .ship-btn svg{width:120px;height:90px}
+  .ship-info{margin-top:12px;background:#fff;border-radius:18px;padding:14px 18px;border:4px dashed #0b5d8c;min-height:80px}
+  .ship-info h3{margin:0 0 4px;color:#0b5d8c}
+  .ship-info p{margin:0}
+  /* life on ship */
+  .tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .tool{background:#fff;border-radius:20px;padding:16px;border:4px solid var(--orange)}
+  .tool h3{margin:0 0 8px;font-size:26px;color:#8d5a2b}
+  .tool .center{text-align:center}
+  .meter{height:26px;background:#eee;border-radius:13px;overflow:hidden;margin:10px 0}
+  .meter > div{height:100%;width:0;background:linear-gradient(90deg,var(--teal),var(--green));transition:width .1s}
+  .status{font-weight:bold;min-height:32px;text-align:center}
+  .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:8px 0}
+  .dr-out{font-size:26px;font-weight:bold;color:#0b5d8c;text-align:center;margin:8px 0}
+  input[type=range]{width:200px;vertical-align:middle}
+  /* two sides & myth */
+  .cards2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--teal)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .card2.taino{border-left-color:#c2562f}
+  .card2.think{border-left-color:var(--purple);background:#f3ebff}
+  .myth{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:10px}
+  .myth .bad{background:#ffe1e7;border:4px solid var(--red);border-radius:18px;padding:16px}
+  .myth .good{background:#e2f7ea;border:4px solid var(--green);border-radius:18px;padding:16px}
+  .myth h3{margin:0 0 6px}
+  .stamp{display:inline-block;transform:rotate(-8deg);border:4px solid var(--red);color:var(--red);font-weight:900;padding:2px 10px;border-radius:8px;letter-spacing:2px}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>⛵ Christopher Columbus 🌎</h1>
+  <p>Sail across the ocean in 1492 — and learn the whole story!</p>
+</header>
+<nav>
+  <a href="#meet">👋 Meet</a>
+  <a href="#timeline">📜 Timeline</a>
+  <a href="#voyage">🗺️ Voyage Map</a>
+  <a href="#ship">🧭 Ship Life</a>
+  <a href="#twosides">🤝 Two Sides</a>
+  <a href="#myth">🌍 Myth Buster</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#funfacts">⭐ Fun Facts</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+
+<!-- MEET -->
+<section id="meet">
+  <h2>👋 Meet Christopher Columbus</h2>
+  <div class="meet">
+    <svg viewBox="0 0 260 300" width="260" height="300" role="img" aria-label="Cartoon drawing of Columbus in a sailor's cap, holding a map">
+      <rect x="0" y="0" width="260" height="300" rx="30" fill="#bfe3f5"/>
+      <path d="M0 240 Q30 225 60 240 T120 240 T180 240 T240 240 T300 240 V300 H0Z" fill="#3a86ff" opacity=".5"/>
+      <!-- body -->
+      <path d="M55 300 Q65 210 130 200 Q195 210 205 300 Z" fill="#8d2b2b"/>
+      <path d="M120 205 L130 240 L140 205 Z" fill="#fff"/>
+      <!-- hair -->
+      <path d="M80 120 Q75 190 95 200 L165 200 Q185 190 180 120 Z" fill="#c9c3b8"/>
+      <!-- face -->
+      <ellipse cx="130" cy="140" rx="48" ry="56" fill="#ffd7b5"/>
+      <!-- cap -->
+      <path d="M78 110 Q130 50 182 110 Z" fill="#1d3557"/>
+      <rect x="74" y="104" width="112" height="14" rx="7" fill="#14213d"/>
+      <!-- eyes -->
+      <ellipse cx="112" cy="138" rx="6" ry="7" fill="#2b2140"/><ellipse cx="148" cy="138" rx="6" ry="7" fill="#2b2140"/>
+      <circle cx="114" cy="136" r="2" fill="#fff"/><circle cx="150" cy="136" r="2" fill="#fff"/>
+      <circle cx="100" cy="160" r="9" fill="#ffb3b3" opacity=".7"/><circle cx="160" cy="160" r="9" fill="#ffb3b3" opacity=".7"/>
+      <path d="M130 142 Q137 156 128 158" stroke="#c98e6b" stroke-width="3" fill="none"/>
+      <path d="M114 174 Q130 186 146 174" stroke="#b04a4a" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- map scroll -->
+      <g transform="translate(150 225) rotate(-10)">
+        <rect x="0" y="0" width="80" height="55" rx="6" fill="#f4e3b5" stroke="#8d5a2b" stroke-width="3"/>
+        <path d="M10 40 Q30 15 50 30 T72 14" stroke="#ef476f" stroke-width="3" fill="none" stroke-dasharray="5 4"/>
+        <text x="62" y="48" font-size="14" fill="#8d5a2b">✕</text>
+      </g>
+    </svg>
+    <div class="facts">
+      <ul>
+        <li>🎂 Born around <b>1451</b> in <b>Genoa</b>, a busy port city in what is now <b>Italy</b>.</li>
+        <li>⚓ He went to sea when he was young and became a <b>skilled sailor</b>. Later he worked with his brother making maps in Portugal.</li>
+        <li>💡 His big idea: the Earth is round, so if you sail <b>west</b>, you can reach <b>Asia</b> and its spices and gold!</li>
+        <li>📏 His big mistake: he thought the Earth was <b>much smaller</b> than it really is. Asia was much, much farther away.</li>
+        <li>👑 The king of Portugal said no. But <b>Queen Isabella and King Ferdinand of Spain</b> said yes and paid for his trip in 1492.</li>
+        <li>⛵ He sailed with <b>three ships</b> — the Niña, the Pinta, and the Santa María — and about <b>90 sailors</b>.</li>
+      </ul>
+      <div class="bubble">"Is Columbus his real name?" Sort of! In Italian he was <b>Cristoforo Colombo</b>, and in Spanish he is called <b>Cristóbal Colón</b>.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <h2>📜 Columbus's Life Timeline</h2>
+  <p>Tap a year to travel through his life! ⏳</p>
+  <div class="tl-track" id="tlTrack"></div>
+  <div class="tl-card" id="tlCard" aria-live="polite"></div>
+  <div class="tl-nav">
+    <button id="tlPrev">⬅ Back</button>
+    <button id="tlNext">Next ➡</button>
+  </div>
+</section>
+
+<!-- VOYAGE MAP -->
+<section id="voyage">
+  <h2>🗺️ Track the Voyage of 1492</h2>
+  <p>Press <b>Sail!</b> to watch the route, or go one stop at a time. The <b style="color:#ef476f">red line</b> is the trip west; the <b style="color:#8338ec">purple dashes</b> are the trip home.</p>
+  <div class="controls">
+    <button id="sailBtn" style="background:var(--green)">⛵ Sail 1492!</button>
+    <button id="stepBtn" style="background:var(--blue)">⏭ Next stop</button>
+    <button id="resetBtn" style="background:var(--red)">↺ Start over</button>
+  </div>
+  <div class="map-wrap" style="margin-top:12px"><svg id="map" viewBox="0 0 900 490" role="img" aria-label="Map of the Atlantic Ocean showing Columbus's 1492 route from Spain to the Caribbean and back"></svg></div>
+  <div class="map-caption" id="mapCaption" aria-live="polite"></div>
+  <h3 style="margin:18px 0 0">🚢 Meet the ships — tap one!</h3>
+  <div class="ships" id="ships"></div>
+  <div class="ship-info" id="shipInfo"><h3>Pick a ship!</h3><p>Tap the Niña, the Pinta, or the Santa María to learn about it.</p></div>
+</section>
+
+<!-- LIFE ON THE SHIP -->
+<section id="ship">
+  <h2>🧭 Life on the Ship</h2>
+  <p class="note-box">There was no GPS in 1492! Sailors found their way with a <b>compass</b>, kept time with a <b>sand glass</b>, and figured out where they were with <b>dead reckoning</b>. Try all three!</p>
+  <div class="tools">
+    <div class="tool">
+      <h3>🧭 Steer by Compass</h3>
+      <p class="tool-text">A compass needle always points north. Columbus's big plan was simple: <b>sail west</b>. The wind keeps pushing your ship off course — keep the arrow in the <b style="color:var(--green)">green zone (West)</b> to reach land!</p>
+      <div class="center">
+        <svg id="compass" viewBox="0 0 240 240" width="240" height="240" aria-label="Compass"></svg>
+      </div>
+      <div class="meter"><div id="steerMeter"></div></div>
+      <div class="status" id="steerStatus">Press Start to set sail!</div>
+      <div class="row">
+        <button id="turnLeft" style="background:var(--purple)">⟲ Left</button>
+        <button id="steerStart" style="background:var(--green)">▶ Start</button>
+        <button id="turnRight" style="background:var(--purple)">Right ⟳</button>
+      </div>
+      <p style="font-size:16px;text-align:center;margin:0">Tip: on a computer you can also use the ← → arrow keys.</p>
+    </div>
+    <div class="tool">
+      <h3>⏳ Turn the Sand Glass</h3>
+      <p class="tool-text">Ships used a <b>sand glass</b> (like an hourglass) that took <b>half an hour</b> to run out. A ship's boy had to turn it over every time, day and night, and call out so everyone knew the time. Eight turns made one <b>4-hour watch</b> (work shift). Here, the sand runs super fast!</p>
+      <div class="center"><svg id="glass" viewBox="0 0 120 180" width="120" height="180" aria-label="Sand glass"></svg></div>
+      <div class="status" id="glassStatus">Turns: 0 of 8</div>
+      <div class="row"><button id="glassBtn" style="background:var(--orange)">🔄 Turn the glass</button></div>
+    </div>
+    <div class="tool">
+      <h3>📐 Dead Reckoning</h3>
+      <p class="tool-text"><b>Dead reckoning</b> means figuring out where you are using math: how <b>fast</b> you're going × how <b>long</b> you've sailed = how <b>far</b> you went. Add the compass direction, and you can mark your spot on the map!</p>
+      <p>🚤 Speed: <input type="range" id="drSpeed" min="2" max="10" value="5"> <b id="drSpeedOut">5</b> miles per hour</p>
+      <p>⏱️ Time: <input type="range" id="drHours" min="1" max="24" value="4"> <b id="drHoursOut">4</b> hours</p>
+      <div class="dr-out" id="drOut"></div>
+      <div class="meter"><div id="drMeter" style="background:linear-gradient(90deg,var(--gold),var(--orange))"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TWO SIDES -->
+<section id="twosides">
+  <h2>🤝 Two Sides of the Story</h2>
+  <p>History is like a coin — it has more than one side. Here's the part of the story told by the people who were already there.</p>
+  <div class="cards2">
+    <div class="card2 taino"><h3>🏝️ People Already Lived There</h3><p>The islands where Columbus landed were home to the <b>Taíno</b> people (say "tah-EE-no"). They had villages, farms, canoes, leaders, games, and art. Millions of people lived across the Americas.</p></div>
+    <div class="card2 taino"><h3>🔍 "Discovered"?</h3><p>Columbus didn't find an empty land. It was new to <b>Europeans</b>, but it was already <b>home</b> to many people. That's why many people now say he <b>"arrived in"</b> or <b>"reached"</b> the Americas.</p></div>
+    <div class="card2 taino"><h3>💔 Hard and Sad Times</h3><p>Columbus and the Spanish settlers treated many Taíno people very unfairly and cruelly. They forced people to work, took some as slaves, and brought new <b>diseases</b> the Taíno's bodies had never fought before. Many, many Taíno died.</p></div>
+    <div class="card2"><h3>🎉 Two Holidays</h3><p>In the United States, the second Monday in October is <b>Columbus Day</b>. Many Italian Americans celebrate it with pride. Many places also celebrate <b>Indigenous Peoples' Day</b> to honor the first people of the Americas and remember their story too.</p></div>
+    <div class="card2"><h3>🌺 The Taíno Today</h3><p>Taíno culture didn't disappear! Many people in Puerto Rico, the Dominican Republic, and Cuba have Taíno ancestors, and we still use Taíno words like <b>hammock</b>, <b>canoe</b>, and <b>hurricane</b>.</p></div>
+    <div class="card2 think"><h3>💭 Think About It</h3><p>Columbus was a brave and very skilled sailor. He also did things that hurt a lot of people. Both are true! How do you think the Taíno felt when strangers arrived and said their home now belonged to Spain?</p></div>
+  </div>
+</section>
+
+<!-- MYTH -->
+<section id="myth">
+  <h2>🌍 Myth Buster: Flat Earth?</h2>
+  <div class="myth">
+    <div class="bad"><div class="stamp">MYTH</div><h3>"Everyone thought the Earth was flat, and Columbus proved it was round!"</h3><p>You might hear this story, but it's <b>not true</b>.</p></div>
+    <div class="good"><div class="stamp" style="color:var(--green);border-color:var(--green)">FACT</div><h3>Educated people already knew the Earth was round.</h3><p>Ancient Greek thinkers figured it out more than 2,000 years earlier! A man named <b>Eratosthenes</b> even measured how big around it was, and he got pretty close. The real argument in 1492 was about the Earth's <b>size</b>. Columbus's critics said Asia was too far to reach by sailing west — and <b>they were right</b>! He only survived because the Americas were in the way.</p></div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <h2>❓ Columbus Quiz Challenge</h2>
+  <div id="quizBox"></div>
+</section>
+
+<!-- FUN FACTS -->
+<section id="funfacts">
+  <h2>⭐ Fun Facts (tap a card to flip!)</h2>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+</main>
+<footer>Made for curious kids 🌎 · Drawings and map made just for this page</footer>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- small sound helper (only after clicks) ---------- */
+let actx = null;
+function beep(notes, type){
+  try{
+    const AC = window.AudioContext || window.webkitAudioContext; if(!AC) return;
+    if(!actx) actx = new AC(); if(actx.state==="suspended") actx.resume();
+    const t0 = actx.currentTime;
+    notes.forEach((f,i)=>{
+      const o=actx.createOscillator(), g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f;
+      const t=t0+i*0.1; g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.2,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3);
+      o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32);
+    });
+  }catch(e){}
+}
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+
+/* ---------- TIMELINE ---------- */
+const EVENTS = [
+  {year:"1451", icon:"👶", title:"Born in Genoa", text:"Christopher Columbus is born around 1451 in Genoa, a city full of ships and sailors in what is now Italy."},
+  {year:"1476", icon:"🏊", title:"Shipwreck and a Big Swim", text:"Columbus's ship is attacked and sinks off the coast of Portugal. The story goes that he grabbed an oar and swam about 6 miles to shore! He then lived in Portugal."},
+  {year:"1492", icon:"⛵", title:"Setting Sail (August 3)", text:"With money from Queen Isabella and King Ferdinand of Spain, Columbus leaves the town of Palos, Spain, with three ships: the Niña, the Pinta, and the Santa María."},
+  {year:"1492", icon:"🏝️", title:"Land! (October 12)", text:"After more than a month on the open ocean, the ships reach an island in the Bahamas. The Taíno people who lived there called it Guanahaní. Columbus thought he was near Asia."},
+  {year:"1493", icon:"🚢", title:"Second Voyage", text:"Columbus returns with 17 ships and over a thousand men to start Spanish settlements on the island of Hispaniola."},
+  {year:"1498", icon:"🌎", title:"Third Voyage", text:"Columbus reaches the coast of South America (today's Venezuela). He ruled the settlers so badly that in 1500 he was arrested and sent back to Spain in chains!"},
+  {year:"1502", icon:"🌊", title:"Fourth and Last Voyage", text:"Columbus explores the coast of Central America. His worm-eaten ships fall apart, and he is stuck on the island of Jamaica for about a year before being rescued."},
+  {year:"1506", icon:"🕯️", title:"The End of His Journey", text:"Columbus dies in Valladolid, Spain. He still believed he had reached islands near Asia — he never knew he had reached continents Europeans didn't know about."}
+];
+let tlIndex = 0;
+const tlTrack = document.getElementById("tlTrack"), tlCard = document.getElementById("tlCard");
+EVENTS.forEach((e,i)=>{
+  const b = document.createElement("button");
+  b.className = "tl-dot"; b.textContent = e.icon+" "+e.year;
+  b.addEventListener("click",()=>showEvent(i, true));
+  tlTrack.appendChild(b);
+});
+function showEvent(i, scroll){
+  tlIndex = Math.max(0, Math.min(EVENTS.length-1, i));
+  const e = EVENTS[tlIndex];
+  tlCard.innerHTML = '<div class="big">'+e.icon+'</div><div><h3>'+e.year+' — '+e.title+'</h3><p>'+e.text+'</p></div>';
+  ReadAloud.stopIf(tlCard); ReadAloud.mark(tlCard);
+  [...tlTrack.children].forEach((b,j)=>b.classList.toggle("active", j===tlIndex));
+  if(scroll) tlTrack.children[tlIndex].scrollIntoView({behavior:"smooth", block:"nearest", inline:"center"});
+  document.getElementById("tlPrev").disabled = tlIndex===0;
+  document.getElementById("tlNext").disabled = tlIndex===EVENTS.length-1;
+}
+document.getElementById("tlPrev").addEventListener("click",()=>showEvent(tlIndex-1, true));
+document.getElementById("tlNext").addEventListener("click",()=>showEvent(tlIndex+1, true));
+showEvent(0, false);
+
+/* ---------- MAP ---------- */
+const SVGNS = "http://www.w3.org/2000/svg";
+const map = document.getElementById("map");
+// simple projection: longitude -90..0, latitude 45..10
+function P(lon, lat){ return [(lon+90)*10, (45-lat)*14]; }
+function el(tag, attrs, parent){ const n=document.createElementNS(SVGNS,tag); for(const k in attrs) n.setAttribute(k, attrs[k]); (parent||map).appendChild(n); return n; }
+function poly(coords){ return coords.map(c=>P(c[0],c[1]).map(v=>v.toFixed(1)).join(",")).join(" "); }
+const defs = el("defs",{});
+const grad = el("linearGradient",{id:"sea",x1:"0",y1:"0",x2:"0",y2:"1"},defs);
+el("stop",{offset:"0","stop-color":"#7cc6ec"},grad); el("stop",{offset:"1","stop-color":"#3a9bd5"},grad);
+el("rect",{x:0,y:0,width:900,height:490,fill:"url(#sea)"});
+// faint grid
+for(let lon=-80; lon<0; lon+=10){ const [x]=P(lon,0); el("line",{x1:x,y1:0,x2:x,y2:490,stroke:"#fff",opacity:.15}); }
+for(let lat=40; lat>10; lat-=10){ const y=P(0,lat)[1]; el("line",{x1:0,y1:y,x2:900,y2:y,stroke:"#fff",opacity:.15}); }
+const LAND = {fill:"#cfe8a9", stroke:"#6b8f3c", "stroke-width":2, "stroke-linejoin":"round"};
+const lands = [
+  // Iberia (Spain & Portugal)
+  [[-9,43.5],[-1.8,43.4],[0,42.7],[0,38.8],[-0.3,38.4],[-2,36.7],[-5.6,36],[-6.4,36.8],[-7.4,37.2],[-8.9,37],[-8.8,38.7],[-9.5,39.4],[-8.8,42],[-9.3,43]],
+  // North-west Africa
+  [[-5.9,35.8],[-1,35.2],[0,35.8],[0,10],[-14.5,10],[-15,10.9],[-16.7,12.4],[-17.5,14.7],[-16.5,16],[-16.1,19],[-17,21],[-16.1,24],[-14.4,26.2],[-13,27.7],[-11,28.7],[-9.6,30.4],[-9.8,32],[-6.8,34]],
+  // North America (east coast, Florida, Gulf)
+  [[-90,45],[-66,45],[-67,44.5],[-70,43.8],[-70.6,42.6],[-70,41.6],[-74,40.5],[-75.5,37],[-76,35],[-79,33.8],[-81,32],[-81.4,30.7],[-80.6,28.5],[-80,27],[-80.1,25.3],[-81.1,25.1],[-81.8,26.7],[-82.7,28],[-83.7,29.9],[-85,29.7],[-88,30.4],[-90,29.3]],
+  // Yucatan / Central America edge
+  [[-90,21.2],[-87,21.5],[-86.8,20],[-87.5,18.5],[-88.2,16],[-86,15.9],[-84,15.9],[-83.2,14.5],[-83.6,11],[-83,10],[-90,10]],
+  // South America (north coast)
+  [[-77,10],[-75.5,10.6],[-73,11.3],[-71.5,12.4],[-71,11],[-68,10.5],[-64,10.6],[-62,10.6],[-61,10]],
+  // Cuba
+  [[-84.9,21.9],[-83,22.9],[-81,23.2],[-78,22.5],[-76,21.2],[-74.2,20.2],[-75.6,19.9],[-77.7,19.9],[-78,20.7],[-80.5,21.8],[-82,22.2]],
+  // Hispaniola
+  [[-74.4,19.9],[-72.6,19.9],[-70,19.7],[-68.4,18.6],[-70,18.2],[-71.4,17.7],[-72.8,18.2],[-74.4,18.4]],
+  // Jamaica
+  [[-78.3,18.4],[-76.3,18.2],[-76.8,17.9],[-78,18.1]],
+  // Puerto Rico
+  [[-67.2,18.5],[-65.6,18.4],[-65.6,18],[-67.2,18]]
+];
+lands.forEach(c=>el("polygon", Object.assign({points:poly(c)}, LAND)));
+// small islands: Bahamas, Canaries, Azores
+[[-77.5,25],[-76.3,24.5],[-75.5,23.6],[-74.5,24],[-73.6,22.4],[-78,24.2]].forEach(c=>{ const [x,y]=P(c[0],c[1]); el("ellipse",Object.assign({cx:x,cy:y,rx:6,ry:4},LAND)); });
+[[-18,28.6],[-17.2,28.1],[-15.6,28],[-16.5,28.3],[-14,28.4],[-13.6,29]].forEach(c=>{ const [x,y]=P(c[0],c[1]); el("circle",Object.assign({cx:x,cy:y,r:4},LAND)); });
+[[-25.2,37.7],[-27.2,38.7],[-28.5,38.5],[-25.1,37]].forEach(c=>{ const [x,y]=P(c[0],c[1]); el("circle",Object.assign({cx:x,cy:y,r:4},LAND)); });
+function label(t, lon, lat, size, color, extra){ const [x,y]=P(lon,lat); const n=el("text",Object.assign({x:x,y:y,"font-size":size||16,"font-weight":"bold",fill:color||"#2b4d1a","text-anchor":"middle","font-family":"Trebuchet MS, sans-serif"},extra||{})); n.textContent=t; return n; }
+label("SPAIN",-3.4,39.6,18); label("PORTUGAL",-8.3,40.8,10);
+label("AFRICA",-8,24,22);
+label("NORTH AMERICA",-81.5,39,17);
+label("SOUTH AMERICA",-67,10.4,13);
+label("ATLANTIC OCEAN",-45,33,30,"#ffffff",{opacity:.85,"letter-spacing":"4"});
+label("Canary Islands",-16,26.6,13,"#14213d");
+label("Azores",-26.5,40,13,"#14213d");
+label("Bahamas",-71.5,26,13,"#14213d");
+label("Cuba",-79.5,21,13,"#2b4d1a");
+label("Hispaniola",-71.2,18.35,11,"#2b4d1a");
+// compass rose decoration
+(function(){ const g=el("g",{transform:"translate(70 410)"}); el("circle",{r:30,fill:"#fff",opacity:.85},g);
+  el("polygon",{points:"0,-26 6,0 0,26 -6,0",fill:"#ef476f"},g); el("polygon",{points:"-26,0 0,6 26,0 0,-6",fill:"#14213d"},g);
+  const n=el("text",{y:-32,"text-anchor":"middle","font-size":14,"font-weight":"bold",fill:"#14213d"},g); n.textContent="N"; })();
+
+// Route waypoints [lon, lat, stop caption or null]
+const ROUTE = [
+  [-6.9,37.2,{t:"August 3, 1492 — Leaving Palos, Spain",d:"Early in the morning, the Niña, the Pinta, and the Santa María sail out from the little port of Palos with about 90 sailors."}],
+  [-12,33,null],
+  [-17.2,28.1,{t:"August–September — The Canary Islands",d:"The ships stop at Spain's Canary Islands to fix the Pinta's broken rudder and load up on food and water. On September 6 they head west into the unknown."}],
+  [-35,28.2,null],
+  [-52,27.2,{t:"September–October — Weeks of Open Ocean",d:"Day after day, nothing but water! The sailors grew scared and grumpy. They wanted to turn back, but Columbus kept going west."}],
+  [-68,25.2,null],
+  [-74.5,24,{t:"October 12, 1492 — Land Ho!",d:"A lookout on the Pinta spots land. They reach an island in the Bahamas that the Taíno called Guanahaní. Columbus named it San Salvador and claimed it for Spain."}],
+  [-75.6,22.6,null],
+  [-76,21.3,{t:"October 28 — Cuba",d:"Columbus reaches Cuba. He was sure he was close to China or Japan!"}],
+  [-74.6,20.3,null],
+  [-73.4,20,{t:"December 5 — Hispaniola",d:"The ships reach a big island Columbus named Hispaniola. Today it is home to Haiti and the Dominican Republic."}],
+  [-72.2,19.9,{t:"December 25, 1492 — Christmas Shipwreck!",d:"Late on Christmas Eve, the Santa María runs onto a coral reef and can't be saved. Its wood is used to build a small fort called La Navidad, which means Christmas."}],
+  [-69.3,19.6,null],
+  [-62,27,null],
+  [-48,34.5,null],
+  [-25.2,37.2,{t:"February 1493 — Storm Near the Azores",d:"On the way home, terrible storms toss the little Niña and Pinta around. The Niña reaches the Azores islands."}],
+  [-9.1,38.7,{t:"March 4, 1493 — Blown to Lisbon",d:"Another storm pushes the Niña to Lisbon, Portugal, where Columbus meets the king of Portugal."}],
+  [-6.9,37.2,{t:"March 15, 1493 — Home Again!",d:"The Niña sails back into Palos, Spain. The Pinta arrives later that same day. Columbus hurries to tell the queen and king about his trip."}]
+];
+const RETURN_FROM = 11; // waypoints after this index are the trip home
+const PTS = ROUTE.map(r=>P(r[0],r[1]));
+// full faint route
+el("polyline",{points:PTS.slice(0,RETURN_FROM+1).map(p=>p.join(",")).join(" "),fill:"none",stroke:"#fff","stroke-width":3,"stroke-dasharray":"2 8",opacity:.6});
+el("polyline",{points:PTS.slice(RETURN_FROM).map(p=>p.join(",")).join(" "),fill:"none",stroke:"#fff","stroke-width":3,"stroke-dasharray":"2 8",opacity:.6});
+const trailOut = el("polyline",{points:"",fill:"none",stroke:"#ef476f","stroke-width":5,"stroke-linecap":"round","stroke-linejoin":"round"});
+const trailHome = el("polyline",{points:"",fill:"none",stroke:"#8338ec","stroke-width":5,"stroke-dasharray":"12 8","stroke-linecap":"round"});
+// stop markers
+const stopDots = [];
+ROUTE.forEach((r,i)=>{ if(r[2]){ const [x,y]=PTS[i]; stopDots[i]=el("circle",{cx:x,cy:y,r:7,fill:"#fff",stroke:"#14213d","stroke-width":3}); } });
+const wreck = (function(){ const [x,y]=PTS[RETURN_FROM]; const t=el("text",{x:x+8,y:y+26,"font-size":22,opacity:0}); t.textContent="💥"; return t; })();
+// ship marker
+const shipG = el("g",{});
+el("path",{d:"M-18 4 L18 4 L12 14 L-12 14 Z",fill:"#8d5a2b",stroke:"#4a2e12","stroke-width":2},shipG);
+el("line",{x1:0,y1:4,x2:0,y2:-22,stroke:"#4a2e12","stroke-width":3},shipG);
+el("path",{d:"M2 -20 Q16 -10 2 0 Z",fill:"#fff",stroke:"#aaa"},shipG);
+el("path",{d:"M-2 -18 Q-14 -9 -2 0 Z",fill:"#fff",stroke:"#aaa"},shipG);
+el("path",{d:"M0 -22 L10 -26 L0 -28 Z",fill:"#ef476f"},shipG);
+
+// cumulative lengths
+const segLen = []; let total = 0;
+for(let i=0;i<PTS.length-1;i++){ const d=Math.hypot(PTS[i+1][0]-PTS[i][0],PTS[i+1][1]-PTS[i][1]); segLen.push(d); total+=d; }
+const cum=[0]; segLen.forEach((d,i)=>cum.push(cum[i]+d));
+let pos = 0; // distance along route
+let anim = null, targetPos = 0, pausing = false;
+const caption = document.getElementById("mapCaption");
+function setCaption(stop){
+  ReadAloud.stopIf(caption);
+  caption.innerHTML = stop ? '<h3>'+stop.t+'</h3><p>'+stop.d+'</p>' : '<h3>Ready to sail?</h3><p>Press "Sail 1492!" to cross the Atlantic Ocean with Columbus.</p>';
+  ReadAloud.mark(caption);
+}
+function pointAt(dist){
+  dist = Math.max(0, Math.min(total, dist));
+  let i = 0; while(i<segLen.length-1 && cum[i+1] < dist) i++;
+  const f = segLen[i] ? (dist-cum[i])/segLen[i] : 0;
+  return {i, x:PTS[i][0]+(PTS[i+1][0]-PTS[i][0])*f, y:PTS[i][1]+(PTS[i+1][1]-PTS[i][1])*f};
+}
+function drawAt(dist){
+  const p = pointAt(dist);
+  const dir = (PTS[p.i+1][0] < PTS[p.i][0]) ? -1 : 1;
+  shipG.setAttribute("transform","translate("+p.x.toFixed(1)+" "+p.y.toFixed(1)+") scale("+(-dir)+",1)");
+  const outPts=[], homePts=[];
+  for(let k=0;k<=p.i;k++){ if(k<=RETURN_FROM) outPts.push(PTS[k]); if(k>=RETURN_FROM) homePts.push(PTS[k]); }
+  if(p.i < RETURN_FROM) outPts.push([p.x,p.y]); else homePts.push([p.x,p.y]);
+  trailOut.setAttribute("points", outPts.map(q=>q.join(",")).join(" "));
+  trailHome.setAttribute("points", homePts.length>1 ? homePts.map(q=>q.join(",")).join(" ") : "");
+  wreck.setAttribute("opacity", dist >= cum[RETURN_FROM]-0.5 ? 1 : 0);
+  stopDots.forEach((d,i)=>{ if(d) d.setAttribute("fill", dist >= cum[i]-0.5 ? "#f5b700" : "#fff"); });
+}
+function nextStopIndex(dist){ for(let i=0;i<ROUTE.length;i++){ if(ROUTE[i][2] && cum[i] > dist+0.5) return i; } return -1; }
+function cancelAnim(){ if(anim){ cancelAnimationFrame(anim); anim=null; } clearTimeout(pausing); pausing=false; }
+function travelTo(idx, thenContinue){
+  cancelAnim();
+  targetPos = cum[idx];
+  let last = null;
+  const speed = 260; // px per second
+  function frame(ts){
+    if(last===null) last = ts;
+    const dt = Math.min(0.05,(ts-last)/1000); last = ts;
+    pos = Math.min(targetPos, pos + speed*dt);
+    drawAt(pos);
+    if(pos >= targetPos){ anim=null; setCaption(ROUTE[idx][2]);
+      if(thenContinue){ const n = nextStopIndex(pos); if(n>=0) pausing = setTimeout(()=>travelTo(n,true), 2600); else done(); }
+      else if(nextStopIndex(pos)<0) done();
+      return; }
+    anim = requestAnimationFrame(frame);
+  }
+  anim = requestAnimationFrame(frame);
+}
+function done(){ beep(HAPPY); }
+document.getElementById("sailBtn").addEventListener("click",()=>{
+  if(nextStopIndex(pos)<0 && pos>0){ pos=0; drawAt(0); }
+  if(pos===0){ setCaption(ROUTE[0][2]); const n=nextStopIndex(0); pausing=setTimeout(()=>travelTo(n,true),1800); }
+  else { const n=nextStopIndex(pos); if(n>=0) travelTo(n,true); }
+});
+document.getElementById("stepBtn").addEventListener("click",()=>{
+  cancelAnim();
+  if(nextStopIndex(pos)<0 && pos>0){ pos=0; drawAt(0); }
+  if(pos===0 && !caption.dataset.started){ caption.dataset.started="1"; setCaption(ROUTE[0][2]); return; }
+  const n=nextStopIndex(pos); if(n>=0) travelTo(n,false);
+});
+document.getElementById("resetBtn").addEventListener("click",()=>{ cancelAnim(); pos=0; delete caption.dataset.started; drawAt(0); setCaption(null); });
+drawAt(0); setCaption(null);
+
+/* ---------- SHIPS ---------- */
+const SHIPS = [
+  {name:"Niña", sails:2, size:.8, color:"#06a2a8", title:"The Niña — Columbus's Favorite", text:"A small, speedy ship called a caravel. \"Niña\" (say NEEN-yah) was actually a nickname — its real name was Santa Clara! After the Santa María wrecked, Columbus sailed home on the Niña. It was his favorite ship, and it went on more voyages with him later."},
+  {name:"Pinta", sails:2, size:.9, color:"#fb8500", title:"The Pinta — The Fast One", text:"Another caravel, and the fastest of the three ships. Its captain was Martín Alonso Pinzón. On October 12, 1492, a lookout on the Pinta was the first to shout \"Land! Land!\""},
+  {name:"Santa María", sails:3, size:1, color:"#ef476f", title:"The Santa María — The Big Flagship", text:"The largest of the three ships and the one Columbus captained himself. It was slower and harder to steer. On Christmas Eve 1492 it ran onto a reef near Hispaniola and couldn't be saved."}
+];
+function shipSVG(s){
+  let masts = "";
+  const xs = s.sails===3 ? [35,60,85] : [45,75];
+  xs.forEach((x,i)=>{ const h = (i===1||s.sails===2&&i===0) ? 45 : 35; masts += '<line x1="'+x+'" y1="62" x2="'+x+'" y2="'+(62-h)+'" stroke="#4a2e12" stroke-width="3"/><path d="M'+(x+2)+' '+(62-h+4)+' Q'+(x+18)+' '+(62-h/2)+' '+(x+2)+' 58 Z" fill="#fff" stroke="#999"/>'; });
+  return '<svg viewBox="0 0 120 90"><path d="M0 80 Q15 72 30 80 T60 80 T90 80 T120 80 V90 H0Z" fill="#7cc6ec"/><g transform="translate('+(60-60*s.size)+' '+(80-80*s.size)+') scale('+s.size+')"><path d="M10 62 L110 62 L98 80 L22 80 Z" fill="'+s.color+'" stroke="#4a2e12" stroke-width="3"/>'+masts+'<path d="M'+(xs[0])+' 14 L'+(xs[0]+12)+' 10 L'+(xs[0])+' 6 Z" fill="#f5b700"/></g></svg>';
+}
+const shipsBox = document.getElementById("ships"), shipInfo = document.getElementById("shipInfo");
+SHIPS.forEach((s,i)=>{
+  const b=document.createElement("button"); b.className="ship-btn"; b.innerHTML=shipSVG(s)+'<span>'+s.name+'</span>';
+  b.addEventListener("click",()=>{
+    [...shipsBox.children].forEach(x=>x.classList.remove("active")); b.classList.add("active");
+    ReadAloud.stopIf(shipInfo);
+    shipInfo.innerHTML='<h3>'+s.title+'</h3><p>'+s.text+'</p>'; ReadAloud.mark(shipInfo);
+  });
+  shipsBox.appendChild(b);
+});
+
+/* ---------- COMPASS GAME ---------- */
+const comp = document.getElementById("compass");
+function cel(tag, attrs, parent){ const n=document.createElementNS(SVGNS,tag); for(const k in attrs) n.setAttribute(k, attrs[k]); parent.appendChild(n); return n; }
+cel("circle",{cx:120,cy:120,r:112,fill:"#f4e3b5",stroke:"#8d5a2b","stroke-width":6},comp);
+// green west zone: 255..285 degrees
+(function(){ const r=104, a1=(255-90)*Math.PI/180, a2=(285-90)*Math.PI/180;
+  const x1=120+r*Math.cos(a1), y1=120+r*Math.sin(a1), x2=120+r*Math.cos(a2), y2=120+r*Math.sin(a2);
+  cel("path",{d:"M120 120 L"+x1.toFixed(1)+" "+y1.toFixed(1)+" A"+r+" "+r+" 0 0 1 "+x2.toFixed(1)+" "+y2.toFixed(1)+" Z",fill:"#2fb36d",opacity:.55},comp); })();
+for(let d=0; d<360; d+=30){ const a=(d-90)*Math.PI/180; cel("line",{x1:120+92*Math.cos(a),y1:120+92*Math.sin(a),x2:120+104*Math.cos(a),y2:120+104*Math.sin(a),stroke:"#8d5a2b","stroke-width":2},comp); }
+[["N",0],["E",90],["S",180],["W",270]].forEach(([t,d])=>{ const a=(d-90)*Math.PI/180; const n=cel("text",{x:120+80*Math.cos(a),y:120+80*Math.sin(a)+8,"text-anchor":"middle","font-size":24,"font-weight":"bold",fill:t==="N"?"#ef476f":"#14213d"},comp); n.textContent=t; });
+const arrow = cel("g",{},comp);
+cel("polygon",{points:"120,40 134,128 120,118 106,128",fill:"#14213d"},arrow);
+cel("circle",{cx:120,cy:120,r:8,fill:"#f5b700"},arrow);
+let heading = 300, wind = 0, steerTimer = null, progress = 0, turning = null;
+function drawHeading(){ arrow.setAttribute("transform","rotate("+heading.toFixed(1)+" 120 120)"); }
+function diffWest(){ let d = ((heading-270)%360+540)%360-180; return d; }
+drawHeading();
+const steerStatus = document.getElementById("steerStatus"), steerMeter = document.getElementById("steerMeter");
+function steerTick(){
+  wind += (Math.random()-0.5)*0.5; wind = Math.max(-1.6, Math.min(1.6, wind));
+  heading = (heading + wind + 360) % 360;
+  if(turning) heading = (heading + turning*3 + 360) % 360;
+  drawHeading();
+  const d = diffWest();
+  if(Math.abs(d) <= 15){ progress += 0.6; steerStatus.textContent = "✅ Heading west! Keep it steady!"; steerStatus.style.color="var(--green)"; }
+  else { steerStatus.textContent = d > 0 ? "⚠️ Too far north — turn LEFT!" : "⚠️ Too far south — turn RIGHT!"; steerStatus.style.color="var(--red)"; }
+  steerMeter.style.width = Math.min(100,progress)+"%";
+  if(progress >= 100){ clearInterval(steerTimer); steerTimer=null; steerStatus.textContent="🏝️ Land ho! You crossed the ocean!"; steerStatus.style.color="var(--purple)";
+    document.getElementById("steerStart").textContent="🔁 Sail again"; beep(HAPPY); confetti(14); }
+}
+document.getElementById("steerStart").addEventListener("click",()=>{
+  if(steerTimer){ clearInterval(steerTimer); steerTimer=null; document.getElementById("steerStart").textContent="▶ Start"; steerStatus.textContent="⏸ Paused"; steerStatus.style.color=""; return; }
+  if(progress>=100){ progress=0; heading=300; }
+  wind = (Math.random()<.5?-1:1)*0.6;
+  steerTimer = setInterval(steerTick, 100);
+  document.getElementById("steerStart").textContent="⏸ Pause";
+});
+function holdTurn(btn, dir){
+  const startT = e=>{ e.preventDefault(); turning = dir; if(!steerTimer){ heading=(heading+dir*5+360)%360; drawHeading(); } };
+  const endT = ()=>{ turning = null; };
+  btn.addEventListener("pointerdown", startT);
+  ["pointerup","pointerleave","pointercancel"].forEach(ev=>btn.addEventListener(ev,endT));
+  btn.addEventListener("keydown", e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); heading=(heading+dir*5+360)%360; drawHeading(); } });
+}
+holdTurn(document.getElementById("turnLeft"), -1);
+holdTurn(document.getElementById("turnRight"), 1);
+document.addEventListener("keydown", e=>{
+  if(!steerTimer) return;
+  if(e.key==="ArrowLeft"){ e.preventDefault(); heading=(heading-5+360)%360; drawHeading(); }
+  if(e.key==="ArrowRight"){ e.preventDefault(); heading=(heading+5)%360; drawHeading(); }
+});
+
+/* ---------- SAND GLASS ---------- */
+const glass = document.getElementById("glass");
+cel("rect",{x:10,y:4,width:100,height:10,rx:4,fill:"#8d5a2b"},glass);
+cel("rect",{x:10,y:166,width:100,height:10,rx:4,fill:"#8d5a2b"},glass);
+cel("clipPath",{id:"topClip"},glass).appendChild(Object.assign(document.createElementNS(SVGNS,"polygon"),{}));
+const topClip = glass.querySelector("#topClip polygon"); topClip.setAttribute("points","22,14 98,14 62,88 58,88");
+const botClipP = cel("clipPath",{id:"botClip"},glass); cel("polygon",{points:"58,92 62,92 98,166 22,166"},botClipP);
+const sandTop = cel("rect",{x:0,y:14,width:120,height:74,fill:"#e9c46a","clip-path":"url(#topClip)"},glass);
+const sandBot = cel("rect",{x:0,y:166,width:120,height:0,fill:"#e9c46a","clip-path":"url(#botClip)"},glass);
+const stream = cel("rect",{x:59,y:86,width:2,height:80,fill:"#e9c46a",opacity:0},glass);
+cel("path",{d:"M22 14 L98 14 L62 90 L98 166 L22 166 L58 90 Z",fill:"rgba(200,230,255,.35)",stroke:"#5a7a8c","stroke-width":3},glass);
+let turns = 0, glassAnim = null;
+const GLASS_MS = 8000;
+function setSand(f){ // f = fraction fallen 0..1
+  const th = 74*(1-f); sandTop.setAttribute("y", (88-th).toFixed(1)); sandTop.setAttribute("height", th.toFixed(1));
+  const bh = 74*f; sandBot.setAttribute("y", (166-bh).toFixed(1)); sandBot.setAttribute("height", bh.toFixed(1));
+  stream.setAttribute("opacity", f>0 && f<1 ? 1 : 0);
+}
+setSand(0);
+const glassStatus = document.getElementById("glassStatus");
+document.getElementById("glassBtn").addEventListener("click",()=>{
+  if(glassAnim){ glassStatus.textContent = "⏳ Wait! The sand isn't finished yet."; return; }
+  if(turns>=8) turns = 0;
+  turns++;
+  glass.style.transition="transform .5s"; glass.style.transform="rotate(180deg)";
+  setTimeout(()=>{ glass.style.transition="none"; glass.style.transform="none"; setSand(0);
+    const t0 = performance.now();
+    const step = now=>{ const f=Math.min(1,(now-t0)/GLASS_MS); setSand(f);
+      if(f<1) glassAnim=requestAnimationFrame(step);
+      else { glassAnim=null; beep([880,880],"sine");
+        glassStatus.textContent = turns>=8 ? "🔔 8 turns = 4 hours. Watch is over — next crew, your turn!" : "Turns: "+turns+" of 8 — turn it again!"; } };
+    glassAnim=requestAnimationFrame(step);
+    glassStatus.textContent = "Turns: "+turns+" of 8 — half an hour is passing…";
+  }, 520);
+});
+
+/* ---------- DEAD RECKONING ---------- */
+const drS=document.getElementById("drSpeed"), drH=document.getElementById("drHours");
+function updateDR(){
+  const s=+drS.value, h=+drH.value, d=s*h;
+  document.getElementById("drSpeedOut").textContent=s; document.getElementById("drHoursOut").textContent=h;
+  document.getElementById("drOut").textContent = s+" × "+h+" = "+d+" miles west 🧭";
+  document.getElementById("drMeter").style.width = (d/240*100)+"%";
+}
+drS.addEventListener("input",updateDR); drH.addEventListener("input",updateDR); updateDR();
+
+/* ---------- QUIZ ---------- */
+const QUIZ = [
+  {q:"Where was Christopher Columbus born?", a:["Genoa, in today's Italy","Madrid, Spain","London, England","Lisbon, Portugal"], c:0,
+   yes:"Yes! Genoa, a city full of ships and sailors. ⚓", no:"Not quite — he was born in Genoa, in today's Italy."},
+  {q:"Who paid for Columbus's voyage in 1492?", a:["The king of England","Queen Isabella and King Ferdinand of Spain","The Vikings","He paid for it himself"], c:1,
+   yes:"Correct! Spain's queen and king said yes. 👑", no:"Oops! It was Queen Isabella and King Ferdinand of Spain."},
+  {q:"What place was Columbus trying to reach by sailing west?", a:["The North Pole","Australia","Asia","The Moon"], c:2,
+   yes:"Right! He wanted to reach Asia and its spices. 🌶️", no:"Nope — he was trying to reach Asia!"},
+  {q:"In 1492, what did educated people think about the shape of the Earth?", a:["It was flat","It was round — they argued about how BIG it was","It was shaped like a cube","Nobody had any idea"], c:1,
+   yes:"Myth busted! They knew it was round. 🌍", no:"That's the myth! Educated people knew it was round — they argued about its size."},
+  {q:"Who already lived on the islands where Columbus landed?", a:["Nobody","The Taíno people","The Romans","Pirates"], c:1,
+   yes:"Yes! The Taíno people were already at home there. 🏝️", no:"Not quite — the Taíno people already lived there."},
+  {q:"What happened to the Santa María on Christmas 1492?", a:["It won a race home","It sank in the middle of the ocean","It ran onto a reef and wrecked","It turned into a submarine"], c:2,
+   yes:"Correct! Its wood was used to build a fort called La Navidad. 🎄", no:"It ran onto a reef near Hispaniola and wrecked!"}
+];
+const quizBox = document.getElementById("quizBox");
+let qi = 0, score = 0;
+const CHEERS = ["🎉","⭐","⛵","🌎","🥳","🧭","✨"];
+function confetti(n){
+  for(let i=0;i<n;i++){
+    const s=document.createElement("div"); s.className="confetti";
+    s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+    s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s";
+    document.body.appendChild(s); setTimeout(()=>s.remove(),4200);
+  }
+}
+function renderQ(){
+  const item = QUIZ[qi];
+  ReadAloud.stop();
+  quizBox.innerHTML = '<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div>'+
+    '<div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+  const qEl = quizBox.querySelector(".q-text");
+  qEl.dataset.say = item.q + " Is it: " + item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ") + "?";
+  ReadAloud.mark(qEl);
+  const ans = quizBox.querySelector(".answers"), fb = quizBox.querySelector(".feedback");
+  item.a.forEach((txt,i)=>{
+    const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+    b.addEventListener("click",()=>{
+      [...ans.children].forEach(x=>x.disabled=true);
+      if(i===item.c){ score++; b.classList.add("right"); fb.textContent="✅ "+item.yes; fb.style.color="var(--green)"; beep(HAPPY); confetti(12); }
+      else { b.classList.add("wrong"); ans.children[item.c].classList.add("right"); fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+      ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+      const next=document.createElement("button"); next.style.background="var(--purple)";
+      next.textContent = qi<QUIZ.length-1 ? "Next question ➡" : "See my score 🏆";
+      next.addEventListener("click",()=>{ qi++; qi<QUIZ.length ? renderQ() : renderEnd(); });
+      fb.after(next);
+    });
+    ans.appendChild(b);
+  });
+}
+function renderEnd(){
+  ReadAloud.stop();
+  const stars = "⭐".repeat(score) + "☆".repeat(QUIZ.length-score);
+  const msg = score===QUIZ.length ? "PERFECT! You're a true history explorer! 🏆" :
+              score>=4 ? "Awesome job, Captain! 🎉" :
+              score>=2 ? "Nice sailing! Explore the page and try again! ⛵" : "Good try! Check out the map and try again! 💪";
+  quizBox.innerHTML = '<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+  const cel2 = quizBox.querySelector(".celebrate");
+  cel2.dataset.say = "You got "+score+" out of "+QUIZ.length+"! "+msg;
+  ReadAloud.mark(cel2);
+  const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--green)";
+  again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+  const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); quizBox.appendChild(wrap);
+  confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+}
+renderQ();
+
+/* ---------- FUN FACTS ---------- */
+const FACTS = [
+  ["🛶 The Vikings Came First","About 500 years before Columbus, a Viking explorer named Leif Erikson sailed to North America and landed in what is now Canada."],
+  ["🗺️ Why \"America\"?","The Americas are named after another explorer, Amerigo Vespucci. A mapmaker put the name \"America\" on a map in 1507 — the year after Columbus died."],
+  ["🌀 Words From the Taíno","The words hammock, canoe, hurricane, and barbecue all come from the Taíno language!"],
+  ["📖 Two Different Logs","Columbus's journal says he wrote down shorter distances for his crew than he really thought they had sailed, so they wouldn't get scared about being so far from home."],
+  ["🏆 Who Saw Land First?","The queen and king promised a reward to the first sailor to see land. A lookout on the Pinta shouted first, but Columbus said he had seen a light the night before — and kept the prize himself!"],
+  ["⛓️ Sent Home in Chains","Spain got so many complaints about how Columbus ruled the settlement on Hispaniola that in 1500 he was arrested and shipped back to Spain in chains."],
+  ["🤔 He Never Knew","Columbus made four trips across the Atlantic and died still believing he had reached Asia. That's why he called the people he met \"Indians.\""]
+];
+const strip = document.getElementById("factsStrip");
+FACTS.forEach(([front,back])=>{
+  const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+  d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+  const flip=()=>d.classList.toggle("flipped");
+  d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+  d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); if(window.ReadAloud) ReadAloud.speakEl(d); } });
+  strip.appendChild(d);
+});
+
+/* ---------- mark all static readable cards ---------- */
+document.querySelectorAll("#meet li, #meet .bubble, #ship .note-box, .tool-text, .card2, .myth .bad, .myth .good, #shipInfo").forEach(n=>n.classList.add("readable"));
+ReadAloud.markAll();
+
+})();
+</script>
+</body>
+</html>

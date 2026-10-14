@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Spark Lessons</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet Bach */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e3f1fb 0%,#f3ecff 45%,#fff3dc 100%)}
+  header h1{color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .subject h2 .tag{font-size:18px;font-weight:bold;background:#fff;border-radius:999px;padding:4px 12px;margin-left:8px;vertical-align:middle}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px}
+  .tile{background:#fff;border-radius:24px;padding:18px;border:5px solid var(--blue);box-shadow:0 6px 0 rgba(0,0,0,.12);display:flex;flex-direction:column;gap:8px;min-height:230px}
+  .tile .ico{font-size:64px;line-height:1}
+  .tile h3{margin:0;font-size:28px}
+  .tile p{margin:0;flex:1}
+  .tile .open{display:block;text-align:center;text-decoration:none;color:#fff;font-weight:bold;font-size:24px;padding:14px 18px;border-radius:16px;box-shadow:0 4px 0 rgba(0,0,0,.25);min-height:60px}
+  .music .tile{border-color:var(--purple)} .music .open{background:var(--purple)}
+  .history .tile{border-color:var(--orange)} .history .open{background:var(--orange)}
+  .math .tile{border-color:var(--blue)} .math .open{background:var(--blue)}
+  .saints .tile{border-color:var(--teal)} .saints .open{background:var(--teal)}
+  .art .tile{border-color:#2a4d8f} .art .open{background:#2a4d8f}
+  .science .tile{border-color:var(--green)} .science .open{background:var(--green)}
+</style>
+</head>
+<body>
+<header>
+  <h1>✨ Spark Lessons ✨</h1>
+  <p>Pick a lesson and start exploring! Tap a card to hear about it.</p>
+</header>
+<nav>
+  <a href="#music">🎵 Music</a>
+  <a href="#art">🎨 Art</a>
+  <a href="#history">🏛️ History</a>
+  <a href="#math">➗ Math</a>
+  <a href="#science">🔬 Science</a>
+  <a href="#saints">✝️ Saints</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+<section class="subject music" id="music">
+  <h2>🎵 Music <span class="tag">1 lesson</span></h2>
+  <div class="tiles">
+    <div class="tile readable" data-say="Johann Sebastian Bach. Meet the music genius, play a little keyboard, and stack melodies in a round.">
+      <div class="ico">🎹</div><h3>Johann Sebastian Bach</h3>
+      <p>Meet the music genius, play a mini keyboard, hear the Minuet in G, and stack melodies in a round!</p>
+      <a class="open" href="bach/index.html">▶ Open lesson</a>
+    </div>
+  </div>
+</section>
+<section class="subject art" id="art">
+  <h2>🎨 Art <span class="tag">2 lessons</span></h2>
+  <div class="tiles">
+    <div class="tile readable" data-say="Johannes Vermeer. Paint with window light, make ultramarine blue in the pigment lab, and explore the camera obscura mystery.">
+      <div class="ico">💡</div><h3>Johannes Vermeer</h3>
+      <p>Paint with window light, grind lapis into ultramarine in the pigment lab, and explore the camera obscura mystery.</p>
+      <a class="open" href="vermeer/index.html">▶ Open lesson</a>
+    </div>
+    <div class="tile readable" data-say="Leonardo da Vinci. Explore his notebooks, match his inventions, and design your own flying machine.">
+      <div class="ico">🎨</div><h3>Leonardo da Vinci</h3>
+      <p>Explore his notebooks, match his inventions, try mirror writing, and design your own flying machine.</p>
+      <a class="open" href="davinci/index.html">▶ Open lesson</a>
+    </div>
+  </div>
+</section>
+<section class="subject history" id="history">
+  <h2>🏛️ History <span class="tag">3 lessons</span></h2>
+  <div class="tiles">
+    <div class="tile readable" data-say="Christopher Columbus. Sail the 1492 voyage on a map, steer by compass, and learn both sides of the story.">
+      <div class="ico">⛵</div><h3>Christopher Columbus</h3>
+      <p>Sail the 1492 voyage on a map, steer by compass, and learn both sides of the story.</p>
+      <a class="open" href="columbus/index.html">▶ Open lesson</a>
+    </div>
+    <div class="tile readable" data-say="Leonardo da Vinci. Explore his notebooks, match his inventions, and design your own flying machine.">
+      <div class="ico">🎨</div><h3>Leonardo da Vinci</h3>
+      <p>Explore his notebooks, match his inventions, try mirror writing, and design your own flying machine.</p>
+      <a class="open" href="davinci/index.html">▶ Open lesson</a>
+    </div>
+    <div class="tile readable" data-say="Big Wars in History. Explore eight big wars on a timeline and a map, with a World War Two deep dive, and learn why they started, how they ended, and what changed.">
+      <div class="ico">🕊️</div><h3>Big Wars in History</h3>
+      <p>Eight big wars from ancient Rome to the Space Race, plus a World War II deep dive: a zoomable timeline, maps, a code-breaking puzzle, and peacemakers.</p>
+      <a class="open" href="wars/index.html">▶ Open lesson</a>
+    </div>
+  </div>
+</section>
+<section class="subject math" id="math">
+  <h2>➗ Math <span class="tag">1 lesson</span></h2>
+  <div class="tiles">
+    <div class="tile readable" data-say="Times Tables, 6 to 9. Flash cards, a number pad, a 60 second challenge, and stars to collect.">
+      <div class="ico">✖️</div><h3>Times Tables 6–9</h3>
+      <p>Flash cards, a big number pad, a 60-second challenge, and stars to collect!</p>
+      <a class="open" href="times-tables/index.html">▶ Open lesson</a>
+    </div>
+  </div>
+</section>
+<section class="subject science" id="science">
+  <h2>🔬 Science <span class="tag">1 lesson</span></h2>
+  <div class="tiles">
+    <div class="tile readable" data-say="How Music Travels on Radio Waves. Explore waves, see AM and FM, tune a pretend radio, and follow a song from microphone to speaker.">
+      <div class="ico">📡</div><h3>How Music Travels on Radio Waves</h3>
+      <p>Explore waves, compare AM and FM, tune a pretend radio, and follow a song from microphone to speaker.</p>
+      <a class="open" href="radio/index.html">▶ Open lesson</a>
+    </div>
+  </div>
+</section>
+<section class="subject saints" id="saints">
+  <h2>✝️ Saints <span class="tag">2 lessons</span></h2>
+  <div class="tiles">
+    <div class="tile readable" data-say="Saint Kateri Tekakwitha, the Lily of the Mohawks. Follow her journey, match her virtues, and build a forest cross for prayer.">
+      <div class="ico">🌸</div><h3>Saint Kateri Tekakwitha</h3>
+      <p>The “Lily of the Mohawks”: follow her journey north, match her virtues, and build a forest cross for prayer.</p>
+      <a class="open" href="saints/kateri/index.html">▶ Open lesson</a>
+    </div>
+    <div class="tile readable" data-say="Saint Junípero Serra. Visit his nine California missions on a map of El Camino Real, and hear both sides of the mission story.">
+      <div class="ico">🔔</div><h3>Saint Junípero Serra</h3>
+      <p>Visit his nine California missions along El Camino Real, ring the mission bells, and hear both sides of the story.</p>
+      <a class="open" href="saints/serra/index.html">▶ Open lesson</a>
+    </div>
+  </div>
+</section>
+</main>
+<footer>Made by Spark ✨ · Works offline — keep all the lesson folders together</footer>
+<script>
+(function(){
+"use strict";
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+ReadAloud.markAll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saint Kateri Tekakwitha — Spark Lessons</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- color-blind-safe theme (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e9eef5 0%,#f4efe6 50%,#eaf3ea 100%)}
+  header h1{color:#3b4a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--blue)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+  .chip{background:#fff;color:var(--ink);border:4px solid #888;box-shadow:none;padding:10px 14px;font-size:19px;min-height:56px;display:flex;align-items:center;gap:8px}
+  .chip .num{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;color:#000;font-weight:900;border:2px solid #222}
+  .chip.on{background:#2b2140;color:#fff;border-color:#2b2140}
+  .chip.on::after{content:" ✔"}
+  .zoom-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .zoom-row button{font-size:18px;padding:10px 14px;min-height:52px}
+  .zoom-row .z-on{outline:4px solid var(--gold);outline-offset:2px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  .pin{cursor:pointer}
+  .map-caption{margin-top:10px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px 14px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  .round-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .round-row .r-on{outline:4px solid var(--gold);outline-offset:2px}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+  /* ---- saints lessons ---- */
+  nav a:nth-child(7){background:#8b2c00} nav a:nth-child(8){background:#8a5a00} nav a:nth-child(9){background:#444}
+  .meet svg{flex:0 0 280px}
+  .tl-dot{min-height:56px;font-weight:bold;font-size:19px}
+  .tl-dot.active::before{content:"📍 "}
+  .tl-nav{align-items:center;gap:10px}
+  .tl-card{border-color:var(--theme)}
+  .tl-card h3{color:var(--theme)}
+  .tl-dot{border-color:var(--theme)} .tl-dot.active{background:var(--theme)}
+  .step-count{font-weight:bold;font-size:20px;align-self:center}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .stepc{background:#fff;border-radius:18px;padding:14px;border-top:12px solid var(--theme)}
+  .stepc .lvl{display:inline-block;font-size:16px;font-weight:bold;background:#2b2140;color:#fff;border-radius:999px;padding:2px 10px}
+  .stepc h3{margin:6px 0 4px;font-size:23px}
+  .stepc p{margin:0 0 6px}
+  .be-like{margin-top:12px}
+  svg text{font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif}
+  .pin:focus{outline:none} .pin:focus circle.dot,.pin:focus rect.dot{stroke:#E6A800;stroke-width:5}
+
+  :root{ --theme:#007a5a }
+  body{background:linear-gradient(180deg,#e6f3ee 0%,#f3f0fa 50%,#fdf6e6 100%)}
+  header h1{color:#00563f;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  .forest-wrap{background:#fff;border-radius:18px;border:4px solid #00563f;padding:6px}
+  #forest{width:100%;max-width:640px;height:auto;display:block;margin:0 auto}
+  #journeySvg{width:100%;max-width:440px;height:auto;display:block;margin:0 auto}
+  .journey{display:grid;grid-template-columns:minmax(260px,440px) 1fr;gap:16px;align-items:start}
+  @media (max-width:760px){.journey{grid-template-columns:1fr}}
+  .intents{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+  .intents button{background:#fff;color:var(--ink);border:4px solid var(--purple);box-shadow:none;min-height:56px;font-size:19px}
+  .intents button.prayed{background:#f3ecff}
+  .intents button.prayed::after{content:" ✔"}
+  .prayer{font-size:22px;background:#fffbe8;border:3px dashed var(--gold);border-radius:16px;padding:12px 16px;margin-top:10px}
+  #forest .hide{opacity:0} #forest g{transition:opacity .5s}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../../index.html">🏠 All lessons</a>
+  <h1>🌸 Saint Kateri Tekakwitha 🌸</h1>
+  <p>The “Lily of the Mohawks” · 1656–1680 · Feast day: July 14 (U.S.)</p>
+</header>
+<nav>
+  <a href="#meet">👋 Meet Kateri</a>
+  <a href="#story">📜 Her Story</a>
+  <a href="#journey">🛶 Journey</a>
+  <a href="#virtues">💛 Virtues</a>
+  <a href="#cross">✝️ Forest Cross</a>
+  <a href="#saint">😇 Saint</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+
+<section id="meet">
+  <h2>👋 Meet Kateri</h2>
+  <div class="meet">
+    <svg viewBox="0 0 280 320" role="img" aria-label="Drawing of Kateri in the forest, wearing a blanket over her head, holding a small wooden cross, with a lily beside her">
+      <rect x="0" y="0" width="280" height="320" rx="24" fill="#d9ecf8"/>
+      <circle cx="232" cy="52" r="26" fill="#E6A800"/>
+      <polygon points="20,250 60,120 100,250" fill="#007a5a"/><polygon points="190,250 235,105 280,250" fill="#00563f"/>
+      <rect x="0" y="250" width="280" height="70" fill="#7fb77e"/>
+      <!-- blanket -->
+      <path d="M140 60 C95 60 78 100 80 140 L66 290 L214 290 L200 140 C202 100 185 60 140 60 Z" fill="#0072B2"/>
+      <path d="M140 60 C95 60 78 100 80 140 L66 290 L214 290 L200 140 C202 100 185 60 140 60 Z" fill="none" stroke="#00456b" stroke-width="3"/>
+      <path d="M78 190 L202 190" stroke="#E6A800" stroke-width="6"/><path d="M74 230 L206 230" stroke="#fff" stroke-width="5" stroke-dasharray="8 6"/>
+      <!-- face and hair -->
+      <ellipse cx="140" cy="122" rx="32" ry="38" fill="#a8704a"/>
+      <path d="M108 112 C110 82 170 82 172 112 C160 98 120 98 108 112 Z" fill="#1c1410"/>
+      <path d="M110 120 L104 200" stroke="#1c1410" stroke-width="10" stroke-linecap="round"/><path d="M170 120 L176 200" stroke="#1c1410" stroke-width="10" stroke-linecap="round"/>
+      <circle cx="128" cy="122" r="3.5" fill="#1c1410"/><circle cx="152" cy="122" r="3.5" fill="#1c1410"/>
+      <path d="M128 140 Q140 148 152 140" stroke="#5a2e1a" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <!-- hands and cross -->
+      <rect x="134" y="168" width="10" height="64" rx="2" fill="#7a4a1e"/><rect x="118" y="182" width="42" height="10" rx="2" fill="#7a4a1e"/>
+      <circle cx="139" cy="214" r="10" fill="#a8704a"/>
+      <!-- lily -->
+      <path d="M48 300 L48 236" stroke="#007a5a" stroke-width="5"/>
+      <path d="M48 236 L34 214 L48 224 L62 214 Z" fill="#fff" stroke="#888" stroke-width="2"/>
+      <path d="M235 300 L235 248" stroke="#007a5a" stroke-width="5"/>
+      <path d="M235 248 L221 226 L235 236 L249 226 Z" fill="#fff" stroke="#888" stroke-width="2"/>
+    </svg>
+    <div class="facts">
+      <ul>
+        <li>👶 Born in <b>1656</b> in the Mohawk village of <b>Ossernenon</b>, in what is now New York State.</li>
+        <li>👨‍👩‍👧 Her father was a <b>Mohawk</b> chief. Her mother was an <b>Algonquin</b> woman who was a Christian.</li>
+        <li>💧 She was baptized in <b>1676</b> and took the name <b>Kateri</b> (Catherine).</li>
+        <li>🛶 She moved to <b>Kahnawake</b>, a Christian Mohawk community near Montreal, Canada.</li>
+        <li>🌸 She died in <b>1680</b>, at just 24 years old. She is called the <b>“Lily of the Mohawks.”</b></li>
+        <li>😇 In <b>2012</b>, she became the first Native American saint from the United States and Canada.</li>
+      </ul>
+      <div class="bubble readable" data-say="What is a saint? A saint is a person who loved God and other people in a heroic way, and who the Catholic Church believes is now in heaven. Catholics ask the saints to pray for them, just like you might ask a friend to pray for you.">😇 <b>What is a saint?</b> A saint is a person who loved God and other people in a heroic way, and who the Catholic Church believes is now in heaven. Catholics ask the saints to pray for them — just like you might ask a friend to pray for you!</div>
+    </div>
+  </div>
+</section>
+
+<section id="story">
+  <h2>📜 Kateri's Story</h2>
+  <p>Tap a year, or use the buttons, to walk through her life.</p>
+  <div id="tlBox"></div>
+</section>
+
+<section id="journey">
+  <h2>🛶 Kateri's Long Journey</h2>
+  <p class="j-help">In 1677, Kateri left her village to live her faith at Kahnawake, about 200 miles away. Follow her trip north, by canoe and on foot!</p>
+  <div class="zoom-row">
+    <button id="jPrev" style="background:#666">◀ Back</button>
+    <button id="jNext" style="background:var(--theme)">Next ▶</button>
+    <span class="step-count" id="jCount"></span>
+  </div>
+  <div class="journey">
+    <div class="map-wrap"><svg id="journeySvg" viewBox="0 0 400 656" role="img" aria-label="Map of Kateri's journey from her Mohawk village in New York north to Kahnawake near Montreal"></svg></div>
+    <div>
+      <div class="card2 readable" id="jCaption" style="border-left-color:var(--theme)"></div>
+      <p style="font-size:16px;color:#555;margin-top:10px">🗺️ Simple map, not to scale. The exact path of her trip isn't known; travelers going north usually followed these lakes and rivers.</p>
+    </div>
+  </div>
+</section>
+
+<section id="virtues">
+  <h2>💛 Kateri's Virtues</h2>
+  <p class="v-help">A <b>virtue</b> is a good habit of the heart. Tap something Kateri did on the left, then tap the virtue it shows on the right.</p>
+  <div class="match">
+    <div class="match-col" id="vLeft"></div>
+    <div class="match-col" id="vRight"></div>
+  </div>
+  <div class="match-status" id="vStatus" aria-live="polite"></div>
+  <div class="card2 be-like" id="beLike" hidden style="border-left-color:var(--gold)"><h3>🌟 You Can Be Like Kateri!</h3>
+    <ul>
+      <li>🙏 <b>Faith:</b> say a short prayer when you wake up.</li>
+      <li>🦁 <b>Courage:</b> do the right thing, even when it's hard.</li>
+      <li>✝️ <b>Prayer:</b> find a quiet spot and talk to God like a friend.</li>
+      <li>💛 <b>Kindness:</b> help someone who is sick, sad, or needs a hand.</li>
+      <li>🌱 <b>Patience:</b> stay gentle, even when things are hard.</li>
+      <li>🌳 <b>Love of creation:</b> take care of plants, animals, and nature.</li>
+    </ul>
+    <button id="vAgain" style="background:var(--teal)">🔁 Play again</button>
+  </div>
+</section>
+
+<section id="cross">
+  <h2>✝️ Make a Forest Cross</h2>
+  <p class="c-help">Kateri loved to pray outdoors. People who knew her wrote that she made simple crosses from sticks and set them up in the woods as places to pray. Let's make one, step by step!</p>
+  <div class="zoom-row">
+    <button id="xNext" style="background:var(--theme)">Next step ▶</button>
+    <button id="xReset" style="background:#666">🔁 Start over</button>
+    <span class="step-count" id="xCount"></span>
+  </div>
+  <div class="forest-wrap">
+    <svg id="forest" viewBox="0 0 640 360" role="img" aria-label="A forest clearing where a cross made of sticks is built step by step">
+      <rect width="640" height="360" fill="#d9ecf8"/>
+      <circle cx="560" cy="60" r="34" fill="#E6A800"/>
+      <polygon points="20,270 70,90 120,270" fill="#007a5a"/><polygon points="90,270 140,120 190,270" fill="#00563f"/>
+      <polygon points="460,270 515,80 570,270" fill="#00563f"/><polygon points="540,270 590,130 640,270" fill="#007a5a"/>
+      <rect x="0" y="262" width="640" height="98" fill="#8cc084"/>
+      <g id="xLying" class="hide">
+        <rect x="200" y="318" width="170" height="14" rx="5" fill="#7a4a1e"/>
+        <rect x="400" y="322" width="100" height="12" rx="5" fill="#8a5a2a" transform="rotate(-8 450 328)"/>
+      </g>
+      <g id="xFlat" class="hide">
+        <rect x="235" y="314" width="170" height="14" rx="5" fill="#7a4a1e"/>
+        <rect x="363" y="286" width="12" height="70" rx="5" fill="#8a5a2a"/>
+        <g id="xFlatCord" class="hide"><path d="M358 312 L380 330 M380 312 L358 330" stroke="#E6A800" stroke-width="5" stroke-linecap="round"/></g>
+      </g>
+      <g id="xUp" class="hide">
+        <ellipse id="xGlow" cx="320" cy="170" rx="95" ry="120" fill="#fff6c8" opacity=".85"/>
+        <rect x="313" y="95" width="14" height="190" rx="5" fill="#7a4a1e"/>
+        <rect x="270" y="135" width="100" height="12" rx="5" fill="#8a5a2a"/>
+        <path d="M309 131 L331 151 M331 131 L309 151" stroke="#E6A800" stroke-width="5" stroke-linecap="round"/>
+        <ellipse cx="320" cy="288" rx="40" ry="8" fill="#6b4b2a"/>
+      </g>
+      <g id="xFlowers"></g>
+    </svg>
+  </div>
+  <div class="card2 readable" id="xCaption" style="margin-top:10px;border-left-color:var(--theme)"></div>
+  <div id="prayBox" hidden>
+    <div class="prayer readable" id="signCross" data-say="The Sign of the Cross. In the name of the Father, and of the Son, and of the Holy Spirit. Amen.">✝️ <b>The Sign of the Cross</b><br>In the name of the Father, and of the Son, and of the Holy Spirit. Amen.</div>
+    <p class="pray-help" style="margin-top:12px">🌸 <b>Who would you like to pray for?</b> Tap one, say a little prayer in your own words, and a flower will grow by the cross.</p>
+    <div class="intents" id="intents"></div>
+    <div class="match-status" id="xStatus" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="saint">
+  <h2>😇 The Road to Sainthood</h2>
+  <p>Becoming a saint takes a long time! The Church carefully studies a person's life, and there are special steps along the way.</p>
+  <div class="steps">
+    <div class="stepc readable" style="border-top-color:#9aa5b8"><span class="lvl">Step 1</span><h3>📂 Servant of God</h3><p>The Church begins to study the person's life, writings, and how they loved God and others.</p></div>
+    <div class="stepc readable" style="border-top-color:#56B4E9"><span class="lvl">Step 2</span><h3>📜 Venerable</h3><p>The Church says the person lived with “heroic virtue.” <b>Kateri: 1943</b>, by Pope Pius XII.</p></div>
+    <div class="stepc readable" style="border-top-color:#E69F00"><span class="lvl">Step 3</span><h3>🙏 Blessed</h3><p>The person is “beatified” and can be called Blessed. <b>Kateri: June 22, 1980</b>, by Pope John Paul II.</p></div>
+    <div class="stepc readable" style="border-top-color:#007a5a"><span class="lvl">Step 4</span><h3>😇 Saint</h3><p>The person is “canonized.” <b>Kateri: October 21, 2012</b>, by Pope Benedict XVI, in Rome.</p></div>
+  </div>
+  <div class="grid" style="margin-top:14px">
+    <div class="card2 readable" style="border-left-color:var(--purple)"><h3>✨ A Healing</h3><p>Before someone is made a saint, the Church studies a <b>miracle</b>. For Kateri, it was the healing of a young boy from Washington State named Jake, from the Lummi Nation. In 2006 he became very sick from a dangerous infection. Many people prayed, asking Kateri to pray for him, and he got better. The Church accepted this as a miracle.</p></div>
+    <div class="card2 readable" style="border-left-color:var(--gold)"><h3>📅 Her Feast Day</h3><p>A <b>feast day</b> is a saint's special day in the Church year. In the United States, we celebrate Saint Kateri on <b>July 14</b>. In Canada, her feast is <b>April 17</b>, the day she died.</p></div>
+    <div class="card2 readable" style="border-left-color:var(--teal)"><h3>🌳 Patron Saint</h3><p>A <b>patron saint</b> is a saint people ask to pray for a special group or cause. Saint Kateri is a patron of <b>ecology and the environment</b> (caring for nature) and of <b>Native peoples</b>.</p></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>❓ Quiz Challenge</h2>
+  <div id="quizBox"></div>
+  <h3 style="margin-top:22px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>The life of Saint Kateri Tekakwitha (1656–1680), presented respectfully from a Catholic perspective: faith, baptism, prayer, virtues, feast day, and the steps to canonization.</li>
+      <li>History and geography: Mohawk and Algonquin roots, 17th-century New York and New France, and her journey to Kahnawake.</li>
+      <li>Character: six virtues matched to real moments in her life, with simple ways a child can practice them.</li>
+    </ul>
+    <h3>Grade band</h3><p>About grades 3–5. Read-aloud helps younger readers.</p>
+    <h3>Accuracy notes</h3>
+    <ul>
+      <li>Most of what we know comes from two Jesuit priests who knew her, Claude Chauchetière and Pierre Cholenec. Dates such as the smallpox outbreak (about 1660–61) and her age at baptism are approximate.</li>
+      <li>The meaning of “Tekakwitha” is debated, so the lesson gives the common explanation and says so. Her last words (“Jesus, I love you”) and her scars fading after death come from those Jesuit accounts, and the lesson presents them as what people who were there wrote.</li>
+      <li>“First Native American saint” here means the first from the United States and Canada. Saint Juan Diego of Mexico, an Indigenous saint, was canonized in 2002.</li>
+      <li>The route on the journey map is approximate and marked that way. Historians agree she traveled about 200 miles north to Kahnawake in 1677.</li>
+    </ul>
+    <h3>Sensitive topics</h3><p>Her parents and brother died of smallpox, and she was teased and pressured for her faith. Both are told gently. The historical accounts also describe very harsh penances she practiced; they are left out here as not age-appropriate.</p>
+    <h3>Time</h3><p>About 30–45 minutes, and it's easy to split into two sittings (story and journey; then virtues, cross, and quiz).</p>
+    <h3>Follow-up activities</h3><p><b>Make a real forest cross</b> on a nature walk from two sticks and string, and pray together for someone. On <b>July 14</b>, celebrate her feast day with a nature clean-up (she's a patron of ecology). The Saint Kateri National Shrine is in Fonda, New York, if you're ever nearby.</p>
+  </div>
+</section>
+</main>
+<footer>Made for curious kids 🌸 · All drawings and maps made just for this page · Works offline</footer>
+
+<script>
+(function(){
+"use strict";
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- sound + confetti ---------- */
+let actx=null;
+function beep(notes,type){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; notes.forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f; const t=t0+i*0.1;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.18,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32); }); }catch(e){} }
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS=["🌸","⭐","✝️","🙏","✨","🛶","💛"];
+function confetti(n){ for(let i=0;i<n;i++){ const s=document.createElement("div"); s.className="confetti"; s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s"; document.body.appendChild(s); setTimeout(()=>s.remove(),4200); } }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function makeQuiz(box, QUIZ, praise){
+  let qi=0, score=0;
+  function renderQ(){
+    const item=QUIZ[qi]; ReadAloud.stop();
+    box.innerHTML='<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div><div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+    const qEl=box.querySelector(".q-text"); qEl.dataset.say=item.q+" Is it: "+item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ")+"?"; ReadAloud.mark(qEl);
+    const ans=box.querySelector(".answers"), fb=box.querySelector(".feedback");
+    item.a.forEach((txt,i)=>{ const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+      b.addEventListener("click",()=>{ [...ans.children].forEach(x=>x.disabled=true);
+        if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+        else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+        ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+        const next=document.createElement("button"); next.style.background="var(--purple)"; next.textContent=qi<QUIZ.length-1?"Next question ➡":"See my score 🏆";
+        next.addEventListener("click",()=>{ qi++; qi<QUIZ.length?renderQ():renderEnd(); }); fb.after(next); });
+      ans.appendChild(b); });
+  }
+  function renderEnd(){
+    ReadAloud.stop(); const stars="⭐".repeat(score)+"☆".repeat(QUIZ.length-score);
+    const msg=score===QUIZ.length?praise:score>=Math.ceil(QUIZ.length*0.6)?"Awesome job! 🎉":score>=2?"Nice work! Explore more and try again! 📜":"Good try! Explore and try again! 💪";
+    box.innerHTML='<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+    const c=box.querySelector(".celebrate"); c.dataset.say="You got "+score+" out of "+QUIZ.length+"! "+msg; ReadAloud.mark(c);
+    const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--teal)"; again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+    const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); box.appendChild(wrap); confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+  }
+  renderQ();
+}
+
+/* ---------- TIMELINE ---------- */
+function makeTimeline(root, EVENTS){
+  let i=0;
+  root.innerHTML='<div class="tl-track" role="list"></div><div class="tl-card readable" aria-live="polite"><div class="big"></div><div><h3></h3><p></p></div></div>'+
+    '<div class="tl-nav"><button class="tl-prev" style="background:#666">◀ Earlier</button><span class="step-count tl-count"></span><button class="tl-next" style="background:var(--theme)">Later ▶</button></div>';
+  const track=root.querySelector(".tl-track"), card=root.querySelector(".tl-card"), prev=root.querySelector(".tl-prev"), next=root.querySelector(".tl-next"), count=root.querySelector(".tl-count");
+  EVENTS.forEach((e,k)=>{ const b=document.createElement("button"); b.className="tl-dot"; b.textContent=e.year; b.setAttribute("aria-label",e.year+": "+e.title);
+    b.addEventListener("click",()=>show(k,true)); track.appendChild(b); });
+  function show(k,speak){
+    i=k; const e=EVENTS[k]; ReadAloud.stopIf(card);
+    [...track.children].forEach((b,j)=>{ b.classList.toggle("active",j===k); b.setAttribute("aria-current",j===k?"true":"false"); });
+    card.querySelector(".big").textContent=e.icon; card.querySelector("h3").textContent=e.year+" — "+e.title; card.querySelector("p").textContent=e.text;
+    prev.disabled=k===0; next.disabled=k===EVENTS.length-1; count.textContent=(k+1)+" of "+EVENTS.length;
+    const b=track.children[k]; track.scrollLeft=b.offsetLeft-track.clientWidth/2+b.offsetWidth/2;
+    ReadAloud.mark(card); if(speak) ReadAloud.speakEl(card);
+  }
+  prev.addEventListener("click",()=>{ if(i>0) show(i-1,true); });
+  next.addEventListener("click",()=>{ if(i<EVENTS.length-1) show(i+1,true); });
+  show(0,false);
+  return {show};
+}
+
+/* ---------- MATCHING GAME ---------- */
+function makeMatch(o){ // o: {left,right,status,pairs:[{id,l,r,tip}], doneMsg, onDone}
+  let selL=null, selR=null, matched=0;
+  const N=o.pairs.length;
+  function build(){
+    selL=selR=null; matched=0; ReadAloud.stop();
+    o.left.innerHTML=""; o.right.innerHTML="";
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="L";
+      c.innerHTML='<span>'+p.l+'</span>'; o.left.appendChild(c); ReadAloud.mark(c); });
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard name-card readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="R";
+      c.innerHTML='<span>'+p.r+'</span>'; o.right.appendChild(c); ReadAloud.mark(c); });
+    o.status.textContent="Matched: 0 of "+N; o.status.style.color=""; o.status.classList.add("readable"); ReadAloud.mark(o.status);
+    if(o.onReset) o.onReset();
+  }
+  function pick(c){
+    if(c.classList.contains("done")) return;
+    if(c.dataset.side==="L"){ if(selL) selL.classList.remove("sel"); selL = selL===c?null:c; if(selL) c.classList.add("sel"); }
+    else { if(selR) selR.classList.remove("sel"); selR = selR===c?null:c; if(selR) c.classList.add("sel"); }
+    if(selL && selR){
+      const a=selL,b=selR; selL=selR=null; a.classList.remove("sel"); b.classList.remove("sel");
+      const p=o.pairs.find(x=>x.id===a.dataset.id);
+      if(a.dataset.id===b.dataset.id){
+        a.classList.add("done"); b.classList.add("done"); matched++; beep(HAPPY);
+        o.status.textContent="✔ Yes! "+p.tip+" ("+matched+" of "+N+")"; o.status.style.color="var(--blue)";
+        if(matched===N){ o.status.textContent=o.doneMsg; confetti(24); if(o.onDone) o.onDone(); }
+        ReadAloud.mark(o.status); setTimeout(()=>ReadAloud.speakEl(o.status),0);
+      } else {
+        [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+        o.status.textContent="✘ Not quite — read it again and try another one!"; o.status.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(o.status);
+      }
+    }
+  }
+  [o.left,o.right].forEach(col=>{
+    col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+    col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard")&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+  });
+  build();
+  return {build};
+}
+
+/* ---------- FUN FACTS ---------- */
+function makeFacts(strip, FACTS){
+  FACTS.forEach(([front,back])=>{ const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+    d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+    const flip=()=>d.classList.toggle("flipped");
+    d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+    d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+    strip.appendChild(d); ReadAloud.mark(d); });
+}
+
+/* ---------- a soft bell sound ---------- */
+function bell(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; [[392,0.16],[784,0.07],[1176,0.04],[1568,0.02]].forEach(([f,a])=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type="sine"; o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(a,t0+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t0+1.8); o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0+1.9); }); }catch(e){} }
+
+function projector(lon0,lon1,lat0,lat1,W,H){ return (lon,lat)=>[ +((lon-lon0)/(lon1-lon0)*W).toFixed(1), +((lat1-lat)/(lat1-lat0)*H).toFixed(1) ]; }
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs,parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+
+/* ---------- TIMELINE ---------- */
+const EVENTS=[
+  {year:"1656",icon:"👶",title:"Born in a Mohawk Village",text:"Tekakwitha was born in the Mohawk village of Ossernenon, in what is now New York State. Her father was a Mohawk chief. Her mother was an Algonquin woman who was a Christian."},
+  {year:"About 1660",icon:"🤒",title:"A Sad Sickness",text:"When she was about four, a terrible sickness called smallpox spread through her village. Her mother, father, and baby brother died. Tekakwitha lived, but the sickness left scars on her face and hurt her eyes."},
+  {year:"1660s",icon:"🏡",title:"Growing Up with Her Uncle",text:"Her uncle, a Mohawk chief, and her aunts raised her. She worked hard: gathering firewood, helping in the fields, sewing, and making beautiful decorations with beads and porcupine quills."},
+  {year:"1667",icon:"✝️",title:"Meeting the Missionaries",text:"When she was about 11, three Jesuit priests stayed for a few days in her uncle's longhouse. The Mohawk called them \"Black Robes.\" Tekakwitha watched them pray and kindly cared for them."},
+  {year:"1676",icon:"💧",title:"Baptized on Easter",text:"At about 20, she was baptized on Easter Sunday by Father Jacques de Lamberville. She took the name Kateri, the Mohawk way of saying Catherine."},
+  {year:"1677",icon:"🛶",title:"The Long Journey North",text:"Some people in her village teased and threatened her for being a Christian. So, with help from friends, she left home and traveled about 200 miles to Kahnawake, a Christian Mohawk community near Montreal."},
+  {year:"Christmas 1677",icon:"🎄",title:"First Holy Communion",text:"On Christmas Day at Kahnawake, Kateri received her First Holy Communion. She had waited a long time for this special day."},
+  {year:"1679",icon:"🤍",title:"A Special Promise",text:"Kateri promised to give her whole life to God and never marry. This was very unusual in her community. She spent her days praying, working, and caring for others."},
+  {year:"1680",icon:"🌸",title:"Going Home to God",text:"Kateri became very sick and died on April 17, 1680, at only 24 years old. The people with her wrote that her last words were \"Jesus, I love you,\" and that her scars faded away after she died."},
+  {year:"1943",icon:"📜",title:"Venerable",text:"Pope Pius XII declared Kateri \"Venerable.\" That means the Church recognized that she lived with heroic virtue."},
+  {year:"1980",icon:"🙏",title:"Blessed Kateri",text:"On June 22, 1980, Pope John Paul II beatified her, so she could be called \"Blessed Kateri.\""},
+  {year:"2012",icon:"😇",title:"Saint Kateri!",text:"On October 21, 2012, Pope Benedict XVI declared her a saint in Rome. She is the first Native American saint from the United States and Canada."}
+];
+makeTimeline(document.getElementById("tlBox"), EVENTS);
+
+/* ---------- JOURNEY MAP ---------- */
+const jsvg=document.getElementById("journeySvg");
+const JP=projector(-75.4,-72.6,42.6,45.9,400,656);
+const pts=a=>a.map(([lo,la])=>JP(lo,la).join(",")).join(" ");
+svgEl("rect",{x:0,y:0,width:400,height:656,fill:"#e9e4cf"},jsvg);
+const water={fill:"none",stroke:"#56B4E9","stroke-linecap":"round","stroke-linejoin":"round"};
+const RIVERS=[
+  {name:"Mohawk River",w:6,p:[[-75.4,43.17],[-75.0,43.08],[-74.7,42.98],[-74.4,42.94],[-74.1,42.86],[-73.9,42.81],[-73.7,42.79]],lab:[-75.0,42.95]},
+  {name:"Hudson River",w:6,p:[[-74.05,43.62],[-73.75,43.3],[-73.6,43.1],[-73.68,42.79],[-73.75,42.6]],lab:null},
+  {name:"Lake George",w:9,p:[[-73.71,43.42],[-73.62,43.53],[-73.52,43.68],[-73.42,43.85]],lab:[-74.32,43.7]},
+  {name:"Lake Champlain",w:12,p:[[-73.41,43.6],[-73.4,43.85],[-73.38,44.05],[-73.32,44.3],[-73.27,44.5],[-73.28,44.75],[-73.35,45.0]],lab:[-74.12,44.45]},
+  {name:"Richelieu River",w:6,p:[[-73.35,45.0],[-73.27,45.3],[-73.25,45.5],[-73.18,45.75],[-73.12,45.95]],lab:[-73.42,45.12],end:true},
+  {name:"St. Lawrence River",w:14,p:[[-75.4,44.88],[-74.75,45.02],[-74.3,45.2],[-73.95,45.33],[-73.7,45.4],[-73.52,45.5],[-73.42,45.62],[-73.3,45.75],[-73.15,45.95]],lab:[-75.3,45.2]}
+];
+RIVERS.forEach(r=>{ svgEl("polyline",Object.assign({points:pts(r.p),"stroke-width":r.w},water),jsvg); });
+svgEl("line",{x1:0,y1:JP(-75,45.0)[1],x2:400,y2:JP(-75,45.0)[1],stroke:"#666","stroke-width":2,"stroke-dasharray":"8 6"},jsvg);
+const tlab=(t,lo,la,o)=>{ const [x,y]=JP(lo,la); const e=svgEl("text",Object.assign({x,y,"font-size":15,fill:"#333",stroke:"#fff","stroke-width":3,"paint-order":"stroke"},o||{}),jsvg); e.textContent=t; return e; };
+RIVERS.forEach(r=>{ if(r.lab) tlab(r.name,r.lab[0],r.lab[1],Object.assign({fill:"#00557a","font-style":"italic","font-size":14},r.end?{"text-anchor":"end"}:{})); });
+tlab("U.S.–Canada border today",-75.35,45.05,{"font-size":13,fill:"#555"});
+tlab("CANADA (Québec)",-75.2,45.75,{"font-weight":"bold",fill:"#6b5a3a","font-size":17});
+tlab("NEW YORK",-75.2,44.2,{"font-weight":"bold",fill:"#6b5a3a","font-size":17});
+tlab("VERMONT",-73.1,44.05,{"font-weight":"bold",fill:"#6b5a3a","font-size":15});
+tlab("Montreal",-73.62,45.66,{"font-size":14});
+const ROUTE=[[-74.33,42.94],[-73.95,43.05],[-73.72,43.38],[-73.62,43.53],[-73.52,43.68],[-73.42,43.85],[-73.38,44.05],[-73.3,44.35],[-73.27,44.6],[-73.32,44.85],[-73.35,45.0],[-73.27,45.3],[-73.4,45.38],[-73.68,45.41]];
+const JSTEPS=[
+  {at:0,icon:"🏡",title:"Leaving Home",text:"In 1677, Kateri quietly left her Mohawk village beside the Mohawk River, in today's New York State. Her uncle did not want her to go, so friends from Kahnawake helped her."},
+  {at:4,icon:"🛶",title:"Lake George",text:"Travelers heading north often paddled canoes up long, narrow Lake George. The French missionaries called it the Lake of the Blessed Sacrament."},
+  {at:9,icon:"🌲",title:"Lake Champlain",text:"Next came big Lake Champlain. The trip took many days of paddling, walking through forests, and camping at night."},
+  {at:11,icon:"🚶‍♀️",title:"The Richelieu River",text:"From the end of the lake, a river and trails led north toward the great St. Lawrence River, in what is now Canada."},
+  {at:13,icon:"⛪",title:"Kahnawake at Last!",text:"Kateri arrived at Kahnawake, a Christian Mohawk community on the St. Lawrence River, across from Montreal. Here she could pray, learn, and live her faith in peace. Kahnawake is still a Mohawk community today."}
+];
+const routeBg=svgEl("polyline",{points:pts(ROUTE),fill:"none",stroke:"#9aa5b8","stroke-width":4,"stroke-dasharray":"2 8","stroke-linecap":"round"},jsvg);
+const routeOn=svgEl("polyline",{points:"",fill:"none",stroke:"#D55E00","stroke-width":5,"stroke-dasharray":"12 7","stroke-linecap":"round"},jsvg);
+const jPins=JSTEPS.map((s,k)=>{ const [x,y]=JP(...ROUTE[s.at]); const g=svgEl("g",{class:"pin",tabindex:0,role:"button","aria-label":"Step "+(k+1)+": "+s.title},jsvg);
+  svgEl("circle",{cx:x,cy:y,r:26,fill:"#fff","fill-opacity":0.01},g);
+  svgEl("circle",{class:"dot",cx:x,cy:y,r:15,fill:"#fff",stroke:"#2b2140","stroke-width":3},g);
+  const t=svgEl("text",{x,y:y+5,"text-anchor":"middle","font-size":15,"font-weight":"bold",fill:"#2b2140"},g); t.textContent=k+1;
+  const act=()=>drawJ(k,true); g.addEventListener("click",act); g.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); act(); } });
+  return g; });
+const kLab=JP(-73.68,45.41); const kl=svgEl("text",{x:kLab[0]-20,y:kLab[1]+30,"font-size":15,"font-weight":"bold",fill:"#2b2140","text-anchor":"middle",stroke:"#fff","stroke-width":3,"paint-order":"stroke"},jsvg); kl.textContent="Kahnawake";
+const vLab=JP(-74.33,42.94); const vl=svgEl("text",{x:vLab[0],y:vLab[1]+32,"font-size":15,"font-weight":"bold",fill:"#2b2140","text-anchor":"middle",stroke:"#fff","stroke-width":3,"paint-order":"stroke"},jsvg); vl.textContent="Kateri's village";
+const kiddo=svgEl("text",{x:0,y:0,"font-size":30,"text-anchor":"middle"},jsvg); kiddo.textContent="🛶";
+let jStep=0; const jCap=document.getElementById("jCaption");
+function drawJ(k,speak){
+  jStep=k; const s=JSTEPS[k]; ReadAloud.stopIf(jCap);
+  routeOn.setAttribute("points",pts(ROUTE.slice(0,s.at+1)));
+  jPins.forEach((g,i)=>{ const c=g.querySelector("circle.dot"); c.setAttribute("fill", i<k?"#e8f3fb":i===k?"#E6A800":"#fff"); c.setAttribute("r", i===k?19:15); });
+  const [x,y]=JP(...ROUTE[s.at]); kiddo.setAttribute("x",x+28); kiddo.setAttribute("y",y+8);
+  jCap.innerHTML='<h3>'+s.icon+' Step '+(k+1)+': '+s.title+'</h3><p>'+s.text+'</p>';
+  document.getElementById("jCount").textContent="Step "+(k+1)+" of "+JSTEPS.length;
+  document.getElementById("jPrev").disabled=k===0; document.getElementById("jNext").disabled=k===JSTEPS.length-1;
+  ReadAloud.mark(jCap); if(speak) ReadAloud.speakEl(jCap);
+  if(k===JSTEPS.length-1 && speak){ beep(HAPPY); confetti(14); }
+}
+document.getElementById("jPrev").addEventListener("click",()=>{ if(jStep>0) drawJ(jStep-1,true); });
+document.getElementById("jNext").addEventListener("click",()=>{ if(jStep<JSTEPS.length-1) drawJ(jStep+1,true); });
+
+/* ---------- VIRTUES MATCH ---------- */
+const VIRTUES=[
+  {id:"faith",r:"🙏 Faith",l:"She asked to be baptized, even though some people in her village did not like it.",tip:"Kateri trusted God and chose to be baptized."},
+  {id:"courage",r:"🦁 Courage",l:"She left home and made a long, hard journey of about 200 miles to live her faith.",tip:"It took courage to leave home for a faraway place."},
+  {id:"prayer",r:"✝️ Prayer",l:"She loved to pray, even out in the forest, where she set up little crosses made of sticks.",tip:"Kateri talked with God every day."},
+  {id:"kind",r:"💛 Kindness",l:"At Kahnawake, she cared for people who were sick or old and taught children their prayers.",tip:"Kateri loved others by helping them."},
+  {id:"patience",r:"🌱 Patience",l:"Smallpox left her with scars and weak eyes, but she stayed gentle and kept working hard.",tip:"Kateri stayed patient through hard things."},
+  {id:"creation",r:"🌳 Love of creation",l:"She loved God's world of forests, rivers, and animals. Today she is a patron saint of ecology.",tip:"Kateri cared for God's creation."}
+];
+const beLike=document.getElementById("beLike");
+const vGame=makeMatch({left:document.getElementById("vLeft"),right:document.getElementById("vRight"),status:document.getElementById("vStatus"),pairs:VIRTUES,
+  doneMsg:"🏆 You matched all six virtues! Read below how you can be like Kateri.",
+  onDone:()=>{ beLike.hidden=false; }, onReset:()=>{ beLike.hidden=true; }});
+document.getElementById("vAgain").addEventListener("click",()=>vGame.build());
+
+/* ---------- FOREST CROSS ---------- */
+const XSTEPS=[
+  "Kateri often prayed in the forest. Let's make a cross like she did! Tap Next step.",
+  "Step 1: Find two sticks — one long and one shorter.",
+  "Step 2: Lay the short stick across the long one, near the top, to make a cross.",
+  "Step 3: Tie the sticks together tightly with a strip of bark or string.",
+  "Step 4: Stand your cross up in a quiet spot. Now it's a little place to pray, just like Kateri's! Make the Sign of the Cross, then pray for someone below."
+];
+const xLying=document.getElementById("xLying"), xFlat=document.getElementById("xFlat"), xFlatCord=document.getElementById("xFlatCord"), xUp=document.getElementById("xUp");
+const xCap=document.getElementById("xCaption"), prayBox=document.getElementById("prayBox"), xNext=document.getElementById("xNext");
+let xs=0;
+function drawX(speak){
+  ReadAloud.stopIf(xCap);
+  xLying.classList.toggle("hide", xs!==1); xFlat.classList.toggle("hide", !(xs===2||xs===3)); xFlatCord.classList.toggle("hide", xs!==3); xUp.classList.toggle("hide", xs!==4);
+  xCap.innerHTML='<h3>'+(xs===4?"✝️ Your cross is ready!":"🌲 Forest Cross")+'</h3><p>'+XSTEPS[xs]+'</p>';
+  document.getElementById("xCount").textContent= xs===0 ? "Ready?" : "Step "+xs+" of 4";
+  xNext.disabled = xs===4; prayBox.hidden = xs!==4;
+  ReadAloud.mark(xCap); if(speak) ReadAloud.speakEl(xCap);
+  if(xs===4 && speak){ bell(); confetti(10); }
+}
+xNext.addEventListener("click",()=>{ if(xs<4){ xs++; drawX(true); } });
+const INTENTS=[["👨‍👩‍👧","My family"],["🧒","My friends"],["🤒","People who are sick"],["😢","Someone who is sad"],["🌎","God's creation"],["🙏","People who need help"]];
+const fGroup=document.getElementById("xFlowers"), FLOWER_SPOTS=[[250,300],[392,300],[215,325],[425,325],[285,335],[355,335]];
+const intents=document.getElementById("intents"), xStatus=document.getElementById("xStatus");
+let prayed=0;
+function resetX(){ xs=0; prayed=0; fGroup.innerHTML=""; intents.querySelectorAll("button").forEach(b=>{ b.classList.remove("prayed"); b.setAttribute("aria-pressed","false"); }); xStatus.textContent=""; drawX(false); }
+INTENTS.forEach(([ic,label])=>{ const b=document.createElement("button"); b.textContent=ic+" "+label;
+  b.addEventListener("click",()=>{ if(b.classList.contains("prayed")) return; b.classList.add("prayed"); b.setAttribute("aria-pressed","true");
+    const [x,y]=FLOWER_SPOTS[prayed%FLOWER_SPOTS.length]; prayed++;
+    const f=svgEl("text",{x,y,"font-size":30,"text-anchor":"middle"},fGroup); f.textContent="🌸";
+    xStatus.textContent = prayed===INTENTS.length ? "🌸 Six flowers! What a loving heart. Kateri would be happy to pray with you." : "🌸 A flower grew! You prayed for: "+label.toLowerCase()+". ("+prayed+" of "+INTENTS.length+")";
+    xStatus.style.color="var(--purple)"; xStatus.classList.add("readable"); ReadAloud.mark(xStatus); setTimeout(()=>ReadAloud.speakEl(xStatus),0);
+    bell(); if(prayed===INTENTS.length) confetti(20); });
+  intents.appendChild(b); });
+document.getElementById("xReset").addEventListener("click",()=>{ ReadAloud.stop(); resetX(); });
+
+/* ---------- QUIZ ---------- */
+const QUIZ=[
+  {q:"What is Kateri often called?", a:["The Lily of the Mohawks","The Rose of Lima","The Little Flower","The Queen of the Forest"], c:0, yes:"Yes! She is the Lily of the Mohawks. (The Rose of Lima and the Little Flower are other saints!)", no:"She is called the Lily of the Mohawks."},
+  {q:"What sickness left scars on Kateri's face and hurt her eyes?", a:["The flu","Smallpox","A cold","Chicken pox"], c:1, yes:"Right! Smallpox spread through her village when she was about four.", no:"It was smallpox."},
+  {q:"On what special day was Kateri baptized in 1676?", a:["Christmas","Easter Sunday","Her birthday","New Year's Day"], c:1, yes:"Correct! She was baptized on Easter Sunday.", no:"She was baptized on Easter Sunday."},
+  {q:"Where did Kateri go to live her faith in 1677?", a:["Rome, Italy","Kahnawake, near Montreal","Mexico City","Boston"], c:1, yes:"Yes! She traveled about 200 miles to Kahnawake.", no:"She went to Kahnawake, near Montreal in Canada."},
+  {q:"What did Kateri make in the woods to help her pray?", a:["Little crosses from sticks","Snowmen","Treehouses","Paper boats"], c:0, yes:"That's right! She set up little crosses made of sticks.", no:"She made little crosses from sticks."},
+  {q:"Which pope declared Kateri a saint in 2012?", a:["Pope Francis","Pope John Paul II","Pope Benedict XVI","Pope Pius XII"], c:2, yes:"Yes! Pope Benedict XVI. In the U.S., her feast day is July 14.", no:"It was Pope Benedict XVI. Her U.S. feast day is July 14."}
+];
+makeQuiz(document.getElementById("quizBox"), QUIZ, "PERFECT! You know Saint Kateri well! 🏆");
+
+/* ---------- FUN FACTS ---------- */
+makeFacts(document.getElementById("factsStrip"), [
+  ["📛 What's in a Name?","“Kateri” is the Mohawk way of saying Catherine. She was named after Saint Catherine of Siena."],
+  ["🔤 Tekakwitha","Her Mohawk name, Tekakwitha, is often explained as “she who bumps into things,” maybe because her eyes were weak. But people explain it in different ways."],
+  ["🧣 A Blanket for Shade","Bright sunlight hurt her eyes after smallpox, so she often wore a blanket pulled over her head."],
+  ["🌸 Why a Lily?","The lily is a symbol of purity, which means a clean and loving heart. That's why Kateri is called the “Lily of the Mohawks.”"],
+  ["⛪ Her Resting Place","Kateri's tomb is in the Church of Saint Francis Xavier at Kahnawake, near Montreal. Kahnawake is still a Mohawk community today."],
+  ["👫 Saints Together","On the same day Kateri became a saint, Pope Benedict XVI also made Marianne Cope a saint. She cared for people with leprosy in Hawaii."]
+]);
+
+/* ---------- INIT ---------- */
+document.querySelectorAll("#meet .facts li, #saint .card2, .j-help, .v-help, .c-help, .pray-help, .grownups, #beLike").forEach(n=>n.classList.add("readable"));
+ReadAloud.markAll();
+drawJ(0,false); resetX();
+})();
+</script>
+</body>
+</html>
