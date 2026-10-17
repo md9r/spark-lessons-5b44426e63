@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Saint Joseph of Cupertino — Spark Lessons</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- color-blind-safe theme (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e9eef5 0%,#f4efe6 50%,#eaf3ea 100%)}
+  header h1{color:#3b4a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--blue)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+  .chip{background:#fff;color:var(--ink);border:4px solid #888;box-shadow:none;padding:10px 14px;font-size:19px;min-height:56px;display:flex;align-items:center;gap:8px}
+  .chip .num{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;color:#000;font-weight:900;border:2px solid #222}
+  .chip.on{background:#2b2140;color:#fff;border-color:#2b2140}
+  .chip.on::after{content:" ✔"}
+  .zoom-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .zoom-row button{font-size:18px;padding:10px 14px;min-height:52px}
+  .zoom-row .z-on{outline:4px solid var(--gold);outline-offset:2px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  .pin{cursor:pointer}
+  .map-caption{margin-top:10px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px 14px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  .round-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .round-row .r-on{outline:4px solid var(--gold);outline-offset:2px}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+  /* ---- saints lessons ---- */
+  nav a:nth-child(7){background:#8b2c00} nav a:nth-child(8){background:#8a5a00} nav a:nth-child(9){background:#444}
+  .meet svg{flex:0 0 280px}
+  .tl-dot{min-height:56px;font-weight:bold;font-size:19px}
+  .tl-dot.active::before{content:"📍 "}
+  .tl-nav{align-items:center;gap:10px}
+  .tl-card{border-color:var(--theme)}
+  .tl-card h3{color:var(--theme)}
+  .tl-dot{border-color:var(--theme)} .tl-dot.active{background:var(--theme)}
+  .step-count{font-weight:bold;font-size:20px;align-self:center}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .stepc{background:#fff;border-radius:18px;padding:14px;border-top:12px solid var(--theme)}
+  .stepc .lvl{display:inline-block;font-size:16px;font-weight:bold;background:#2b2140;color:#fff;border-radius:999px;padding:2px 10px}
+  .stepc h3{margin:6px 0 4px;font-size:23px}
+  .stepc p{margin:0 0 6px}
+  .be-like{margin-top:12px}
+  svg text{font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif}
+  .pin:focus{outline:none} .pin:focus circle.dot,.pin:focus rect.dot{stroke:#E6A800;stroke-width:5}
+
+
+  :root{ --theme:#00788a }
+  body{background:linear-gradient(180deg,#e6f2f5 0%,#f6f1e7 50%,#eef0fa 100%)}
+  header h1{color:#00505c;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  .hook{border-radius:24px;padding:22px;text-align:center;background:linear-gradient(180deg,#cfe8f3,#fdf6e6);border:4px solid #fff;overflow:hidden}
+  .hook h2{margin:0 0 6px;font-size:clamp(26px,4.5vw,38px)}
+  .sky{position:relative;height:200px;max-width:520px;margin:0 auto}
+  .friar{position:absolute;left:50%;bottom:6px;transform:translateX(-50%);font-size:84px;transition:bottom 2.4s ease-in-out}
+  .sky.up .friar{bottom:90px}
+  .cloud{position:absolute;font-size:40px;opacity:.85}
+  .floatBtn{font-size:22px;min-height:68px;background:var(--theme)}
+  #pathSvg{width:100%;height:auto;display:block;background:#fbf7ee;border-radius:14px;border:4px solid #c9b98f}
+  .stop-card{background:#fff;border-radius:18px;border-left:10px solid var(--theme);padding:16px 18px;margin-top:12px}
+  .stop-card .yr{display:inline-block;background:var(--theme);color:#fff;font-weight:bold;border-radius:999px;padding:2px 12px;margin-bottom:6px}
+  .choices{display:grid;gap:10px;margin-top:10px}
+  .choices button{text-align:left;min-height:60px;font-size:19px;background:#fff;color:var(--ink);border:4px solid var(--theme);box-shadow:none}
+  .choices button.good{background:#e6f3f5;border-color:#0072B2}
+  .choices button.try{border-color:#C24E00;border-style:dashed}
+  .pfb{font-weight:bold;min-height:30px;margin-top:8px}
+  .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+  .badge{min-width:96px;padding:8px 10px;border-radius:14px;border:3px dashed #9aa5b8;background:#fff;text-align:center;font-weight:bold;font-size:15px;color:#666}
+  .badge .bi{font-size:30px;display:block;filter:grayscale(1);opacity:.45}
+  .badge.got{border:3px solid var(--gold);background:#fff8df;color:var(--ink)}
+  .badge.got .bi{filter:none;opacity:1}
+  .cert{display:none;margin-top:14px;background:#fffdf5;border:6px double #b38b00;border-radius:18px;padding:18px;text-align:center}
+  .cert.show{display:block}
+  .cert h3{font-size:28px;margin:4px 0}
+  .prayer{background:#fffaf0;border:4px solid var(--gold);border-radius:18px;padding:16px 20px;font-size:21px;line-height:1.6}
+  .tag{display:inline-block;background:#3b4a6b;color:#fff;border-radius:8px;padding:2px 10px;font-size:15px;font-weight:bold}
+  .tag.trad{background:#B86E00}
+  .patrons{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+  .pat{background:#fff;border-radius:16px;padding:12px;text-align:center;border:3px solid #cfd8e3}
+  .pat .pi{font-size:46px}
+  .ending{background:linear-gradient(180deg,#0b1a3a,#2a3f7a);color:#fff;border-radius:22px;padding:18px;text-align:center}
+  .ending .card2{color:var(--ink);text-align:left}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../../index.html">🏠 All lessons</a>
+  <h1>🕊️ Saint Joseph of Cupertino</h1>
+  <p>The “clumsy” friar who never gave up · 1603–1663 · Feast day: September 18</p>
+</header>
+<nav>
+  <a href="#hook">🕊️ Start</a>
+  <a href="#meet">👋 Meet Joseph</a>
+  <a href="#path">🥾 Never Give Up</a>
+  <a href="#virtues">💛 Virtues</a>
+  <a href="#tests">🙏 Before a Test</a>
+  <a href="#patron">🚀 Patron</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#ending">⭐ The End</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+
+<section id="hook" class="hook">
+  <h2>Ever felt clumsy… or worried about a test?</h2>
+  <div class="sky" id="sky" aria-hidden="true">
+    <span class="cloud" style="left:6%;top:20px">☁️</span><span class="cloud" style="right:8%;top:50px">☁️</span>
+    <span class="friar" id="friar">🧎</span>
+  </div>
+  <p id="hookText" class="hook-text" style="font-size:21px">So did a boy named Joseph, about 400 years ago. Tap the button to hear his surprising story!</p>
+  <button class="floatBtn" id="floatBtn">🕊️ Tap to begin</button>
+</section>
+
+<section id="meet">
+  <h2>👋 Meet Joseph</h2>
+  <div class="grid">
+    <div class="card2"><h3>🏚️ A Poor Family</h3><p>Joseph Desa was born on <b>June 17, 1603</b>, in the small town of <b>Cupertino</b> (Copertino) in southern Italy. His father, a carpenter, died in debt, and the family was very poor. <span class="tag trad">Tradition</span> says Joseph was born in a stable, a little like Jesus.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>😮 “Boccaperta”</h3><p>Joseph was often lost in thought, and he wandered around with his mouth hanging open. Other kids nicknamed him <b>“Boccaperta,”</b> which means “open mouth” in Italian. He was called clumsy and slow, and he had a hard time in school.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🚪 Doors Closed… and One Opened</h3><p>Joseph wanted to serve God as a friar. Some religious orders said no. The Capuchins took him, then sent him away after about eight months. Finally, the <b>Conventual Franciscans</b> let him work in their stable, and later he joined them.</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>⛪ Father Joseph</h3><p>Studying was very hard for him, but he kept trying. In <b>1628</b> he was ordained a <b>priest</b>. People came to love him for his gentleness, his joy, and his deep prayer.</p></div>
+    <div class="card2" style="border-left-color:#3b4a6b"><h3>☁️ Reported Flights</h3><p>Many people, over many years, reported seeing Joseph fall into deep prayer (called an <b>ecstasy</b>) and <b>rise into the air</b>. No one could test this in a science lab back then. The Church studied the witnesses' reports very carefully before declaring him a saint.</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>🏛️ Investigated and Moved</h3><p>All the crowds and wonders worried church leaders. In <b>1638</b>, the <b>Inquisition</b> (a church court) questioned him and found he had done nothing wrong. Still, he was moved from friary to friary and kept away from crowds. He obeyed patiently.</p></div>
+    <div class="card2" style="border-left-color:var(--red)"><h3>🕯️ His Last Home</h3><p>Joseph spent his last years in <b>Osimo</b>, Italy, and died there on <b>September 18, 1663</b>. That's why his feast day is September 18.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>👑 A Saint</h3><p>He was beatified in 1753, and <b>Pope Clement XIII</b> declared him a <b>saint in 1767</b>. Today he is a patron saint of <b>students, test-takers, pilots and air travelers, and astronauts</b>!</p></div>
+  </div>
+</section>
+
+<section id="path">
+  <h2>🥾 The Never-Give-Up Path</h2>
+  <p class="path-help">Walk with Joseph through his life. At each stop, choose what helps him keep going, and earn a virtue badge! <span class="no-read" style="font-size:16px">(This is a story path, not a real map.)</span></p>
+  <svg id="pathSvg" viewBox="0 0 900 260" role="img" aria-label="A winding story path with stops from Joseph's life"></svg>
+  <div class="stop-card readable" id="stopCard" aria-live="polite"></div>
+  <div class="choices" id="choices"></div>
+  <div class="pfb" id="pfb" aria-live="polite"></div>
+  <div style="margin-top:8px"><button id="nextStop" style="background:var(--theme);display:none">Next stop ➡</button></div>
+  <h3 style="margin-top:18px">🏅 Your Virtue Badges</h3>
+  <div class="badges" id="badges"></div>
+  <div class="cert readable" id="cert"></div>
+</section>
+
+<section id="virtues">
+  <h2>💛 Virtues Match</h2>
+  <p class="v-help">A <b>virtue</b> is a good habit. Match each virtue on the left to a moment from Joseph's life on the right. Tap one card on each side!</p>
+  <div class="match"><div class="match-col" id="vLeft"></div><div class="match-col" id="vRight"></div></div>
+  <div class="match-status" id="vStatus" aria-live="polite"></div>
+</section>
+
+<section id="tests">
+  <h2>🙏 Before a Test</h2>
+  <div class="grid">
+    <div class="card2 readable"><h3>📚 Why Students Ask for His Help</h3><p>Joseph struggled with schoolwork, so many Catholic students ask him to pray for them before tests. <span class="tag trad">Tradition</span> tells that at one big exam, the bishop asked him about the one Bible passage he knew really well. At his last exam, the bishop was so pleased with the first students that he passed the whole group, Joseph included!</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>🙏 A Sample Prayer for Kids</h3><p style="font-size:16px"><i>(A sample written for this lesson. You can use your own words too!)</i></p>
+      <div class="prayer" id="prayer" data-say="A sample prayer. Dear God, thank you for my mind and for everything I've learned. Please help me stay calm, think clearly, and do my best. Saint Joseph of Cupertino, you know what it feels like to find school hard. Please pray for me. Amen.">Dear God, thank you for my mind and for everything I've learned. Please help me stay calm, think clearly, and do my best.<br>Saint Joseph of Cupertino, you know what it feels like to find school hard. Please pray for me. Amen.</div>
+      <div style="margin-top:10px"><button id="prayBtn" style="background:var(--theme)" aria-pressed="false">🙏 We prayed it together</button></div>
+    </div>
+    <div class="card2 readable" style="border-left-color:#0072B2"><h3>✏️ Pray AND Prepare</h3><p>Prayer goes together with doing your part, just like Joseph kept studying. Before a test: <b>1.</b> Study a little each day. <b>2.</b> Get a good night's sleep. <b>3.</b> Eat breakfast. <b>4.</b> Take three slow breaths. <b>5.</b> Read each question carefully. You've got this!</p></div>
+  </div>
+</section>
+
+<section id="patron">
+  <h2>🚀 Patron of Flyers and Astronauts</h2>
+  <p class="pat-help">Because people reported seeing him rise into the air, Joseph became a patron saint of pilots, air travelers, and even astronauts. A patron saint is someone people ask to pray for them in a special part of life.</p>
+  <div class="patrons">
+    <div class="pat readable"><div class="pi">📚</div><b>Students</b><p>He knew school could be hard.</p></div>
+    <div class="pat readable"><div class="pi">📝</div><b>Test-takers</b><p>Because of his famous exams.</p></div>
+    <div class="pat readable"><div class="pi">✈️</div><b>Pilots & air travelers</b><p>Because of his reported flights.</p></div>
+    <div class="pat readable"><div class="pi">🧑‍🚀</div><b>Astronauts</b><p>The highest flyers of all! Think of him next time a rocket launches.</p></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>❓ Quiz Challenge</h2>
+  <div id="quizBox"></div>
+  <h3 style="margin-top:22px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<section id="ending">
+  <div class="ending">
+    <h2 style="color:#fff">⭐ The Boy Everyone Underestimated</h2>
+    <div style="font-size:60px" aria-hidden="true">🧎➡️👑</div>
+    <div class="card2 readable" id="endCard"></div>
+  </div>
+</section>
+
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>The life of St. Joseph of Cupertino (1603–1663), Conventual Franciscan friar, presented from a respectful Catholic perspective.</li>
+      <li>Perseverance, humility, and obedience; a healthy view of prayer <i>and</i> preparation before tests.</li>
+      <li>History skills: telling documented facts from pious tradition.</li>
+    </ul>
+    <h3>Documented vs. tradition</h3>
+    <ul>
+      <li><b>Well documented:</b> born 1603 in Copertino to a poor family; the nickname “Boccaperta”; turned away/dismissed (including by the Capuchins, c. 1620); taken in by the Conventual Franciscans at the Grottella; ordained priest March 28, 1628; examined by the Inquisition at Naples in 1638 and cleared; moved among friaries (Assisi, Pietrarubbia, Fossombrone) and finally to Osimo (1657); died at Osimo, September 18, 1663; beatified 1753 by Benedict XIV; canonized July 16, 1767 by Clement XIII.</li>
+      <li><b>Reported by witnesses and accepted in the canonization process:</b> his ecstasies and levitations. Many sworn testimonies were collected, and Prospero Lambertini (later Benedict XIV), a famously rigorous examiner, reviewed the cause. The lesson presents these as reports the Church found credible, not as laboratory-verified events.</li>
+      <li><b>Tradition / popular stories:</b> birth in a stable; specific anecdotes such as broken dishes at the Capuchins; the details of the exam story (the passage he happened to know; the bishop passing the group). These are presented as tradition.</li>
+      <li>The sample prayer was written for this lesson and is clearly labeled as such.</li>
+    </ul>
+    <h3>Grade band & time</h3><p>Grades 3–5; about 30–40 minutes. Read-aloud is on every card.</p>
+    <h3>Talk about it</h3><p>“When is a time you felt slow or clumsy? What helped you keep going?” and “Why do you think Joseph stayed gentle when people misunderstood him?”</p>
+  </div>
+</section>
+</main>
+<footer>Made for kids who keep trying 🕊️ · All drawings made just for this page · Works offline</footer>
+
+<script>
+(function(){
+"use strict";
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- sound + confetti ---------- */
+let actx=null;
+function beep(notes,type){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; notes.forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f; const t=t0+i*0.1;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.18,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32); }); }catch(e){} }
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS=["🕊️","⭐","✝️","🙏","✨","🚀","📚"];
+function confetti(n){ for(let i=0;i<n;i++){ const s=document.createElement("div"); s.className="confetti"; s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s"; document.body.appendChild(s); setTimeout(()=>s.remove(),4200); } }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function makeQuiz(box, QUIZ, praise){
+  let qi=0, score=0;
+  function renderQ(){
+    const item=QUIZ[qi]; ReadAloud.stop();
+    box.innerHTML='<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div><div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+    const qEl=box.querySelector(".q-text"); qEl.dataset.say=item.q+" Is it: "+item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ")+"?"; ReadAloud.mark(qEl);
+    const ans=box.querySelector(".answers"), fb=box.querySelector(".feedback");
+    item.a.forEach((txt,i)=>{ const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+      b.addEventListener("click",()=>{ [...ans.children].forEach(x=>x.disabled=true);
+        if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+        else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+        ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+        const next=document.createElement("button"); next.style.background="var(--purple)"; next.textContent=qi<QUIZ.length-1?"Next question ➡":"See my score 🏆";
+        next.addEventListener("click",()=>{ qi++; qi<QUIZ.length?renderQ():renderEnd(); }); fb.after(next); });
+      ans.appendChild(b); });
+  }
+  function renderEnd(){
+    ReadAloud.stop(); const stars="⭐".repeat(score)+"☆".repeat(QUIZ.length-score);
+    const msg=score===QUIZ.length?praise:score>=Math.ceil(QUIZ.length*0.6)?"Awesome job! 🎉":score>=2?"Nice work! Explore more and try again! 📜":"Good try! Explore and try again! 💪";
+    box.innerHTML='<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+    const c=box.querySelector(".celebrate"); c.dataset.say="You got "+score+" out of "+QUIZ.length+"! "+msg; ReadAloud.mark(c);
+    const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--teal)"; again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+    const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); box.appendChild(wrap); confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+  }
+  renderQ();
+}
+
+/* ---------- TIMELINE ---------- */
+function makeTimeline(root, EVENTS){
+  let i=0;
+  root.innerHTML='<div class="tl-track" role="list"></div><div class="tl-card readable" aria-live="polite"><div class="big"></div><div><h3></h3><p></p></div></div>'+
+    '<div class="tl-nav"><button class="tl-prev" style="background:#666">◀ Earlier</button><span class="step-count tl-count"></span><button class="tl-next" style="background:var(--theme)">Later ▶</button></div>';
+  const track=root.querySelector(".tl-track"), card=root.querySelector(".tl-card"), prev=root.querySelector(".tl-prev"), next=root.querySelector(".tl-next"), count=root.querySelector(".tl-count");
+  EVENTS.forEach((e,k)=>{ const b=document.createElement("button"); b.className="tl-dot"; b.textContent=e.year; b.setAttribute("aria-label",e.year+": "+e.title);
+    b.addEventListener("click",()=>show(k,true)); track.appendChild(b); });
+  function show(k,speak){
+    i=k; const e=EVENTS[k]; ReadAloud.stopIf(card);
+    [...track.children].forEach((b,j)=>{ b.classList.toggle("active",j===k); b.setAttribute("aria-current",j===k?"true":"false"); });
+    card.querySelector(".big").textContent=e.icon; card.querySelector("h3").textContent=e.year+" — "+e.title; card.querySelector("p").textContent=e.text;
+    prev.disabled=k===0; next.disabled=k===EVENTS.length-1; count.textContent=(k+1)+" of "+EVENTS.length;
+    const b=track.children[k]; track.scrollLeft=b.offsetLeft-track.clientWidth/2+b.offsetWidth/2;
+    ReadAloud.mark(card); if(speak) ReadAloud.speakEl(card);
+  }
+  prev.addEventListener("click",()=>{ if(i>0) show(i-1,true); });
+  next.addEventListener("click",()=>{ if(i<EVENTS.length-1) show(i+1,true); });
+  show(0,false);
+  return {show};
+}
+
+/* ---------- MATCHING GAME ---------- */
+function makeMatch(o){ // o: {left,right,status,pairs:[{id,l,r,tip}], doneMsg, onDone}
+  let selL=null, selR=null, matched=0;
+  const N=o.pairs.length;
+  function build(){
+    selL=selR=null; matched=0; ReadAloud.stop();
+    o.left.innerHTML=""; o.right.innerHTML="";
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="L";
+      c.innerHTML='<span>'+p.l+'</span>'; o.left.appendChild(c); ReadAloud.mark(c); });
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard name-card readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="R";
+      c.innerHTML='<span>'+p.r+'</span>'; o.right.appendChild(c); ReadAloud.mark(c); });
+    o.status.textContent="Matched: 0 of "+N; o.status.style.color=""; o.status.classList.add("readable"); ReadAloud.mark(o.status);
+    if(o.onReset) o.onReset();
+  }
+  function pick(c){
+    if(c.classList.contains("done")) return;
+    if(c.dataset.side==="L"){ if(selL) selL.classList.remove("sel"); selL = selL===c?null:c; if(selL) c.classList.add("sel"); }
+    else { if(selR) selR.classList.remove("sel"); selR = selR===c?null:c; if(selR) c.classList.add("sel"); }
+    if(selL && selR){
+      const a=selL,b=selR; selL=selR=null; a.classList.remove("sel"); b.classList.remove("sel");
+      const p=o.pairs.find(x=>x.id===a.dataset.id);
+      if(a.dataset.id===b.dataset.id){
+        a.classList.add("done"); b.classList.add("done"); matched++; beep(HAPPY);
+        o.status.textContent="✔ Yes! "+p.tip+" ("+matched+" of "+N+")"; o.status.style.color="var(--blue)";
+        if(matched===N){ o.status.textContent=o.doneMsg; confetti(24); if(o.onDone) o.onDone(); }
+        ReadAloud.mark(o.status); setTimeout(()=>ReadAloud.speakEl(o.status),0);
+      } else {
+        [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+        o.status.textContent="✘ Not quite — read it again and try another one!"; o.status.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(o.status);
+      }
+    }
+  }
+  [o.left,o.right].forEach(col=>{
+    col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+    col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard")&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+  });
+  build();
+  return {build};
+}
+
+/* ---------- FUN FACTS ---------- */
+function makeFacts(strip, FACTS){
+  FACTS.forEach(([front,back])=>{ const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+    d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+    const flip=()=>d.classList.toggle("flipped");
+    d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+    d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+    strip.appendChild(d); ReadAloud.mark(d); });
+}
+
+/* ---------- a soft bell sound ---------- */
+function bell(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; [[392,0.16],[784,0.07],[1176,0.04],[1568,0.02]].forEach(([f,a])=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type="sine"; o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(a,t0+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t0+1.8); o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0+1.9); }); }catch(e){} }
+
+function projector(lon0,lon1,lat0,lat1,W,H){ return (lon,lat)=>[ +((lon-lon0)/(lon1-lon0)*W).toFixed(1), +((lat1-lat)/(lat1-lat0)*H).toFixed(1) ]; }
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs,parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+
+const $id=id=>document.getElementById(id);
+
+/* ---------- HOOK ---------- */
+$id("floatBtn").addEventListener("click",()=>{
+  const sky=$id("sky"), up=!sky.classList.contains("up"); sky.classList.toggle("up",up);
+  $id("hookText").textContent = up
+    ? "Joseph was teased as clumsy and slow. But people later reported seeing him rise into the air while he prayed! How did a boy who struggled in school become a saint? Let's follow his path."
+    : "So did a boy named Joseph, about 400 years ago. Tap the button to hear his surprising story!";
+  $id("floatBtn").textContent = up ? "🕊️ Come back down" : "🕊️ Tap to begin";
+  ReadAloud.mark($id("hookText")); if(up){ beep([392,523.25,659.25]); ReadAloud.speakEl($id("hookText")); }
+});
+
+/* ---------- NEVER GIVE UP PATH ---------- */
+const STOPS=[
+ {yr:"1603",ico:"👶",title:"Born in Cupertino",text:"Joseph is born into a very poor family in Cupertino, southern Italy. His father has died owing money.",q:"His family has almost nothing. What can Joseph hold on to?",good:"Trusting that God loves him, rich or poor",bad:"Feeling worthless because he is poor",badge:["🤲","Trust"],why:"Joseph's whole life showed deep trust in God's love."},
+ {yr:"Boyhood",ico:"😮",title:"“Boccaperta”",text:"Joseph daydreams with his mouth open, and kids call him “Boccaperta,” open mouth. He is often clumsy and forgetful.",q:"When kids tease him, what should Joseph do?",good:"Stay gentle and keep going",bad:"Tease them back meaner",badge:["🕊️","Gentleness"],why:"Joseph was known for being gentle, even with people who were unkind."},
+ {yr:"Teen years",ico:"👞",title:"Shoemaker Helper",text:"Joseph tries learning to make shoes, but he's not good at it. His heart wants to serve God.",q:"His first job isn't working out. What now?",good:"Be patient and keep looking for where God wants him",bad:"Decide he's no good at anything",badge:["⏳","Patience"],why:"Patience helped Joseph keep searching for his path."},
+ {yr:"About 1620",ico:"🚪",title:"Sent Away",text:"Some friars say no. The Capuchins take him, but after about eight months they send him away for being too clumsy and distracted.",q:"A door just closed. What takes courage?",good:"Try again, even though he's embarrassed",bad:"Never try anything new again",badge:["🦁","Courage"],why:"It takes courage to try again after being sent away."},
+ {yr:"About 1625",ico:"🐴",title:"The Stable at Grottella",text:"The Conventual Franciscans at the Grottella let Joseph work caring for their mule and doing chores. He works hard and humbly, and they later accept him to study to become a friar.",q:"He has the lowliest job. How should he do it?",good:"Do it cheerfully and well, even if no one notices",bad:"Complain that the job is beneath him",badge:["🙇","Humility"],why:"Humility means doing small things with great love."},
+ {yr:"1627",ico:"📖",title:"The Hard Exams",text:"Studying is very hard for Joseph. He keeps working. Tradition tells that the bishop happened to ask him about the one passage he knew best!",q:"The books are hard. What does Joseph do?",good:"Keep studying and ask God for help",bad:"Stop studying and just hope",badge:["✏️","Hard Work"],why:"Joseph prayed and studied. He did his part!"},
+ {yr:"1628",ico:"⛪",title:"Ordained a Priest",text:"On March 28, 1628, Joseph becomes a priest! The boy everyone thought was slow now serves God's people.",q:"His dream came true. How does he respond?",good:"Thank God with joy",bad:"Brag that he's better than others",badge:["🙏","Faith"],why:"Joseph was full of gratitude and joy."},
+ {yr:"Many years",ico:"☁️",title:"Deep Prayer",text:"Joseph often falls into deep prayer called ecstasy. Many witnesses report seeing him rise into the air. Crowds come to see.",q:"Crowds want to watch him. What matters most to Joseph?",good:"Loving God in prayer, not being famous",bad:"Showing off for the crowds",badge:["✨","Prayer"],why:"Joseph didn't seek attention. He just loved God."},
+ {yr:"1638",ico:"🏛️",title:"Questioned and Moved",text:"A church court called the Inquisition questions Joseph. It finds he did nothing wrong. Still, he's moved from friary to friary and kept away from crowds.",q:"He's told to move again and again. What does he do?",good:"Obey peacefully and keep praying",bad:"Run away and refuse",badge:["🧭","Obedience"],why:"Joseph obeyed patiently, trusting God even when it was hard."},
+ {yr:"1657–1663",ico:"🕯️",title:"Peace in Osimo",text:"Joseph spends his last years in Osimo, Italy, praying in peace. He dies there on September 18, 1663.",q:"At the end of his life, what fills Joseph's heart?",good:"Peace and love for God",bad:"Anger about all his troubles",badge:["☮️","Peace"],why:"Joseph finished his journey with a peaceful heart."}
+];
+const svg=$id("pathSvg"); let cur=0, done=0; const got=new Set();
+const PTS=STOPS.map((s,i)=>[60+i*87, i%2? 70:180]);
+function drawPath(){
+  svg.innerHTML="";
+  svgEl("rect",{width:900,height:260,fill:"#fbf7ee"},svg);
+  const d="M"+PTS.map(p=>p.join(",")).join(" L"); svgEl("path",{d,fill:"none",stroke:"#c9b98f","stroke-width":14,"stroke-linecap":"round","stroke-linejoin":"round"},svg);
+  svgEl("path",{d,fill:"none",stroke:"#fff","stroke-width":3,"stroke-dasharray":"8 10"},svg);
+  PTS.forEach((p,i)=>{ const s=STOPS[i], g=svgEl("g",{},svg); const isDone=got.has(i), isCur=i===cur;
+    svgEl("circle",{cx:p[0],cy:p[1],r:isCur?30:25,fill:isDone?"#E6A800":(isCur?"#00788a":"#fff"),stroke:isCur?"#00505c":"#7a6a45","stroke-width":isCur?5:3},g);
+    const t=svgEl("text",{x:p[0],y:p[1]+9,"text-anchor":"middle","font-size":26},g); t.textContent=isDone?"✔":s.ico;
+    const l=svgEl("text",{x:p[0],y:i%2?p[1]-40:p[1]+52,"text-anchor":"middle","font-size":14,"font-weight":"bold",fill:"#2b2140","paint-order":"stroke",stroke:"#fbf7ee","stroke-width":4},g); l.textContent=s.yr; });
+  const p=PTS[Math.min(cur,STOPS.length-1)], f=svgEl("text",{x:p[0]+22,y:p[1]-22,"font-size":30},svg); f.textContent="🚶";
+  if(done===STOPS.length){ const c=svgEl("text",{x:870,y:40,"text-anchor":"end","font-size":30},svg); c.textContent="👑"; }
+}
+function showStop(speak){
+  const s=STOPS[cur], card=$id("stopCard");
+  card.innerHTML='<span class="yr">'+s.yr+'</span><h3>'+s.ico+' Stop '+(cur+1)+' of '+STOPS.length+': '+s.title+'</h3><p>'+s.text+'</p><p><b>'+s.q+'</b></p>';
+  card.dataset.say="Stop "+(cur+1)+". "+s.title+". "+s.text+" "+s.q+" Choose: "+(cur%2?s.bad+", or "+s.good:s.good+", or "+s.bad)+".";
+  ReadAloud.mark(card);
+  const ch=$id("choices"); ch.innerHTML=""; $id("pfb").textContent=""; $id("nextStop").style.display="none";
+  const opts=cur%2?[[s.bad,false],[s.good,true]]:[[s.good,true],[s.bad,false]];
+  opts.forEach(([txt,ok])=>{ const b=document.createElement("button"); b.textContent=txt; b.dataset.ok=ok?"1":"0";
+    b.addEventListener("click",()=>choose(b,ok)); ch.appendChild(b); });
+  drawPath(); if(speak) ReadAloud.speakEl(card);
+}
+function choose(b,ok){
+  const s=STOPS[cur], fb=$id("pfb");
+  if(!ok){ b.classList.add("try"); b.textContent="↩ "+b.textContent.replace(/^↩ /,""); fb.textContent="🤔 Hmm, Joseph chose a different way. Try the other choice!"; fb.style.color="var(--red)"; beep(SAD,"square"); fb.classList.add("readable"); ReadAloud.mark(fb); ReadAloud.speakEl(fb); return; }
+  [...$id("choices").children].forEach(x=>x.disabled=true); b.classList.add("good"); b.textContent="✔ "+b.textContent;
+  if(!got.has(cur)){ got.add(cur); done++; }
+  fb.textContent="🏅 Badge earned: "+s.badge[0]+" "+s.badge[1]+"! "+s.why; fb.style.color="var(--blue)"; fb.classList.add("readable"); ReadAloud.mark(fb); ReadAloud.speakEl(fb); beep(HAPPY); confetti(10);
+  renderBadges(); drawPath();
+  if(cur<STOPS.length-1){ $id("nextStop").style.display=""; } else finishPath();
+}
+$id("nextStop").addEventListener("click",()=>{ if(cur<STOPS.length-1){ cur++; showStop(true); } });
+function renderBadges(){ const bx=$id("badges"); bx.innerHTML="";
+  STOPS.forEach((s,i)=>{ const d=document.createElement("div"); d.className="badge"+(got.has(i)?" got":""); d.innerHTML='<span class="bi">'+s.badge[0]+'</span>'+(got.has(i)?"✔ ":"○ ")+s.badge[1]; bx.appendChild(d); }); }
+function finishPath(){
+  const c=$id("cert"); c.classList.add("show");
+  c.innerHTML='<div style="font-size:50px">👑</div><h3>Saint Joseph of Cupertino!</h3><p>After Joseph died, the Church carefully studied his life. He was beatified in 1753 and declared a <b>saint in 1767</b> by Pope Clement XIII. The boy called “open mouth” became a saint, not by being the smartest, but by loving God and <b>never giving up</b>.</p><p><b>You earned all 10 virtue badges!</b> 🏅</p>';
+  ReadAloud.mark(c); confetti(40); beep([392,493.88,587.33,783.99]); setTimeout(()=>ReadAloud.speakEl(c),2500); updateEnding();
+}
+
+/* ---------- VIRTUES MATCH ---------- */
+makeMatch({left:$id("vLeft"),right:$id("vRight"),status:$id("vStatus"),
+  pairs:[
+    {id:"per",l:"💪 Perseverance",r:"Kept studying even though school was very hard",tip:"Perseverance means not giving up."},
+    {id:"hum",l:"🙇 Humility",r:"Cheerfully cared for the friars' mule and did chores",tip:"Humility means doing small jobs with love."},
+    {id:"obe",l:"🧭 Obedience",r:"Moved peacefully when church leaders sent him to new places",tip:"Obedience means trusting and following rightful leaders."},
+    {id:"gen",l:"🕊️ Gentleness",r:"Stayed kind when kids called him “Boccaperta”",tip:"Gentleness means being kind even when others aren't."},
+    {id:"pra",l:"✨ Prayer",r:"Spent long hours talking with God",tip:"Prayer is talking and listening to God."}
+  ],
+  doneMsg:"🏆 All matched! Joseph's virtues are good habits anyone can practice.", onDone:()=>{ matchDone=true; updateEnding(); }});
+let matchDone=false;
+
+/* ---------- PRAYER ---------- */
+$id("prayer").classList.add("readable");
+$id("prayBtn").addEventListener("click",()=>{ const b=$id("prayBtn"); b.setAttribute("aria-pressed","true"); b.textContent="✔ We prayed it together. Amen! 🙏"; bell(); });
+
+/* ---------- QUIZ ---------- */
+const quizBox=$id("quizBox"); let quizDone=false;
+makeQuiz(quizBox,[
+  {q:"What did kids nickname Joseph?", a:["The Flyer","Boccaperta, “open mouth”","The Genius","Brother Shoes"], c:1, yes:"Right! Because he wandered around with his mouth open, lost in thought.", no:"They called him “Boccaperta,” which means open mouth."},
+  {q:"Which group finally welcomed Joseph?", a:["The Conventual Franciscans","A shoemakers' club","The navy","The Capuchins kept him forever"], c:0, yes:"Yes! He started in their stable and became a friar and priest.", no:"The Conventual Franciscans welcomed him, starting in their stable."},
+  {q:"What happened when the Inquisition questioned Joseph in 1638?", a:["He was put in jail forever","They found he had done nothing wrong","He flew away","He became Pope"], c:1, yes:"Correct! He was cleared, though he was moved around to avoid crowds.", no:"They found he had done nothing wrong."},
+  {q:"Why is Joseph a patron of pilots and astronauts?", a:["He invented airplanes","Witnesses reported seeing him rise into the air in prayer","He was a sailor","He loved birds"], c:1, yes:"Yes! Because of the reported levitations.", no:"Because witnesses reported seeing him rise into the air while praying."},
+  {q:"When is his feast day?", a:["December 25","June 17","September 18","July 4"], c:2, yes:"Right! September 18, the day he died in 1663.", no:"It's September 18, the day he died in Osimo in 1663."}
+],"PERFECT! You never gave up, just like Joseph! 🏆");
+new MutationObserver(()=>{ if(!quizDone && quizBox.querySelector(".celebrate")){ quizDone=true; updateEnding(); } }).observe(quizBox,{childList:true,subtree:true});
+
+/* ---------- FUN FACTS ---------- */
+makeFacts($id("factsStrip"),[
+  ["🍎 Cupertino, California","The city of Cupertino in California got its name from a creek named for Saint Joseph of Cupertino by a Spanish expedition mapmaker, Pedro Font, in 1776."],
+  ["🐴 Stable Worker","Before he became a friar, Joseph's job at the Grottella included caring for the friars' mule."],
+  ["📅 Born in June, Feast in September","He was born June 17, 1603, but his feast day is September 18, the day he died."],
+  ["🔎 A Careful Judge","The man who studied Joseph's case closely, Prospero Lambertini, later became Pope Benedict XIV and beatified him in 1753. He was famous for being very careful with evidence."],
+  ["⛪ Where He Rests","Joseph's tomb is in the Basilica of Saint Joseph of Cupertino in Osimo, Italy."]
+]);
+
+/* ---------- ENDING ---------- */
+function updateEnding(){
+  const c=$id("endCard"), parts=[done===STOPS.length,matchDone,quizDone], n=parts.filter(Boolean).length;
+  const list='<ul style="list-style:none;padding-left:0"><li>'+(parts[0]?"✔":"○")+' Walk the Never-Give-Up Path</li><li>'+(parts[1]?"✔":"○")+' Match the virtues</li><li>'+(parts[2]?"✔":"○")+' Finish the quiz</li></ul>';
+  if(n===3){ c.innerHTML='<h3>🌟 You did it, just like Joseph!</h3><p>People thought Joseph was too clumsy and too slow. But he kept trying, kept praying, and kept loving, and he became a saint, a patron of students and even astronauts! Next time something feels hard, remember: <b>slow and steady with God beats giving up.</b></p>'+list; confetti(40); }
+  else c.innerHTML='<h3>🧎 Finish the journey</h3><p>Complete all three activities to see the ending of Joseph\'s story!</p>'+list;
+  ReadAloud.mark(c);
+}
+
+/* ---------- INIT ---------- */
+document.querySelectorAll("#meet .card2, .path-help, .v-help, .pat-help, .grownups, .hook-text").forEach(n=>n.classList.add("readable"));
+ReadAloud.markAll(); renderBadges(); showStop(false); updateEnding();
+})();
+</script>
+</body>
+</html>

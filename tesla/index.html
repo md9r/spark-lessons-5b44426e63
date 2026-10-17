@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nikola Tesla — Spark Lessons</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- color-blind-safe theme (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e9eef5 0%,#f4efe6 50%,#eaf3ea 100%)}
+  header h1{color:#3b4a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--blue)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+  .chip{background:#fff;color:var(--ink);border:4px solid #888;box-shadow:none;padding:10px 14px;font-size:19px;min-height:56px;display:flex;align-items:center;gap:8px}
+  .chip .num{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;color:#000;font-weight:900;border:2px solid #222}
+  .chip.on{background:#2b2140;color:#fff;border-color:#2b2140}
+  .chip.on::after{content:" ✔"}
+  .zoom-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .zoom-row button{font-size:18px;padding:10px 14px;min-height:52px}
+  .zoom-row .z-on{outline:4px solid var(--gold);outline-offset:2px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  .pin{cursor:pointer}
+  .map-caption{margin-top:10px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px 14px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  .round-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .round-row .r-on{outline:4px solid var(--gold);outline-offset:2px}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+  /* ---- saints lessons ---- */
+  nav a:nth-child(7){background:#8b2c00} nav a:nth-child(8){background:#8a5a00} nav a:nth-child(9){background:#444}
+  .meet svg{flex:0 0 280px}
+  .tl-dot{min-height:56px;font-weight:bold;font-size:19px}
+  .tl-dot.active::before{content:"📍 "}
+  .tl-nav{align-items:center;gap:10px}
+  .tl-card{border-color:var(--theme)}
+  .tl-card h3{color:var(--theme)}
+  .tl-dot{border-color:var(--theme)} .tl-dot.active{background:var(--theme)}
+  .step-count{font-weight:bold;font-size:20px;align-self:center}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .stepc{background:#fff;border-radius:18px;padding:14px;border-top:12px solid var(--theme)}
+  .stepc .lvl{display:inline-block;font-size:16px;font-weight:bold;background:#2b2140;color:#fff;border-radius:999px;padding:2px 10px}
+  .stepc h3{margin:6px 0 4px;font-size:23px}
+  .stepc p{margin:0 0 6px}
+  .be-like{margin-top:12px}
+  svg text{font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif}
+  .pin:focus{outline:none} .pin:focus circle.dot,.pin:focus rect.dot{stroke:#E6A800;stroke-width:5}
+
+
+  :root{ --theme:#0072B2 }
+  body{background:linear-gradient(180deg,#e6eef8 0%,#f3f0fa 50%,#eef6f2 100%)}
+  header h1{color:#1d3f73;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  .hook{position:relative;border-radius:24px;padding:22px;text-align:center;background:#141b2b;color:#c9d2e0;transition:background .8s,color .8s;border:4px solid #fff}
+  .hook.lit{background:radial-gradient(circle at 50% 30%,#fff6c8 0%,#ffe48a 30%,#f3f0fa 75%);color:#2b2140}
+  .hook h2{margin:0 0 6px;font-size:clamp(26px,4.5vw,38px)}
+  .hook .bulb{font-size:90px;filter:grayscale(1) brightness(.5);transition:filter .6s}
+  .hook.lit .bulb{filter:none;text-shadow:0 0 30px #ffd84a}
+  .switch{font-size:24px;min-height:70px;padding:14px 28px;background:#E6A800;color:#2b2140}
+  .lab-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:8px}
+  canvas.lab{width:100%;height:auto;display:block;background:#0e1a2b;border-radius:12px}
+  .ctrl-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:10px 0}
+  .ctrl-row button{min-height:56px}
+  .ctrl-row label{font-weight:bold;font-size:19px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  input[type=range]{width:min(260px,70vw);height:40px;accent-color:#0072B2}
+  .seg button{background:#fff;color:var(--ink);border:4px solid #0072B2;box-shadow:none;min-height:56px}
+  .seg button[aria-pressed="true"]{background:#0072B2;color:#fff}
+  .seg button[aria-pressed="true"]::after{content:" ✔"}
+  .readout{font-weight:bold;font-size:20px;margin:6px 0}
+  .lf{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .lfc{background:#fff;border-radius:16px;padding:14px;border:4px solid #9aa5b8}
+  .lfc .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+  .lfc .btns button{min-height:54px;font-size:18px}
+  .lfc.done-fact{border-color:#0072B2;background:#e8f3fb}
+  .lfc.done-legend{border-color:#B86E00;background:#fff3e0}
+  .result{font-weight:bold;margin-top:8px}
+  #coilSvg{width:100%;max-width:520px;height:auto;display:block;margin:0 auto;background:#0b1020;border-radius:14px}
+  .meter{height:22px;background:#2b2140;border-radius:999px;overflow:hidden;border:3px solid #2b2140;max-width:420px;margin:8px auto}
+  .meter > div{height:100%;width:0;background:repeating-linear-gradient(45deg,#E6A800 0 10px,#ffd84a 10px 20px)}
+  #chargeBtn{touch-action:none;user-select:none;-webkit-user-select:none}
+  .payoff{background:linear-gradient(180deg,#141b2b,#1d3f73);color:#fff;border-radius:22px;padding:18px}
+  #city{width:100%;height:auto;display:block;border-radius:14px}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>⚡ Nikola Tesla ⚡</h1>
+  <p>The inventor who helped bring electric power to the world · 1856–1943</p>
+</header>
+<nav>
+  <a href="#hook">💡 Start</a>
+  <a href="#life">📜 His Life</a>
+  <a href="#acdc">🔌 AC vs DC</a>
+  <a href="#motor">🌀 Motor</a>
+  <a href="#coil">⚡ Spark Toy</a>
+  <a href="#legend">🕵️ Legend or Fact?</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#payoff">🏙️ Light the City</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+
+<section id="hook" class="hook">
+  <div class="bulb" aria-hidden="true">💡</div>
+  <h2 id="hookTitle">It's dark in here…</h2>
+  <p id="hookText" class="hook-text" style="font-size:22px">Tap the switch!</p>
+  <button class="switch" id="switchBtn" aria-pressed="false">🔌 Flip the switch</button>
+</section>
+
+<section id="life">
+  <h2>📜 Who Was Nikola Tesla?</h2>
+  <div class="grid">
+    <div class="card2"><h3>👶 A Boy from Smiljan</h3><p>Nikola Tesla was born in <b>1856</b> in the village of <b>Smiljan</b>, then part of the Austrian Empire and now in <b>Croatia</b>. His family was <b>Serbian</b>. His father was an Orthodox priest, and his mother was clever at inventing handy tools for the home.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>📚 Student in Graz</h3><p>He studied engineering in <b>Graz</b>, Austria. There he saw an electric machine that sparked a lot, and he began dreaming of a better way to make motors run.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>🇺🇸 Off to America</h3><p>In <b>1884</b>, Tesla arrived in New York and worked for <b>Thomas Edison's</b> company for a few months. They disagreed, and Tesla left to work on his own ideas.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🌀 The Big Idea</h3><p>Tesla figured out how to use <b>alternating current (AC)</b> to make a <b>rotating magnetic field</b>. That let him build a simple, tough <b>induction motor</b>. Motors like it still run fans, pumps, and factory machines today!</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>⚔️ The War of the Currents</h3><p>In the late 1880s, Edison backed <b>DC</b> power. <b>George Westinghouse</b> bought rights to Tesla's AC patents and backed <b>AC</b>. The two sides competed fiercely over which system would power America.</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>🎡 AC Wins the Big Show</h3><p>In <b>1893</b>, Westinghouse's AC system lit up the <b>Chicago World's Fair</b> with many thousands of lights. Then a power plant at <b>Niagara Falls</b> used Tesla's AC system and, in <b>1896</b>, sent power more than 20 miles to the city of Buffalo.</p></div>
+    <div class="card2" style="border-left-color:var(--red)"><h3>⚡ The Tesla Coil</h3><p>Around 1891, Tesla invented the <b>Tesla coil</b>, a machine that makes very high voltages and long, crackling sparks. He used it to explore wireless signals and lighting.</p></div>
+    <div class="card2" style="border-left-color:#3b4a6b"><h3>📻 Radio: Many Inventors</h3><p>Tesla worked on wireless radio signals in the 1890s, and so did <b>Guglielmo Marconi</b> and others. In <b>1943</b>, the U.S. Supreme Court decided some of Marconi's radio patents were not valid, partly because others, including Tesla, had similar ideas first. Radio really had many inventors.</p></div>
+    <div class="card2" style="border-left-color:#8a5a00"><h3>🗼 Wardenclyffe Tower</h3><p>Around 1901, Tesla began building a giant tower at <b>Wardenclyffe</b> on Long Island, New York. He dreamed of sending messages, and even power, without wires around the world. The money ran out, it was never finished, and it was torn down in 1917.</p></div>
+    <div class="card2" style="border-left-color:#6a3d9a"><h3>🕯️ His Last Years</h3><p>Tesla had brilliant ideas but was not good at making money from them. He died in <b>1943</b> in a hotel room in New York City, at age 86, with very little money.</p></div>
+    <div class="card2" style="border-left-color:#0072B2"><h3>🧲 A Unit Named for Him</h3><p>Scientists measure the strength of a magnetic field in units called <b>teslas</b>, named in his honor. A fridge magnet is only about one hundredth of a tesla!</p></div>
+  </div>
+</section>
+
+<section id="acdc">
+  <h2>🔌 AC vs DC Explorer</h2>
+  <p class="ad-help"><b>Electric current</b> is tiny particles called <b>electrons</b> moving through a wire. In <b>DC</b> (direct current) they flow one way. In <b>AC</b> (alternating current) they wiggle back and forth, over and over. Both can light a bulb!</p>
+  <div class="ctrl-row seg" role="group" aria-label="Choose current type">
+    <button id="mDC" aria-pressed="true">➡️ DC: one way</button>
+    <button id="mAC" aria-pressed="false">↔️ AC: back and forth</button>
+  </div>
+  <div class="lab-wrap"><canvas class="lab" id="flowCanvas" width="900" height="300" role="img" aria-label="A circuit loop with electrons flowing to light a bulb"></canvas></div>
+  <div class="card2 readable" id="flowCap" style="margin-top:10px;border-left-color:var(--theme)"></div>
+
+  <h3 style="margin-top:22px">🏭 ➜ 🏘️ Sending Power Far Away</h3>
+  <p class="far-help">Electricity loses energy as it travels through long wires. Tesla's AC could use <b>transformers</b> to raise the voltage very high for the long trip (losing much less energy), then lower it again near homes. Back then, DC couldn't easily do this. Slide the town farther away!</p>
+  <div class="ctrl-row"><label>📏 Distance to town: <input type="range" id="dist" min="1" max="40" value="1" aria-label="Distance in miles"> <span id="distTxt">1 mile</span></label></div>
+  <div class="lab-wrap"><canvas class="lab" id="farCanvas" width="900" height="300" role="img" aria-label="Two power lines, DC and AC with transformers, sending power to a town"></canvas></div>
+  <div class="readout" id="farRead" aria-live="polite"></div>
+  <div class="card2 readable" id="farCap" style="border-left-color:var(--gold)"></div>
+</section>
+
+<section id="motor">
+  <h2>🌀 The Rotating Magnetic Field</h2>
+  <p class="mo-help">Tesla's clever trick: put three coils of wire around a circle and feed each one AC that peaks at a different moment. Together they make a magnetic field that <b>spins around</b>, and it drags a metal rotor along with it. No sparking brushes needed!</p>
+  <div class="ctrl-row">
+    <button id="moStart" style="background:var(--theme)">▶ Start motor</button>
+    <button id="moStop" style="background:#666">⏸ Stop</button>
+    <span class="seg" style="display:flex;gap:10px;flex-wrap:wrap"><button id="mo3" aria-pressed="true">3 coils (Tesla)</button><button id="mo1" aria-pressed="false">Just 1 coil</button></span>
+    <label>Speed <input type="range" id="moSpeed" min="1" max="10" value="4" aria-label="Field speed"></label>
+  </div>
+  <div class="lab-wrap"><canvas class="lab" id="motorCanvas" width="600" height="420" role="img" aria-label="Three coils labeled A, B, and C around a rotor, with a spinning magnetic field arrow"></canvas></div>
+  <div class="card2 readable" id="moCap" style="margin-top:10px;border-left-color:var(--purple)"></div>
+</section>
+
+<section id="coil">
+  <h2>⚡ Pretend Tesla Coil Spark Toy</h2>
+  <p class="co-help">This is a <b>safe, pretend</b> Tesla coil on the screen. Press and <b>hold</b> the Charge button to build up voltage, then let go to make sparks! (Sounds only play when you tap, and you can turn them down.)</p>
+  <svg id="coilSvg" viewBox="0 0 520 420" role="img" aria-label="A pretend Tesla coil with a donut-shaped top that makes lightning sparks">
+    <rect width="520" height="420" fill="#0b1020"/>
+    <g id="sparks"></g>
+    <rect x="230" y="190" width="60" height="180" rx="8" fill="#b87333"/>
+    <g stroke="#7a4a1e" stroke-width="2">
+      <line x1="230" y1="205" x2="290" y2="205"/><line x1="230" y1="225" x2="290" y2="225"/><line x1="230" y1="245" x2="290" y2="245"/><line x1="230" y1="265" x2="290" y2="265"/><line x1="230" y1="285" x2="290" y2="285"/><line x1="230" y1="305" x2="290" y2="305"/><line x1="230" y1="325" x2="290" y2="325"/><line x1="230" y1="345" x2="290" y2="345"/>
+    </g>
+    <ellipse cx="260" cy="180" rx="90" ry="30" fill="#c0c6cf" stroke="#7a828c" stroke-width="4"/>
+    <ellipse cx="260" cy="174" rx="40" ry="10" fill="#9aa0a6"/>
+    <rect x="190" y="370" width="140" height="24" rx="6" fill="#3b4a6b"/>
+    <text x="260" y="410" text-anchor="middle" font-size="14" fill="#c9d2e0">pretend coil · not a real one!</text>
+  </svg>
+  <div class="meter" aria-hidden="true"><div id="meterFill"></div></div>
+  <div class="ctrl-row" style="justify-content:center">
+    <button id="chargeBtn" style="background:#E6A800;color:#2b2140;font-size:22px;min-height:70px">⚡ Hold to charge</button>
+    <label>🔊 Sound <input type="range" id="coilVol" min="0" max="100" value="30" aria-label="Spark sound volume"></label>
+  </div>
+  <div class="card2 readable" id="coilCap" style="border-left-color:var(--red)"></div>
+  <div class="card2 readable" style="margin-top:10px;border-left-color:#C24E00"><h3>⚠️ Real Tesla Coils Are Dangerous</h3><p>Real Tesla coils make extremely high voltages. Only trained experts with special safety gear should ever run one. Never poke things into electrical outlets, and stay far away from power lines, especially fallen ones.</p></div>
+</section>
+
+<section id="legend">
+  <h2>🕵️ Legend or Fact?</h2>
+  <p class="lg-help">Tesla is so famous that lots of stories about him get exaggerated. Be a history detective: is each one a <b>fact</b> or a <b>legend</b>?</p>
+  <div class="lf" id="lfBox"></div>
+  <div class="match-status" id="lfStatus" aria-live="polite"></div>
+</section>
+
+<section id="quiz">
+  <h2>❓ Quiz Challenge</h2>
+  <p>Finish the quiz to light up the last building in the city!</p>
+  <div id="quizBox"></div>
+  <h3 style="margin-top:22px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<section id="payoff">
+  <h2>🏙️ Light the City</h2>
+  <div class="payoff">
+    <svg id="city" viewBox="0 0 900 260" role="img" aria-label="A city skyline whose windows light up as you complete activities"></svg>
+    <div class="readout" id="cityRead" aria-live="polite"></div>
+    <div class="card2 readable" id="payoffCard" style="color:var(--ink);border-left-color:#E6A800"></div>
+  </div>
+</section>
+
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>Nikola Tesla's life (1856–1943) and his real contributions: the rotating magnetic field, the AC induction motor and polyphase system, the Tesla coil, and early wireless work.</li>
+      <li>Science: AC versus DC, why high-voltage AC with transformers made long-distance power practical, and how a rotating field turns a motor.</li>
+      <li>History skills: separating documented facts from popular legends.</li>
+    </ul>
+    <h3>Grade band</h3><p>About grades 3–5. Read-aloud helps younger readers.</p>
+    <h3>Accuracy notes</h3>
+    <ul>
+      <li>AC existed before Tesla. His key contribution was a practical AC motor and polyphase system (patents licensed by Westinghouse in 1888).</li>
+      <li>The often-told “$50,000 promise” from Edison comes from Tesla's own later account and can't be confirmed, so it's labeled a legend here.</li>
+      <li>The 1943 Supreme Court case (Marconi Wireless Telegraph Co. v. United States) invalidated parts of Marconi's patents, citing earlier work by Lodge, Tesla, and Stone. It did not declare Tesla “the inventor of radio,” and it was decided months after Tesla died.</li>
+      <li>Niagara: the Adams plant began generating in 1895, and power reached Buffalo (about 26 miles) in November 1896.</li>
+      <li>The animations are simplified teaching models: electron speed, line losses, and the spark toy are not to scale.</li>
+    </ul>
+    <h3>Safety</h3><p>The lesson includes a clear warning about real Tesla coils, outlets, and power lines. The spark toy is purely on-screen.</p>
+    <h3>Time</h3><p>About 35–45 minutes; easy to split (life and AC/DC, then motor, spark toy, legends, and quiz).</p>
+    <h3>Follow-up</h3><p>Read the label on a phone charger together: it takes AC from the wall (100–240 V) and puts out low-voltage DC. That little box is a modern cousin of the AC vs DC story.</p>
+  </div>
+</section>
+</main>
+<footer>Made for curious inventors ⚡ · All drawings made just for this page · Works offline</footer>
+
+<script>
+(function(){
+"use strict";
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- sound + confetti ---------- */
+let actx=null;
+function beep(notes,type){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; notes.forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f; const t=t0+i*0.1;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.18,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32); }); }catch(e){} }
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS=["⚡","💡","⭐","🔌","✨","🧲","🏙️"];
+function confetti(n){ for(let i=0;i<n;i++){ const s=document.createElement("div"); s.className="confetti"; s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s"; document.body.appendChild(s); setTimeout(()=>s.remove(),4200); } }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function makeQuiz(box, QUIZ, praise){
+  let qi=0, score=0;
+  function renderQ(){
+    const item=QUIZ[qi]; ReadAloud.stop();
+    box.innerHTML='<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div><div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+    const qEl=box.querySelector(".q-text"); qEl.dataset.say=item.q+" Is it: "+item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ")+"?"; ReadAloud.mark(qEl);
+    const ans=box.querySelector(".answers"), fb=box.querySelector(".feedback");
+    item.a.forEach((txt,i)=>{ const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+      b.addEventListener("click",()=>{ [...ans.children].forEach(x=>x.disabled=true);
+        if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+        else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+        ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+        const next=document.createElement("button"); next.style.background="var(--purple)"; next.textContent=qi<QUIZ.length-1?"Next question ➡":"See my score 🏆";
+        next.addEventListener("click",()=>{ qi++; qi<QUIZ.length?renderQ():renderEnd(); }); fb.after(next); });
+      ans.appendChild(b); });
+  }
+  function renderEnd(){
+    ReadAloud.stop(); const stars="⭐".repeat(score)+"☆".repeat(QUIZ.length-score);
+    const msg=score===QUIZ.length?praise:score>=Math.ceil(QUIZ.length*0.6)?"Awesome job! 🎉":score>=2?"Nice work! Explore more and try again! 📜":"Good try! Explore and try again! 💪";
+    box.innerHTML='<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+    const c=box.querySelector(".celebrate"); c.dataset.say="You got "+score+" out of "+QUIZ.length+"! "+msg; ReadAloud.mark(c);
+    const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--teal)"; again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+    const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); box.appendChild(wrap); confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+  }
+  renderQ();
+}
+
+/* ---------- TIMELINE ---------- */
+function makeTimeline(root, EVENTS){
+  let i=0;
+  root.innerHTML='<div class="tl-track" role="list"></div><div class="tl-card readable" aria-live="polite"><div class="big"></div><div><h3></h3><p></p></div></div>'+
+    '<div class="tl-nav"><button class="tl-prev" style="background:#666">◀ Earlier</button><span class="step-count tl-count"></span><button class="tl-next" style="background:var(--theme)">Later ▶</button></div>';
+  const track=root.querySelector(".tl-track"), card=root.querySelector(".tl-card"), prev=root.querySelector(".tl-prev"), next=root.querySelector(".tl-next"), count=root.querySelector(".tl-count");
+  EVENTS.forEach((e,k)=>{ const b=document.createElement("button"); b.className="tl-dot"; b.textContent=e.year; b.setAttribute("aria-label",e.year+": "+e.title);
+    b.addEventListener("click",()=>show(k,true)); track.appendChild(b); });
+  function show(k,speak){
+    i=k; const e=EVENTS[k]; ReadAloud.stopIf(card);
+    [...track.children].forEach((b,j)=>{ b.classList.toggle("active",j===k); b.setAttribute("aria-current",j===k?"true":"false"); });
+    card.querySelector(".big").textContent=e.icon; card.querySelector("h3").textContent=e.year+" — "+e.title; card.querySelector("p").textContent=e.text;
+    prev.disabled=k===0; next.disabled=k===EVENTS.length-1; count.textContent=(k+1)+" of "+EVENTS.length;
+    const b=track.children[k]; track.scrollLeft=b.offsetLeft-track.clientWidth/2+b.offsetWidth/2;
+    ReadAloud.mark(card); if(speak) ReadAloud.speakEl(card);
+  }
+  prev.addEventListener("click",()=>{ if(i>0) show(i-1,true); });
+  next.addEventListener("click",()=>{ if(i<EVENTS.length-1) show(i+1,true); });
+  show(0,false);
+  return {show};
+}
+
+/* ---------- MATCHING GAME ---------- */
+function makeMatch(o){ // o: {left,right,status,pairs:[{id,l,r,tip}], doneMsg, onDone}
+  let selL=null, selR=null, matched=0;
+  const N=o.pairs.length;
+  function build(){
+    selL=selR=null; matched=0; ReadAloud.stop();
+    o.left.innerHTML=""; o.right.innerHTML="";
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="L";
+      c.innerHTML='<span>'+p.l+'</span>'; o.left.appendChild(c); ReadAloud.mark(c); });
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard name-card readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="R";
+      c.innerHTML='<span>'+p.r+'</span>'; o.right.appendChild(c); ReadAloud.mark(c); });
+    o.status.textContent="Matched: 0 of "+N; o.status.style.color=""; o.status.classList.add("readable"); ReadAloud.mark(o.status);
+    if(o.onReset) o.onReset();
+  }
+  function pick(c){
+    if(c.classList.contains("done")) return;
+    if(c.dataset.side==="L"){ if(selL) selL.classList.remove("sel"); selL = selL===c?null:c; if(selL) c.classList.add("sel"); }
+    else { if(selR) selR.classList.remove("sel"); selR = selR===c?null:c; if(selR) c.classList.add("sel"); }
+    if(selL && selR){
+      const a=selL,b=selR; selL=selR=null; a.classList.remove("sel"); b.classList.remove("sel");
+      const p=o.pairs.find(x=>x.id===a.dataset.id);
+      if(a.dataset.id===b.dataset.id){
+        a.classList.add("done"); b.classList.add("done"); matched++; beep(HAPPY);
+        o.status.textContent="✔ Yes! "+p.tip+" ("+matched+" of "+N+")"; o.status.style.color="var(--blue)";
+        if(matched===N){ o.status.textContent=o.doneMsg; confetti(24); if(o.onDone) o.onDone(); }
+        ReadAloud.mark(o.status); setTimeout(()=>ReadAloud.speakEl(o.status),0);
+      } else {
+        [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+        o.status.textContent="✘ Not quite — read it again and try another one!"; o.status.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(o.status);
+      }
+    }
+  }
+  [o.left,o.right].forEach(col=>{
+    col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+    col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard")&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+  });
+  build();
+  return {build};
+}
+
+/* ---------- FUN FACTS ---------- */
+function makeFacts(strip, FACTS){
+  FACTS.forEach(([front,back])=>{ const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+    d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+    const flip=()=>d.classList.toggle("flipped");
+    d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+    d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+    strip.appendChild(d); ReadAloud.mark(d); });
+}
+
+/* ---------- a soft bell sound ---------- */
+function bell(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; [[392,0.16],[784,0.07],[1176,0.04],[1568,0.02]].forEach(([f,a])=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type="sine"; o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(a,t0+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t0+1.8); o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0+1.9); }); }catch(e){} }
+
+function projector(lon0,lon1,lat0,lat1,W,H){ return (lon,lat)=>[ +((lon-lon0)/(lon1-lon0)*W).toFixed(1), +((lat1-lat)/(lat1-lat0)*H).toFixed(1) ]; }
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs,parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+
+const $id=id=>document.getElementById(id), $$=q=>[...document.querySelectorAll(q)];
+const progress={hook:false,acdc:false,far:false,motor:false,coil:false,legend:false,quiz:false};
+
+/* ---------- HOOK ---------- */
+const hook=$id("hook");
+$id("switchBtn").addEventListener("click",()=>{
+  const on=!hook.classList.contains("lit"); hook.classList.toggle("lit",on); $id("switchBtn").setAttribute("aria-pressed",on?"true":"false");
+  $id("hookTitle").textContent = on ? "Let there be light! 💡" : "It's dark in here…";
+  $id("hookText").textContent = on ? "That light, and almost every plug in your home, uses AC power, an idea Nikola Tesla helped make work. Let's find out how!" : "Tap the switch!";
+  $id("switchBtn").textContent = on ? "🔌 Switch off" : "🔌 Flip the switch";
+  ReadAloud.mark($id("hookText"));
+  if(on){ beep([523.25,783.99]); ReadAloud.speakEl($id("hookText")); mark("hook"); }
+});
+
+/* ---------- AC vs DC FLOW ---------- */
+const fc=$id("flowCanvas"), fx=fc.getContext("2d"); let mode="DC", ft=0;
+const loop={x:120,y:60,w:660,h:180};
+function loopPoint(s){
+  const P=2*(loop.w+loop.h); let d=((s%1)+1)%1*P;
+  if(d<loop.w) return [loop.x+d,loop.y]; d-=loop.w;
+  if(d<loop.h) return [loop.x+loop.w,loop.y+d]; d-=loop.h;
+  if(d<loop.w) return [loop.x+loop.w-d,loop.y+loop.h]; d-=loop.w;
+  return [loop.x,loop.y+loop.h-d];
+}
+function drawFlow(){
+  const W=fc.width,H=fc.height; fx.fillStyle="#0e1a2b"; fx.fillRect(0,0,W,H);
+  fx.strokeStyle="#b87333"; fx.lineWidth=10; fx.strokeRect(loop.x,loop.y,loop.w,loop.h);
+  fx.fillStyle="#3b4a6b"; fx.fillRect(loop.x-46,loop.y+50,92,80); fx.fillStyle="#fff"; fx.font="bold 18px Trebuchet MS,sans-serif"; fx.textAlign="center";
+  fx.fillText(mode==="DC"?"DC source":"AC source",loop.x,loop.y+96);
+  const glow = mode==="DC" ? 1 : 0.8+0.2*Math.abs(Math.sin(ft*0.6));
+  const bx=loop.x+loop.w, by=loop.y+loop.h/2;
+  const g=fx.createRadialGradient(bx,by,5,bx,by,70); g.addColorStop(0,"rgba(255,230,120,"+(0.9*glow)+")"); g.addColorStop(1,"rgba(255,230,120,0)");
+  fx.fillStyle=g; fx.beginPath(); fx.arc(bx,by,70,0,Math.PI*2); fx.fill();
+  fx.fillStyle="#ffe48a"; fx.beginPath(); fx.arc(bx,by,26,0,Math.PI*2); fx.fill(); fx.fillStyle="#2b2140"; fx.font="bold 15px Trebuchet MS,sans-serif"; fx.fillText("bulb",bx,by+5);
+  const N=36; const shift = mode==="DC" ? ft*0.0025 : Math.sin(ft*0.06)*0.012;
+  for(let i=0;i<N;i++){ const [x,y]=loopPoint(i/N+shift); fx.fillStyle="#56B4E9"; fx.beginPath(); fx.arc(x,y,7,0,Math.PI*2); fx.fill(); fx.fillStyle="#0e1a2b"; fx.font="bold 12px sans-serif"; fx.fillText("−",x,y+4); }
+  fx.fillStyle="#E6A800"; fx.font="bold 22px Trebuchet MS,sans-serif";
+  fx.fillText(mode==="DC" ? "electrons: → → → always one way" : (Math.cos(ft*0.06)>0?"electrons: → back…":"electrons: ← …and forth"), W/2, loop.y+loop.h+44);
+  fx.textAlign="left"; ft++;
+}
+function setMode(m){ mode=m; $id("mDC").setAttribute("aria-pressed",m==="DC"); $id("mAC").setAttribute("aria-pressed",m==="AC");
+  $id("flowCap").innerHTML = m==="DC" ? '<h3>➡️ DC: Direct Current</h3><p>The electrons flow steadily in <b>one direction</b> around the loop, like water in a river. Batteries make DC. Edison\'s first power systems used DC.</p>'
+    : '<h3>↔️ AC: Alternating Current</h3><p>The electrons wiggle <b>back and forth</b>, switching direction over and over. In the United States, wall outlets switch <b>60 times every second</b> (the animation is slowed way down). The bulb still lights, because moving electrons carry energy either way!</p>';
+  ReadAloud.mark($id("flowCap")); }
+$id("mDC").addEventListener("click",()=>{ setMode("DC"); ReadAloud.speakEl($id("flowCap")); });
+$id("mAC").addEventListener("click",()=>{ setMode("AC"); ReadAloud.speakEl($id("flowCap")); mark("acdc"); });
+
+/* ---------- FAR AWAY ---------- */
+const farC=$id("farCanvas"), farx=farC.getContext("2d"); let dist=1;
+function brightDC(d){ return Math.max(0, 1-(d-1)/3); }
+function brightAC(d){ return Math.max(0.82, 1-d*0.004); }
+function town(ctx,x,y,b,label){
+  ctx.fillStyle="#3b4a6b"; ctx.fillRect(x,y,80,60); ctx.beginPath(); ctx.moveTo(x-6,y); ctx.lineTo(x+40,y-30); ctx.lineTo(x+86,y); ctx.fill();
+  for(let i=0;i<3;i++){ ctx.fillStyle = b>0.05 ? "rgba(255,220,90,"+(0.25+0.75*b)+")" : "#1b2233"; ctx.fillRect(x+8+i*24,y+18,16,22); }
+  ctx.fillStyle="#fff"; ctx.font="bold 15px Trebuchet MS,sans-serif"; ctx.fillText(label+": "+Math.round(b*100)+"%"+(b<0.05?" (dark)":""),x-4,y+82);
+}
+function drawFar(){
+  const W=farC.width; farx.fillStyle="#0e1a2b"; farx.fillRect(0,0,W,farC.height);
+  const lineLen=100+(dist/40)*560, dcB=brightDC(dist), acB=brightAC(dist);
+  farx.fillStyle="#fff"; farx.font="bold 17px Trebuchet MS,sans-serif"; farx.fillText("DC (low voltage)",20,30);
+  farx.fillStyle="#3b4a6b"; farx.fillRect(20,50,70,50); farx.fillStyle="#fff"; farx.font="bold 13px Trebuchet MS,sans-serif"; farx.fillText("power",33,72); farx.fillText("plant",35,88);
+  farx.strokeStyle="rgba(255,160,60,"+(0.3+0.7*dcB)+")"; farx.lineWidth=5; farx.setLineDash([12,6]); farx.beginPath(); farx.moveTo(90,75); farx.lineTo(90+lineLen,75); farx.stroke(); farx.setLineDash([]);
+  town(farx,110+lineLen,42,dcB,"Town");
+  farx.fillStyle="#fff"; farx.font="bold 17px Trebuchet MS,sans-serif"; farx.fillText("AC with transformers (Tesla & Westinghouse)",20,148);
+  farx.fillStyle="#3b4a6b"; farx.fillRect(20,190,70,50); farx.fillStyle="#fff"; farx.font="bold 13px Trebuchet MS,sans-serif"; farx.fillText("power",33,212); farx.fillText("plant",35,228);
+  farx.fillStyle="#E6A800"; farx.fillRect(96,200,30,30); farx.fillStyle="#2b2140"; farx.font="bold 12px sans-serif"; farx.fillText("UP",101,220);
+  farx.strokeStyle="#5ec4d4"; farx.lineWidth=5; farx.beginPath(); farx.moveTo(126,215); farx.lineTo(96+lineLen,215); farx.stroke();
+  farx.fillStyle="#E6A800"; farx.fillRect(96+lineLen,200,30,30); farx.fillStyle="#2b2140"; farx.fillText("DN",100+lineLen,220);
+  farx.fillStyle="#fff"; farx.font="bold 13px Trebuchet MS,sans-serif"; farx.fillText("high voltage",126,250);
+  town(farx,140+lineLen,190,acB,"Town");
+  $id("farRead").textContent="📏 "+dist+" mile"+(dist>1?"s":"")+" · DC town: "+Math.round(dcB*100)+"% bright · AC town: "+Math.round(acB*100)+"% bright";
+}
+function farCaption(){
+  const dcB=brightDC(dist);
+  $id("farCap").innerHTML = dcB>0.6 ? '<h3>🏘️ Close by, both work</h3><p>When the town is close, both DC and AC can light it. Edison\'s early DC power stations served customers within about a mile.</p>'
+   : dcB>0 ? '<h3>📉 DC is fading</h3><p>As the wires get longer, low-voltage DC loses more and more energy as heat. The AC town, using high voltage and transformers, is still bright!</p>'
+   : '<h3>🏆 AC wins the long trip</h3><p>The DC town is dark, but the AC town still shines. That is how AC power from Niagara Falls reached Buffalo, more than 20 miles away, in 1896, and why our power grid uses AC today. (This is a simplified model.)</p>';
+  ReadAloud.mark($id("farCap"));
+}
+$id("dist").addEventListener("input",e=>{ dist=+e.target.value; $id("distTxt").textContent=dist+" mile"+(dist>1?"s":""); drawFar(); farCaption(); if(dist>=20) mark("far"); });
+$id("dist").addEventListener("change",()=>ReadAloud.speakEl($id("farCap")));
+
+/* ---------- MOTOR ---------- */
+const mc=$id("motorCanvas"), mx=mc.getContext("2d"); let moOn=false, moTheta=0, rotor=0, rotorVel=0, three=true, moSpeed=4;
+const COILS=[{n:"A",ang:-Math.PI/2,c:"#E69F00"},{n:"B",ang:-Math.PI/2+2*Math.PI/3,c:"#56B4E9"},{n:"C",ang:-Math.PI/2+4*Math.PI/3,c:"#CC79A7"}];
+function drawMotor(){
+  const W=mc.width,H=mc.height,cx=W/2,cy=H/2-20; mx.fillStyle="#0e1a2b"; mx.fillRect(0,0,W,H);
+  mx.strokeStyle="#3b4a6b"; mx.lineWidth=18; mx.beginPath(); mx.arc(cx,cy,150,0,Math.PI*2); mx.stroke();
+  let fxv=0,fyv=0; mx.textAlign="center";
+  COILS.forEach((k,i)=>{
+    const live = three || i===0;
+    const strength = !live ? 0 : (three ? Math.cos(moTheta - i*2*Math.PI/3) : Math.cos(moTheta));
+    fxv += strength*Math.cos(k.ang); fyv += strength*Math.sin(k.ang);
+    const x=cx+150*Math.cos(k.ang), y=cy+150*Math.sin(k.ang);
+    mx.fillStyle=live?k.c:"#445"; mx.globalAlpha=live?0.35+0.65*Math.abs(strength):1; mx.fillRect(x-30,y-30,60,60); mx.globalAlpha=1;
+    mx.strokeStyle="#fff"; mx.lineWidth=3; mx.strokeRect(x-30,y-30,60,60);
+    mx.fillStyle=live?"#0e1a2b":"#9aa5b8"; mx.font="bold 26px Trebuchet MS,sans-serif"; mx.fillText(k.n,x,y+9);
+    if(!live){ mx.fillStyle="#9aa5b8"; mx.font="bold 13px Trebuchet MS,sans-serif"; mx.fillText("off",x,y+44); }
+  });
+  mx.fillStyle="#b87333"; mx.beginPath(); mx.arc(cx,cy,70,0,Math.PI*2); mx.fill();
+  mx.strokeStyle="#7a4a1e"; mx.lineWidth=4; for(let i=0;i<8;i++){ const a=rotor+i*Math.PI/4; mx.beginPath(); mx.moveTo(cx+30*Math.cos(a),cy+30*Math.sin(a)); mx.lineTo(cx+66*Math.cos(a),cy+66*Math.sin(a)); mx.stroke(); }
+  mx.fillStyle="#fff"; mx.beginPath(); mx.arc(cx+52*Math.cos(rotor),cy+52*Math.sin(rotor),9,0,Math.PI*2); mx.fill();
+  const mag=Math.hypot(fxv,fyv), fa=Math.atan2(fyv,fxv);
+  if(mag>0.05){ const L=Math.min(1.5,mag)/1.5*120; mx.strokeStyle="#ffd84a"; mx.lineWidth=7; mx.beginPath(); mx.moveTo(cx,cy); mx.lineTo(cx+L*Math.cos(fa),cy+L*Math.sin(fa)); mx.stroke();
+    mx.fillStyle="#ffd84a"; mx.beginPath(); mx.arc(cx+L*Math.cos(fa),cy+L*Math.sin(fa),10,0,Math.PI*2); mx.fill(); }
+  mx.fillStyle="#fff"; mx.font="bold 17px Trebuchet MS,sans-serif"; mx.textAlign="left";
+  mx.fillText("yellow arrow = magnetic field", 14, H-36); mx.fillText("white dot = rotor (spinning part)", 14, H-12);
+  mx.textAlign="right"; mx.fillText("Rotor: "+(Math.abs(rotorVel)<0.002?"still":"spinning"), W-14, H-12); mx.textAlign="left";
+  if(moOn) moTheta += 0.012*moSpeed;
+  const fieldVel=(moOn&&three)?0.012*moSpeed:0;
+  rotorVel += (fieldVel*0.9 - rotorVel)*0.02;
+  rotor += rotorVel;
+}
+function moCaption(speak){
+  $id("moCap").innerHTML = three
+    ? (moOn ? '<h3>🌀 It spins!</h3><p>Each coil takes a turn being strongest: A, then B, then C. That makes the yellow field arrow spin around, and the copper rotor chases it, always a tiny bit behind. That\'s an <b>induction motor</b>, Tesla\'s famous invention!</p>' : '<h3>🌀 Ready</h3><p>Press Start to send AC to coils A, B, and C.</p>')
+    : '<h3>↕️ Just one coil</h3><p>With only coil A, the field just flips back and forth. It never spins around, so the rotor can\'t get going by itself. Tesla\'s idea of using several coils, each peaking at a different time, solved this!</p>';
+  ReadAloud.mark($id("moCap")); if(speak) ReadAloud.speakEl($id("moCap"));
+}
+function setThree(v){ three=v; $id("mo3").setAttribute("aria-pressed",v?"true":"false"); $id("mo1").setAttribute("aria-pressed",v?"false":"true"); }
+$id("moStart").addEventListener("click",()=>{ moOn=true; moCaption(true); if(three) mark("motor"); });
+$id("moStop").addEventListener("click",()=>{ moOn=false; moCaption(false); });
+$id("mo3").addEventListener("click",()=>{ setThree(true); moCaption(true); if(moOn) mark("motor"); });
+$id("mo1").addEventListener("click",()=>{ setThree(false); moOn=true; moCaption(true); });
+$id("moSpeed").addEventListener("input",e=>{ moSpeed=+e.target.value; });
+
+/* ---------- SPARK TOY ---------- */
+let charge=0, charging=false, chargeTimer=null;
+const sparks=$id("sparks");
+function crackle(power){
+  try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+    const vol=(+$id("coilVol").value)/100; if(vol<=0) return;
+    const dur=0.25+power*0.6, len=Math.floor(actx.sampleRate*dur), buf=actx.createBuffer(1,len,actx.sampleRate), d=buf.getChannelData(0);
+    for(let i=0;i<len;i++){ d[i]=(Math.random()<0.08?(Math.random()*2-1):0)*(1-i/len); }
+    const s=actx.createBufferSource(), g=actx.createGain(); s.buffer=buf; g.gain.value=0.5*vol; s.connect(g); g.connect(actx.destination); s.start(); }catch(e){}
+}
+function bolt(x1,y1,x2,y2,depth){
+  let pts=[[x1,y1],[x2,y2]];
+  for(let k=0;k<depth;k++){ const np=[]; for(let i=0;i<pts.length-1;i++){ const [a,b]=pts[i],[c,d]=pts[i+1]; const len=Math.hypot(c-a,d-b); np.push(pts[i],[(a+c)/2+(Math.random()-0.5)*len*0.45,(b+d)/2+(Math.random()-0.5)*len*0.45]); } np.push(pts[pts.length-1]); pts=np; }
+  return pts.map(p=>p.map(v=>v.toFixed(1)).join(",")).join(" ");
+}
+function fire(){
+  const power=charge/100; sparks.innerHTML="";
+  const n=Math.max(1,Math.round(2+power*7));
+  for(let i=0;i<n;i++){
+    const a=Math.PI+0.15+Math.random()*(Math.PI-0.3), r=50+power*170+Math.random()*30;
+    const sx=260+Math.cos(a)*85, sy=180+Math.sin(a)*26, x2=260+Math.cos(a)*(85+r*1.2), y2=180+Math.sin(a)*(26+r*0.8);
+    const pts=bolt(sx,sy,x2,y2,4);
+    svgEl("polyline",{points:pts,fill:"none",stroke:"#b9a8ff","stroke-width":6,opacity:.45},sparks);
+    svgEl("polyline",{points:pts,fill:"none",stroke:"#fff","stroke-width":2.2},sparks);
+  }
+  crackle(power);
+  setTimeout(()=>{ sparks.innerHTML=""; },400+power*600);
+  $id("coilCap").innerHTML='<h3>⚡ '+(power>0.8?"MEGA ZAP!":power>0.4?"Zap!":"A tiny spark")+'</h3><p>'+(power>0.8?"A full charge makes long, branching sparks! Big real Tesla coils can make sparks longer than a grown-up is tall.":power>0.4?"More charge makes longer sparks. Try holding all the way to 100%!":"Only a little charge, so only a short spark. Hold longer!")+' The sparks happen because the voltage gets so high that electricity jumps right through the air.</p>';
+  ReadAloud.mark($id("coilCap")); mark("coil");
+  charge=0; $id("meterFill").style.width="0%"; $id("chargeBtn").textContent="⚡ Hold to charge";
+}
+function startCharge(e){ if(e) e.preventDefault(); if(charging) return; charging=true; chargeTimer=setInterval(()=>{ charge=Math.min(100,charge+4); $id("meterFill").style.width=charge+"%"; $id("chargeBtn").textContent="⚡ Charging… "+charge+"%"; },50); }
+function endCharge(){ if(!charging) return; charging=false; clearInterval(chargeTimer); fire(); }
+const cb=$id("chargeBtn");
+cb.addEventListener("pointerdown",startCharge); ["pointerup","pointerleave","pointercancel"].forEach(t=>cb.addEventListener(t,endCharge));
+cb.addEventListener("contextmenu",e=>e.preventDefault());
+cb.addEventListener("keydown",e=>{ if((e.key===" "||e.key==="Enter")&&!e.repeat) startCharge(e); }); cb.addEventListener("keyup",e=>{ if(e.key===" "||e.key==="Enter") endCharge(); });
+$id("coilCap").innerHTML='<h3>⚡ Ready to charge</h3><p>Hold the yellow button. Watch the meter fill up, then let go!</p>';
+
+/* ---------- LEGEND OR FACT ---------- */
+const LF=[
+  {s:"Tesla invented alternating current (AC).",fact:false,why:"AC was known before Tesla. His big invention was a practical AC motor and a whole AC system that made AC really useful."},
+  {s:"A unit for measuring magnetic fields, the tesla, is named after him.",fact:true,why:"Scientists use the tesla to measure how strong a magnetic field is."},
+  {s:"Edison promised Tesla $50,000 and then said it was a joke.",fact:false,why:"This story comes from Tesla's own memories years later, and there is no record to prove it. So it's a legend, or at least unproven."},
+  {s:"Tesla's Wardenclyffe Tower sent free power around the world.",fact:false,why:"Tesla dreamed of wireless power, but the tower was never finished, and it was torn down in 1917."},
+  {s:"AC power from Niagara Falls reached Buffalo in 1896 using Tesla's system.",fact:true,why:"It was a huge success for AC power."},
+  {s:"Tesla built a death ray that could knock planes out of the sky.",fact:false,why:"In his old age Tesla talked about such an idea, but he never built one, and no working device was ever found."}
+];
+const lfBox=$id("lfBox"); let lfDone=0, lfRight=0;
+LF.forEach(it=>{ const d=document.createElement("div"); d.className="lfc readable";
+  d.innerHTML='<p><b>“'+it.s+'”</b></p><div class="btns"><button style="background:#0072B2">✔ Fact</button><button style="background:#B86E00">📖 Legend</button></div><div class="result" aria-live="polite"></div>';
+  d.dataset.say=it.s+" Fact, or legend?";
+  const [bF,bL]=d.querySelectorAll("button"), res=d.querySelector(".result");
+  const answer=guessFact=>{ if(d.dataset.answered) return; d.dataset.answered="1"; bF.disabled=bL.disabled=true; lfDone++;
+    const ok=guessFact===it.fact; if(ok) lfRight++;
+    d.classList.add(it.fact?"done-fact":"done-legend");
+    res.textContent=(ok?"✔ Nice detective work! ":"✘ Not quite. ")+(it.fact?"✔ FACT: ":"📖 LEGEND: ")+it.why;
+    d.dataset.say=(ok?"Nice detective work! ":"Not quite. ")+"That's a "+(it.fact?"fact. ":"legend. ")+it.why; ReadAloud.speakEl(d);
+    ok?beep(HAPPY):beep(SAD,"square");
+    if(lfDone===LF.length){ $id("lfStatus").textContent="🕵️ Case closed! You got "+lfRight+" of "+LF.length+". Real historians check their sources, just like you!"; $id("lfStatus").classList.add("readable"); ReadAloud.mark($id("lfStatus")); confetti(16); mark("legend"); }
+  };
+  bF.addEventListener("click",()=>answer(true)); bL.addEventListener("click",()=>answer(false)); lfBox.appendChild(d); });
+
+/* ---------- QUIZ ---------- */
+const quizBox=$id("quizBox");
+makeQuiz(quizBox, [
+  {q:"Where was Nikola Tesla born?", a:["In New York City","In Smiljan, in today's Croatia","In Paris, France","On a ship"], c:1, yes:"Yes! In 1856, in a village that is now in Croatia. His family was Serbian.", no:"He was born in Smiljan, in today's Croatia."},
+  {q:"What is the difference between AC and DC?", a:["AC flows one way; DC wiggles","AC goes back and forth; DC flows one way","They are exactly the same","DC is only for toys"], c:1, yes:"Right! AC alternates direction; DC flows one way.", no:"AC goes back and forth; DC flows one way."},
+  {q:"Why was AC better for sending power far away?", a:["It was purple","Transformers can raise its voltage for the trip, so less energy is lost","It doesn't need wires","It's quieter"], c:1, yes:"Exactly! High voltage means much smaller losses in long wires.", no:"Transformers raise AC voltage for the trip, so much less energy is lost."},
+  {q:"What did Tesla's rotating magnetic field make possible?", a:["The light bulb","The induction motor","The telephone","The airplane"], c:1, yes:"Yes! The AC induction motor, still used everywhere.", no:"It made the AC induction motor possible."},
+  {q:"Which of these is a LEGEND, not a fact?", a:["The tesla unit is named for him","Niagara Falls power used his AC system","Wardenclyffe Tower sent free power around the world","He worked briefly for Edison"], c:2, yes:"Right! The tower was never finished.", no:"Wardenclyffe never sent power around the world. It was never finished."}
+], "PERFECT! You're a power-grid genius! 🏆");
+new MutationObserver(()=>{ if(quizBox.querySelector(".celebrate")) mark("quiz"); }).observe(quizBox,{childList:true,subtree:true});
+
+/* ---------- FUN FACTS ---------- */
+makeFacts($id("factsStrip"), [
+  ["🚤 A Remote-Control Boat","In 1898, Tesla showed off a small boat he could steer with radio signals, at Madison Square Garden in New York. People were amazed!"],
+  ["🕊️ Pigeon Friend","In his later years, Tesla loved feeding pigeons in New York City."],
+  ["🗣️ Many Languages","Tesla could speak several languages, including Serbian, German, and English."],
+  ["🧲 How Strong Is a Tesla?","A fridge magnet is about 0.01 tesla. Hospital MRI machines use magnets of about 1.5 to 3 teslas!"],
+  ["🔌 60 Times a Second","In the U.S., the AC in your outlets switches direction 60 times each second. In many other countries, it's 50 times."],
+  ["🎡 The White City","The 1893 Chicago World's Fair was nicknamed the “White City,” and at night its electric lights made it glow."]
+]);
+
+/* ---------- PAYOFF CITY ---------- */
+const city=$id("city");
+const KEYS=[["hook","Flip switch"],["acdc","Try AC"],["far","Send 20+ miles"],["motor","Spin motor"],["coil","Make a spark"],["legend","Solve legends"],["quiz","Finish quiz"]];
+const BLD=[];
+(function buildCity(){
+  svgEl("rect",{width:900,height:260,fill:"#0b1020"},city);
+  for(let i=0;i<40;i++) svgEl("circle",{cx:(i*137)%900,cy:(i*53)%90+6,r:1.3,fill:"#fff",opacity:.6},city);
+  KEYS.forEach((k,i)=>{ const x=14+i*126, h=110+((i*53)%90), w=104;
+    const g=svgEl("g",{},city); svgEl("rect",{x,y:228-h,width:w,height:h,fill:"#1d2a44",stroke:"#3b4a6b","stroke-width":2},g);
+    const wins=[]; for(let r=0;r<Math.floor(h/26)-1;r++) for(let c=0;c<3;c++){ wins.push(svgEl("rect",{x:x+14+c*28,y:228-h+14+r*26,width:16,height:14,fill:"#2b3550"},g)); }
+    const t=svgEl("text",{x:x+w/2,y:250,"text-anchor":"middle","font-size":14,fill:"#c9d2e0","font-weight":"bold"},g); t.textContent="○ "+k[1];
+    BLD.push({key:k[0],wins,t,label:k[1]}); });
+})();
+function mark(key){ if(progress[key]) return; progress[key]=true; updateCity(true); }
+function updateCity(fromAction){
+  const n=Object.values(progress).filter(Boolean).length;
+  BLD.forEach(b=>{ const on=progress[b.key]; b.wins.forEach(w=>w.setAttribute("fill",on?"#ffd84a":"#2b3550")); b.t.textContent=(on?"✔ ":"○ ")+b.label; b.t.setAttribute("fill",on?"#ffd84a":"#c9d2e0"); });
+  $id("cityRead").textContent="💡 Buildings lit: "+n+" of "+KEYS.length;
+  const pc=$id("payoffCard");
+  if(n===KEYS.length){ pc.innerHTML='<h3>🏙️ You lit the whole city!</h3><p>Just like the AC power from Niagara Falls lit up Buffalo, your hard work lit up every building. Next time you plug something in, remember: tiny electrons are wiggling back and forth 60 times a second, thanks partly to Nikola Tesla\'s big idea!</p>';
+    if(fromAction){ confetti(40); beep([523.25,659.25,783.99,1046.5,1318.5]); } }
+  else pc.innerHTML='<h3>🔦 Light up the city!</h3><p>Every activity you finish lights one building: flip the switch, try AC, send power more than 20 miles, spin the motor with 3 coils, make a spark, solve all the legends, and finish the quiz.</p>';
+  ReadAloud.mark(pc);
+}
+
+/* ---------- INIT ---------- */
+document.querySelectorAll("#life .card2, .ad-help, .far-help, .mo-help, .co-help, .lg-help, .grownups, .hook-text").forEach(n=>n.classList.add("readable"));
+ReadAloud.markAll();
+setMode("DC"); drawFar(); farCaption(); moCaption(false); updateCity(false);
+(function anim(){ drawFlow(); drawMotor(); requestAnimationFrame(anim); })();
+})();
+</script>
+</body>
+</html>
