@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Airplanes Fly — Spark Lessons</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- color-blind-safe theme (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e9eef5 0%,#f4efe6 50%,#eaf3ea 100%)}
+  header h1{color:#3b4a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--blue)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+  .chip{background:#fff;color:var(--ink);border:4px solid #888;box-shadow:none;padding:10px 14px;font-size:19px;min-height:56px;display:flex;align-items:center;gap:8px}
+  .chip .num{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;color:#000;font-weight:900;border:2px solid #222}
+  .chip.on{background:#2b2140;color:#fff;border-color:#2b2140}
+  .chip.on::after{content:" ✔"}
+  .zoom-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .zoom-row button{font-size:18px;padding:10px 14px;min-height:52px}
+  .zoom-row .z-on{outline:4px solid var(--gold);outline-offset:2px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  .pin{cursor:pointer}
+  .map-caption{margin-top:10px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px 14px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  .round-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .round-row .r-on{outline:4px solid var(--gold);outline-offset:2px}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+  /* ---- saints lessons ---- */
+  nav a:nth-child(7){background:#8b2c00} nav a:nth-child(8){background:#8a5a00} nav a:nth-child(9){background:#444}
+  .meet svg{flex:0 0 280px}
+  .tl-dot{min-height:56px;font-weight:bold;font-size:19px}
+  .tl-dot.active::before{content:"📍 "}
+  .tl-nav{align-items:center;gap:10px}
+  .tl-card{border-color:var(--theme)}
+  .tl-card h3{color:var(--theme)}
+  .tl-dot{border-color:var(--theme)} .tl-dot.active{background:var(--theme)}
+  .step-count{font-weight:bold;font-size:20px;align-self:center}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .stepc{background:#fff;border-radius:18px;padding:14px;border-top:12px solid var(--theme)}
+  .stepc .lvl{display:inline-block;font-size:16px;font-weight:bold;background:#2b2140;color:#fff;border-radius:999px;padding:2px 10px}
+  .stepc h3{margin:6px 0 4px;font-size:23px}
+  .stepc p{margin:0 0 6px}
+  .be-like{margin-top:12px}
+  svg text{font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif}
+  .pin:focus{outline:none} .pin:focus circle.dot,.pin:focus rect.dot{stroke:#E6A800;stroke-width:5}
+
+
+  :root{ --theme:#0072B2 }
+  body{background:linear-gradient(180deg,#dcecf8 0%,#f2f6fb 45%,#eef6ee 100%)}
+  header h1{color:#0b3d66;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  .hook{position:relative;border-radius:24px;padding:20px;text-align:center;background:linear-gradient(180deg,#56B4E9 0%,#bfe3f7 70%,#7fbf7f 70%,#5a9e5a 100%);border:4px solid #fff;overflow:hidden;min-height:330px}
+  .hook h2{margin:0 0 6px;font-size:clamp(26px,4.5vw,38px);color:#0b2540}
+  .hook .runway{position:relative;height:150px}
+  .hook .jet{position:absolute;left:4%;bottom:6px;font-size:70px;transition:left 3s ease-in,bottom 3s ease-in,transform 3s;transform:rotate(0deg)}
+  .hook.flying .jet{left:78%;bottom:120px;transform:rotate(-14deg)}
+  .hook .hook-text{background:rgba(255,255,255,.9);border-radius:14px;padding:10px 14px;font-size:21px;max-width:760px;margin:0 auto 10px}
+  .goBtn{font-size:24px;min-height:70px;padding:14px 28px;background:#E6A800;color:#1d2433}
+  .lab-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:8px}
+  canvas.lab{width:100%;height:auto;display:block;background:#0e1a2b;border-radius:12px;touch-action:none}
+  .ctrl-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:10px 0}
+  .ctrl-row button{min-height:56px}
+  .ctrl-row label{font-weight:bold;font-size:19px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  input[type=range]{width:min(260px,70vw);height:40px;accent-color:#0072B2}
+  .seg{display:flex;flex-wrap:wrap;gap:8px}
+  .seg button{background:#fff;color:var(--ink);border:4px solid #0072B2;box-shadow:none;min-height:56px}
+  .seg button[aria-pressed="true"]{background:#0072B2;color:#fff}
+  .seg button[aria-pressed="true"]::after{content:" ✔"}
+  .readout{font-weight:bold;font-size:20px;margin:6px 0}
+  .formula{font-family:Georgia,serif;font-size:19px;background:#f2f6fb;border-radius:10px;padding:8px 12px;display:inline-block}
+  .forces{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .force{background:#fff;border-radius:16px;padding:12px;border-top:10px solid #999}
+  .force .fi{font-size:40px}
+  .pad{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:10px}
+  .pad .grp{background:#fff;border-radius:16px;padding:10px;text-align:center;border:3px solid #cfd8e3}
+  .pad .grp b{display:block;font-size:19px;margin-bottom:6px}
+  .pad button{min-height:64px;min-width:96px;font-size:19px;touch-action:none;user-select:none;-webkit-user-select:none;margin:3px}
+  .pad button.held{outline:5px solid #E6A800;outline-offset:2px}
+  #planeTop{width:100%;max-width:420px;height:auto;display:block;margin:6px auto}
+  .myth{background:#fff3e0;border:4px dashed #B86E00;border-radius:18px;padding:14px 18px}
+  .myth .stamp{display:inline-block;background:#B86E00;color:#fff;font-weight:bold;border-radius:8px;padding:2px 10px;transform:rotate(-3deg)}
+  .safety{border-left-color:#C24E00 !important;background:#fff6ef}
+  .ending{background:linear-gradient(180deg,#0b1a3a,#24508a);color:#fff;border-radius:22px;padding:18px}
+  .ending .card2{color:var(--ink)}
+  .checks{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .chk{background:rgba(255,255,255,.12);border:3px dashed #9fb3cc;border-radius:12px;padding:6px 12px;font-weight:bold}
+  .chk.ok{background:#E6A800;color:#1d2433;border:3px solid #fff}
+  #wings{width:100%;max-width:520px;height:auto;display:none;margin:10px auto}
+  #wings.show{display:block}
+  nav a:nth-child(10){background:#0b3d66} nav a:nth-child(11){background:#6a3d9a} nav a:nth-child(12){background:#00788a} nav a:nth-child(13){background:#3b4a6b}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>✈️ How Airplanes Fly</h1>
+  <p>The real physics of lift, thrust, drag, and weight, and why wings don't work in space</p>
+</header>
+<nav>
+  <a href="#hook">🛫 Start</a>
+  <a href="#forces">⚖️ Four Forces</a>
+  <a href="#lift">🪽 Lift</a>
+  <a href="#tunnel">🌬️ Wind Tunnel</a>
+  <a href="#balance">🎚️ Balance</a>
+  <a href="#controls">🕹️ Pilot</a>
+  <a href="#more">🔥 Engines & More</a>
+  <a href="#history">📜 Wrights</a>
+  <a href="#space">🚀 Space</a>
+  <a href="#try">✋ Try It</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#land">🛬 Land & Earn Wings</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+
+<section id="hook" class="hook">
+  <h2 id="hookTitle">How does something this heavy fly?</h2>
+  <p id="hookText" class="hook-text">A jumbo jet can weigh as much as 60 elephants, yet it floats on invisible air. Tap the button to take off!</p>
+  <div class="runway" aria-hidden="true"><span class="jet">🛫</span></div>
+  <button class="goBtn" id="goBtn">🛫 Take off!</button>
+</section>
+
+<section id="forces">
+  <h2>⚖️ The Four Forces of Flight</h2>
+  <p class="forces-help">Every airplane in the sky is in a tug-of-war between four forces. A <b>force</b> is a push or a pull.</p>
+  <div class="forces">
+    <div class="force readable" style="border-top-color:#56B4E9"><div class="fi">⬆️</div><h3>Lift (up)</h3><p>Made by the wings as air flows over and under them. Lift holds the plane up.</p></div>
+    <div class="force readable" style="border-top-color:#E69F00"><div class="fi">⬇️</div><h3>Weight (down)</h3><p>Gravity pulling the plane, its passengers, and its fuel toward Earth.</p></div>
+    <div class="force readable" style="border-top-color:#009E73"><div class="fi">➡️</div><h3>Thrust (forward)</h3><p>Made by the engines, pushing the plane forward through the air.</p></div>
+    <div class="force readable" style="border-top-color:#CC79A7"><div class="fi">⬅️</div><h3>Drag (backward)</h3><p>Air pushing back against the plane as it moves, like wind pushing on you when you ride a bike fast.</p></div>
+  </div>
+</section>
+
+<section id="lift">
+  <h2>🪽 How a Wing Really Makes Lift</h2>
+  <div class="grid">
+    <div class="card2"><h3>⬇️ Wings Push Air Down</h3><p>A wing is shaped and tilted so that it <b>turns the air flowing past it downward</b>. Newton's third law says every push has an equal and opposite push back. The wing pushes air down, so <b>the air pushes the wing up</b>. That's lift!</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>🌀 Pressure Above and Below</h3><p>As the wing turns the air, the air pressure <b>above the wing gets lower</b>, and the pressure <b>below gets higher</b>. The higher pressure underneath pushes up harder than the lower pressure on top pushes down. This is the same lift, just described another way.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>💨 Faster Over the Top</h3><p>Air flowing over the top of the wing <b>speeds up</b>, and that goes along with the lower pressure there. Scientists have measured and photographed this in wind tunnels.</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>📐 Angle of Attack</h3><p>The <b>angle of attack</b> is how much the wing is tilted up into the oncoming air. Tilting more turns more air down and makes more lift, but only up to a point…</p></div>
+    <div class="card2" style="border-left-color:var(--red)"><h3>⚠️ Stall!</h3><p>If the angle gets too steep (for many wings, past roughly <b>15 degrees</b>), the air can't follow the curved top of the wing anymore. It <b>separates</b> into messy swirls, and <b>lift suddenly drops</b>. Pilots call this a <b>stall</b>. (It has nothing to do with the engine stopping!)</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>🎛️ What Changes Lift?</h3><p>Four things: <b>speed</b> (faster means much more lift), <b>wing size</b> (bigger wings, more lift), <b>air density</b> (thick air near the ground gives more lift than thin air up high), and <b>angle of attack</b>.</p></div>
+  </div>
+  <div class="myth readable" style="margin-top:14px"><span class="stamp">🚫 MYTH BUSTED</span>
+    <h3>The “Equal Transit Time” Myth</h3>
+    <p>Some books say air going over the top of the wing must “catch up” and meet the air going underneath at the back edge, so it has to go faster. <b>That's not true!</b> Nothing makes the air meet back up. In real wind tunnel tests, the air over the top moves so fast that it <b>arrives at the back edge first</b>, way ahead of the air below. Race them and see!</p>
+    <button id="raceBtn" style="background:#B86E00">🏁 Race the air!</button>
+  </div>
+  <div class="lab-wrap" style="margin-top:10px"><canvas class="lab" id="raceCanvas" width="900" height="260" role="img" aria-label="Two puffs of air race over and under a wing; the top one reaches the back edge first"></canvas></div>
+  <div class="readout" id="raceRead" aria-live="polite"></div>
+</section>
+
+<section id="tunnel">
+  <h2>🌬️ Wing Wind Tunnel</h2>
+  <p class="tunnel-help">Change the wind speed and the wing's angle. Watch the air bend <b>downward</b> behind the wing, and watch the lift arrow grow or shrink. Can you make it stall?</p>
+  <div class="ctrl-row">
+    <label>💨 Speed <input type="range" id="tSpeed" min="0" max="10" value="6" aria-label="Wind speed"> <span id="tSpeedTxt"></span></label>
+    <label>📐 Angle <input type="range" id="tAngle" min="-5" max="25" value="5" aria-label="Angle of attack in degrees"> <span id="tAngleTxt"></span></label>
+  </div>
+  <div class="ctrl-row">
+    <span class="seg" role="group" aria-label="Wing size"><button id="wBig" aria-pressed="true">🪽 Big wing</button><button id="wSmall" aria-pressed="false">🪶 Small wing</button></span>
+    <span class="seg" role="group" aria-label="Air"><button id="aSea" aria-pressed="true">🌊 Air near the ground</button><button id="aHigh" aria-pressed="false">🏔️ Thin air, very high</button><button id="aSpace" aria-pressed="false">🚀 Space (no air)</button></span>
+  </div>
+  <div class="lab-wrap"><canvas class="lab" id="tunnelCanvas" width="900" height="420" role="img" aria-label="Wind tunnel with airflow lines bending around a wing and a lift arrow"></canvas></div>
+  <div class="readout" id="tRead" aria-live="polite"></div>
+  <p><span class="formula">Lift ≈ ½ × air density × speed × speed × wing area × lift factor</span></p>
+  <div class="card2 readable" id="tCap" style="border-left-color:var(--theme)"></div>
+</section>
+
+<section id="balance">
+  <h2>🎚️ Four-Forces Balance</h2>
+  <p class="bal-help">Our pretend plane's <b>weight</b> stays the same. You control <b>thrust</b> and <b>lift</b>. More lift than weight makes it climb. More thrust than drag makes it speed up. Drag grows as the plane goes faster.</p>
+  <div class="ctrl-row">
+    <label>➡️ Thrust <input type="range" id="bThrust" min="0" max="100" value="50" aria-label="Thrust"> <span id="bThrustTxt"></span></label>
+    <label>⬆️ Lift <input type="range" id="bLift" min="0" max="100" value="50" aria-label="Lift"> <span id="bLiftTxt"></span></label>
+    <button id="bReset" style="background:#666">↺ Reset</button>
+  </div>
+  <div class="lab-wrap"><canvas class="lab" id="balCanvas" width="900" height="340" role="img" aria-label="A plane with four force arrows that climbs, descends, speeds up, or slows down"></canvas></div>
+  <div class="readout" id="bRead" aria-live="polite"></div>
+  <div class="card2 readable" id="bCap" style="border-left-color:var(--green)"></div>
+</section>
+
+<section id="controls">
+  <h2>🕹️ Pilot Controls: Fly Through the Rings</h2>
+  <div class="grid">
+    <div class="card2"><h3>🔄 Ailerons: ROLL</h3><p>Flaps near the tips of the wings. One goes up while the other goes down, so the plane <b>rolls</b> (tips its wings). Tipping the wings is how a plane <b>turns</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>↕️ Elevator: PITCH</h3><p>Flaps on the small back wing (the tail). They tip the plane's <b>nose up or down</b>, which is called <b>pitch</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>↔️ Rudder: YAW</h3><p>A flap on the tall tail fin. It swings the <b>nose left or right</b>, which is called <b>yaw</b>. Pilots use it with the ailerons to make smooth turns.</p></div>
+  </div>
+  <p class="ctl-help" style="margin-top:10px"><b>How to play:</b> press and <b>hold</b> the control buttons to steer the plane's nose (the yellow cross) into the middle of each ring. Rolling tips the wings and turns you slowly; the rudder nudges you sideways; the elevator moves you up or down. Fly through 5 rings! (Keyboard: arrow keys for pitch and roll, A and D for rudder.)</p>
+  <svg id="planeTop" viewBox="0 0 420 260" role="img" aria-label="Top view of a plane showing the ailerons, elevator, and rudder"></svg>
+  <div class="ctrl-row"><button id="gStart" style="background:var(--theme)">▶ Start flying</button><span class="readout" id="gRead" aria-live="polite">Rings: 0 of 5</span></div>
+  <div class="lab-wrap"><canvas class="lab" id="gameCanvas" width="800" height="450" role="img" aria-label="Pilot's view with a horizon and rings to fly through"></canvas></div>
+  <div class="pad">
+    <div class="grp"><b>🔄 Ailerons (roll)</b><button data-ctl="ail" data-v="-1" style="background:#0072B2">↺ Roll left</button><button data-ctl="ail" data-v="1" style="background:#0072B2">Roll right ↻</button></div>
+    <div class="grp"><b>↕️ Elevator (pitch)</b><button data-ctl="elev" data-v="1" style="background:#B86E00">⬆ Nose up</button><button data-ctl="elev" data-v="-1" style="background:#B86E00">⬇ Nose down</button></div>
+    <div class="grp"><b>↔️ Rudder (yaw)</b><button data-ctl="rud" data-v="-1" style="background:#6a3d9a">⬅ Yaw left</button><button data-ctl="rud" data-v="1" style="background:#6a3d9a">Yaw right ➡</button></div>
+  </div>
+  <div class="card2 readable" id="gCap" style="margin-top:10px;border-left-color:var(--theme)"></div>
+</section>
+
+<section id="more">
+  <h2>🔥 Engines, Wind, and Takeoff</h2>
+  <div class="grid">
+    <div class="card2"><h3>🌀 Propellers</h3><p>A propeller is really a set of <b>spinning wings</b>. Each blade is tilted to throw air <b>backward</b>, so the air pushes the plane <b>forward</b>. That's thrust, and it's Newton's third law again!</p></div>
+    <div class="card2" style="border-left-color:var(--red)"><h3>🔥 Jet Engines</h3><p>A jet engine sucks in air, squeezes it, mixes it with fuel, and burns it. The hot gas blasts out the back very fast, and that pushes the plane forward. Big fans at the front of many jet engines also push lots of air backward.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>🌬️ Why Take Off Into the Wind?</h3><p>Wings care about how fast the <b>air</b> moves past them, not how fast the wheels roll. Taking off <b>into the wind</b> means the air is already rushing over the wings, so the plane reaches flying speed sooner and needs <b>less runway</b>. Planes usually land into the wind too.</p></div>
+  </div>
+</section>
+
+<section id="history">
+  <h2>📜 The Wright Brothers</h2>
+  <div class="grid">
+    <div class="card2"><h3>🚲 Bicycle Builders</h3><p><b>Wilbur and Orville Wright</b> ran a bicycle shop in Dayton, Ohio. They studied birds, gliders, and the science of wings.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>🌬️ Their Own Wind Tunnel</h3><p>In 1901, they built a small <b>wind tunnel</b> and tested about 200 tiny wing shapes, just like the one you tried above! Their careful tests helped them design better wings and propellers.</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>✈️ December 17, 1903</h3><p>Near <b>Kitty Hawk, North Carolina</b>, Orville flew their engine-powered <b>Flyer</b> for <b>12 seconds</b> and about <b>120 feet</b>, into a strong, cold wind. It was the first controlled, powered, sustained airplane flight. Later that day, Wilbur flew 852 feet in 59 seconds.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🔄 Steering in the Air</h3><p>The Wrights' big secret was <b>control</b>. They twisted the wing tips with wires (called “wing warping”) to roll and turn. Today's ailerons do the same job.</p></div>
+  </div>
+</section>
+
+<section id="space">
+  <h2>🚀 Why Wings Don't Work in Space</h2>
+  <div class="grid">
+    <div class="card2"><h3>🌌 No Air, No Lift</h3><p>Wings work by pushing on <b>air</b>. Space has almost no air at all, so a wing has nothing to push. In space, a wing can't make lift, and propellers and jet engines can't work either. (Try the “Space” button in the wind tunnel!)</p></div>
+    <div class="card2" style="border-left-color:var(--red)"><h3>🔥 Rockets Push Exhaust</h3><p>A rocket carries its fuel <b>and</b> the oxygen to burn it. It blasts hot exhaust gas out the back, and the gas pushes the rocket the other way. That's Newton's third law, and it works even with no air around.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>🛬 Spaceships With Wings</h3><p>The <b>Space Shuttle</b> used rockets to reach space, but it had wings for coming home. Once it was back in the air, it <b>glided</b> to the runway with no engines running.</p></div>
+  </div>
+</section>
+
+<section id="try">
+  <h2>✋ Try It Yourself</h2>
+  <div class="grid">
+    <div class="card2 readable"><h3>🚗 Hand Out the Car Window</h3><p>On a quiet road, with a grown-up driving slowly, hold your flat hand out the window, fingers together. Tilt the front edge up a little: you'll feel your hand <b>pushed up</b> (lift) and <b>back</b> (drag). Tilt it way up, and the push becomes mostly backward with less lift, a lot like a stall!</p></div>
+    <div class="card2 readable safety"><h3>⚠️ Safety First</h3><p>Only do this with a grown-up's permission, at slow speeds, on a quiet road. Keep your hand close to the car, and never stick your head or arm far out. Watch out for mailboxes, bushes, and other cars. Never do it on a highway. A safe at-home version: hold your flat hand in front of a fan or a hair dryer on the cool setting, and tilt it.</p></div>
+    <div class="card2 readable" style="border-left-color:var(--gold)"><h3>📄 Paper Airplane Lab</h3><p>Fold a paper airplane and test it! <b>1.</b> Bend both back edges <b>up</b> a little (like an elevator): the nose should rise. <b>2.</b> Bend one up and one down (like ailerons): it should roll. <b>3.</b> Throw it gently, level, then steeply upward. A too-steep throw can stall and drop!</p></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>❓ Quiz Challenge</h2>
+  <div id="quizBox"></div>
+  <h3 style="margin-top:22px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<section id="land">
+  <h2>🛬 Land the Plane and Earn Your Wings</h2>
+  <p class="land-help">Bring the plane down gently onto the runway. Hold <b>Nose up</b> to slow your descent, and <b>Nose down</b> to come down faster. Touch down on the runway nice and soft!</p>
+  <div class="ctrl-row"><button id="lStart" style="background:var(--theme)">▶ Start approach</button></div>
+  <div class="lab-wrap"><canvas class="lab" id="landCanvas" width="900" height="300" role="img" aria-label="A plane approaching a runway to land"></canvas></div>
+  <div class="pad"><div class="grp"><b>↕️ Elevator</b><button id="lUp" style="background:#B86E00">⬆ Nose up</button><button id="lDown" style="background:#B86E00">⬇ Nose down</button></div></div>
+  <div class="readout" id="lRead" aria-live="polite"></div>
+  <div class="ending" style="margin-top:14px">
+    <h3 style="color:#fff">🎖️ Pilot Checklist</h3>
+    <div class="checks" id="checks"></div>
+    <svg id="wings" viewBox="0 0 520 200" role="img" aria-label="Golden pilot wings badge"></svg>
+    <div class="card2 readable" id="endCard"></div>
+  </div>
+</section>
+
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>The four forces (lift, weight, thrust, drag) and how their balance makes a plane climb, descend, speed up, or slow down.</li>
+      <li>Lift explained correctly: the wing's shape and angle of attack turn the flow downward (Newton's 3rd law), with lower pressure above, higher pressure below, and faster flow over the top. These are complementary descriptions of the same physics, not competing theories.</li>
+      <li>Angle of attack, stall (flow separation), the factors in the lift equation, control surfaces, propulsion, takeoff into the wind, the Wright brothers, and why rockets (not wings) work in space.</li>
+    </ul>
+    <h3>Myth addressed</h3>
+    <p>The “equal transit time” explanation (air over the top must rejoin the air below at the trailing edge) is false. Real flow over the top reaches the trailing edge well before the flow underneath. The lesson says so explicitly and animates it.</p>
+    <h3>Models are simplified</h3>
+    <ul>
+      <li>The wind tunnel uses L = ½ρv²SC<sub>L</sub> with a made-up, roughly linear lift factor and a stall near 15°. Real stall angles vary by wing and conditions. The streamlines are illustrative, not a fluid simulation.</li>
+      <li>In the balance demo, lift is a direct slider. In real planes, lift depends on speed and angle, so thrust and lift are linked.</li>
+      <li>In the ring game, the controls are simplified: the wings level themselves, and the rudder nudges the plane sideways.</li>
+    </ul>
+    <h3>Safety</h3><p>The hand-out-the-window demo needs a grown-up driving slowly on a quiet road. A fan or a cool hair dryer is a safe indoor alternative.</p>
+    <h3>Grade band & time</h3><p>Grades 3–5; about 40–50 minutes. It's easy to split: forces and lift, then the interactives, then history, space, the quiz, and landing.</p>
+  </div>
+</section>
+</main>
+<footer>Made for future pilots and astronauts ✈️🚀 · All drawings made just for this page · Works offline</footer>
+
+<script>
+(function(){
+"use strict";
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- sound + confetti ---------- */
+let actx=null;
+function beep(notes,type){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; notes.forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f; const t=t0+i*0.1;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.18,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32); }); }catch(e){} }
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS=["✈️","🛫","⭐","☁️","🚀","🪽","🎖️"];
+function confetti(n){ for(let i=0;i<n;i++){ const s=document.createElement("div"); s.className="confetti"; s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s"; document.body.appendChild(s); setTimeout(()=>s.remove(),4200); } }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function makeQuiz(box, QUIZ, praise){
+  let qi=0, score=0;
+  function renderQ(){
+    const item=QUIZ[qi]; ReadAloud.stop();
+    box.innerHTML='<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div><div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+    const qEl=box.querySelector(".q-text"); qEl.dataset.say=item.q+" Is it: "+item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ")+"?"; ReadAloud.mark(qEl);
+    const ans=box.querySelector(".answers"), fb=box.querySelector(".feedback");
+    item.a.forEach((txt,i)=>{ const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+      b.addEventListener("click",()=>{ [...ans.children].forEach(x=>x.disabled=true);
+        if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+        else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+        ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+        const next=document.createElement("button"); next.style.background="var(--purple)"; next.textContent=qi<QUIZ.length-1?"Next question ➡":"See my score 🏆";
+        next.addEventListener("click",()=>{ qi++; qi<QUIZ.length?renderQ():renderEnd(); }); fb.after(next); });
+      ans.appendChild(b); });
+  }
+  function renderEnd(){
+    ReadAloud.stop(); const stars="⭐".repeat(score)+"☆".repeat(QUIZ.length-score);
+    const msg=score===QUIZ.length?praise:score>=Math.ceil(QUIZ.length*0.6)?"Awesome job! 🎉":score>=2?"Nice work! Explore more and try again! 📜":"Good try! Explore and try again! 💪";
+    box.innerHTML='<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+    const c=box.querySelector(".celebrate"); c.dataset.say="You got "+score+" out of "+QUIZ.length+"! "+msg; ReadAloud.mark(c);
+    const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--teal)"; again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+    const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); box.appendChild(wrap); confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+  }
+  renderQ();
+}
+
+/* ---------- TIMELINE ---------- */
+function makeTimeline(root, EVENTS){
+  let i=0;
+  root.innerHTML='<div class="tl-track" role="list"></div><div class="tl-card readable" aria-live="polite"><div class="big"></div><div><h3></h3><p></p></div></div>'+
+    '<div class="tl-nav"><button class="tl-prev" style="background:#666">◀ Earlier</button><span class="step-count tl-count"></span><button class="tl-next" style="background:var(--theme)">Later ▶</button></div>';
+  const track=root.querySelector(".tl-track"), card=root.querySelector(".tl-card"), prev=root.querySelector(".tl-prev"), next=root.querySelector(".tl-next"), count=root.querySelector(".tl-count");
+  EVENTS.forEach((e,k)=>{ const b=document.createElement("button"); b.className="tl-dot"; b.textContent=e.year; b.setAttribute("aria-label",e.year+": "+e.title);
+    b.addEventListener("click",()=>show(k,true)); track.appendChild(b); });
+  function show(k,speak){
+    i=k; const e=EVENTS[k]; ReadAloud.stopIf(card);
+    [...track.children].forEach((b,j)=>{ b.classList.toggle("active",j===k); b.setAttribute("aria-current",j===k?"true":"false"); });
+    card.querySelector(".big").textContent=e.icon; card.querySelector("h3").textContent=e.year+" — "+e.title; card.querySelector("p").textContent=e.text;
+    prev.disabled=k===0; next.disabled=k===EVENTS.length-1; count.textContent=(k+1)+" of "+EVENTS.length;
+    const b=track.children[k]; track.scrollLeft=b.offsetLeft-track.clientWidth/2+b.offsetWidth/2;
+    ReadAloud.mark(card); if(speak) ReadAloud.speakEl(card);
+  }
+  prev.addEventListener("click",()=>{ if(i>0) show(i-1,true); });
+  next.addEventListener("click",()=>{ if(i<EVENTS.length-1) show(i+1,true); });
+  show(0,false);
+  return {show};
+}
+
+/* ---------- MATCHING GAME ---------- */
+function makeMatch(o){ // o: {left,right,status,pairs:[{id,l,r,tip}], doneMsg, onDone}
+  let selL=null, selR=null, matched=0;
+  const N=o.pairs.length;
+  function build(){
+    selL=selR=null; matched=0; ReadAloud.stop();
+    o.left.innerHTML=""; o.right.innerHTML="";
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="L";
+      c.innerHTML='<span>'+p.l+'</span>'; o.left.appendChild(c); ReadAloud.mark(c); });
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard name-card readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="R";
+      c.innerHTML='<span>'+p.r+'</span>'; o.right.appendChild(c); ReadAloud.mark(c); });
+    o.status.textContent="Matched: 0 of "+N; o.status.style.color=""; o.status.classList.add("readable"); ReadAloud.mark(o.status);
+    if(o.onReset) o.onReset();
+  }
+  function pick(c){
+    if(c.classList.contains("done")) return;
+    if(c.dataset.side==="L"){ if(selL) selL.classList.remove("sel"); selL = selL===c?null:c; if(selL) c.classList.add("sel"); }
+    else { if(selR) selR.classList.remove("sel"); selR = selR===c?null:c; if(selR) c.classList.add("sel"); }
+    if(selL && selR){
+      const a=selL,b=selR; selL=selR=null; a.classList.remove("sel"); b.classList.remove("sel");
+      const p=o.pairs.find(x=>x.id===a.dataset.id);
+      if(a.dataset.id===b.dataset.id){
+        a.classList.add("done"); b.classList.add("done"); matched++; beep(HAPPY);
+        o.status.textContent="✔ Yes! "+p.tip+" ("+matched+" of "+N+")"; o.status.style.color="var(--blue)";
+        if(matched===N){ o.status.textContent=o.doneMsg; confetti(24); if(o.onDone) o.onDone(); }
+        ReadAloud.mark(o.status); setTimeout(()=>ReadAloud.speakEl(o.status),0);
+      } else {
+        [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+        o.status.textContent="✘ Not quite — read it again and try another one!"; o.status.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(o.status);
+      }
+    }
+  }
+  [o.left,o.right].forEach(col=>{
+    col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+    col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard")&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+  });
+  build();
+  return {build};
+}
+
+/* ---------- FUN FACTS ---------- */
+function makeFacts(strip, FACTS){
+  FACTS.forEach(([front,back])=>{ const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+    d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+    const flip=()=>d.classList.toggle("flipped");
+    d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+    d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+    strip.appendChild(d); ReadAloud.mark(d); });
+}
+
+/* ---------- a soft bell sound ---------- */
+function bell(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; [[392,0.16],[784,0.07],[1176,0.04],[1568,0.02]].forEach(([f,a])=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type="sine"; o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(a,t0+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t0+1.8); o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0+1.9); }); }catch(e){} }
+
+function projector(lon0,lon1,lat0,lat1,W,H){ return (lon,lat)=>[ +((lon-lon0)/(lon1-lon0)*W).toFixed(1), +((lat1-lat)/(lat1-lat0)*H).toFixed(1) ]; }
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs,parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+
+const $id=id=>document.getElementById(id);
+const progress={tunnel:false,myth:false,balance:false,rings:false,quiz:false,land:false};
+const CHECK_LABELS={tunnel:"Make a wing stall",myth:"Race the air (myth buster)",balance:"Make the plane climb",rings:"Fly through 5 rings",quiz:"Finish the quiz",land:"Land softly"};
+const DBG=window.__fl={};
+
+/* ---------- HOOK ---------- */
+$id("goBtn").addEventListener("click",()=>{
+  const h=$id("hook"), on=!h.classList.contains("flying"); h.classList.toggle("flying",on);
+  $id("hookTitle").textContent = on ? "Liftoff! ✈️" : "How does something this heavy fly?";
+  $id("hookText").textContent = on ? "The wings are pushing air down, so the air pushes the plane up. Let's discover the real physics of flight, and why it won't work in space!" : "A jumbo jet can weigh as much as 60 elephants, yet it floats on invisible air. Tap the button to take off!";
+  $id("goBtn").textContent = on ? "🛬 Back to the runway" : "🛫 Take off!";
+  ReadAloud.mark($id("hookText"));
+  if(on){ beep([392,523.25,659.25,783.99]); ReadAloud.speakEl($id("hookText")); }
+});
+
+/* ---------- AIRFOIL ---------- */
+function airfoil(chord){ // returns [upper[], lower[]] in local coords, x from -c/2..c/2, y up negative
+  const up=[],lo=[], m=0.04,p=0.4,t=0.13;
+  for(let i=0;i<=40;i++){ const u=(1-Math.cos(Math.PI*i/40))/2;
+    const yt=5*t*(0.2969*Math.sqrt(u)-0.126*u-0.3516*u*u+0.2843*u*u*u-0.1015*u*u*u*u);
+    const yc=u<p? m/(p*p)*(2*p*u-u*u) : m/((1-p)*(1-p))*((1-2*p)+2*p*u-u*u);
+    up.push([(u-0.5)*chord,-(yc+yt)*chord]); lo.push([(u-0.5)*chord,-(yc-yt)*chord]); }
+  return [up,lo];
+}
+function drawWing(ctx,cx,cy,chord,deg,fill){
+  const [up,lo]=airfoil(chord), a=deg*Math.PI/180, c=Math.cos(a), s=Math.sin(a);
+  const tr=([x,y])=>[cx+x*c-y*s, cy+x*s+y*c];
+  ctx.beginPath(); up.forEach((pt,i)=>{ const [X,Y]=tr(pt); i?ctx.lineTo(X,Y):ctx.moveTo(X,Y); }); for(let i=lo.length-1;i>=0;i--){ const [X,Y]=tr(lo[i]); ctx.lineTo(X,Y); }
+  ctx.closePath(); ctx.fillStyle=fill||"#dfe6ee"; ctx.fill(); ctx.strokeStyle="#fff"; ctx.lineWidth=2; ctx.stroke();
+  return {up:up.map(tr),lo:lo.map(tr)};
+}
+
+/* ---------- MYTH RACE ---------- */
+const rc=$id("raceCanvas"), rx=rc.getContext("2d"); let race=null;
+function drawRace(){
+  rx.fillStyle="#0e1a2b"; rx.fillRect(0,0,900,260);
+  const g=drawWing(rx,450,140,420,6);
+  rx.fillStyle="#fff"; rx.font="bold 16px Trebuchet MS,sans-serif"; rx.textAlign="center";
+  rx.fillText("front edge",g.up[0][0]-10,g.up[0][1]+50); rx.fillText("back edge",g.up[40][0]+10,g.up[40][1]+30);
+  const off=(pts,dy)=>pts.map(([x,y])=>[x,y+dy]);
+  const top=off(g.up,-14), bot=off(g.lo,14);
+  if(race){
+    const pos=(path,f)=>{ if(f<=1){ const i=Math.min(path.length-1,Math.floor(f*(path.length-1))); return path[i]; } const e=path[path.length-1]; return [e[0]+(f-1)*300,e[1]+(f-1)*30]; };
+    const [tx,ty]=pos(top,race.ft), [bx,by]=pos(bot,race.fb);
+    rx.fillStyle="#56B4E9"; rx.beginPath(); rx.arc(tx,ty,11,0,7); rx.fill(); rx.fillStyle="#E69F00"; rx.beginPath(); rx.arc(bx,by,11,0,7); rx.fill();
+    rx.fillStyle="#56B4E9"; rx.fillText("top air",tx,ty-18); rx.fillStyle="#E69F00"; rx.fillText("bottom air",bx,by+30);
+    if(race.ft<1.6) race.ft+=0.012; if(race.fb<1.25) race.fb+=0.0075;
+    if(race.ft>=1 && !race.topDone){ race.topDone=true; $id("raceRead").textContent="🏁 The TOP air reached the back edge first! The bottom air is still on its way…"; }
+    if(race.fb>=1 && !race.botDone){ race.botDone=true; $id("raceRead").textContent="🏁 Top air won by a lot! The two puffs never meet back up, so the “equal transit time” idea is a myth."; beep(HAPPY); mark("myth"); }
+  } else { rx.fillStyle="#c9d2e0"; rx.fillText("Press “Race the air!” to start two puffs of air together at the front edge",450,40); }
+  rx.textAlign="left";
+}
+$id("raceBtn").addEventListener("click",()=>{ race={ft:0,fb:0}; $id("raceRead").textContent="🏃 They start side by side…"; });
+
+/* ---------- WIND TUNNEL ---------- */
+const tc=$id("tunnelCanvas"), tx=tc.getContext("2d"); let tSpeed=6, tAng=5, tS=1, tRho=1, tAir="sea", tt=0;
+function CL(a){ return a<=15 ? 0.25+0.1*a : Math.max(0.55, 1.0-0.03*(a-15)); }
+function liftPct(){ return Math.round(tRho*tSpeed*tSpeed*tS*CL(tAng)/(1*36*1*CL(5))*100); }
+const LINES=[]; for(let k=1;k<=6;k++){ LINES.push(-k*34); LINES.push(k*34); }
+const PARTS=LINES.map(()=>Array.from({length:9},(_,i)=>i*100+Math.random()*30));
+function streamY(y0,x,cy,cl,stalled){
+  const s=(x-450)/150, g=Math.exp(-Math.abs(y0)/150);
+  const down=26*cl*g*(1/(1+Math.exp(-s*2.2))) - 8*cl*g*Math.exp(-(s+1.3)*(s+1.3));
+  const bump=(y0<0?-1:1)*(y0<0?26:8)*Math.exp(-s*s*1.6)*Math.exp(-Math.abs(y0)/90);
+  let y=cy+y0+down+bump - s*Math.tan(tAng*Math.PI/180)*0;
+  if(stalled && y0<0 && y0>-150 && s>-0.4){ y+=Math.sin(x*0.07+tt*0.25+y0)*10*Math.min(1,(s+0.4))*Math.exp(-Math.abs(y0)/120); }
+  return y;
+}
+function drawTunnel(){
+  const W=900,H=420,cy=200; tx.fillStyle="#0e1a2b"; tx.fillRect(0,0,W,H);
+  const stalled = tAng>15 && tSpeed>0 && tRho>0, air=tRho>0, cl=air&&tSpeed>0? (stalled?CL(tAng)*0.5:CL(tAng)) : 0;
+  if(air){
+    LINES.forEach((y0,li)=>{
+      tx.strokeStyle="rgba(86,180,233,.45)"; tx.lineWidth=2; tx.beginPath();
+      for(let x=0;x<=W;x+=10){ const y=streamY(y0,x,cy,cl,stalled); x?tx.lineTo(x,y):tx.moveTo(x,y); } tx.stroke();
+      PARTS[li].forEach((px,pi)=>{ const s=(px-450)/150, g=Math.exp(-Math.abs(y0)/150);
+        const fac=1+(y0<0?0.7:-0.3)*cl*g*Math.exp(-s*s*1.5);
+        PARTS[li][pi]=(px+tSpeed*0.9*fac)%W;
+        tx.fillStyle="#cdeeff"; tx.beginPath(); tx.arc(px,streamY(y0,px,cy,cl,stalled),3.2,0,7); tx.fill(); });
+    });
+    if(stalled){ tx.strokeStyle="#E69F00"; tx.lineWidth=3; for(let i=0;i<4;i++){ const x=520+i*70, y=cy-40-(i%2)*25; tx.beginPath(); tx.arc(x,y,14+4*Math.sin(tt*0.2+i),tt*0.15+i,tt*0.15+i+4.5); tx.stroke(); } }
+  } else { tx.fillStyle="#fff"; for(let i=0;i<60;i++){ tx.fillRect((i*149)%W,(i*71)%H,2,2); } }
+  drawWing(tx,450,cy,300,tAng*0.6+0,"#dfe6ee"); // drawn tilt (scaled so big angles stay readable)
+  tx.font="bold 18px Trebuchet MS,sans-serif"; tx.textAlign="center";
+  if(air && cl>0.15 && tSpeed>0){ tx.fillStyle="#56B4E9"; tx.fillText("LOW pressure (−)",300,cy-70); tx.fillStyle="#E69F00"; tx.fillText("HIGH pressure (+)",330,cy+75); }
+  if(air && tSpeed>0 && cl>0.15){ tx.fillStyle="#c9d2e0"; tx.fillText("air turned DOWN ↘",780,cy+85); }
+  const pct=liftPct(), L=Math.max(0,Math.min(175,pct*0.9));
+  if(L>2){ tx.strokeStyle="#E6A800"; tx.fillStyle="#E6A800"; tx.lineWidth=12; tx.beginPath(); tx.moveTo(450,cy); tx.lineTo(450,cy-L); tx.stroke();
+    tx.beginPath(); tx.moveTo(430,cy-L); tx.lineTo(470,cy-L); tx.lineTo(450,cy-L-24); tx.fill(); tx.fillText("LIFT",510,cy-L+4); }
+  if(stalled){ tx.fillStyle="#E69F00"; tx.font="bold 26px Trebuchet MS,sans-serif"; tx.fillText("⚠ STALL! The air separated from the wing",450,40); }
+  if(!air){ tx.fillStyle="#fff"; tx.font="bold 26px Trebuchet MS,sans-serif"; tx.fillText("Space: no air to push, so no lift!",450,40); }
+  tx.fillStyle="#c9d2e0"; tx.font="bold 15px Trebuchet MS,sans-serif"; tx.textAlign="left"; tx.fillText("wind →",14,H-14); tx.textAlign="right"; tx.fillText("wing tilt drawn smaller than real angle",W-14,H-14); tx.textAlign="left";
+  tt++;
+}
+function tUpdate(){
+  $id("tSpeedTxt").textContent=tSpeed+" of 10"; $id("tAngleTxt").textContent=tAng+"°";
+  const pct=liftPct(), stalled=tAng>15&&tSpeed>0&&tRho>0;
+  $id("tRead").textContent="⬆️ Lift: "+pct+"% of our pretend plane's weight "+(pct>=100?"✔ enough to fly!":"✘ not enough to fly")+(stalled?" · ⚠ STALLED":"");
+  let h,p;
+  if(tRho===0){ h="🚀 No air in space"; p="With no air flowing past, the wing can't turn any air downward, so there's no lift at all. That's why spacecraft use rockets that push out exhaust instead."; }
+  else if(tSpeed===0){ h="😴 No wind"; p="With no air moving past the wing, there's no lift. Planes need speed through the air to fly."; }
+  else if(stalled){ h="⚠️ Stall!"; p="The angle is too steep. The air can't follow the curved top of the wing, so it breaks away into swirls, and lift drops. To recover, pilots lower the nose to reduce the angle."; mark("tunnel"); }
+  else if(tAng<0){ h="⬇️ Tilted down"; p="With the front edge tilted down, the wing turns less air downward and makes little or even negative lift."; }
+  else { h="🪽 Smooth flow"; p="The air follows the wing and leaves it heading downward. Pushing air down means the air pushes the wing up. Try more speed, a bigger angle, or thinner air"+(tAir==="high"?". Thin, high air gives much less lift, so high-flying planes must go very fast.":"."); }
+  $id("tCap").innerHTML="<h3>"+h+"</h3><p>"+p+"</p>"; ReadAloud.mark($id("tCap"));
+}
+$id("tSpeed").addEventListener("input",e=>{ tSpeed=+e.target.value; tUpdate(); });
+$id("tAngle").addEventListener("input",e=>{ tAng=+e.target.value; tUpdate(); });
+["tSpeed","tAngle"].forEach(id=>$id(id).addEventListener("change",()=>ReadAloud.speakEl($id("tCap"))));
+function seg(ids,cur){ ids.forEach(i=>$id(i).setAttribute("aria-pressed",i===cur?"true":"false")); }
+$id("wBig").addEventListener("click",()=>{ tS=1; seg(["wBig","wSmall"],"wBig"); tUpdate(); });
+$id("wSmall").addEventListener("click",()=>{ tS=0.6; seg(["wBig","wSmall"],"wSmall"); tUpdate(); });
+$id("aSea").addEventListener("click",()=>{ tRho=1; tAir="sea"; seg(["aSea","aHigh","aSpace"],"aSea"); tUpdate(); ReadAloud.speakEl($id("tCap")); });
+$id("aHigh").addEventListener("click",()=>{ tRho=0.3; tAir="high"; seg(["aSea","aHigh","aSpace"],"aHigh"); tUpdate(); ReadAloud.speakEl($id("tCap")); });
+$id("aSpace").addEventListener("click",()=>{ tRho=0; tAir="space"; seg(["aSea","aHigh","aSpace"],"aSpace"); tUpdate(); ReadAloud.speakEl($id("tCap")); });
+DBG.liftPct=liftPct;
+
+/* ---------- FOUR FORCES BALANCE ---------- */
+const bc=$id("balCanvas"), bx=bc.getContext("2d"); let bT=50,bL=50,bW=50,bSpd=60,bAlt=170,bScroll=0,bState="";
+function bDrag(){ return bSpd*50/60; }
+function arrow(ctx,x1,y1,x2,y2,col,label,lx,ly){ ctx.strokeStyle="#1d2433"; ctx.lineWidth=14; ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke(); ctx.strokeStyle=col; ctx.fillStyle=col; ctx.lineWidth=9; ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+  const a=Math.atan2(y2-y1,x2-x1); ctx.beginPath(); ctx.moveTo(x2+14*Math.cos(a),y2+14*Math.sin(a)); ctx.lineTo(x2+14*Math.cos(a+2.3),y2+14*Math.sin(a+2.3)); ctx.lineTo(x2+14*Math.cos(a-2.3),y2+14*Math.sin(a-2.3)); ctx.fill();
+  ctx.font="bold 17px Trebuchet MS,sans-serif"; ctx.lineWidth=4; ctx.strokeStyle="#1d2433"; ctx.strokeText(label,lx,ly); ctx.fillText(label,lx,ly); }
+function planeSide(ctx,x,y,tilt){
+  ctx.save(); ctx.translate(x,y); ctx.rotate(tilt);
+  ctx.fillStyle="#e8eef5"; ctx.beginPath(); ctx.ellipse(0,0,80,15,0,0,7); ctx.fill();
+  ctx.beginPath(); ctx.moveTo(-60,-6); ctx.lineTo(-86,-40); ctx.lineTo(-70,-40); ctx.lineTo(-40,-8); ctx.fill();
+  ctx.fillStyle="#b9c6d6"; ctx.beginPath(); ctx.moveTo(-10,2); ctx.lineTo(-34,24); ctx.lineTo(-20,24); ctx.lineTo(20,2); ctx.fill();
+  ctx.fillStyle="#0072B2"; for(let i=0;i<5;i++){ ctx.fillRect(-30+i*16,-6,8,6); } ctx.fillStyle="#56B4E9"; ctx.beginPath(); ctx.ellipse(68,-3,10,6,0,0,7); ctx.fill();
+  ctx.restore();
+}
+function drawBal(){
+  const W=900,H=340; const vy=(bL-bW)*0.03, ax=(bT-bDrag())*0.01;
+  bSpd=Math.max(0,bSpd+ax); bAlt=Math.max(40,Math.min(300,bAlt+vy)); bScroll=(bScroll+bSpd*0.08)%900;
+  const sky=bx.createLinearGradient(0,0,0,H); sky.addColorStop(0,"#2a6fb0"); sky.addColorStop(1,"#bfe3f7"); bx.fillStyle=sky; bx.fillRect(0,0,W,H);
+  bx.fillStyle="rgba(255,255,255,.85)"; for(let i=0;i<5;i++){ const cxp=((i*230-bScroll)%1150+1150)%1150-120, cyp=50+(i*67)%200+(bAlt-170)*0.6; bx.beginPath(); bx.ellipse(cxp,cyp,55,18,0,0,7); bx.fill(); }
+  const gy=H-20+(bAlt-170)*0.9; bx.fillStyle="#5a9e5a"; bx.fillRect(0,gy,W,H);
+  const px=450, py=H-bAlt*0.85-20+70, tilt=-Math.max(-0.25,Math.min(0.25,vy*0.35));
+  planeSide(bx,px,Math.min(H-30,Math.max(60,py)),tilt);
+  const py2=Math.min(H-30,Math.max(60,py));
+  arrow(bx,px,py2-16,px,py2-16-bL*1.1,"#56B4E9","LIFT "+bL,px+12,py2-30-bL*0.8);
+  arrow(bx,px,py2+16,px,py2+16+bW*1.1,"#E69F00","WEIGHT "+bW,px+12,py2+40+bW*0.6);
+  arrow(bx,px+82,py2,px+82+bT*1.4,py2,"#009E73","THRUST "+bT,px+90,py2-16);
+  const D=Math.round(bDrag()); arrow(bx,px-82,py2,px-82-D*1.4,py2,"#CC79A7","DRAG "+D,px-200,py2-16);
+  const v=Math.abs(bL-bW)<=2?"level":(bL>bW?"climb":"descend"), h=Math.abs(bT-bDrag())<=1.5?"steady":(bT>bDrag()?"faster":"slower");
+  const st=v+"/"+h; if(st!==bState){ bState=st; bCaption(v,h); }
+  $id("bRead").textContent=(v==="climb"?"⬆️ Climbing":v==="descend"?"⬇️ Descending":"➖ Flying level")+" · "+(h==="faster"?"⏩ Speeding up":h==="slower"?"⏪ Slowing down":"⏺ Steady speed")+" · Speed "+Math.round(bSpd);
+  if(v==="climb") mark("balance");
+}
+function bCaption(v,h){
+  const vt={climb:"Lift is bigger than weight, so the plane climbs.",descend:"Weight is bigger than lift, so the plane comes down.",level:"Lift equals weight, so the plane flies level."}[v];
+  const ht={faster:"Thrust is bigger than drag, so the plane speeds up. As it goes faster, drag grows until it matches the thrust.",slower:"Drag is bigger than thrust, so the plane slows down, until drag shrinks to match the thrust.",steady:"Thrust equals drag, so the speed stays the same."}[h];
+  $id("bCap").innerHTML="<h3>⚖️ What's happening?</h3><p>"+vt+" "+ht+"</p>"; ReadAloud.mark($id("bCap"));
+}
+$id("bThrust").addEventListener("input",e=>{ bT=+e.target.value; $id("bThrustTxt").textContent=bT; });
+$id("bLift").addEventListener("input",e=>{ bL=+e.target.value; $id("bLiftTxt").textContent=bL; });
+["bThrust","bLift"].forEach(id=>$id(id).addEventListener("change",()=>setTimeout(()=>ReadAloud.speakEl($id("bCap")),400)));
+$id("bReset").addEventListener("click",()=>{ bT=50;bL=50;bSpd=60;bAlt=170; $id("bThrust").value=50; $id("bLift").value=50; $id("bThrustTxt").textContent=50; $id("bLiftTxt").textContent=50; });
+$id("bThrustTxt").textContent=bT; $id("bLiftTxt").textContent=bL;
+
+/* ---------- PLANE TOP VIEW (control surfaces) ---------- */
+const pt=$id("planeTop"); const SURF={};
+(function(){ svgEl("rect",{width:420,height:260,fill:"#eef4fa",rx:14},pt);
+  svgEl("path",{d:"M210 18 C222 30 224 60 224 90 L224 200 C224 220 216 236 210 242 C204 236 196 220 196 200 L196 90 C196 60 198 30 210 18Z",fill:"#c9d5e3",stroke:"#3b4a6b","stroke-width":3},pt);
+  svgEl("path",{d:"M196 100 L30 150 L30 166 L196 140Z M224 100 L390 150 L390 166 L224 140Z",fill:"#dfe6ee",stroke:"#3b4a6b","stroke-width":3},pt);
+  svgEl("path",{d:"M198 212 L140 232 L140 242 L198 234Z M222 212 L280 232 L280 242 L222 234Z",fill:"#dfe6ee",stroke:"#3b4a6b","stroke-width":3},pt);
+  SURF.ail=[svgEl("path",{d:"M40 157 L110 136 L110 146 L40 166Z",fill:"#9aa5b8"},pt),svgEl("path",{d:"M380 157 L310 136 L310 146 L380 166Z",fill:"#9aa5b8"},pt)];
+  SURF.elev=[svgEl("rect",{x:142,y:236,width:56,height:7,fill:"#9aa5b8"},pt),svgEl("rect",{x:222,y:236,width:56,height:7,fill:"#9aa5b8"},pt)];
+  SURF.rud=[svgEl("rect",{x:206,y:200,width:8,height:44,fill:"#9aa5b8"},pt)];
+  const lab=(x,y,t,a)=>{ const e=svgEl("text",{x,y,"font-size":15,"font-weight":"bold",fill:"#1d2433","text-anchor":a||"middle"},pt); e.textContent=t; return e; };
+  lab(70,128,"aileron"); lab(350,128,"aileron"); lab(110,252,"elevator","end"); lab(300,252,"elevator","start"); lab(232,203,"◂ rudder (tail fin)","start");
+  SURF.label=lab(210,14+0,"","middle"); SURF.label.setAttribute("y",16);
+})();
+function showSurf(){ ["ail","elev","rud"].forEach(k=>SURF[k].forEach(e=>e.setAttribute("fill",ctl[k]?"#E6A800":"#9aa5b8")));
+  SURF.label.textContent= ctl.ail?"Ailerons → ROLL":ctl.elev?"Elevator → PITCH":ctl.rud?"Rudder → YAW":""; }
+
+/* ---------- PILOT GAME ---------- */
+const gc=$id("gameCanvas"), gx=gc.getContext("2d"); const ctl={ail:0,elev:0,rud:0};
+const G={on:false,roll:0,x:0,y:0,rings:[],passed:0,tried:0,total:5,msg:""}; DBG.game=G; DBG.ctl=ctl;
+function newRing(){ return {x:G.x+(Math.random()*2-1)*170, y:G.y+(Math.random()*2-1)*110, z:1}; }
+function startGame(){ Object.assign(G,{on:true,roll:0,x:0,y:0,passed:0,tried:0,msg:""}); G.rings=[newRing()]; $id("gRead").textContent="Rings: 0 of 5"; gCaption("✈️ Fly!","Steer the yellow cross into the middle of the ring before it reaches you."); }
+function gCaption(h,p,speak){ $id("gCap").innerHTML="<h3>"+h+"</h3><p>"+p+"</p>"; ReadAloud.mark($id("gCap")); if(speak) ReadAloud.speakEl($id("gCap")); }
+function stepGame(){
+  if(!G.on) return;
+  G.roll+=ctl.ail*1.6; if(!ctl.ail) G.roll*=0.96; G.roll=Math.max(-45,Math.min(45,G.roll));
+  G.x+=G.roll*0.075+ctl.rud*1.5; G.y+=ctl.elev*2.0;
+  const r=G.rings[0]; if(!r) return; r.z-=0.0042;
+  if(r.z<=0){ G.tried++; const ok=Math.hypot(r.x-G.x,r.y-G.y)<62; if(ok){ G.passed++; beep(HAPPY); confetti(8); G.msg="✔ Through the ring!"; } else { beep(SAD,"square"); G.msg="✘ Missed. Keep going!"; }
+    $id("gRead").textContent="Rings: "+G.passed+" of "+G.total+(G.tried>G.passed?" (tries: "+G.tried+")":"");
+    G.rings.shift();
+    if(G.passed>=G.total){ G.on=false; gCaption("🏆 Ace pilot!","You flew through all 5 rings using the ailerons to roll, the elevator to pitch, and the rudder to yaw. Real pilots use all three together!",true); mark("rings"); confetti(30); }
+    else G.rings.push(newRing()); }
+}
+function drawGame(){
+  const W=800,H=450,cx=W/2,cy=H/2; stepGame();
+  gx.save(); gx.translate(cx,cy); gx.rotate(-G.roll*Math.PI/180);
+  const hy=G.y*0.6; gx.fillStyle="#56B4E9"; gx.fillRect(-900,-900,1800,900+hy); gx.fillStyle="#3f7f3f"; gx.fillRect(-900,hy,1800,900);
+  gx.strokeStyle="#fff"; gx.lineWidth=3; gx.beginPath(); gx.moveTo(-900,hy); gx.lineTo(900,hy); gx.stroke(); gx.restore();
+  G.rings.slice().reverse().forEach(r=>{ const per=1/(0.45+r.z*3.2); const sx=cx+(r.x-G.x)*per, sy=cy-(r.y-G.y)*per, rad=62*per;
+    gx.strokeStyle="#E69F00"; gx.lineWidth=Math.max(4,14*per); gx.beginPath(); gx.arc(sx,sy,rad,0,7); gx.stroke(); gx.strokeStyle="#fff"; gx.lineWidth=2; gx.beginPath(); gx.arc(sx,sy,rad,0,7); gx.stroke(); });
+  gx.save(); gx.translate(cx,cy+90); gx.rotate(G.roll*Math.PI/180*0.6);
+  gx.fillStyle="#e8eef5"; gx.strokeStyle="#1d2433"; gx.lineWidth=3; gx.beginPath(); gx.moveTo(-170,8); gx.lineTo(170,8); gx.lineTo(170,18); gx.lineTo(-170,18); gx.closePath(); gx.fill(); gx.stroke();
+  gx.beginPath(); gx.ellipse(0,10,26,26,0,0,7); gx.fill(); gx.stroke(); gx.beginPath(); gx.moveTo(-4,-16); gx.lineTo(4,-16); gx.lineTo(4,-58); gx.lineTo(-4,-58); gx.fill(); gx.stroke();
+  if(ctl.ail){ gx.fillStyle="#E6A800"; gx.fillRect(-160,ctl.ail>0?-2:18,40,8); gx.fillRect(120,ctl.ail>0?18:-2,40,8); }
+  gx.restore();
+  gx.strokeStyle="#E6A800"; gx.lineWidth=4; gx.beginPath(); gx.moveTo(cx-22,cy); gx.lineTo(cx+22,cy); gx.moveTo(cx,cy-22); gx.lineTo(cx,cy+22); gx.stroke();
+  gx.fillStyle="#fff"; gx.font="bold 20px Trebuchet MS,sans-serif"; gx.textAlign="left"; gx.fillText(G.on?(G.msg||"Steer into the ring!"):(G.passed>=G.total?"🏆 All rings done!":"Press ▶ Start flying"),14,30);
+  gx.textAlign="right"; gx.fillText("Bank: "+Math.round(G.roll)+"°",W-14,30); gx.textAlign="left";
+}
+function hold(btn,down,up){ const d=e=>{ e.preventDefault(); btn.classList.add("held"); down(); }, u=()=>{ if(btn.classList.contains("held")){ btn.classList.remove("held"); up(); } };
+  btn.addEventListener("pointerdown",d); ["pointerup","pointerleave","pointercancel"].forEach(t=>btn.addEventListener(t,u)); btn.addEventListener("contextmenu",e=>e.preventDefault());
+  btn.addEventListener("keydown",e=>{ if((e.key===" "||e.key==="Enter")&&!e.repeat) d(e); }); btn.addEventListener("keyup",e=>{ if(e.key===" "||e.key==="Enter") u(); }); }
+document.querySelectorAll("#controls .pad button").forEach(b=>hold(b,()=>{ ctl[b.dataset.ctl]=+b.dataset.v; showSurf(); },()=>{ ctl[b.dataset.ctl]=0; showSurf(); }));
+const KEYMAP={ArrowLeft:["ail",-1],ArrowRight:["ail",1],ArrowUp:["elev",1],ArrowDown:["elev",-1],a:["rud",-1],d:["rud",1],A:["rud",-1],D:["rud",1]};
+document.addEventListener("keydown",e=>{ const m=KEYMAP[e.key]; if(!m||!G.on) return; e.preventDefault(); ctl[m[0]]=m[1]; showSurf(); });
+document.addEventListener("keyup",e=>{ const m=KEYMAP[e.key]; if(!m) return; ctl[m[0]]=0; showSurf(); });
+$id("gStart").addEventListener("click",()=>{ startGame(); ReadAloud.speakEl($id("gCap")); });
+gCaption("🕹️ Ready for takeoff","Press Start flying, then hold the control buttons to steer through the rings.");
+
+/* ---------- LANDING ---------- */
+const lc=$id("landCanvas"), lx=lc.getContext("2d"); const LND={on:false,x:100,alt:170,vs:0.6,up:0,done:"" }; DBG.land=LND;
+function startLand(){ Object.assign(LND,{on:true,x:100,alt:170,vs:0.6,up:0,done:""}); $id("lRead").textContent="✈️ On approach… aim for the gray runway!"; }
+function stepLand(){ if(!LND.on) return; LND.vs+=LND.up*0.025; if(!LND.up) LND.vs+= (0.6-LND.vs)*0.004; LND.vs=Math.max(-0.4,Math.min(2.4,LND.vs));
+  LND.x+=1.25; LND.alt-=LND.vs; LND.alt=Math.min(230,LND.alt);
+  let res="";
+  if(LND.alt<=0){ LND.alt=0; if(LND.x<520) res="short"; else if(LND.vs>1.0) res="hard"; else res="soft"; }
+  else if(LND.x>860) res="long";
+  if(res){ LND.on=false; LND.done=res; const msg={short:"✘ Touched down before the runway! Hold Nose up a bit more and try again.",hard:"✘ Bumpy landing, too fast a descent. Use Nose up just before touchdown (pilots call it the flare). Try again!",long:"↻ You flew past the runway, so it's a go-around! Use Nose down to come down sooner. Try again.",soft:"✔ Smooth landing! Welcome to the runway, pilot!"}[res];
+    $id("lRead").textContent=msg; $id("lRead").classList.add("readable"); ReadAloud.mark($id("lRead")); ReadAloud.speakEl($id("lRead"));
+    if(res==="soft"){ beep([523.25,659.25,783.99,1046.5]); confetti(20); mark("land"); } else beep(SAD,"square"); }
+}
+function drawLand(){
+  stepLand(); const W=900,H=300,gy=250;
+  const sky=lx.createLinearGradient(0,0,0,H); sky.addColorStop(0,"#ffb877"); sky.addColorStop(1,"#bfe3f7"); lx.fillStyle=sky; lx.fillRect(0,0,W,H);
+  lx.fillStyle="#5a9e5a"; lx.fillRect(0,gy,W,H-gy); lx.fillStyle="#555"; lx.fillRect(520,gy-4,340,14); lx.fillStyle="#fff"; for(let x=530;x<850;x+=40) lx.fillRect(x,gy+1,22,4);
+  lx.fillStyle="#1d2433"; lx.font="bold 16px Trebuchet MS,sans-serif"; lx.fillText("RUNWAY",650,gy+34);
+  planeSide(lx,LND.x,gy-14-LND.alt,Math.max(-0.2,Math.min(0.25,-(LND.vs-0.6)*0.25+0.05)));
+  lx.fillStyle="#1d2433"; lx.font="bold 18px Trebuchet MS,sans-serif"; lx.fillText("Height: "+Math.round(LND.alt)+" · Sink rate: "+LND.vs.toFixed(1)+(LND.vs>1.0?" (too fast for touchdown!)":" (gentle)"),14,26);
+}
+hold($id("lUp"),()=>{ LND.up=-1; },()=>{ LND.up=0; }); hold($id("lDown"),()=>{ LND.up=1; },()=>{ LND.up=0; });
+$id("lStart").addEventListener("click",startLand);
+
+/* ---------- QUIZ ---------- */
+const quizBox=$id("quizBox");
+makeQuiz(quizBox,[
+  {q:"Which force pulls an airplane down toward the ground?", a:["Thrust","Drag","Weight (gravity)","Lift"], c:2, yes:"Right! Weight is gravity pulling down.", no:"Weight, or gravity, pulls the plane down."},
+  {q:"How does a wing make lift?", a:["It turns the air downward, so the air pushes the wing up","It is filled with helium","Magnets in the wing","The engine pushes it up"], c:0, yes:"Yes! Push air down, and the air pushes the wing up. That's Newton's third law.", no:"The wing turns air downward, so the air pushes the wing up."},
+  {q:"Is it true that air over the top must meet the air underneath at the back edge?", a:["Yes, always","No! The air over the top actually gets there first","Only on Tuesdays","Only for jets"], c:1, yes:"Myth busted! The top air arrives first.", no:"It's a myth. The top air actually reaches the back edge first."},
+  {q:"What happens if the angle of attack gets too steep?", a:["The plane goes faster","The wing stalls and lift drops","The engine turns off","Nothing at all"], c:1, yes:"Right! The air separates from the wing, and lift drops.", no:"The wing stalls: the air separates, and lift drops."},
+  {q:"Which control surface makes the plane ROLL?", a:["Rudder","Ailerons","Elevator","Landing gear"], c:1, yes:"Yes! The ailerons on the wings roll the plane.", no:"The ailerons roll the plane. The elevator pitches, and the rudder yaws."},
+  {q:"Why can't wings fly a spaceship in space?", a:["Space is too cold","There's no air to push on","Wings are too heavy","Space is too dark"], c:1, yes:"Exactly! No air, no lift. Rockets push exhaust instead.", no:"Space has no air for wings to push, so rockets push exhaust instead."}
+],"PERFECT! You're ready for flight school! 🏆");
+new MutationObserver(()=>{ if(quizBox.querySelector(".celebrate")) mark("quiz"); }).observe(quizBox,{childList:true,subtree:true});
+
+/* ---------- FACTS ---------- */
+makeFacts($id("factsStrip"),[
+  ["🌕 Wright Flyer on the Moon","Neil Armstrong carried small pieces of the 1903 Wright Flyer's wood and fabric with him on Apollo 11 in 1969."],
+  ["🚁 Flying on Mars","NASA's Ingenuity helicopter flew on Mars in 2021, carrying a tiny piece of Wright Flyer fabric. Mars's air is so thin that its blades had to spin about 2,500 times a minute!"],
+  ["📏 Shorter Than a Jumbo Jet","The first flight, 120 feet, was shorter than the wingspan of a Boeing 747 jumbo jet."],
+  ["🏔️ Thin Air Up High","Where airliners cruise, the air is less than a third as thick as at the ground, so jets fly very fast to get enough lift."],
+  ["🐦 Same Physics as Birds","Bird wings make lift the same way: they turn air downward. Flapping also makes thrust."]
+]);
+
+/* ---------- PAYOFF ---------- */
+const checks=$id("checks");
+function mark(k){ if(progress[k]) return; progress[k]=true; updateEnd(true); }
+function updateEnd(fromAction){
+  checks.innerHTML=""; Object.keys(progress).forEach(k=>{ const d=document.createElement("span"); d.className="chk"+(progress[k]?" ok":""); d.textContent=(progress[k]?"✔ ":"○ ")+CHECK_LABELS[k]; checks.appendChild(d); });
+  const n=Object.values(progress).filter(Boolean).length, all=n===Object.keys(progress).length, c=$id("endCard");
+  $id("wings").classList.toggle("show",all);
+  if(all){ c.innerHTML="<h3>🎖️ You earned your pilot wings!</h3><p>You can explain all four forces, you know how wings really make lift (and busted a famous myth), you survived a stall, flew through the rings, and landed softly. And you know why astronauts need rockets instead of wings. Clear skies, pilot!</p>"; if(fromAction){ confetti(50); beep([523.25,659.25,783.99,1046.5,1318.5]); } }
+  else c.innerHTML="<h3>🧑‍✈️ Earn your wings</h3><p>Finish every item on the pilot checklist ("+n+" of 6 done) to earn your golden pilot wings.</p>";
+  ReadAloud.mark(c);
+}
+(function wingsSvg(){ const s=$id("wings");
+  const g=svgEl("g",{},s);
+  for(let side of [-1,1]){ for(let i=0;i<6;i++){ svgEl("path",{d:"M"+(260+side*55)+" "+(85+i*9)+" Q"+(260+side*(140+i*12))+" "+(60+i*10)+" "+(260+side*(240-i*24))+" "+(50+i*16)+" Q"+(260+side*(150))+" "+(95+i*8)+" "+(260+side*55)+" "+(100+i*9)+"Z",fill:i%2?"#E6A800":"#f5cd4b",stroke:"#8a6500","stroke-width":1.5},g); } }
+  svgEl("circle",{cx:260,cy:100,r:46,fill:"#0072B2",stroke:"#E6A800","stroke-width":7},g);
+  const t=svgEl("text",{x:260,y:112,"text-anchor":"middle","font-size":34},g); t.textContent="✈️";
+  const t2=svgEl("text",{x:260,y:180,"text-anchor":"middle","font-size":26,"font-weight":"bold",fill:"#E6A800"},g); t2.textContent="JUNIOR AVIATOR";
+})();
+
+/* ---------- INIT ---------- */
+document.querySelectorAll("#lift .grid .card2, #controls .grid .card2, #more .card2, #history .card2, #space .card2, .forces-help, .tunnel-help, .bal-help, .ctl-help, .land-help, .grownups, .hook-text").forEach(n=>n.classList.add("readable"));
+ReadAloud.markAll(); tUpdate(); bCaption("level","steady"); updateEnd(false); showSurf();
+(function anim(){ drawRace(); drawTunnel(); drawBal(); drawGame(); drawLand(); requestAnimationFrame(anim); })();
+})();
+</script>
+</body>
+</html>
