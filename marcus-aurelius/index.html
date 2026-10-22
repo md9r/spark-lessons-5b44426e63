@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Marcus Aurelius — Spark Lessons</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- color-blind-safe theme (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e9eef5 0%,#f4efe6 50%,#eaf3ea 100%)}
+  header h1{color:#3b4a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--blue)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+  .chip{background:#fff;color:var(--ink);border:4px solid #888;box-shadow:none;padding:10px 14px;font-size:19px;min-height:56px;display:flex;align-items:center;gap:8px}
+  .chip .num{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;color:#000;font-weight:900;border:2px solid #222}
+  .chip.on{background:#2b2140;color:#fff;border-color:#2b2140}
+  .chip.on::after{content:" ✔"}
+  .zoom-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .zoom-row button{font-size:18px;padding:10px 14px;min-height:52px}
+  .zoom-row .z-on{outline:4px solid var(--gold);outline-offset:2px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  .pin{cursor:pointer}
+  .map-caption{margin-top:10px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px 14px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  .round-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .round-row .r-on{outline:4px solid var(--gold);outline-offset:2px}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+  /* ---- saints lessons ---- */
+  nav a:nth-child(7){background:#8b2c00} nav a:nth-child(8){background:#8a5a00} nav a:nth-child(9){background:#444}
+  .meet svg{flex:0 0 280px}
+  .tl-dot{min-height:56px;font-weight:bold;font-size:19px}
+  .tl-dot.active::before{content:"📍 "}
+  .tl-nav{align-items:center;gap:10px}
+  .tl-card{border-color:var(--theme)}
+  .tl-card h3{color:var(--theme)}
+  .tl-dot{border-color:var(--theme)} .tl-dot.active{background:var(--theme)}
+  .step-count{font-weight:bold;font-size:20px;align-self:center}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .stepc{background:#fff;border-radius:18px;padding:14px;border-top:12px solid var(--theme)}
+  .stepc .lvl{display:inline-block;font-size:16px;font-weight:bold;background:#2b2140;color:#fff;border-radius:999px;padding:2px 10px}
+  .stepc h3{margin:6px 0 4px;font-size:23px}
+  .stepc p{margin:0 0 6px}
+  .be-like{margin-top:12px}
+  svg text{font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif}
+  .pin:focus{outline:none} .pin:focus circle.dot,.pin:focus rect.dot{stroke:#E6A800;stroke-width:5}
+
+
+  :root{ --theme:#6a3d9a }
+  body{background:linear-gradient(180deg,#f3eefa 0%,#fbf6ea 50%,#eef3f8 100%)}
+  header h1{color:#4a2a70;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  .hook{border-radius:24px;padding:22px;text-align:center;background:#2b2140;color:#fff;border:4px solid #fff}
+  .hook h2{margin:0 0 8px;font-size:clamp(26px,4.5vw,38px);color:#ffd84a}
+  .hook p{font-size:21px}
+  .crown{font-size:70px}
+  .scroll{max-width:620px;margin:14px auto 0;background:#fbf0d0;color:#2b2140;border-radius:14px;border:4px solid #B86E00;padding:0 20px;max-height:0;overflow:hidden;transition:max-height .9s,padding .9s;text-align:left}
+  .scroll.open{max-height:900px;padding:16px 20px}
+  .scroll .greek{font-size:26px;text-align:center;color:#6a3d9a;font-weight:bold}
+  .big-btn{font-size:23px;min-height:70px;padding:14px 26px;background:#E6A800;color:#2b2140}
+  .quote{background:#fbf0d0;border:4px solid #B86E00;border-radius:16px;padding:14px 16px;margin:10px 0}
+  .quote .src{font-size:16px;color:#5a4a20;margin-top:6px}
+  .quote .kid{margin-top:8px;padding-top:8px;border-top:2px dashed #B86E00}
+  .map-wrap svg{width:100%;height:auto;display:block;border-radius:12px}
+  .pin text{font-weight:bold;paint-order:stroke;stroke:#fff;stroke-width:4px}
+  .pin.seen circle.dot{fill:#009E73}
+  .sorter{background:#fff;border-radius:20px;border:4px solid var(--theme);padding:16px;text-align:center}
+  .sort-item{font-size:clamp(24px,4vw,32px);font-weight:bold;margin:10px auto 14px;min-height:90px;display:flex;align-items:center;justify-content:center;gap:12px;background:#f3eefa;border-radius:16px;padding:12px;max-width:640px}
+  .sort-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .sort-btns button{font-size:22px;min-height:76px;min-width:240px}
+  #inBtn{background:#007a5a} #outBtn{background:#0072B2}
+  .bins{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;text-align:left}
+  .bin{border-radius:16px;padding:10px 12px;min-height:90px;border:4px dashed}
+  .bin h4{margin:0 0 6px;font-size:20px}
+  .bin.in{border-color:#007a5a;background:#e6f5ef} .bin.out{border-color:#0072B2;background:#e8f3fb}
+  .bin span{display:inline-block;background:#fff;border-radius:999px;padding:4px 10px;margin:3px;font-size:16px;border:2px solid #9aa5b8}
+  .sort-fb{font-weight:bold;font-size:20px;margin-top:12px;min-height:30px}
+  @media (max-width:600px){.bins{grid-template-columns:1fr}.sort-btns button{min-width:0;width:100%}}
+  .virtues{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .virtue{background:#fff;border-radius:16px;border:4px solid #9aa5b8;padding:12px;text-align:center;cursor:pointer}
+  .virtue .ico{font-size:46px}
+  .virtue[aria-pressed="true"]{border-color:#6a3d9a;background:#f3eefa}
+  .virtue[aria-pressed="true"] h4::after{content:" ✔ my pick"}
+  .virtue h4{margin:4px 0;font-size:22px}
+  textarea{width:100%;min-height:110px;font-size:20px;border-radius:14px;border:3px solid #6a3d9a;padding:10px;font-family:inherit;box-sizing:border-box}
+  .pause-ring{width:160px;height:160px;border-radius:50%;margin:10px auto;background:radial-gradient(circle,#cfe7f7,#56B4E9);transform:scale(.6);transition:transform 4s ease-in-out;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:20px;color:#2b2140}
+  .pause-ring.grow{transform:scale(1)}
+  .payoff{background:linear-gradient(180deg,#2b2140,#4a2a70);color:#fff;border-radius:22px;padding:18px;text-align:center}
+  #wreath{width:min(420px,100%);height:auto;display:block;margin:0 auto}
+  .gentle{border-left-color:#3b4a6b !important;background:#f4f6fa}
+  nav a:nth-child(10){background:#0b3d66} nav a:nth-child(11){background:#6a3d9a} nav a:nth-child(12){background:#00788a}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>🏛️ Marcus Aurelius 🏛️</h1>
+  <p>The Roman emperor who kept a secret notebook · Born 121 AD · Emperor 161–180 AD</p>
+</header>
+<nav>
+  <a href="#hook">📜 Start</a>
+  <a href="#who">👑 Who Was He?</a>
+  <a href="#map">🗺️ His Empire</a>
+  <a href="#timeline">⏳ Timeline</a>
+  <a href="#stoic">🦉 Stoic Ideas</a>
+  <a href="#sort">✋ Can I Control It?</a>
+  <a href="#notebook">📓 The Notebook</a>
+  <a href="#hard">🌧️ Hard Times</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#payoff">🌿 Laurel Wreath</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+<section id="hook" class="hook">
+  <div class="crown" aria-hidden="true">👑📓</div>
+  <h2>Imagine you ruled the whole Roman Empire…</h2>
+  <p id="hookText" class="hook-text">Millions of people. Armies. Palaces. You could have anything you wanted. So what would you write in your <b>secret notebook</b>? One emperor wrote notes to himself about being <b>patient, honest, and kind</b>. Tap to peek inside!</p>
+  <button class="big-btn" id="openScroll" aria-expanded="false">📜 Open the emperor's notebook</button>
+  <div class="scroll" id="scroll" aria-live="polite">
+    <div class="greek no-read" aria-hidden="true">ΤΑ ΕΙΣ ΕΑΥΤΟΝ</div>
+    <p id="scrollText" style="font-size:20px">Those Greek words mean something like <b>“To Himself.”</b> Marcus Aurelius, emperor of Rome, wrote his notebook in Greek and never meant for anyone else to read it. Here is one idea from it, in an English translation:</p>
+    <div class="quote" id="hookQuote"><p style="margin:0;font-size:21px"><b>“No longer talk at all about the kind of man that a good man ought to be, but be such.”</b></p>
+      <div class="src">— <i>Meditations</i> 10.16, translated by George Long (1862)</div>
+      <div class="kid">🧒 <b>In kid words:</b> Stop just <i>talking</i> about how to be good. Go <i>be</i> good!</div></div>
+    <p style="font-size:19px">Let's find out who wrote this, and why people still read his notebook almost <b>1,850 years</b> later. 🌿 Finish activities to earn your <b>laurel wreath</b>!</p>
+  </div>
+</section>
+
+<section id="who">
+  <h2>👑 Who Was Marcus Aurelius?</h2>
+  <div class="grid">
+    <div class="card2"><h3>👶 A Boy in Rome</h3><p>Marcus was born in the city of <b>Rome</b> in <b>121 AD</b>, into a rich and important family. He loved learning. Ancient writers say Emperor <b>Hadrian</b> liked the honest boy so much he made a pun on his family name and called him <b>“Verissimus,”</b> which means “most truthful.”</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>🤝 Picked for the Job</h3><p>In <b>138 AD</b>, Hadrian chose <b>Antoninus Pius</b> to be the next emperor, on one condition: Antoninus had to adopt <b>Marcus</b> and a younger boy, <b>Lucius Verus</b>, as his sons. So at about 17, Marcus was on the path to becoming emperor.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>📚 A Student for Life</h3><p>Marcus had many teachers. His favorite subject became <b>philosophy</b>, which means “love of wisdom.” A teacher named <b>Junius Rusticus</b> shared with him the lessons of <b>Epictetus</b>, a Stoic teacher who had once been enslaved.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>👑👑 Two Emperors at Once</h3><p>When Antoninus died in <b>161 AD</b>, Marcus became emperor. He surprised everyone by making his adopted brother <b>Lucius Verus</b> co-emperor. Rome had two emperors ruling side by side for the first time! Lucius died in <b>169 AD</b>, and then Marcus ruled alone.</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>⭐ One of the “Five Good Emperors”</h3><p>Much later, historians grouped five emperors in a row as the <b>“Five Good Emperors”</b>: <b>Nerva, Trajan, Hadrian, Antoninus Pius, and Marcus Aurelius</b>. They were remembered for ruling fairly well and choosing their next ruler carefully. Marcus was the last of the five.</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>🦉 The Philosopher King</h3><p>Long before, the Greek thinker <b>Plato</b> wrote that the best ruler would be a <b>philosopher</b>. Marcus is often called the closest Rome ever came to a “philosopher king.” He tried to rule with <b>wisdom, fairness, and self-control</b>, though he was a human who made mistakes too.</p></div>
+    <div class="card2" style="border-left-color:var(--red)"><h3>📓 A Secret Notebook</h3><p>Marcus kept a private notebook, written in <b>Greek</b>, the language of philosophy in his time (he also spoke Latin). He wrote reminders to himself. Some parts were written while he was with his army along the <b>Danube River</b>. Today we call it the <b><i>Meditations</i></b>.</p></div>
+    <div class="card2" style="border-left-color:#3b4a6b"><h3>🏇 A Statue That Survived</h3><p>A huge bronze statue of Marcus on a horse still exists in Rome. Many bronze statues of emperors were melted down over the centuries, but people long believed this one showed <b>Constantine</b>, the first Christian emperor, and that probably helped save it! The original is now kept indoors at the Capitoline Museums.</p></div>
+  </div>
+</section>
+
+<section id="map">
+  <h2>🗺️ The Roman Empire in Marcus's Time</h2>
+  <p class="map-help">Around <b>170 AD</b>, the Roman Empire wrapped all the way around the <b>Mediterranean Sea</b>. It stretched from northern <b>Britain</b> to <b>Egypt</b> and <b>Syria</b>, with tens of millions of people. Its northern edge followed two big rivers: the <b>Rhine</b> and the <b>Danube</b>. Tap the 📍 pins to explore!</p>
+  <div class="map-wrap"><svg id="mapSvg" viewBox="0 0 900 600" role="img" aria-label="Simplified map of the Roman Empire around 170 AD with the Mediterranean Sea, the Rhine and Danube frontier, and pins for Rome, Athens, Carnuntum, Sirmium, Londinium, Alexandria, and Antioch"></svg></div>
+  <div class="card2 readable" id="mapCap" style="margin-top:10px;border-left-color:var(--theme)"><h3>📍 Tap a pin</h3><p>Pins you visit turn green with a ✔. Visit at least 4 to earn a laurel leaf.</p></div>
+  <p style="font-size:16px">Map is simplified and not exact: coastlines are rough, and the shaded land shows roughly where Rome ruled. Dashed line = river frontier.</p>
+</section>
+
+<section id="timeline">
+  <h2>⏳ Timeline of Marcus's Life</h2>
+  <p class="tl-help">Tap a year, or use the arrows. Reach the end to earn a laurel leaf! (AD means years counted forward from the traditional year of Jesus's birth.)</p>
+  <div id="tl"></div>
+</section>
+
+<section id="stoic">
+  <h2>🦉 What Is a Stoic?</h2>
+  <div class="grid">
+    <div class="card2"><h3>🏛️ A Porch Full of Thinkers</h3><p>Around <b>300 BC</b>, a teacher named <b>Zeno</b> taught in Athens at a painted porch called the <b>Stoa</b>. His followers were nicknamed <b>Stoics</b>, “porch people”! Marcus lived about 450 years later, but he loved their ideas.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>✋ The Big Stoic Idea</h3><p>Epictetus taught (here in our own words): <b>some things are up to us, and some things are not.</b> Up to us: our choices, our effort, and how we treat people. Not up to us: the weather, other people's choices, and lots of what happens. Spend your energy on the first group!</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>💭 It's How You Think About It</h3><p>Stoics believed that our <b>thoughts about</b> an event often upset us more than the event itself. Rain on game day isn't “terrible” by itself. You can choose to think, “Okay, what can I do now?”</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>😌 Not “No Feelings”</h3><p>Today “stoic” can mean hiding your feelings, but the Stoics didn't mean <i>never feel sad</i>. They meant: notice your feelings, then let <b>good thinking</b> steer what you do, not anger or fear.</p></div>
+  </div>
+  <h3 style="margin-top:22px">🌟 The Four Stoic Virtues: Pick one to practice today!</h3>
+  <div class="virtues" id="virtues">
+    <div class="virtue readable" role="button" tabindex="0" aria-pressed="false" data-v="Wisdom"><div class="ico" aria-hidden="true">🦉</div><h4>Wisdom</h4><p>Thinking carefully and knowing what really matters.</p></div>
+    <div class="virtue readable" role="button" tabindex="0" aria-pressed="false" data-v="Courage"><div class="ico" aria-hidden="true">🦁</div><h4>Courage</h4><p>Doing the right thing even when it's scary or hard.</p></div>
+    <div class="virtue readable" role="button" tabindex="0" aria-pressed="false" data-v="Justice"><div class="ico" aria-hidden="true">⚖️</div><h4>Justice</h4><p>Being fair and kind to other people.</p></div>
+    <div class="virtue readable" role="button" tabindex="0" aria-pressed="false" data-v="Self-control"><div class="ico" aria-hidden="true">🧘</div><h4>Self-control</h4><p>Not letting wants or anger boss you around.</p></div>
+  </div>
+  <div class="card2 readable" id="virtueCap" style="margin-top:10px;border-left-color:var(--gold)"><p>Tap a virtue to choose it.</p></div>
+  <h3 style="margin-top:22px">🌬️ A Stoic Pause</h3>
+  <div class="card2 readable" id="pauseCard" style="text-align:center"><p>When you feel upset, pause before you react. Breathe in while the circle grows, out while it shrinks. Then ask: “Is this up to me?”</p>
+    <div class="pause-ring no-read" id="pauseRing" aria-hidden="true">Ready</div>
+    <button id="pauseBtn" style="background:#0072B2">🌬️ Start 3 slow breaths</button></div>
+</section>
+
+<section id="sort">
+  <h2>✋ Can I Control It? A Stoic Sorting Game</h2>
+  <p class="sort-help">Marcus practiced asking: <b>“Is this up to me?”</b> Sort each card. Is it <b>in my control</b> or <b>not in my control</b>?</p>
+  <div class="sorter">
+    <div class="step-count" id="sortCount"></div>
+    <div class="sort-item readable" id="sortItem" aria-live="polite"></div>
+    <div class="sort-btns">
+      <button id="inBtn">✋ In my control</button>
+      <button id="outBtn">🌧️ Not in my control</button>
+    </div>
+    <div class="sort-fb readable" id="sortFb" aria-live="polite"></div>
+    <div class="bins">
+      <div class="bin in"><h4>✋ In my control</h4><div id="binIn"></div></div>
+      <div class="bin out"><h4>🌧️ Not in my control</h4><div id="binOut"></div></div>
+    </div>
+    <button id="sortAgain" style="background:var(--teal);margin-top:12px;display:none">🔁 Sort again</button>
+  </div>
+</section>
+
+<section id="notebook">
+  <h2>📓 Inside the <i>Meditations</i></h2>
+  <p class="nb-help">The <i>Meditations</i> is 12 short “books” (really chapters) of notes. Marcus wrote them for himself, not for us! Here are a few famous lines, in a well-known English translation by <b>George Long</b> (1862), with a kid-words version.</p>
+  <div class="quote readable"><p style="margin:0"><b>“The best way of avenging thyself is not to become like the wrong doer.”</b></p>
+    <div class="src">— <i>Meditations</i> 6.6, translated by George Long</div>
+    <div class="kid">🧒 <b>In kid words:</b> If someone is mean to you, the best answer is to <b>not</b> become mean too.</div></div>
+  <div class="quote readable"><p style="margin:0"><b>“If thou art pained by any external thing, it is not this thing that disturbs thee, but thy own judgement about it.”</b></p>
+    <div class="src">— <i>Meditations</i> 8.47, translated by George Long</div>
+    <div class="kid">🧒 <b>In kid words:</b> Often what upsets us most is the story we tell ourselves about a thing, and we can change that story.</div></div>
+  <div class="card2 readable" style="border-left-color:var(--orange)"><h3>🏕️ Written in an Army Camp</h3><p>Old copies of the notebook include little notes that say where parts were written: one says <b>“among the Quadi, by the Granua”</b> (a river in today's Slovakia), and another says <b>“at Carnuntum,”</b> a Roman army base on the Danube. So the emperor was writing about patience and kindness in a tent near the frontier!</p></div>
+  <div class="card2 readable" style="border-left-color:var(--teal)"><h3>🌅 His Morning Reminder (in our words)</h3><p>Near the start of Book 2, Marcus reminds himself that today he will probably meet people who are rude or ungrateful. Instead of getting angry, he tells himself they act that way because they don't know better, and that people are made to <b>work together</b>, like hands and feet. <i>(This is our summary, not his exact words.)</i></p></div>
+  <h3 style="margin-top:22px">✍️ Your Turn: Write a Notebook Line</h3>
+  <p class="nb-help2">Like Marcus, write one reminder to yourself. It stays only on this screen and is <b>not saved or sent</b> anywhere.</p>
+  <textarea id="myLine" aria-label="Your notebook line" placeholder="Example: When my brother bugs me, I'll take a breath before I answer."></textarea>
+  <div class="ctrl-row" style="margin-top:8px"><button id="saveLine" style="background:var(--theme)">📜 Add to my scroll</button></div>
+  <div class="quote readable" id="myScroll" style="display:none"></div>
+</section>
+
+<section id="hard">
+  <h2>🌧️ Hard Times for Rome</h2>
+  <p class="hard-help">Marcus's years as emperor were not peaceful. These are true and serious events, told gently.</p>
+  <div class="grid">
+    <div class="card2 gentle"><h3>🤒 The Antonine Plague</h3><p>Around <b>165–166 AD</b>, soldiers coming home from a war in the east brought back a terrible sickness. It spread across the empire for years, and very many people died. Scientists today think it may have been <b>smallpox</b>, a disease that vaccines have now wiped out. Marcus had to keep the empire going through all of it.</p></div>
+    <div class="card2 gentle"><h3>⚔️ Wars on the Danube</h3><p>Groups of people from north of the Danube River, like the <b>Marcomanni</b> and <b>Quadi</b>, crossed into Roman lands. Marcus spent much of his last <b>12 or so years</b> far from Rome, with his armies on the frontier. He didn't love war, but he believed defending the empire was his duty. Ancient writers say he even sold palace treasures to pay for it rather than raise taxes.</p></div>
+    <div class="card2 gentle"><h3>🕯️ The End of His Life</h3><p>Marcus died in <b>180 AD</b>, while still with his army near the Danube, probably at <b>Vindobona</b> (today's Vienna) or <b>Sirmium</b>; old writers don't agree which. He was 58.</p></div>
+    <div class="card2 gentle"><h3>👦 A Disappointing Son</h3><p>The four emperors before Marcus had picked grown men as their next rulers. Marcus instead passed power to his own son, <b>Commodus</b>. Commodus turned out to be a <b>poor ruler</b> who cared more about showing off than governing well, and his reign ended badly in <b>192 AD</b>. Even a wise person can't control everything, including other people's choices. Marcus would have called that a hard Stoic lesson.</p></div>
+  </div>
+  <div class="card2 readable" style="margin-top:12px;border-left-color:var(--green)"><h3>💡 Why Do People Still Read Him?</h3><p>The <i>Meditations</i> is one of the only books we have where a <b>ruler of a mighty empire</b> wrote honestly to himself about his worries and how to be good. It's been printed in many languages, and today students, soldiers, athletes, doctors, business leaders, and kids read it for help staying calm, brave, and kind. Its ideas, like focusing on what's up to you, are still used by people who teach others how to handle worry.</p></div>
+</section>
+
+<section id="quiz">
+  <h2>❓ Quiz Challenge</h2>
+  <p>Finish the quiz to earn a laurel leaf! Each question is read aloud with its choices.</p>
+  <div id="quizBox"></div>
+  <h3 style="margin-top:22px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<section id="payoff">
+  <h2>🌿 Earn Your Laurel Wreath</h2>
+  <div class="payoff">
+    <svg id="wreath" viewBox="0 0 420 300" role="img" aria-label="A laurel wreath whose leaves turn green and gold as you complete activities"></svg>
+    <div class="readout" id="wreathRead" aria-live="polite"></div>
+    <div class="card2 readable" id="payoffCard" style="color:var(--ink);border-left-color:#E6A800;text-align:left"></div>
+  </div>
+</section>
+
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>Who Marcus Aurelius was (born 121 AD; emperor 161–180 AD; co-ruler with Lucius Verus until 169; last of the “Five Good Emperors”) and what the Roman Empire looked like around 170 AD.</li>
+      <li>The core Stoic idea of what is and isn't in our control (from Epictetus), the four Stoic virtues, and the <i>Meditations</i> as a private notebook in Greek.</li>
+      <li>Honest history: the Antonine Plague, the Marcomannic Wars, and the succession of Commodus, told without graphic detail.</li>
+    </ul>
+    <h3>Grade band</h3><p>About grades 3–5, a bit above for strong readers. Read-aloud supports every card.</p>
+    <h3>Time</h3><p>About 30–40 minutes; easy to split (life, map and timeline, then Stoic ideas, sorting game, notebook, and quiz).</p>
+    <h3>Accuracy notes</h3>
+    <ul>
+      <li>Quotations are from George Long's public-domain 1862 translation (6.6, 8.47, 10.16). The Book 2 “morning reminder” is a labeled paraphrase. The Epictetus idea is paraphrased (Handbook/Enchiridion, ch. 1).</li>
+      <li>The title “To Himself” comes from the manuscript tradition; Marcus may not have titled it. The place notes (“among the Quadi, by the Granua”; “at Carnuntum”) appear at the breaks after Books 1 and 2 in the manuscripts (some editions print them as headings of Books 2 and 3).</li>
+      <li>The “Verissimus” nickname and the sale of palace goods come from ancient sources (Cassius Dio and the less reliable <i>Historia Augusta</i>), so they're attributed to “ancient writers.”</li>
+      <li>The plague's identity (probably smallpox) and its death toll are debated. Marcus's place of death is disputed (Vindobona or Sirmium).</li>
+      <li>Persecutions of Christians took place in some provinces during his reign (e.g., St. Justin Martyr in Rome, c. 165, and the martyrs of Lyon, 177). This isn't covered in the kids' cards but is worth knowing for discussion.</li>
+      <li>The map is a simplified sketch, not a precise historical boundary.</li>
+    </ul>
+    <h3>Follow-up</h3><p>Keep a 3-line “Meditations” journal for a week at bedtime: (1) one thing that went well, (2) one thing that wasn't up to me, (3) one thing I'll try to do better tomorrow.</p>
+  </div>
+</section>
+</main>
+<footer>Made for curious historians 🏛️ · All drawings made just for this page · Works offline</footer>
+<script>
+(function(){
+"use strict";
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- sound + confetti ---------- */
+let actx=null;
+function beep(notes,type){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; notes.forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f; const t=t0+i*0.1;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.18,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32); }); }catch(e){} }
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS=["🏛️","📜","⭐","🦉","✨","🌿","👑"];
+function confetti(n){ for(let i=0;i<n;i++){ const s=document.createElement("div"); s.className="confetti"; s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s"; document.body.appendChild(s); setTimeout(()=>s.remove(),4200); } }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function makeQuiz(box, QUIZ, praise){
+  let qi=0, score=0;
+  function renderQ(){
+    const item=QUIZ[qi]; ReadAloud.stop();
+    box.innerHTML='<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div><div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+    const qEl=box.querySelector(".q-text"); qEl.dataset.say=item.q+" Is it: "+item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ")+"?"; ReadAloud.mark(qEl);
+    const ans=box.querySelector(".answers"), fb=box.querySelector(".feedback");
+    item.a.forEach((txt,i)=>{ const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+      b.addEventListener("click",()=>{ [...ans.children].forEach(x=>x.disabled=true);
+        if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+        else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+        ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+        const next=document.createElement("button"); next.style.background="var(--purple)"; next.textContent=qi<QUIZ.length-1?"Next question ➡":"See my score 🏆";
+        next.addEventListener("click",()=>{ qi++; qi<QUIZ.length?renderQ():renderEnd(); }); fb.after(next); });
+      ans.appendChild(b); });
+  }
+  function renderEnd(){
+    ReadAloud.stop(); const stars="⭐".repeat(score)+"☆".repeat(QUIZ.length-score);
+    const msg=score===QUIZ.length?praise:score>=Math.ceil(QUIZ.length*0.6)?"Awesome job! 🎉":score>=2?"Nice work! Explore more and try again! 📜":"Good try! Explore and try again! 💪";
+    box.innerHTML='<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+    const c=box.querySelector(".celebrate"); c.dataset.say="You got "+score+" out of "+QUIZ.length+"! "+msg; ReadAloud.mark(c);
+    const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--teal)"; again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+    const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); box.appendChild(wrap); confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+  }
+  renderQ();
+}
+
+/* ---------- TIMELINE ---------- */
+function makeTimeline(root, EVENTS){
+  let i=0;
+  root.innerHTML='<div class="tl-track" role="list"></div><div class="tl-card readable" aria-live="polite"><div class="big"></div><div><h3></h3><p></p></div></div>'+
+    '<div class="tl-nav"><button class="tl-prev" style="background:#666">◀ Earlier</button><span class="step-count tl-count"></span><button class="tl-next" style="background:var(--theme)">Later ▶</button></div>';
+  const track=root.querySelector(".tl-track"), card=root.querySelector(".tl-card"), prev=root.querySelector(".tl-prev"), next=root.querySelector(".tl-next"), count=root.querySelector(".tl-count");
+  EVENTS.forEach((e,k)=>{ const b=document.createElement("button"); b.className="tl-dot"; b.textContent=e.year; b.setAttribute("aria-label",e.year+": "+e.title);
+    b.addEventListener("click",()=>show(k,true)); track.appendChild(b); });
+  function show(k,speak){
+    i=k; const e=EVENTS[k]; ReadAloud.stopIf(card);
+    [...track.children].forEach((b,j)=>{ b.classList.toggle("active",j===k); b.setAttribute("aria-current",j===k?"true":"false"); });
+    card.querySelector(".big").textContent=e.icon; card.querySelector("h3").textContent=e.year+" — "+e.title; card.querySelector("p").textContent=e.text;
+    prev.disabled=k===0; next.disabled=k===EVENTS.length-1; count.textContent=(k+1)+" of "+EVENTS.length;
+    const b=track.children[k]; track.scrollLeft=b.offsetLeft-track.clientWidth/2+b.offsetWidth/2;
+    ReadAloud.mark(card); if(speak) ReadAloud.speakEl(card);
+  }
+  prev.addEventListener("click",()=>{ if(i>0) show(i-1,true); });
+  next.addEventListener("click",()=>{ if(i<EVENTS.length-1) show(i+1,true); });
+  show(0,false);
+  return {show};
+}
+
+/* ---------- MATCHING GAME ---------- */
+function makeMatch(o){ // o: {left,right,status,pairs:[{id,l,r,tip}], doneMsg, onDone}
+  let selL=null, selR=null, matched=0;
+  const N=o.pairs.length;
+  function build(){
+    selL=selR=null; matched=0; ReadAloud.stop();
+    o.left.innerHTML=""; o.right.innerHTML="";
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="L";
+      c.innerHTML='<span>'+p.l+'</span>'; o.left.appendChild(c); ReadAloud.mark(c); });
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard name-card readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="R";
+      c.innerHTML='<span>'+p.r+'</span>'; o.right.appendChild(c); ReadAloud.mark(c); });
+    o.status.textContent="Matched: 0 of "+N; o.status.style.color=""; o.status.classList.add("readable"); ReadAloud.mark(o.status);
+    if(o.onReset) o.onReset();
+  }
+  function pick(c){
+    if(c.classList.contains("done")) return;
+    if(c.dataset.side==="L"){ if(selL) selL.classList.remove("sel"); selL = selL===c?null:c; if(selL) c.classList.add("sel"); }
+    else { if(selR) selR.classList.remove("sel"); selR = selR===c?null:c; if(selR) c.classList.add("sel"); }
+    if(selL && selR){
+      const a=selL,b=selR; selL=selR=null; a.classList.remove("sel"); b.classList.remove("sel");
+      const p=o.pairs.find(x=>x.id===a.dataset.id);
+      if(a.dataset.id===b.dataset.id){
+        a.classList.add("done"); b.classList.add("done"); matched++; beep(HAPPY);
+        o.status.textContent="✔ Yes! "+p.tip+" ("+matched+" of "+N+")"; o.status.style.color="var(--blue)";
+        if(matched===N){ o.status.textContent=o.doneMsg; confetti(24); if(o.onDone) o.onDone(); }
+        ReadAloud.mark(o.status); setTimeout(()=>ReadAloud.speakEl(o.status),0);
+      } else {
+        [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+        o.status.textContent="✘ Not quite — read it again and try another one!"; o.status.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(o.status);
+      }
+    }
+  }
+  [o.left,o.right].forEach(col=>{
+    col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+    col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard")&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+  });
+  build();
+  return {build};
+}
+
+/* ---------- FUN FACTS ---------- */
+function makeFacts(strip, FACTS){
+  FACTS.forEach(([front,back])=>{ const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+    d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+    const flip=()=>d.classList.toggle("flipped");
+    d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+    d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+    strip.appendChild(d); ReadAloud.mark(d); });
+}
+
+/* ---------- a soft bell sound ---------- */
+function bell(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; [[392,0.16],[784,0.07],[1176,0.04],[1568,0.02]].forEach(([f,a])=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type="sine"; o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(a,t0+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t0+1.8); o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0+1.9); }); }catch(e){} }
+
+function projector(lon0,lon1,lat0,lat1,W,H){ return (lon,lat)=>[ +((lon-lon0)/(lon1-lon0)*W).toFixed(1), +((lat1-lat)/(lat1-lat0)*H).toFixed(1) ]; }
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs,parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+
+const $id=id=>document.getElementById(id), $$=q=>[...document.querySelectorAll(q)];
+const progress={hook:false,map:false,timeline:false,virtue:false,sort:false,notebook:false,quiz:false};
+
+/* ---------- HOOK ---------- */
+$id("openScroll").addEventListener("click",()=>{
+  const sc=$id("scroll"), open=!sc.classList.contains("open"); sc.classList.toggle("open",open);
+  $id("openScroll").setAttribute("aria-expanded",open?"true":"false");
+  $id("openScroll").textContent=open?"📜 Roll the notebook up":"📜 Open the emperor's notebook";
+  if(open){ beep([392,523.25,659.25]); ReadAloud.speakEl(sc); mark("hook"); }
+});
+
+/* ---------- MAP ---------- */
+const svg=$id("mapSvg"), P=projector(-11,46,27,58,900,600);
+const pts=a=>a.map(([lo,la])=>P(lo,la).join(",")).join(" ");
+svgEl("rect",{width:900,height:600,fill:"#f1e7cf"},svg);
+const SEA={fill:"#bfe0f2",stroke:"#5a8fb0","stroke-width":1.5};
+const MED=[[-5.6,36],[-2,36.7],[-1,37.6],[-0.3,39.5],[2.2,41.4],[3.2,43.2],[4.8,43.4],[6.5,43.1],[8.9,44.4],[10.3,43.5],[11.2,42.4],[12.2,41.7],[14.3,40.8],[15.7,40],[15.7,38],[16.6,38.5],[17.2,39.4],[17.2,40.4],[18.5,40.1],[16.9,41.1],[15.9,41.9],[14.2,42.4],[13.5,43.6],[12.3,44.8],[12.3,45.4],[13.8,45.6],[14.5,45.2],[15.5,44],[16.4,43.5],[18.1,42.6],[19.4,41.3],[19.4,40.4],[20.7,38.8],[21.3,38.3],[21.6,37],[22.5,36.4],[23,36.8],[23.2,37.7],[23.7,37.9],[24,38.4],[23,39.3],[22.9,40.6],[23.8,40],[24.4,40.9],[25.9,40.8],[26.4,40.2],[26.2,39.4],[26.8,39],[27,38.4],[27.3,37],[28.2,36.7],[30.6,36.8],[32.5,36.1],[34.6,36.8],[36.1,36.6],[35.8,35.5],[35.5,33.9],[34.8,32.1],[34.3,31.4],[32.3,31.2],[29.9,31.2],[25.1,31.6],[22,32.9],[20,32.1],[19,30.3],[16,31.2],[13.2,32.9],[11,33.5],[10.8,35.5],[11.1,37],[10.2,36.9],[8,36.9],[3,36.8],[-0.6,35.8],[-2.9,35.3],[-5.3,35.9]];
+const BLACK=[[29,41.2],[28.1,41.6],[27.8,42.7],[28.6,43.6],[29.7,45.2],[30.7,46.5],[32.5,46.1],[33.5,45],[33.5,44.5],[35,44.8],[36.5,45.3],[38.2,46.6],[39.2,47.1],[38.3,46],[37.5,44.6],[39.7,43.5],[41.6,41.6],[39.6,41],[37,41.1],[35,42],[33.3,42],[31,41.1]];
+const ATL=[[-11,27],[-9.8,29.5],[-9.6,30.4],[-8.5,33.3],[-6.8,34],[-5.9,35.8],[-6.3,36.5],[-7.4,37.2],[-8.9,37],[-8.8,38.7],[-9.5,38.8],[-8.7,41],[-8.9,42.5],[-9.3,43],[-8,43.7],[-3.8,43.4],[-1.5,43.4],[-1.2,46],[-2.2,47.2],[-4.5,48],[-4.7,48.6],[-1.6,48.7],[-1.4,49.7],[0.2,49.5],[1.6,50.2],[2.5,51.1],[3.6,51.5],[4.6,52.9],[6.5,53.5],[8.6,53.9],[8.6,55.5],[8.2,57],[10.5,57.7],[10.7,58],[-11,58]];
+const ISL=[ [[12.4,38.1],[15.1,38.2],[15.6,38.3],[15.1,36.7],[12.4,37.7]], [[8.4,41],[9.8,41.2],[9.6,39],[8.4,39]], [[8.6,43],[9.4,42.9],[9.3,41.4],[8.8,41.5]], [[23.5,35.6],[26.3,35.3],[24.5,34.9]], [[32.3,35],[34.6,35.6],[33.9,34.6]],
+  [[-5.7,50],[-3.5,50.3],[-1,50.7],[1.4,51.1],[1.7,52.7],[0,53.5],[-1.6,55.6],[-2,57.6],[-4,58.6],[-5,58.5],[-6,56.5],[-4.9,55],[-3,54],[-4.6,53.3],[-4.5,52],[-5.3,51.7],[-3,51.4],[-4.2,51.1]],
+  [[-6,52.2],[-6,54.5],[-8,55.2],[-10,54],[-10,51.6]] ];
+// approximate Roman land (drawn first, sea on top trims coasts)
+const EMP=[[-9.8,29.5],[-9.5,44],[-1.5,43.4],[-1.2,46],[-4.7,48.6],[1.6,50.2],[4.1,51.9],[6.1,51.8],[6.8,51.3],[7.6,50.4],[8.6,50.2],[9.6,49.4],[10.5,48.9],[12.1,49],[13.5,48.6],[16.4,48.2],[17.1,48.1],[18.9,47.8],[19,47.5],[18.9,45.9],[20.5,44.8],[21.3,48],[24,48.4],[27.5,46.5],[25.6,45.6],[26.5,44.3],[28,44.1],[28.6,45.3],[29.7,45.2],[30.5,43.5],[41.8,41.4],[40.6,39.5],[39.5,37.5],[40.5,35.5],[38.5,33],[35.5,30],[35,28],[33.5,27],[30,27],[25,30.5],[20,30],[15,29.6],[10,32],[7,33],[0,34],[-5,33.5],[-9,30.5]];
+svgEl("polygon",{points:pts(EMP),fill:"#e9c9b8",stroke:"#C24E00","stroke-width":2.5},svg);
+[MED,BLACK,ATL].forEach(a=>svgEl("polygon",Object.assign({points:pts(a)},SEA),svg));
+ISL.forEach((a,k)=>{ if(k<5) svgEl("polygon",{points:pts(a),fill:"#e9c9b8",stroke:"#5a8fb0","stroke-width":1.5},svg); else if(k===6) svgEl("polygon",{points:pts(a),fill:"#f1e7cf",stroke:"#5a8fb0","stroke-width":1.5},svg); });
+svgEl("polygon",{points:pts(ISL[5]),fill:"#f1e7cf",stroke:"#5a8fb0","stroke-width":1.5},svg); // Britain base
+svgEl("polygon",{points:pts([[-5.7,50],[-3.5,50.3],[-1,50.7],[1.4,51.1],[1.7,52.7],[0,53.5],[-1.6,55],[-4.5,54.9],[-3,54],[-4.6,53.3],[-4.5,52],[-5.3,51.7],[-3,51.4],[-4.2,51.1]]),fill:"#e9c9b8"},svg); // Roman Britain
+svgEl("polyline",{points:pts([[-4.5,54.9],[-1.6,55]]),fill:"none",stroke:"#2b2140","stroke-width":4},svg);
+const RHINE=[[4.1,51.9],[6.1,51.8],[6.8,51.3],[7.6,50.4],[8.3,49.9],[8.4,49],[7.6,47.6]];
+const DANUBE=[[8.5,47.95],[10,48.4],[12.1,49],[13.5,48.6],[16.4,48.2],[17.1,48.1],[18.9,47.8],[19,47.5],[18.9,45.9],[20.5,44.8],[22.5,44.6],[23.9,43.8],[26,43.9],[28,44.1],[28.6,45.3],[29.7,45.2]];
+[RHINE,DANUBE].forEach(r=>svgEl("polyline",{points:pts(r),fill:"none",stroke:"#0072B2","stroke-width":4,"stroke-dasharray":"10 6"},svg));
+function label(t,lo,la,o){ const [x,y]=P(lo,la); const e=svgEl("text",Object.assign({x,y,"font-size":17,fill:"#2b2140","text-anchor":"middle","font-weight":"bold","paint-order":"stroke",stroke:"#fff","stroke-width":4},o||{}),svg); e.textContent=t; return e; }
+label("Mediterranean Sea",18,34.4,{"font-size":20,fill:"#0b3d66"});
+label("Black Sea",34.5,43.3,{fill:"#0b3d66"});
+label("Atlantic Ocean",-6.5,46.2,{fill:"#0b3d66","font-size":16});
+label("Danube River",23,45.6,{fill:"#0b3d66","font-size":15});
+label("Rhine",9.6,51,{fill:"#0b3d66","font-size":15});
+label("Hadrian's Wall",-3.3,56.3,{"font-size":14});
+label("ROMAN EMPIRE (shaded)",2,39.6,{fill:"#8a3a00","font-size":16});
+label("Lands outside Rome's rule",30,53.5,{fill:"#5a4a20","font-size":15});
+const PINS=[
+ {n:"Rome",lo:12.5,la:41.9,dx:-16,dy:6,t:"Rome, the capital of the empire, where Marcus was born in 121 AD. A column carved with scenes of his wars on the Danube still stands there today."},
+ {n:"Athens",lo:23.7,la:38,dx:14,dy:6,t:"Athens, Greece, where Zeno started Stoic philosophy at a painted porch called the Stoa, around 300 BC. Marcus later paid for teachers of philosophy there."},
+ {n:"Carnuntum",lo:16.9,la:48.1,dx:-14,dy:-10,t:"Carnuntum, a Roman army base on the Danube in today's Austria. A note in the Meditations says part of it was written at Carnuntum."},
+ {n:"Sirmium",lo:19.6,la:45,dx:14,dy:16,t:"Sirmium, a Roman city near the Danube frontier in today's Serbia. Marcus spent time here during the wars, and it's one of the two places where he may have died."},
+ {n:"Londinium",lo:-0.1,la:51.5,dx:14,dy:6,t:"Londinium, today's London, in the Roman province of Britannia. Hadrian's Wall, farther north, marked Rome's edge in Britain."},
+ {n:"Alexandria",lo:29.9,la:31.2,dx:14,dy:16,t:"Alexandria, a huge city in Egypt with a famous library. Egypt's grain helped feed the city of Rome."},
+ {n:"Antioch",lo:36.2,la:36.2,dx:14,dy:6,t:"Antioch, a big city in Syria in the east. Lucius Verus based himself near here during a war against Parthia, and returning soldiers brought back the plague."}
+];
+const seen=new Set();
+PINS.forEach(p=>{ const [x,y]=P(p.lo,p.la); const g=svgEl("g",{class:"pin",tabindex:0,role:"button","aria-label":"Pin: "+p.n},svg);
+  svgEl("circle",{cx:x,cy:y,r:22,fill:"transparent"},g);
+  svgEl("circle",{class:"dot",cx:x,cy:y,r:10,fill:"#6a3d9a",stroke:"#fff","stroke-width":3},g);
+  const t=svgEl("text",{x:x+p.dx,y:y+p.dy,"font-size":17,"text-anchor":p.dx<0?"end":"start",fill:"#2b2140"},g); t.textContent=p.n;
+  p.g=g;
+  const go=()=>{ seen.add(p.n); g.classList.add("seen"); t.textContent="✔ "+p.n;
+    const c=$id("mapCap"); c.innerHTML="<h3>📍 "+p.n+"</h3><p>"+p.t+"</p><p><b>Pins visited: "+seen.size+" of "+PINS.length+"</b>"+(seen.size>=4?" 🌿":"")+"</p>"; ReadAloud.mark(c); ReadAloud.speakEl(c); beep([523.25]);
+    if(seen.size>=4) mark("map"); };
+  g.addEventListener("click",go); g.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } }); });
+
+/* ---------- TIMELINE ---------- */
+const EVENTS=[
+ {year:"121 AD",icon:"👶",title:"Born in Rome",text:"Marcus is born in Rome on April 26, 121 AD, into a wealthy, important family. Hadrian is emperor."},
+ {year:"138 AD",icon:"🤝",title:"Adopted",text:"Hadrian picks Antoninus Pius as the next emperor, and Antoninus adopts Marcus and young Lucius Verus. Later that year Hadrian dies and Antoninus becomes emperor."},
+ {year:"140s AD",icon:"🦉",title:"Falling for Philosophy",text:"In his twenties, Marcus turns more and more to Stoic philosophy. His teacher Junius Rusticus shares the lessons of Epictetus with him."},
+ {year:"161 AD",icon:"👑",title:"Emperor! Two of Them!",text:"Antoninus dies. Marcus becomes emperor and makes Lucius Verus his co-emperor."},
+ {year:"165 AD",icon:"🤒",title:"The Plague Arrives",text:"Around 165 to 166, soldiers returning from a war in the east bring back a terrible sickness, the Antonine Plague. It spreads for years."},
+ {year:"166–180 AD",icon:"⚔️",title:"Wars on the Danube",text:"Peoples from north of the Danube, like the Marcomanni and Quadi, cross into Roman lands. Marcus spends many years with his army on the frontier."},
+ {year:"169 AD",icon:"🕯️",title:"Ruling Alone",text:"Lucius Verus dies, and Marcus rules alone."},
+ {year:"170s AD",icon:"📓",title:"Writing the Meditations",text:"During these busy, hard years, often in army camps along the Danube, Marcus writes his private notebook in Greek."},
+ {year:"177 AD",icon:"👦",title:"Commodus Made Co-Emperor",text:"Marcus makes his teenage son Commodus his co-emperor and heir."},
+ {year:"180 AD",icon:"🌅",title:"Marcus Dies",text:"Marcus dies on March 17, 180 AD, near the Danube, probably at Vindobona or Sirmium. Commodus becomes sole emperor."},
+ {year:"192 AD",icon:"📉",title:"Commodus's Reign Ends",text:"Commodus proves to be a poor ruler, and his reign ends badly. Many historians see the end of Marcus's reign as the close of a golden age for Rome."},
+ {year:"Today",icon:"📚",title:"Still Read",text:"Nearly 1,850 years later, people all over the world still read the Meditations for help being calm, brave, and kind."}
+];
+const TL=makeTimeline($id("tl"),EVENTS);
+$id("tl").addEventListener("click",()=>{ const c=$id("tl").querySelector(".tl-count").textContent; if(c.startsWith(EVENTS.length+" ")) mark("timeline"); });
+
+/* ---------- VIRTUES ---------- */
+$$(".virtue").forEach(v=>{ const pick=()=>{ $$(".virtue").forEach(x=>x.setAttribute("aria-pressed",x===v?"true":"false"));
+    const c=$id("virtueCap"); c.innerHTML="<p>✔ Today you'll practice <b>"+v.dataset.v+"</b>! Marcus wrote reminders like this to himself. Tonight, think of one time you used it.</p>"; ReadAloud.mark(c); ReadAloud.speakEl(c); beep(HAPPY); mark("virtue"); };
+  v.addEventListener("click",e=>{ if(!e.target.closest(".spk")){ e.stopPropagation(); pick(); } }); v.addEventListener("keydown",e=>{ if(e.target===v&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(); } }); });
+
+/* ---------- PAUSE ---------- */
+let pausing=false;
+$id("pauseBtn").addEventListener("click",()=>{ if(pausing) return; pausing=true; const r=$id("pauseRing"); let n=0;
+  const cycle=()=>{ if(n>=3){ r.textContent="Calm ✔"; r.classList.remove("grow"); pausing=false; return; }
+    r.textContent="Breathe in"; r.classList.add("grow"); setTimeout(()=>{ r.textContent="Breathe out"; r.classList.remove("grow"); setTimeout(()=>{ n++; cycle(); },4000); },4000); };
+  cycle(); });
+
+/* ---------- SORTING GAME ---------- */
+const ITEMS=[
+ {t:"Whether it rains on game day",i:"🌧️",in:false,why:"Nobody controls the weather. But you can control whether you bring a raincoat and how you react!"},
+ {t:"How hard I try at practice",i:"💪",in:true,why:"Your effort is up to you. Stoics say that's where to put your energy."},
+ {t:"What other kids think of me",i:"💭",in:false,why:"Other people's thoughts are up to them. You control how you act, not what they think."},
+ {t:"Whether I tell the truth",i:"🗣️",in:true,why:"Telling the truth is your choice. Remember, Hadrian called young Marcus “most truthful”!"},
+ {t:"How I react when I lose a game",i:"🏅",in:true,why:"Losing may not be up to you, but your reaction is. That's very Stoic!"},
+ {t:"Whether the other team is better",i:"⚽",in:false,why:"You can't control the other team. You can control how you play."},
+ {t:"Being kind to someone who's left out",i:"🤝",in:true,why:"Kindness is a choice, and it's always in your control."},
+ {t:"A traffic jam on the way to school",i:"🚗",in:false,why:"Traffic isn't up to you. Getting grumpy about it is optional, though!"},
+ {t:"Whether I say sorry when I'm wrong",i:"🙏",in:true,why:"Saying sorry is your choice. It takes courage, one of the Stoic virtues."},
+ {t:"Getting a cold",i:"🤧",in:false,why:"Getting sick isn't fully up to you, though washing hands helps! Marcus faced a plague he couldn't control."}
+];
+let order=[], si=0, sRight=0;
+function sortStart(){ order=shuffle(ITEMS.slice()); si=0; sRight=0; $id("binIn").innerHTML=""; $id("binOut").innerHTML="";
+  $id("sortFb").textContent=""; $id("sortAgain").style.display="none"; $id("inBtn").disabled=false; $id("outBtn").disabled=false; sortShow(); }
+function sortShow(){ const it=order[si]; const el=$id("sortItem");
+  el.innerHTML='<span aria-hidden="true">'+it.i+'</span><span>'+it.t+'</span>'; el.dataset.say=it.t+". Is it in my control, or not in my control?"; ReadAloud.mark(el);
+  $id("sortCount").textContent="Card "+(si+1)+" of "+order.length+" · Correct: "+sRight; }
+function sortAnswer(sayIn){ const it=order[si], ok=sayIn===it.in, fb=$id("sortFb");
+  if(ok){ sRight++; beep(HAPPY); } else beep(SAD,"square");
+  fb.textContent=(ok?"✔ Yes! ":"✘ Hmm, not quite. ")+"“"+it.t+"” is "+(it.in?"IN":"NOT in")+" my control. "+it.why;
+  fb.style.color=ok?"var(--green)":"var(--red)"; ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+  const chip=document.createElement("span"); chip.textContent=(ok?"✔ ":"✘→ ")+it.i+" "+it.t; $id(it.in?"binIn":"binOut").appendChild(chip);
+  si++;
+  if(si<order.length) sortShow();
+  else { $id("inBtn").disabled=true; $id("outBtn").disabled=true; const el=$id("sortItem");
+    el.innerHTML="<span>🏆 Done! "+sRight+" of "+order.length+" right.</span>"; el.dataset.say="Done! You got "+sRight+" of "+order.length+" right. Now you think like a Stoic: work on what's up to you, and stay calm about the rest.";
+    ReadAloud.mark(el); $id("sortCount").textContent="All "+order.length+" cards sorted"; $id("sortAgain").style.display="inline-block"; confetti(24); mark("sort");
+    fb.textContent+=" 🏆 All sorted! Work on what's up to you, and stay calm about the rest."; ReadAloud.mark(fb); }
+}
+$id("inBtn").addEventListener("click",()=>sortAnswer(true));
+$id("outBtn").addEventListener("click",()=>sortAnswer(false));
+$id("sortAgain").addEventListener("click",sortStart);
+
+/* ---------- NOTEBOOK ---------- */
+$id("saveLine").addEventListener("click",()=>{ const v=$id("myLine").value.trim(); const s=$id("myScroll");
+  if(!v){ s.style.display="block"; s.innerHTML="<p>✏️ Write a reminder in the box first, then tap the button.</p>"; ReadAloud.mark(s); ReadAloud.speakEl(s); return; }
+  s.style.display="block"; s.innerHTML=""; const h=document.createElement("p"); h.innerHTML="<b>📜 My notebook, Book 1:</b>"; const q=document.createElement("p"); q.style.fontSize="22px"; q.textContent="“"+v+"”";
+  const f=document.createElement("p"); f.style.fontSize="16px"; f.textContent="— written by a young philosopher, to himself 🌿"; s.append(h,q,f); ReadAloud.mark(s); ReadAloud.speakEl(s); beep(HAPPY); mark("notebook"); });
+
+/* ---------- QUIZ ---------- */
+makeQuiz($id("quizBox"),[
+ {q:"When was Marcus Aurelius emperor of Rome?",a:["About 1,000 BC","161 to 180 AD","1776 AD"],c:1,yes:"Right! He ruled from 161 to 180 AD.",no:"He ruled from 161 to 180 AD, nearly 1,850 years ago."},
+ {q:"Who was co-emperor with Marcus at first?",a:["Julius Caesar","Lucius Verus","Commodus"],c:1,yes:"Yes! His adopted brother Lucius Verus ruled with him until 169 AD.",no:"It was Lucius Verus, his adopted brother, until 169 AD."},
+ {q:"What language did Marcus write his Meditations in?",a:["Latin","Greek","English"],c:1,yes:"Correct! Greek was the language of philosophy.",no:"He wrote in Greek, the language of philosophy, even though he also spoke Latin."},
+ {q:"According to the Stoics, which of these is in your control?",a:["The weather","What other people think","How you treat people"],c:2,yes:"Yes! Your choices and actions are up to you.",no:"How you treat people is up to you. Weather and other people's thoughts are not."},
+ {q:"Where was Marcus while writing parts of his notebook?",a:["On vacation at the beach","In army camps near the Danube River","On a ship to America"],c:1,yes:"Right! Notes say \"among the Quadi\" and \"at Carnuntum,\" near the Danube.",no:"He wrote parts in army camps near the Danube River frontier."},
+ {q:"Why do people still read the Meditations?",a:["It's an honest guide to staying calm, brave, and kind","It has maps of buried treasure","It tells how to build a chariot"],c:0,yes:"Exactly! It's a powerful ruler's honest notes on being good.",no:"People read it because it's an emperor's honest notes on staying calm, brave, and kind."}
+],"Perfect score! You're a true philosopher! 🦉");
+$id("quizBox").addEventListener("click",()=>{ if($id("quizBox").querySelector(".celebrate")) mark("quiz"); });
+
+makeFacts($id("factsStrip"),[
+ ["🐴 Mistaken identity!","His bronze horse statue may have survived because people thought it showed Emperor Constantine."],
+ ["🏛️ A column of comics","The Column of Marcus Aurelius in Rome has carved pictures spiraling up it, showing his Danube wars like a stone comic strip!"],
+ ["📛 The name game","He was born Marcus Annius Verus. His name changed as he was adopted and became emperor."],
+ ["🦉 Not meant for us","The Meditations was private. We don't know exactly how it survived before copies appeared centuries later."],
+ ["👨‍🏫 Paid teachers","Marcus set up paid teaching posts for philosophy in Athens, including one for the Stoics."],
+ ["🗺️ One giant empire","In Marcus's time, a traveler could go from Britain all the way to Egypt without ever leaving Roman lands!"]
+]);
+
+/* ---------- PAYOFF WREATH ---------- */
+const KEYS=[["hook","Open the notebook"],["map","Visit 4 map pins"],["timeline","Reach the end of the timeline"],["virtue","Pick a virtue"],["sort","Finish the sorting game"],["notebook","Write a notebook line"],["quiz","Finish the quiz"]];
+const W=$id("wreath"), LEAVES=[];
+svgEl("rect",{width:420,height:300,fill:"transparent"},W);
+const R=108, CX=210, CY=150;
+[-1,1].forEach(side=>{ svgEl("path",{d:"M "+(CX+side*28)+" "+(CY+R-4)+" A "+R+" "+R+" 0 0 "+(side<0?1:0)+" "+(CX+side*40)+" "+(CY-R+8),fill:"none",stroke:"#8a5a00","stroke-width":5,"stroke-linecap":"round"},W); });
+for(let side of [-1,1]){ for(let k=0;k<7;k++){ const th=(side<0?(108+k*22):(72-k*22))*Math.PI/180;
+  const cx=CX+R*Math.cos(th), cy=CY+R*Math.sin(th);
+  for(const off of [-1,1]){ const rot=th*180/Math.PI+90+off*35*side*(-1);
+    const ox=cx+Math.cos(th)*off*12, oy=cy+Math.sin(th)*off*12;
+    const leaf=svgEl("ellipse",{cx:ox.toFixed(1),cy:oy.toFixed(1),rx:22,ry:9,transform:"rotate("+rot.toFixed(1)+" "+ox.toFixed(1)+" "+oy.toFixed(1)+")",fill:"#5b5470",stroke:"#2b2140","stroke-width":2},W); LEAVES.push({leaf,k}); } } }
+svgEl("path",{d:"M 185 262 L 210 250 L 235 262 L 228 285 L 210 270 L 192 285 Z",fill:"#E6A800",stroke:"#2b2140","stroke-width":2},W);
+const wt=svgEl("text",{x:210,y:160,"text-anchor":"middle","font-size":44},W); wt.textContent="🏛️";
+const wl=svgEl("text",{x:210,y:205,"text-anchor":"middle","font-size":18,fill:"#fff","font-weight":"bold"},W);
+function mark(key){ if(progress[key]) return; progress[key]=true; updateWreath(true); }
+function updateWreath(fromAction){
+  const n=KEYS.filter(k=>progress[k[0]]).length;
+  LEAVES.forEach(({leaf,k})=>{ const on=k<n; leaf.setAttribute("fill",on?(n===KEYS.length?"#E6A800":"#009E73"):"#5b5470"); });
+  wl.textContent=n+" of "+KEYS.length+" leaves";
+  $id("wreathRead").textContent="🌿 Leaves earned: "+n+" of "+KEYS.length;
+  const pc=$id("payoffCard");
+  if(n===KEYS.length){ pc.innerHTML='<h3>🌿 You earned the laurel wreath!</h3><p>Romans gave laurel wreaths to honor winners. You earned yours by thinking like a Stoic. Marcus had a whole empire, but the thing he worked on most was <b>himself</b>: being honest, patient, fair, and kind. That\'s something you can do too, starting today. As his notebook says (George Long translation): <b>“be such.”</b></p>';
+    if(fromAction){ confetti(40); beep([523.25,659.25,783.99,1046.5,1318.5]); } }
+  else pc.innerHTML='<h3>🌿 Grow your laurel wreath!</h3><p>Each activity adds leaves: '+KEYS.map(k=>(progress[k[0]]?"✔ ":"○ ")+k[1]).join(", ")+'.</p>';
+  ReadAloud.mark(pc);
+}
+
+/* ---------- INIT ---------- */
+$$("#who .card2, #stoic .card2, #hard .card2, .map-help, .tl-help, .sort-help, .nb-help, .nb-help2, .hard-help, .grownups, .hook-text").forEach(n=>n.classList.add("readable"));
+ReadAloud.markAll();
+sortStart(); updateWreath(false);
+})();
+</script>
+</body>
+</html>
