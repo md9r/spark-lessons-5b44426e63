@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Midsummer Night’s Dream — Spark Lessons</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- color-blind-safe theme (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e9eef5 0%,#f4efe6 50%,#eaf3ea 100%)}
+  header h1{color:#3b4a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--blue)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+  .chip{background:#fff;color:var(--ink);border:4px solid #888;box-shadow:none;padding:10px 14px;font-size:19px;min-height:56px;display:flex;align-items:center;gap:8px}
+  .chip .num{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;color:#000;font-weight:900;border:2px solid #222}
+  .chip.on{background:#2b2140;color:#fff;border-color:#2b2140}
+  .chip.on::after{content:" ✔"}
+  .zoom-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .zoom-row button{font-size:18px;padding:10px 14px;min-height:52px}
+  .zoom-row .z-on{outline:4px solid var(--gold);outline-offset:2px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  .pin{cursor:pointer}
+  .map-caption{margin-top:10px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px 14px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  .round-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .round-row .r-on{outline:4px solid var(--gold);outline-offset:2px}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+  /* ---- saints lessons ---- */
+  nav a:nth-child(7){background:#8b2c00} nav a:nth-child(8){background:#8a5a00} nav a:nth-child(9){background:#444}
+  .meet svg{flex:0 0 280px}
+  .tl-dot{min-height:56px;font-weight:bold;font-size:19px}
+  .tl-dot.active::before{content:"📍 "}
+  .tl-nav{align-items:center;gap:10px}
+  .tl-card{border-color:var(--theme)}
+  .tl-card h3{color:var(--theme)}
+  .tl-dot{border-color:var(--theme)} .tl-dot.active{background:var(--theme)}
+  .step-count{font-weight:bold;font-size:20px;align-self:center}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .stepc{background:#fff;border-radius:18px;padding:14px;border-top:12px solid var(--theme)}
+  .stepc .lvl{display:inline-block;font-size:16px;font-weight:bold;background:#2b2140;color:#fff;border-radius:999px;padding:2px 10px}
+  .stepc h3{margin:6px 0 4px;font-size:23px}
+  .stepc p{margin:0 0 6px}
+  .be-like{margin-top:12px}
+  svg text{font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif}
+  .pin:focus{outline:none} .pin:focus circle.dot,.pin:focus rect.dot{stroke:#E6A800;stroke-width:5}
+
+  :root{ --theme:#3b2a6b }
+  body{background:linear-gradient(180deg,#ecebf8 0%,#f6f1fb 50%,#eef5ef 100%)}
+  header h1{color:#3b2a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  .card2{border-left-color:var(--theme)}
+  .card2 p{font-size:21px}
+  .hook{border-radius:24px;padding:22px;text-align:center;background:#1d1840;color:#fff;border:4px solid #fff}
+  .hook h2{margin:0 0 8px;font-size:clamp(26px,4.5vw,38px);color:#ffd84a}
+  .hook p{font-size:22px}
+  .big-btn{font-size:23px;min-height:70px;padding:14px 26px;background:#E6A800;color:#2b2140}
+  .reveal{max-width:640px;margin:14px auto 0;background:#efeafb;color:#2b2140;border-radius:14px;border:0 solid #6a3d9a;padding:0 20px;max-height:0;overflow:hidden;transition:max-height .9s,padding .9s;text-align:left}
+  .reveal.open{max-height:1000px;padding:16px 20px;border-width:4px}
+  #hookArt{width:min(420px,100%);height:auto;display:block;margin:6px auto}
+  .donkey{transition:opacity .8s,transform .8s;transform-origin:210px 170px;opacity:0;transform:scale(.4)}
+  .donkey.on{opacity:1;transform:scale(1)}
+  .note{background:#f4f6fa;border:3px dashed #3b4a6b;border-radius:14px;padding:12px 14px;margin-top:12px}
+  .gentle{border-left-color:#3b4a6b !important;background:#f4f6fa}
+  .sec-help{font-size:21px}
+  .quote{font-style:italic;font-weight:bold;color:#3b2a6b}
+  /* sorter */
+  .sorter{background:#fff;border-radius:20px;border:4px solid var(--theme);padding:16px;text-align:center}
+  .sort-item{font-size:clamp(22px,3.6vw,30px);font-weight:bold;margin:10px auto 14px;min-height:96px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:#efeafb;border-radius:16px;padding:12px;max-width:680px}
+  .sort-item small{font-size:20px;font-weight:normal}
+  .sort-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .sort-btns button{font-size:21px;min-height:76px;min-width:200px}
+  #gHuman{background:#B86E00} #gFairy{background:#6a3d9a} #gActor{background:#007a5a}
+  .bins{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;text-align:left}
+  .bin{border-radius:16px;padding:10px 12px;min-height:90px;border:4px dashed}
+  .bin h4{margin:0 0 6px;font-size:19px}
+  .bin.h{border-color:#B86E00;background:#fbf0d8} .bin.f{border-color:#6a3d9a;background:#f1eafa} .bin.a{border-color:#007a5a;background:#e6f5ef}
+  .bin span{display:inline-block;background:#fff;border-radius:999px;padding:4px 10px;margin:3px;font-size:16px;border:2px solid #9aa5b8}
+  .sort-fb{font-weight:bold;font-size:20px;margin-top:12px;min-height:30px}
+  @media (max-width:700px){.bins{grid-template-columns:1fr}.sort-btns button{min-width:0;width:100%}}
+  /* potion */
+  .forest{background:#fff;border-radius:18px;border:4px solid #1d1840;padding:6px}
+  .forest svg{width:100%;height:auto;display:block;border-radius:12px}
+  .who-tap{cursor:pointer} .who-tap:focus{outline:none} .who-tap:focus .lab{stroke:#E6A800;stroke-width:4}
+  .tool{display:inline-block;background:#efeafb;border:3px solid var(--theme);border-radius:999px;padding:6px 14px;font-weight:bold;font-size:20px;margin:8px 0}
+  .loveboard{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .loveboard span{background:#fff;border:3px solid #9aa5b8;border-radius:999px;padding:6px 12px;font-size:19px;font-weight:bold}
+  .loveboard span.happy{border-color:#007a5a;background:#e6f5ef}
+  .loveboard span.happy::after{content:" ✔"}
+  #potionNext{background:var(--theme);margin-top:10px;display:none}
+  /* story order */
+  .order-pool{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:10px 0}
+  .order-pool button{background:#fff;color:var(--ink);border:4px solid #9aa5b8;min-height:76px;text-align:left;box-shadow:none;font-size:19px}
+  .order-pool button.oops{animation:shake .4s}
+  .order-list{list-style:none;padding:0;margin:10px 0;counter-reset:st}
+  .order-list li{background:#e6f5ef;border:3px solid #007a5a;border-radius:14px;padding:10px 14px;margin:6px 0;font-size:20px;counter-increment:st}
+  .order-list li::before{content:counter(st)". ✔ ";font-weight:bold}
+  /* lines */
+  .lines{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+  .lcard{background:#fff;border-radius:18px;border:4px solid #9aa5b8;padding:14px;cursor:pointer;min-height:160px}
+  .lcard .ql{font-size:22px;font-style:italic;font-weight:bold;color:#3b2a6b;margin:4px 0}
+  .lcard .src{font-size:17px;color:#444}
+  .lcard .plain{display:none;margin:8px 0 0;font-size:20px;background:#fff6d6;border-radius:12px;padding:8px 10px}
+  .lcard .tap{font-size:16px;color:#555}
+  .lcard.done{border-color:var(--theme);background:#f6f2fd}
+  .lcard.done .plain{display:block} .lcard.done .tap{display:none}
+  .lcard.done .src::after{content:" ✔";font-weight:bold}
+  .match-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .match-cols>div{display:flex;flex-direction:column;gap:10px}
+  .mcard span{font-size:21px}
+  /* show */
+  .stage{background:#5a1a2e;border-radius:20px;padding:14px;border:6px solid #E6A800;text-align:center;color:#2b2140}
+  .stage .curtain{display:flex;justify-content:space-between;color:#fff;font-weight:bold;font-size:18px}
+  .stage .scene{background:#fff8ec;border-radius:14px;padding:14px;min-height:170px;display:flex;gap:16px;align-items:center;text-align:left}
+  .stage .scene .big{font-size:72px;flex:0 0 auto}
+  .stage .scene p{font-size:21px;margin:6px 0}
+  #showNext{background:#E6A800;color:#2b2140;margin-top:12px;min-height:64px;font-size:21px}
+  /* payoff */
+  .payoff{background:linear-gradient(180deg,#141033,#3b2a6b);color:#fff;border-radius:22px;padding:18px;text-align:center}
+  #ring{width:min(480px,100%);height:auto;display:block;margin:0 auto}
+  .readout{font-size:22px;font-weight:bold;margin:6px 0 10px}
+  nav a:nth-child(10){background:#0b3d66} nav a:nth-child(11){background:#8a2c62} nav a:nth-child(12){background:#00788a} nav a:nth-child(13){background:#3b2a6b} nav a:nth-child(14){background:#8b1e3f}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>🌙 A Midsummer Night’s Dream 🧚</h1>
+  <p>A funny fairy play by William Shakespeare · Written around 1595</p>
+</header>
+<nav>
+  <a href="#hook">🌙 Start</a>
+  <a href="#shakespeare">✒️ Shakespeare</a>
+  <a href="#athens">🏛️ In Athens</a>
+  <a href="#fairies">🧚 Fairies</a>
+  <a href="#actors">🎭 The Actors</a>
+  <a href="#ending">💒 Happy Ending</a>
+  <a href="#whoswho">👥 Who’s Who</a>
+  <a href="#potion">🌸 Puck’s Potion</a>
+  <a href="#order">📜 Story Order</a>
+  <a href="#speak">💬 Speak Like Shakespeare</a>
+  <a href="#show">🎪 The Silly Play</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#payoff">🍄 Fairy Ring</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+<section id="hook" class="hook">
+  <svg id="hookArt" viewBox="0 0 420 260" aria-hidden="true"></svg>
+  <h2>What if you fell asleep in a magic forest… and woke up with a DONKEY’S HEAD?</h2>
+  <p class="hook-text">Fairies. A tricky sprite. A magic flower. And lots and lots of silly mix-ups! This is one of the funniest plays ever written.</p>
+  <button class="big-btn" id="enterForest" aria-expanded="false">🌙 Step into the fairy forest</button>
+  <div class="reveal" id="reveal" aria-live="polite">
+    <p style="font-size:21px">This story is called <b>A Midsummer Night’s Dream</b>. It was written by <b>William Shakespeare</b> more than 400 years ago.</p>
+    <p style="font-size:21px"><b>Midsummer</b> means the middle of summer. In old stories, it was a time when magic was in the air!</p>
+    <p style="font-size:20px">🍄 Finish activities to light up your own <b>fairy ring</b>!</p>
+  </div>
+</section>
+
+<section id="shakespeare">
+  <h2>✒️ Who Was Shakespeare?</h2>
+  <div class="grid">
+    <div class="card2"><h3>✒️ A Famous Writer</h3><p><b>William Shakespeare</b> lived in England more than 400 years ago. Many people call him the greatest writer in the English language.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>🏡 Where He Was Born</h3><p>He was born in <b>1564</b> in a small town called <b>Stratford-upon-Avon</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>👑 A Royal Link</h3><p>When Shakespeare was born, the queen of England was <b>Elizabeth I</b>. She was Henry VIII’s daughter!</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🎭 Actor and Writer</h3><p>He moved to London. He <b>acted</b> in plays, and he <b>wrote</b> them too.</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>📚 So Many Plays</h3><p>He wrote <b>more than 35 plays</b>, plus lots of poems. Some plays are funny. Some are sad.</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>🏟️ The Globe Theatre</h3><p>In <b>1599</b>, his acting group built the <b>Globe Theatre</b> in London. It was round, and open to the sky!</p></div>
+    <div class="card2" style="border-left-color:#0072B2"><h3>🧍 Standing Room</h3><p>For just a <b>penny</b>, people could stand right in front of the stage to watch. Plays happened in the afternoon, in daylight.</p></div>
+    <div class="card2" style="border-left-color:#8a2c62"><h3>😂 A Comedy</h3><p>He wrote <b>A Midsummer Night’s Dream</b> around <b>1595</b>. It is a <b>comedy</b>: a funny play with a happy ending.</p></div>
+    <div class="card2 gentle"><h3>🕯️ His Plays Live On</h3><p>Shakespeare died in <b>1616</b>. But people still act out his plays all over the world today!</p></div>
+  </div>
+</section>
+
+<section id="athens">
+  <h2>🏛️ The Story, Part 1: In Athens</h2>
+  <div class="grid">
+    <div class="card2"><h3>🏛️ Long Ago in Athens</h3><p>The story starts in <b>Athens</b>, a city in Greece, long ago. Duke <b>Theseus</b> is getting married to Queen <b>Hippolyta</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>💞 Hermia and Lysander</h3><p><b>Hermia</b> loves <b>Lysander</b>. And Lysander loves Hermia. So far, so good!</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>💔 Helena and Demetrius</h3><p><b>Helena</b> loves <b>Demetrius</b>. But Demetrius wants to marry <b>Hermia</b>! Poor Helena.</p></div>
+    <div class="card2 gentle"><h3>😠 A Very Strict Father</h3><p>Hermia’s father wants her to marry Demetrius, not Lysander. He was very strict, and the law of Athens was harsh.</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>🌲 Run to the Forest!</h3><p>So Hermia and Lysander run away into the <b>forest</b> at night. Demetrius follows them. And Helena follows Demetrius!</p></div>
+  </div>
+</section>
+
+<section id="fairies">
+  <h2>🧚 The Story, Part 2: The Fairies</h2>
+  <p class="sec-help">The forest is full of fairies. People can’t see them, but the fairies can see the people!</p>
+  <div class="grid">
+    <div class="card2"><h3>👑 The Fairy King and Queen</h3><p><b>Oberon</b> is the king of the fairies. <b>Titania</b> is the queen.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>😤 A Big Argument</h3><p>Oberon and Titania are having a big argument. They both want to look after the same little boy.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>😜 Meet Puck</h3><p><b>Puck</b> is Oberon’s helper. He is a fast, tricky fairy who loves playing jokes. His other name is <b>Robin Goodfellow</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🌸 A Magic Flower</h3><p>Oberon sends Puck to find a magic flower called <b>love-in-idleness</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>👀 How the Magic Works</h3><p>Put the flower’s juice on someone’s eyes while they sleep. When they wake up, they will love the <b>first creature they see</b>!</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>🙃 The Big Mix-Up</h3><p>Oberon tells Puck to help Helena. But Puck puts the juice on the <b>wrong</b> sleeping man! Soon, nobody loves the right person.</p></div>
+  </div>
+</section>
+
+<section id="actors">
+  <h2>🎭 The Story, Part 3: The Actors</h2>
+  <div class="grid">
+    <div class="card2"><h3>🔨 Six Workmen</h3><p>Six workmen from Athens want to put on a play for the Duke’s wedding. There is a carpenter, a weaver, a tailor, and more.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>🙋 Nick Bottom</h3><p><b>Bottom</b> the weaver is VERY excited. He wants to play every part, even the lion!</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>🌲 Practice in the Woods</h3><p>The actors go into the forest to practice their play, where nobody can see them. But the fairies can!</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🫏 A Donkey Head!</h3><p>Puck plays a trick. He gives Bottom a <b>donkey’s head</b>! Bottom’s friends run away scared. Bottom has no idea what happened.</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>😍 Titania Wakes Up</h3><p>Oberon put the flower juice on Titania’s eyes. She wakes up, sees Bottom with his donkey head, and falls in love with him!</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>🌾 Hay, Please!</h3><p>Titania’s fairies treat Bottom like a king. They scratch his hairy head. And he asks for <b>hay and oats</b> to munch!</p></div>
+  </div>
+</section>
+
+<section id="ending">
+  <h2>💒 The Story, Part 4: A Happy Ending</h2>
+  <div class="grid">
+    <div class="card2"><h3>🌿 All Fixed!</h3><p>Puck uses a cure to fix the mix-up. Lysander loves Hermia again. And Demetrius now loves Helena!</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🤝 Friends Again</h3><p>Oberon wakes Titania from the spell. The fairy king and queen are friends again. Puck takes off Bottom’s donkey head.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>💭 Was It a Dream?</h3><p>Everyone wakes up in the morning. They all feel like they had a strange <b>dream</b>!</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>💒 Three Weddings</h3><p>The Duke says Hermia can marry Lysander. So there are <b>three weddings</b>: Theseus and Hippolyta, Hermia and Lysander, and Helena and Demetrius.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>🎪 The Silliest Play</h3><p>Then the workmen put on their play, <b>Pyramus and Thisbe</b>. It is supposed to be sad, but they act it so badly that everyone laughs!</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>✨ Goodnight, Fairies</h3><p>At night, the fairies bless the happy couples. Then Puck says goodbye to the audience.</p></div>
+  </div>
+</section>
+
+<section id="whoswho">
+  <h2>👥 Who’s Who?</h2>
+  <p class="sec-help sort-help">There are three groups in this play: <b>lords and lovers</b> from Athens, <b>fairies</b> from the forest, and the <b>actors</b>, who are Athens workmen putting on a play. Which group does each character belong to?</p>
+  <div class="sorter">
+    <div class="step-count" id="sortCount"></div>
+    <div class="sort-item readable" id="sortItem" aria-live="polite"></div>
+    <div class="sort-btns">
+      <button id="gHuman">🏛️ Lords &amp; lovers</button>
+      <button id="gFairy">🧚 Fairies</button>
+      <button id="gActor">🎭 Actors</button>
+    </div>
+    <div class="sort-fb readable" id="sortFb" aria-live="polite"></div>
+    <div class="bins">
+      <div class="bin h"><h4>🏛️ Lords &amp; lovers</h4><div id="binH"></div></div>
+      <div class="bin f"><h4>🧚 Fairies</h4><div id="binF"></div></div>
+      <div class="bin a"><h4>🎭 Actors</h4><div id="binA"></div></div>
+    </div>
+    <button id="sortAgain" style="background:var(--teal);margin-top:12px;display:none">🔁 Play again</button>
+  </div>
+</section>
+
+<section id="potion">
+  <h2>🌸 Puck’s Potion</h2>
+  <p class="sec-help potion-help">You are Puck! Read what to do, then tap the right person in the forest. Watch who falls in love with whom… and then fix the mix-up!</p>
+  <div class="forest"><svg id="forestSvg" viewBox="0 0 900 420" role="img" aria-label="A moonlit forest with the characters you can tap"></svg></div>
+  <div class="card2 readable" id="potionCap" style="margin-top:10px;border-left-color:#6a3d9a"></div>
+  <div class="loveboard" id="loveBoard" aria-live="polite"></div>
+  <button id="potionNext">Next ▶</button>
+</section>
+
+<section id="order">
+  <h2>📜 Put the Story in Order</h2>
+  <p class="sec-help order-help">Tap what happens <b>first</b>, then what happens next, all the way to the end.</p>
+  <ol class="order-list" id="orderList"></ol>
+  <div class="order-pool" id="orderPool"></div>
+  <div class="card2 readable" id="orderCap" style="border-left-color:var(--gold)"><p>Step 1 of 7: What happens first?</p></div>
+</section>
+
+<section id="speak">
+  <h2>💬 Speak Like Shakespeare</h2>
+  <p class="sec-help">Shakespeare wrote in English, but it was English from 400 years ago. Some words are different! Tap an old word, then tap what it means today.</p>
+  <div class="match-cols"><div id="mLeft"></div><div id="mRight"></div></div>
+  <div class="card2 readable" id="mStatus" style="margin-top:12px;border-left-color:var(--gold)"></div>
+  <div class="note readable" id="whereNote"><b>⚠️ Tricky word!</b> <b>Wherefore</b> does NOT mean “where.” It means <b>“why.”</b> In another Shakespeare play, Juliet asks, <span class="quote">“O Romeo, Romeo, wherefore art thou Romeo?”</span> She means, “Why do you have to be Romeo?”</div>
+
+  <h3 style="margin-top:24px">📜 Famous Lines from the Play</h3>
+  <p class="sec-help lines-help">These are real lines from the play. Tap each one to see what it means in plain words.</p>
+  <div class="lines" id="linesGrid"></div>
+  <div class="card2 readable" id="linesCap" style="margin-top:12px;border-left-color:var(--gold)"><p>Lines decoded: 0 of 7</p></div>
+</section>
+
+<section id="show">
+  <h2>🎪 The Silly Play: Pyramus and Thisbe</h2>
+  <p class="sec-help">At the wedding party, the workmen finally put on their play. Let’s watch! Tap “Next scene.”</p>
+  <div class="stage">
+    <div class="curtain"><span>🎭</span><span id="showCount">Scene 1 of 6</span><span>🎭</span></div>
+    <div class="scene readable" id="showScene" aria-live="polite"><div class="big" aria-hidden="true"></div><div><h3></h3><p></p></div></div>
+    <button id="showNext">Next scene ▶</button>
+  </div>
+</section>
+
+<section id="quiz">
+  <h2>❓ Quiz Challenge</h2>
+  <p>Finish the quiz to light a mushroom! Each question is read aloud with its choices.</p>
+  <div id="quizBox"></div>
+  <h3 style="margin-top:22px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<section id="payoff">
+  <h2>🍄 Light Up the Fairy Ring</h2>
+  <div class="payoff">
+    <svg id="ring" viewBox="0 0 480 330" role="img" aria-label="A moonlit fairy ring of mushrooms that light up as you finish activities"></svg>
+    <div class="readout" id="ringRead" aria-live="polite"></div>
+    <div class="card2 readable" id="payoffCard" style="color:var(--ink);border-left-color:#E6A800;text-align:left"></div>
+  </div>
+</section>
+
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>Who Shakespeare was (1564–1616; Stratford-upon-Avon; actor and playwright; the Globe, 1599), with a link to the Henry VIII lesson (Elizabeth I was on the throne when he was born).</li>
+      <li>The plot of <i>A Midsummer Night’s Dream</i> (c. 1595–96) in four parts, its three groups of characters, and how a comedy works (mix-ups that are put right, ending in weddings).</li>
+      <li>Real lines from the play with plain-English versions, plus Early Modern English words (thou, thy, wherefore, hither, whither, anon, methinks), including the classic “wherefore = why” trap.</li>
+      <li>Story sequencing, and the idea of a play-within-a-play (Pyramus and Thisbe).</li>
+    </ul>
+    <h3>Level and time</h3><p>Written for a young 8-year-old (short sentences, one idea per card), with read-aloud on every card. About <b>15–20 minutes</b>; easy to split into two sittings (Shakespeare and the story; then the activities, quiz, and fairy ring).</p>
+    <h3>What was softened (for you to discuss if and when you choose)</h3>
+    <ul>
+      <li><b>Egeus’s threat (Act 1, Scene 1):</b> Hermia’s father invokes Athenian law, under which she must marry Demetrius or face death; Theseus adds the option of life as a nun. The lesson says only that her father “was very strict, and the law of Athens was harsh.”</li>
+      <li><b>The fairy quarrel:</b> the boy is a “changeling” child whose mother (a devotee of Titania) died giving birth; Oberon enchants Titania partly to get the boy from her, and she is humiliated while under the spell. The lesson says only that they “both want to look after the same little boy.”</li>
+      <li><b>The love potion and consent:</b> the enchanted lovers (and Titania with Bottom) don’t choose freely. Demetrius stays enchanted at the end. You may want to talk about this with an older child.</li>
+      <li><b>Rough words and threats:</b> Demetrius threatens Helena in the wood (Act 2, Scene 1); the lovers hurl insults in Act 3, Scene 2 (“puppet,” “acorn,” and so on); Bottom’s “ass” jokes. These are left out.</li>
+      <li><b>Pyramus and Thisbe:</b> in the play-within-the-play both lovers stab themselves (comically, in Act 5, Scene 1). The lesson calls it a pretend sad ending acted so badly that everyone laughs, and mentions only Bottom’s “die, die, die, die, die.”</li>
+    </ul>
+    <h3>Accuracy notes</h3>
+    <ul>
+      <li>Every Shakespeare line was checked against the full text (Project Gutenberg edition). Act and scene numbers use standard modern numbering. Puck’s closing speech (“If we shadows have offended…”) is printed at the end of Act 5, Scene 1; some editions label it an Epilogue. The Juliet line is from <i>Romeo and Juliet</i>, Act 2, Scene 2.</li>
+      <li>Shakespeare was baptized on 26 April 1564 (his birthday is traditionally given as 23 April); he died on 23 April 1616. The Globe was built in 1599, burned in 1613 during a performance of <i>Henry VIII</i> (also called <i>All Is True</i>) when a stage cannon set the thatch alight, and was rebuilt in 1614. The modern reconstruction, Shakespeare’s Globe, opened in 1997.</li>
+      <li>The workmen (“rude mechanicals”) are Peter Quince (carpenter), Nick Bottom (weaver), Francis Flute (bellows-mender), Tom Snout (tinker), Snug (joiner), and Robin Starveling (tailor). Love-in-idleness is the wild pansy (heartsease). The cure for Titania is named “Dian’s bud.”</li>
+      <li>In Shakespeare’s England, female roles were played by boys; women did not act on the public stage until the 1660s. Uranus’s moons Oberon, Titania, and Puck are named after these characters. Mendelssohn’s incidental music (including the “Wedding March”) dates from 1842.</li>
+    </ul>
+    <h3>Follow-up activity</h3><p><b>Act out a scene:</b> try the workmen handing out parts (Act 1, Scene 2, where Bottom wants to play the lion too) or the Pyramus and Thisbe play, with someone holding up fingers as the Wall’s “chink.” <b>Make Bottom’s donkey mask:</b> cut long ears from paper, tape them to a paper plate with eye holes, and draw a big donkey nose. Then ask: what would <i>you</i> do if you woke up with a donkey head?</p>
+  </div>
+</section>
+</main>
+<footer>Made for young readers 🌙 · All drawings made just for this page · Works offline</footer>
+<script>
+(function(){
+"use strict";
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    t=t.replace(/\bElizabeth I\b/g,"Elizabeth the First").replace(/\bHenry VIII\b/g,"Henry the Eighth").replace(/slumber.d/g,"slumbered").replace(/[✔✘]/g," ");
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- sound + confetti ---------- */
+let actx=null;
+function beep(notes,type){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; notes.forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f; const t=t0+i*0.1;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.18,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32); }); }catch(e){} }
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS=["🌙","✨","🧚","🌸","⭐","🍄","🎭"];
+function confetti(n){ for(let i=0;i<n;i++){ const s=document.createElement("div"); s.className="confetti"; s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s"; document.body.appendChild(s); setTimeout(()=>s.remove(),4200); } }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function makeQuiz(box, QUIZ, praise){
+  let qi=0, score=0;
+  function renderQ(){
+    const item=QUIZ[qi]; ReadAloud.stop();
+    box.innerHTML='<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div><div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+    const qEl=box.querySelector(".q-text"); qEl.dataset.say=item.q+" Is it: "+item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ")+"?"; ReadAloud.mark(qEl);
+    const ans=box.querySelector(".answers"), fb=box.querySelector(".feedback");
+    item.a.forEach((txt,i)=>{ const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+      b.addEventListener("click",()=>{ [...ans.children].forEach(x=>x.disabled=true);
+        if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+        else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+        ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+        const next=document.createElement("button"); next.style.background="var(--purple)"; next.textContent=qi<QUIZ.length-1?"Next question ➡":"See my score 🏆";
+        next.addEventListener("click",()=>{ qi++; qi<QUIZ.length?renderQ():renderEnd(); }); fb.after(next); });
+      ans.appendChild(b); });
+  }
+  function renderEnd(){
+    ReadAloud.stop(); const stars="⭐".repeat(score)+"☆".repeat(QUIZ.length-score);
+    const msg=score===QUIZ.length?praise:score>=Math.ceil(QUIZ.length*0.6)?"Awesome job! 🎉":score>=2?"Nice work! Explore more and try again! 📜":"Good try! Explore and try again! 💪";
+    box.innerHTML='<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+    const c=box.querySelector(".celebrate"); c.dataset.say="You got "+score+" out of "+QUIZ.length+"! "+msg; ReadAloud.mark(c);
+    const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--teal)"; again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+    const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); box.appendChild(wrap); confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+  }
+  renderQ();
+}
+
+/* ---------- TIMELINE ---------- */
+function makeTimeline(root, EVENTS){
+  let i=0;
+  root.innerHTML='<div class="tl-track" role="list"></div><div class="tl-card readable" aria-live="polite"><div class="big"></div><div><h3></h3><p></p></div></div>'+
+    '<div class="tl-nav"><button class="tl-prev" style="background:#666">◀ Earlier</button><span class="step-count tl-count"></span><button class="tl-next" style="background:var(--theme)">Later ▶</button></div>';
+  const track=root.querySelector(".tl-track"), card=root.querySelector(".tl-card"), prev=root.querySelector(".tl-prev"), next=root.querySelector(".tl-next"), count=root.querySelector(".tl-count");
+  EVENTS.forEach((e,k)=>{ const b=document.createElement("button"); b.className="tl-dot"; b.textContent=e.year; b.setAttribute("aria-label",e.year+": "+e.title);
+    b.addEventListener("click",()=>show(k,true)); track.appendChild(b); });
+  function show(k,speak){
+    i=k; const e=EVENTS[k]; ReadAloud.stopIf(card);
+    [...track.children].forEach((b,j)=>{ b.classList.toggle("active",j===k); b.setAttribute("aria-current",j===k?"true":"false"); });
+    card.querySelector(".big").textContent=e.icon; card.querySelector("h3").textContent=e.year+" — "+e.title; card.querySelector("p").textContent=e.text;
+    prev.disabled=k===0; next.disabled=k===EVENTS.length-1; count.textContent=(k+1)+" of "+EVENTS.length;
+    const b=track.children[k]; track.scrollLeft=b.offsetLeft-track.clientWidth/2+b.offsetWidth/2;
+    ReadAloud.mark(card); if(speak) ReadAloud.speakEl(card);
+  }
+  prev.addEventListener("click",()=>{ if(i>0) show(i-1,true); });
+  next.addEventListener("click",()=>{ if(i<EVENTS.length-1) show(i+1,true); });
+  show(0,false);
+  return {show};
+}
+
+/* ---------- MATCHING GAME ---------- */
+function makeMatch(o){ // o: {left,right,status,pairs:[{id,l,r,tip}], doneMsg, onDone}
+  let selL=null, selR=null, matched=0;
+  const N=o.pairs.length;
+  function build(){
+    selL=selR=null; matched=0; ReadAloud.stop();
+    o.left.innerHTML=""; o.right.innerHTML="";
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="L";
+      c.innerHTML='<span>'+p.l+'</span>'; o.left.appendChild(c); ReadAloud.mark(c); });
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard name-card readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="R";
+      c.innerHTML='<span>'+p.r+'</span>'; o.right.appendChild(c); ReadAloud.mark(c); });
+    o.status.textContent="Matched: 0 of "+N; o.status.style.color=""; o.status.classList.add("readable"); ReadAloud.mark(o.status);
+    if(o.onReset) o.onReset();
+  }
+  function pick(c){
+    if(c.classList.contains("done")) return;
+    if(c.dataset.side==="L"){ if(selL) selL.classList.remove("sel"); selL = selL===c?null:c; if(selL) c.classList.add("sel"); }
+    else { if(selR) selR.classList.remove("sel"); selR = selR===c?null:c; if(selR) c.classList.add("sel"); }
+    if(selL && selR){
+      const a=selL,b=selR; selL=selR=null; a.classList.remove("sel"); b.classList.remove("sel");
+      const p=o.pairs.find(x=>x.id===a.dataset.id);
+      if(a.dataset.id===b.dataset.id){
+        a.classList.add("done"); b.classList.add("done"); matched++; beep(HAPPY);
+        o.status.textContent="✔ Yes! "+p.tip+" ("+matched+" of "+N+")"; o.status.style.color="var(--blue)";
+        if(matched===N){ o.status.textContent=o.doneMsg; confetti(24); if(o.onDone) o.onDone(); }
+        ReadAloud.mark(o.status); setTimeout(()=>ReadAloud.speakEl(o.status),0);
+      } else {
+        [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+        o.status.textContent="✘ Not quite — read it again and try another one!"; o.status.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(o.status);
+      }
+    }
+  }
+  [o.left,o.right].forEach(col=>{
+    col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+    col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard")&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+  });
+  build();
+  return {build};
+}
+
+/* ---------- FUN FACTS ---------- */
+function makeFacts(strip, FACTS){
+  FACTS.forEach(([front,back])=>{ const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+    d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+    const flip=()=>d.classList.toggle("flipped");
+    d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+    d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+    strip.appendChild(d); ReadAloud.mark(d); });
+}
+
+/* ---------- a soft bell sound ---------- */
+function bell(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; [[392,0.16],[784,0.07],[1176,0.04],[1568,0.02]].forEach(([f,a])=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type="sine"; o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(a,t0+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t0+1.8); o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0+1.9); }); }catch(e){} }
+
+function projector(lon0,lon1,lat0,lat1,W,H){ return (lon,lat)=>[ +((lon-lon0)/(lon1-lon0)*W).toFixed(1), +((lat1-lat)/(lat1-lat0)*H).toFixed(1) ]; }
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs,parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+
+const $id=id=>document.getElementById(id), $$=q=>[...document.querySelectorAll(q)];
+const progress={hook:false,sort:false,potion:false,order:false,words:false,lines:false,show:false,quiz:false};
+
+/* ---------- HOOK ART ---------- */
+const H=$id("hookArt");
+svgEl("rect",{width:420,height:260,rx:18,fill:"#141033"},H);
+[[40,40],[90,90],[150,30],[260,50],[320,100],[380,30],[60,150],[350,170],[200,20]].forEach(([x,y])=>svgEl("circle",{cx:x,cy:y,r:2.5,fill:"#fff"},H));
+svgEl("circle",{cx:350,cy:60,r:34,fill:"#F0E442"},H); svgEl("circle",{cx:365,cy:50,r:30,fill:"#141033"},H);
+[[30,260,70],[90,260,95],[330,260,85],[390,260,70]].forEach(([x,y,h])=>{ svgEl("polygon",{points:(x-30)+","+(y-10)+" "+x+","+(y-10-h-60)+" "+(x+30)+","+(y-10),fill:"#0f4d3a"},H); });
+svgEl("rect",{x:0,y:235,width:420,height:25,fill:"#1f5e3b"},H);
+const D=svgEl("g",{class:"donkey",id:"donkey"},H);
+svgEl("ellipse",{cx:180,cy:70,rx:13,ry:46,fill:"#9a8f8a",stroke:"#2b2140","stroke-width":3,transform:"rotate(-18 180 70)"},D);
+svgEl("ellipse",{cx:240,cy:70,rx:13,ry:46,fill:"#9a8f8a",stroke:"#2b2140","stroke-width":3,transform:"rotate(18 240 70)"},D);
+svgEl("ellipse",{cx:180,cy:72,rx:6,ry:32,fill:"#CC79A7",transform:"rotate(-18 180 72)"},D);
+svgEl("ellipse",{cx:240,cy:72,rx:6,ry:32,fill:"#CC79A7",transform:"rotate(18 240 72)"},D);
+svgEl("ellipse",{cx:210,cy:150,rx:52,ry:62,fill:"#a89d97",stroke:"#2b2140","stroke-width":3},D);
+svgEl("ellipse",{cx:210,cy:192,rx:38,ry:28,fill:"#d9cfc9",stroke:"#2b2140","stroke-width":3},D);
+svgEl("circle",{cx:196,cy:192,r:5,fill:"#2b2140"},D); svgEl("circle",{cx:224,cy:192,r:5,fill:"#2b2140"},D);
+svgEl("circle",{cx:188,cy:135,r:8,fill:"#fff"},D); svgEl("circle",{cx:232,cy:135,r:8,fill:"#fff"},D);
+svgEl("circle",{cx:190,cy:137,r:4,fill:"#2b2140"},D); svgEl("circle",{cx:234,cy:137,r:4,fill:"#2b2140"},D);
+svgEl("path",{d:"M196 208 Q210 216 224 208",fill:"none",stroke:"#2b2140","stroke-width":3},D);
+svgEl("path",{d:"M190 95 Q210 80 230 95 Q220 105 210 98 Q200 105 190 95 Z",fill:"#4a3b36"},D);
+const sparkle=svgEl("g",{},H); [[100,120],[310,140],[140,200],[290,210]].forEach(([x,y])=>{ const t=svgEl("text",{x,y,"font-size":20,fill:"#F0E442","text-anchor":"middle"},sparkle); t.textContent="✦"; });
+$id("enterForest").addEventListener("click",()=>{
+  const r=$id("reveal"), open=!r.classList.contains("open"); r.classList.toggle("open",open); $id("donkey").classList.toggle("on",open);
+  $id("enterForest").setAttribute("aria-expanded",open?"true":"false");
+  $id("enterForest").textContent=open?"🌙 Hide the donkey":"🌙 Step into the fairy forest";
+  if(open){ beep([392,523.25,659.25,783.99]); ReadAloud.speakEl(r); mark("hook"); }
+});
+
+/* ---------- WHO'S WHO SORT ---------- */
+const CHARS=[
+ {n:"Theseus",d:"The Duke, the ruler of Athens.",g:"h"},
+ {n:"Hermia",d:"She loves Lysander.",g:"h"},
+ {n:"Lysander",d:"He loves Hermia.",g:"h"},
+ {n:"Helena",d:"She loves Demetrius.",g:"h"},
+ {n:"Demetrius",d:"At first, he wants to marry Hermia.",g:"h"},
+ {n:"Oberon",d:"The king of the fairies.",g:"f"},
+ {n:"Titania",d:"The queen of the fairies.",g:"f"},
+ {n:"Puck",d:"A tricky helper who loves jokes.",g:"f"},
+ {n:"Nick Bottom",d:"A weaver who wants to play every part!",g:"a"},
+ {n:"Peter Quince",d:"A carpenter who is in charge of the play.",g:"a"},
+ {n:"Flute",d:"He has to play a lady in the play.",g:"a"},
+ {n:"Snug",d:"He plays the lion.",g:"a"}
+];
+const GROUP={h:"Lords & lovers",f:"Fairies",a:"Actors"}, GICON={h:"🏛️",f:"🧚",a:"🎭"}, GBIN={h:"binH",f:"binF",a:"binA"};
+let order=[], si=0, sRight=0;
+function sortStart(){ order=shuffle(CHARS.slice()); si=0; sRight=0; ["binH","binF","binA"].forEach(b=>$id(b).innerHTML="");
+  $id("sortFb").textContent=""; $id("sortAgain").style.display="none"; $$(".sort-btns button").forEach(b=>b.disabled=false); sortShow(); }
+function sortShow(){ const c=order[si], el=$id("sortItem");
+  el.innerHTML="<span>"+c.n+"</span><small>"+c.d+"</small>"; el.dataset.say=c.n+". "+c.d+" Lords and lovers, fairies, or actors?"; ReadAloud.mark(el);
+  $id("sortCount").textContent="Card "+(si+1)+" of "+order.length+" · Correct: "+sRight; }
+function sortAnswer(g){ const c=order[si], ok=g===c.g, fb=$id("sortFb");
+  if(ok){ sRight++; beep(HAPPY); } else beep(SAD,"square");
+  fb.textContent=(ok?"✔ Yes! ":"✘ Not quite. ")+c.n+" belongs with the "+GROUP[c.g]+". "+c.d;
+  fb.style.color=ok?"var(--green)":"var(--red)"; ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+  const chip=document.createElement("span"); chip.textContent=(ok?"✔ ":"✘→ ")+c.n; $id(GBIN[c.g]).appendChild(chip);
+  si++;
+  if(si<order.length) sortShow();
+  else { $$(".sort-btns button").forEach(b=>b.disabled=true); const el=$id("sortItem");
+    el.innerHTML="<span>🏆 Done! "+sRight+" of "+order.length+" right.</span>"; el.dataset.say="Done! You got "+sRight+" of "+order.length+" right. Now you know who's who!";
+    ReadAloud.mark(el); $id("sortCount").textContent="All "+order.length+" characters sorted"; $id("sortAgain").style.display="inline-block"; confetti(24); mark("sort");
+    fb.textContent+=" 🏆 All sorted!"; ReadAloud.mark(fb); }
+}
+$id("gHuman").addEventListener("click",()=>sortAnswer("h"));
+$id("gFairy").addEventListener("click",()=>sortAnswer("f"));
+$id("gActor").addEventListener("click",()=>sortAnswer("a"));
+$id("sortAgain").addEventListener("click",sortStart);
+
+/* ---------- PUCK'S POTION ---------- */
+const F=$id("forestSvg");
+const PEOPLE={
+ lys:{n:"Lysander",c:"#0072B2"}, her:{n:"Hermia",c:"#CC79A7"}, hel:{n:"Helena",c:"#E69F00"}, dem:{n:"Demetrius",c:"#009E73"},
+ tit:{n:"Titania",c:"#56B4E9",wings:true,crown:true}, bot:{n:"Bottom",c:"#8a6d3b",donkey:true}, obe:{n:"Oberon",c:"#3b2a6b",wings:true,crown:true}
+};
+const STEPS=[
+ {cast:[["lys",170,1],["her",360,1],["hel",640,0]],tool:"flower",target:"lys",
+  prompt:"Oberon says: “Put the flower juice on the eyes of the sleeping young man from Athens.” There is a sleeping young man right here. Tap him!",
+  hints:{her:"Hermia is not a young man. Look for the sleeping young man!",hel:"Helena is awake. The magic only works on sleeping eyes."},
+  result:"Oops! That was Lysander, not Demetrius! Lysander wakes up and sees Helena first… and now he loves Helena!",
+  love:[["lys","hel"],["her","lys"],["hel","dem"],["dem","her"]]},
+ {cast:[["her",110,0],["dem",330,1],["hel",560,0],["lys",770,0]],tool:"flower",target:"dem",
+  prompt:"Oberon sees the mistake. He wants Demetrius to love Helena. Demetrius is asleep now. Tap Demetrius!",
+  hints:{her:"Hermia is awake. Find the sleeping one!",hel:"Helena is awake. Find the sleeping one!",lys:"Lysander already had the flower. Try Demetrius!"},
+  result:"Demetrius wakes up and sees Helena. Now he loves Helena too! Two young men love Helena, and nobody loves Hermia. What a mess!",
+  love:[["lys","hel"],["dem","hel"],["hel","dem"],["her","lys"]]},
+ {cast:[["her",130,1],["lys",330,1],["hel",560,1],["dem",760,1]],tool:"cure",target:"lys",
+  prompt:"Puck makes a magic fog, and all four fall asleep. Now use the cure herb on the young man who should love Hermia. Tap Lysander!",
+  hints:{her:"Hermia was never under the spell. She still loves Lysander!",hel:"Helena was never under the spell. She still loves Demetrius!",dem:"Wait! If you cure Demetrius, he will chase Hermia again. Leave him loving Helena!"},
+  result:"Lysander wakes up and loves Hermia again! And Demetrius still loves Helena. Everyone loves the right person now!",
+  love:[["lys","her"],["her","lys"],["dem","hel"],["hel","dem"]]},
+ {cast:[["tit",260,1],["bot",540,0],["obe",760,0]],tool:"flower",target:"tit",
+  prompt:"Now Oberon plays a trick on Titania. Help him! Tap the sleeping fairy queen.",
+  hints:{bot:"Bottom is awake, with a donkey head! Tap the sleeping queen.",obe:"Oberon is the one with the plan. Tap the sleeping queen!"},
+  result:"Titania wakes up, sees Bottom with his donkey head… and falls in love with him! Silly!",
+  love:[["tit","bot"]]},
+ {cast:[["tit",260,1],["bot",540,1],["obe",760,0]],tool:"cure",target:"tit",
+  prompt:"Oberon wants to be friends again. Use the cure on Titania, the sleeping fairy queen.",
+  hints:{bot:"Bottom never had the flower. But don’t worry, Puck will take off his donkey head!",obe:"Oberon is awake. Tap the sleeping queen."},
+  result:"Titania wakes up and loves Oberon again. The king and queen are friends! And Puck takes off Bottom’s donkey head.",
+  love:[["tit","obe"],["obe","tit"]]}
+];
+let step=0, stepDone=false;
+function person(id,x,asleep,parent){
+  const p=PEOPLE[id], g=svgEl("g",{class:"who-tap",tabindex:0,role:"button","aria-label":p.n+(asleep?", asleep":", awake"),"data-id":id},parent);
+  if(asleep){
+    svgEl("ellipse",{cx:x+10,cy:330,rx:60,ry:20,fill:p.c,stroke:"#fff","stroke-width":2},g);
+    if(p.donkey){ svgEl("ellipse",{cx:x-62,cy:318,rx:22,ry:16,fill:"#a89d97",stroke:"#2b2140","stroke-width":2},g); svgEl("ellipse",{cx:x-80,cy:300,rx:6,ry:20,fill:"#9a8f8a",transform:"rotate(-50 "+(x-80)+" 300)"},g); }
+    else { svgEl("circle",{cx:x-58,cy:322,r:17,fill:"#f1c9a5",stroke:"#2b2140","stroke-width":2},g); svgEl("path",{d:"M"+(x-66)+" 320 q4 3 8 0",fill:"none",stroke:"#2b2140","stroke-width":2},g); }
+    if(p.crown) svgEl("polygon",{points:(x-70)+",306 "+(x-66)+",294 "+(x-60)+",302 "+(x-54)+",292 "+(x-48)+",306",fill:"#E6A800"},g);
+    const z=svgEl("text",{x:x-30,y:290,"font-size":24,"font-weight":"bold",fill:"#fff"},g); z.textContent="Z z z";
+  } else {
+    if(p.wings){ svgEl("ellipse",{cx:x-26,cy:260,rx:20,ry:36,fill:"#cfe8f7",opacity:.75,transform:"rotate(-20 "+(x-26)+" 260)"},g); svgEl("ellipse",{cx:x+26,cy:260,rx:20,ry:36,fill:"#cfe8f7",opacity:.75,transform:"rotate(20 "+(x+26)+" 260)"},g); }
+    svgEl("path",{d:"M"+(x-30)+" 340 L"+x+" 240 L"+(x+30)+" 340 Z",fill:p.c,stroke:"#fff","stroke-width":2},g);
+    if(p.donkey){ svgEl("ellipse",{cx:x-10,cy:190,rx:6,ry:22,fill:"#9a8f8a",stroke:"#2b2140","stroke-width":2,transform:"rotate(-15 "+(x-10)+" 190)"},g); svgEl("ellipse",{cx:x+10,cy:190,rx:6,ry:22,fill:"#9a8f8a",stroke:"#2b2140","stroke-width":2,transform:"rotate(15 "+(x+10)+" 190)"},g);
+      svgEl("ellipse",{cx:x,cy:224,rx:22,ry:26,fill:"#a89d97",stroke:"#2b2140","stroke-width":2},g); svgEl("ellipse",{cx:x,cy:240,rx:15,ry:11,fill:"#d9cfc9"},g);
+      svgEl("circle",{cx:x-8,cy:218,r:3,fill:"#2b2140"},g); svgEl("circle",{cx:x+8,cy:218,r:3,fill:"#2b2140"},g); }
+    else { svgEl("circle",{cx:x,cy:224,r:20,fill:"#f1c9a5",stroke:"#2b2140","stroke-width":2},g); svgEl("circle",{cx:x-7,cy:221,r:2.5,fill:"#2b2140"},g); svgEl("circle",{cx:x+7,cy:221,r:2.5,fill:"#2b2140"},g); svgEl("path",{d:"M"+(x-6)+" 231 Q"+x+" 236 "+(x+6)+" 231",fill:"none",stroke:"#2b2140","stroke-width":2},g); }
+    if(p.crown) svgEl("polygon",{points:(x-14)+",206 "+(x-12)+",192 "+(x-5)+",200 "+x+",188 "+(x+5)+",200 "+(x+12)+",192 "+(x+14)+",206",fill:"#E6A800"},g);
+  }
+  svgEl("rect",{class:"lab",x:x-62,y:356,width:124,height:34,rx:10,fill:"#fff",stroke:"#2b2140","stroke-width":2},g);
+  const t=svgEl("text",{x,y:380,"text-anchor":"middle","font-size":20,"font-weight":"bold",fill:"#2b2140"},g); t.textContent=p.n;
+  return g;
+}
+function drawForest(cast){
+  F.innerHTML="";
+  svgEl("rect",{width:900,height:420,fill:"#141033"},F);
+  [[60,40],[160,80],[300,30],[480,60],[620,30],[700,90],[820,50],[420,110]].forEach(([x,y])=>svgEl("circle",{cx:x,cy:y,r:2.5,fill:"#fff"},F));
+  svgEl("circle",{cx:800,cy:70,r:36,fill:"#F0E442"},F);
+  [[40,140],[860,150],[250,120],[640,130]].forEach(([x,h])=>svgEl("polygon",{points:(x-45)+",330 "+x+","+(330-h-80)+" "+(x+45)+",330",fill:"#0f4d3a"},F));
+  svgEl("rect",{x:0,y:330,width:900,height:90,fill:"#1f5e3b"},F);
+  [[90,345],[470,350],[850,345]].forEach(([x,y])=>{ svgEl("circle",{cx:x,cy:y,r:7,fill:"#CC79A7"},F); svgEl("circle",{cx:x,cy:y,r:3,fill:"#F0E442"},F); });
+  cast.forEach(([id,x,asleep])=>{ const g=person(id,x,!!asleep,F); g.addEventListener("click",()=>tapPerson(id,x)); g.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); tapPerson(id,x); } }); });
+}
+function loveBoard(pairs){ const b=$id("loveBoard"); b.innerHTML="";
+  pairs.forEach(([a,z])=>{ const s=document.createElement("span"); const back=pairs.some(([p,q])=>p===z&&q===a); s.className=back?"happy":"";
+    s.textContent=PEOPLE[a].n+" ❤ loves → "+PEOPLE[z].n; b.appendChild(s); }); }
+function showStep(){ const s=STEPS[step]; stepDone=false; drawForest(s.cast); $id("potionNext").style.display="none";
+  const c=$id("potionCap"); c.innerHTML="<h3>🧚 Step "+(step+1)+" of "+STEPS.length+"</h3><p class='tool'>"+(s.tool==="flower"?"🌸 Puck’s tool: the magic flower":"🌿 Puck’s tool: the cure herb")+"</p><p>"+s.prompt+"</p>"; ReadAloud.mark(c);
+  loveBoard(step===0?[["her","lys"],["lys","her"],["hel","dem"],["dem","her"]]:STEPS[step-1].love.filter(([a])=>s.cast.some(k=>k[0]===a)||step<3)); }
+function tapPerson(id,x){ const s=STEPS[step], c=$id("potionCap"); if(stepDone) return;
+  if(id===s.target){ stepDone=true;
+    const em=svgEl("text",{x:x-58,y:300,"font-size":40,"text-anchor":"middle"},F); em.textContent=s.tool==="flower"?"🌸":"🌿";
+    // wake the target and draw a heart toward their new love
+    const cast=s.cast.map(k=>k[0]===id?[k[0],k[1],0]:k); const newLove=s.love.find(([a])=>a===id)[1];
+    setTimeout(()=>{ drawForest(cast); const to=cast.find(k=>k[0]===newLove); const tx=to?to[1]:x+200;
+      svgEl("path",{d:"M"+x+" 180 Q"+((x+tx)/2)+" 110 "+tx+" 180",fill:"none",stroke:"#CC79A7","stroke-width":5,"stroke-dasharray":"10 8"},F);
+      const h=svgEl("text",{x:(x+tx)/2,y:140,"font-size":40,"text-anchor":"middle"},F); h.textContent="❤"; },500);
+    c.innerHTML="<h3>"+(s.tool==="flower"?"🌸":"🌿")+" Step "+(step+1)+" of "+STEPS.length+" ✔</h3><p>"+s.result+"</p>"+(step===STEPS.length-1?"<p><b>🏆 You fixed every mix-up! Good job, Puck!</b></p>":"");
+    loveBoard(s.love); beep(s.tool==="flower"?[659.25,783.99,1046.5]:HAPPY);
+    if(step<STEPS.length-1){ $id("potionNext").style.display="inline-block"; }
+    else { $id("potionNext").style.display="inline-block"; $id("potionNext").textContent="🔁 Play again"; confetti(24); mark("potion"); }
+  } else { c.innerHTML="<h3>🤔 Not that one!</h3><p>"+(s.hints[id]||"Read the clue again!")+"</p><p>"+s.prompt+"</p>"; beep(SAD,"square"); }
+  ReadAloud.mark(c); ReadAloud.speakEl(c); }
+$id("potionNext").addEventListener("click",()=>{ if(step<STEPS.length-1){ step++; } else { step=0; $id("potionNext").textContent="Next ▶"; } showStep(); ReadAloud.speakEl($id("potionCap")); });
+
+/* ---------- STORY ORDER ---------- */
+const EVENTS=[
+ "Hermia and Lysander run away to the forest.",
+ "Oberon sends Puck to find the magic flower.",
+ "Puck puts the flower juice on the wrong sleeping man.",
+ "Puck gives Bottom a donkey’s head.",
+ "Titania wakes up and falls in love with Bottom.",
+ "Everything is fixed, and three couples get married.",
+ "The actors perform their silly play, Pyramus and Thisbe."
+];
+let oNext=0;
+function orderBuild(){ oNext=0; $id("orderList").innerHTML=""; $id("orderPool").innerHTML="";
+  shuffle(EVENTS.map((t,k)=>({t,k}))).forEach(({t,k})=>{ const b=document.createElement("button"); b.textContent=t; b.dataset.k=k;
+    b.addEventListener("click",()=>{ const c=$id("orderCap");
+      if(k===oNext){ const li=document.createElement("li"); li.textContent=t; $id("orderList").appendChild(li); b.remove(); oNext++; beep(HAPPY);
+        c.innerHTML=oNext<EVENTS.length?"<p>✔ Yes! “"+t+"” Step "+(oNext+1)+" of 7: What happens next?</p>":"<p>✔ "+t+" 🏆 You put the whole story in order!</p>";
+        if(oNext===EVENTS.length){ confetti(24); mark("order"); } }
+      else { b.classList.add("oops"); setTimeout(()=>b.classList.remove("oops"),450); beep(SAD,"square"); c.innerHTML="<p>✘ Not yet! That happens later. What happens "+(oNext===0?"first":"next")+"?</p>"; }
+      ReadAloud.mark(c); ReadAloud.speakEl(c); });
+    $id("orderPool").appendChild(b); });
+}
+
+/* ---------- WORD MATCH ---------- */
+makeMatch({left:$id("mLeft"),right:$id("mRight"),status:$id("mStatus"),
+ pairs:[
+  {id:"thou",l:"🗣️ thou",r:"you",tip:"Thou means you. Thee means you too! Quince cries, “Thou art translated,” which means “You are changed!” (Act 3, Scene 1)"},
+  {id:"thy",l:"🗣️ thy",r:"your",tip:"Thy means your. “Thy name” means “your name.”"},
+  {id:"where",l:"🗣️ wherefore",r:"why",tip:"Wherefore means why! Hermia asks, “Hate me? Wherefore?” That means, “Hate me? Why?” (Act 3, Scene 2)"},
+  {id:"hither",l:"🗣️ hither",r:"here (come this way)",tip:"Hither means here, to this place. Oberon says, “My gentle Puck, come hither.” (Act 2, Scene 1)"},
+  {id:"whither",l:"🗣️ whither",r:"where to?",tip:"Whither means where to. Puck asks a fairy, “Whither wander you?” That means, “Where are you going?” (Act 2, Scene 1)"},
+  {id:"anon",l:"🗣️ anon",r:"soon",tip:"Anon means soon. A fairy says the queen will “come here anon,” which means “come here soon.” (Act 2, Scene 1)"},
+  {id:"methinks",l:"🗣️ methinks",r:"I think",tip:"Methinks means I think. Bottom says, “Methinks I am marvellous hairy about the face.” He doesn’t know he has a donkey head! (Act 4, Scene 1)"}
+ ],
+ doneMsg:"🏆 All 7 matched! Now thou canst speak like Shakespeare! (That means: now you can speak like Shakespeare!)",
+ onDone:()=>mark("words")});
+
+/* ---------- FAMOUS LINES ---------- */
+const LINES=[
+ {q:"The course of true love never did run smooth.",who:"Lysander",where:"Act 1, Scene 1",p:"Love is never easy. There are always bumps along the way."},
+ {q:"Let me play the lion too.",who:"Bottom",where:"Act 1, Scene 2",p:"I want to be the lion too! (Bottom wants to play every part.)"},
+ {q:"I’ll put a girdle round about the earth / In forty minutes.",who:"Puck",where:"Act 2, Scene 1",p:"I can zoom all the way around the world in 40 minutes! (A girdle is a belt.)"},
+ {q:"Bless thee, Bottom! bless thee! Thou art translated.",who:"Peter Quince",where:"Act 3, Scene 1",p:"Oh my goodness, Bottom! You have been changed! (He just saw the donkey head.)"},
+ {q:"Lord, what fools these mortals be!",who:"Puck",where:"Act 3, Scene 2",p:"Wow, humans are so silly! (Mortals means people.)"},
+ {q:"And though she be but little, she is fierce.",who:"Helena, about Hermia",where:"Act 3, Scene 2",p:"She may be small, but she is strong and brave!"},
+ {q:"If we shadows have offended, / Think but this, and all is mended, / That you have but slumber’d here / While these visions did appear.",who:"Puck, saying goodbye",where:"Act 5, Scene 1",p:"If you didn’t like our play, just pretend it was all a dream! (Shadows means the actors.)"}
+];
+const decoded=new Set();
+LINES.forEach((L,k)=>{ const d=document.createElement("div"); d.className="lcard readable"; d.tabIndex=0; d.setAttribute("role","button");
+  d.innerHTML='<p class="ql">“'+L.q.replace(/ \/ /g,"<br>")+'”</p><p class="src">— '+L.who+', '+L.where+'</p><p class="tap no-read">👆 Tap for plain words</p><p class="plain">💡 In plain words: '+L.p+'</p>';
+  const q=L.q.replace(/ \/ /g," ");
+  d.dataset.say=L.who.split(",")[0]+" says: "+q+" "+L.where+". Tap to see what it means.";
+  const open=()=>{ d.classList.add("done"); d.dataset.say=L.who.split(",")[0]+" says: "+q+" In plain words: "+L.p;
+    if(!decoded.has(k)){ decoded.add(k); beep([523.25,659.25]); }
+    $id("linesCap").innerHTML="<p><b>Lines decoded: "+decoded.size+" of "+LINES.length+"</b>"+(decoded.size===LINES.length?" 📜 You decoded them all! You can read Shakespeare!":"")+"</p>"; ReadAloud.mark($id("linesCap"));
+    if(decoded.size===LINES.length){ confetti(16); mark("lines"); } };
+  d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) open(); });
+  d.addEventListener("keydown",e=>{ if(e.target===d&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); open(); ReadAloud.speakEl(d); } });
+  $id("linesGrid").appendChild(d); ReadAloud.mark(d); });
+
+/* ---------- THE SILLY PLAY ---------- */
+const SHOW=[
+ {i:"📜",t:"The Story",p:"The play is about two young people, Pyramus and Thisbe, who love each other. Bottom plays Pyramus. Flute plays Thisbe, in a lady’s costume!"},
+ {i:"🧱",t:"The Wall",p:"Snout plays a wall! He holds up his fingers to make a little hole, called a chink. Pyramus and Thisbe talk through it. Bottom mixes up his words and says, “I see a voice!”"},
+ {i:"🦁",t:"The Lion",p:"Snug plays the lion. But first he tells the ladies not to be scared. He’s not really a lion. He’s just Snug the joiner!"},
+ {i:"🌙",t:"Moonshine",p:"Starveling plays the moon. He carries a lantern, a thorny bush, and a dog, and says the lantern is the moon. The audience can’t stop giggling!"},
+ {i:"🎭",t:"The Pretend Sad Ending",p:"The story has a sad ending. But the actors are SO over the top that it’s funny! Bottom says, “die, die, die, die, die,” and flops down."},
+ {i:"🙃",t:"Bottom Pops Up!",p:"Then Bottom jumps right back up to talk to the audience, and offers to do a dance! Everyone claps. What a silly show!"}
+];
+let shi=0;
+function showScene(speak){ const s=SHOW[shi], el=$id("showScene");
+  el.querySelector(".big").textContent=s.i; el.querySelector("h3").textContent="Scene "+(shi+1)+": "+s.t; el.querySelector("p").textContent=s.p;
+  $id("showCount").textContent="Scene "+(shi+1)+" of "+SHOW.length; ReadAloud.mark(el); if(speak) ReadAloud.speakEl(el);
+  $id("showNext").textContent=shi<SHOW.length-1?"Next scene ▶":"🔁 Watch again";
+  if(shi===SHOW.length-1){ confetti(20); beep([392,523.25,659.25,783.99]); mark("show"); } }
+$id("showNext").addEventListener("click",()=>{ shi=shi<SHOW.length-1?shi+1:0; showScene(true); });
+
+/* ---------- QUIZ ---------- */
+makeQuiz($id("quizBox"),[
+ {q:"Who wrote A Midsummer Night’s Dream?",a:["Henry VIII","Leonardo da Vinci","William Shakespeare"],c:2,yes:"Right! William Shakespeare wrote it around 1595.",no:"It was William Shakespeare, around 1595."},
+ {q:"What did Puck give Bottom?",a:["A golden crown","A donkey’s head","A pair of wings"],c:1,yes:"Yes! A donkey’s head. Hee-haw!",no:"Puck gave Bottom a donkey’s head!"},
+ {q:"What does the magic flower do?",a:["It makes you fly","It makes you love the first one you see","It makes you invisible"],c:1,yes:"Correct! You love the first creature you see when you wake up.",no:"It makes you love the first creature you see when you wake up."},
+ {q:"What does the old word “wherefore” mean?",a:["Where","Why","When"],c:1,yes:"Yes! Wherefore means why. Tricky!",no:"Wherefore means why, not where. Tricky!"},
+ {q:"Who is the king of the fairies?",a:["Oberon","Lysander","Bottom"],c:0,yes:"Right! Oberon is the fairy king, and Titania is the queen.",no:"Oberon is the fairy king. Titania is the queen."},
+ {q:"What does Puck say about humans?",a:["“Hello, my friends!”","“Time for bed!”","“Lord, what fools these mortals be!”"],c:2,yes:"Yes! That means, “Wow, humans are so silly!”",no:"He says, “Lord, what fools these mortals be!” It means humans are silly."}
+],"Perfect score! Thou art a true Shakespeare star! 🌟");
+$id("quizBox").addEventListener("click",()=>{ if($id("quizBox").querySelector(".celebrate")) mark("quiz"); });
+
+makeFacts($id("factsStrip"),[
+ ["🪐 Moons in space!","Three moons of the planet Uranus are named Oberon, Titania, and Puck, after characters in this play!"],
+ ["👦 Boys played girls","In Shakespeare’s time, women did not act on stage. Boys played Hermia, Helena, and Titania!"],
+ ["🔥 A Henry VIII link","In 1613, the Globe burned down during a play about Henry VIII! A stage cannon set the roof on fire. The theater was built again the next year."],
+ ["🏟️ Visit the Globe","A copy of the Globe Theatre opened in London in 1997. You can watch plays there today, just like long ago."],
+ ["🌼 A real flower","Love-in-idleness is a real flower! Today we call it a wild pansy."],
+ ["💒 Wedding music","A composer named Felix Mendelssohn wrote music for this play. His Wedding March is still played at lots of weddings!"]
+]);
+
+/* ---------- PAYOFF: FAIRY RING ---------- */
+const KEYS=[["hook","Step into the forest"],["sort","Sort who’s who"],["potion","Fix Puck’s potion mix-up"],["order","Put the story in order"],["words","Match the old words"],["lines","Decode 7 famous lines"],["show","Watch the silly play"],["quiz","Finish the quiz"]];
+const R=$id("ring");
+svgEl("rect",{width:480,height:330,rx:18,fill:"#141033"},R);
+[[40,30],[110,60],[200,25],[300,50],[350,20],[440,70],[60,110],[420,130]].forEach(([x,y])=>svgEl("circle",{cx:x,cy:y,r:2.5,fill:"#fff"},R));
+const moonGlow=svgEl("circle",{cx:410,cy:60,r:50,fill:"#F0E442",opacity:.08},R);
+svgEl("circle",{cx:410,cy:60,r:30,fill:"#F0E442"},R);
+svgEl("ellipse",{cx:240,cy:225,rx:220,ry:90,fill:"#1f5e3b"},R);
+const MCOL=["#D55E00","#0072B2","#CC79A7","#009E73","#E69F00","#56B4E9","#F0E442","#8a2c62"];
+const MUSH=[];
+for(let k=0;k<8;k++){ const a=(k/8)*Math.PI*2-Math.PI/2, x=240+170*Math.cos(a), y=220+68*Math.sin(a);
+  const g=svgEl("g",{},R); const glow=svgEl("circle",{cx:x,cy:y-14,r:30,fill:"#F0E442",opacity:0},g);
+  svgEl("rect",{x:x-7,y:y-12,width:14,height:22,rx:5,fill:"#efe6d0",stroke:"#2b2140","stroke-width":1.5},g);
+  const cap=svgEl("path",{d:"M"+(x-24)+" "+(y-10)+" Q"+x+" "+(y-44)+" "+(x+24)+" "+(y-10)+" Z",fill:"#5b5470",stroke:"#fff","stroke-width":2},g);
+  const t=svgEl("text",{x,y:y-16,"text-anchor":"middle","font-size":15,"font-weight":"bold",fill:"#fff"},g); t.textContent="?";
+  MUSH.push({glow,cap,t,k}); }
+const pansy=svgEl("g",{opacity:0},R);
+[[-14,-12,"#6a3d9a"],[14,-12,"#6a3d9a"],[-16,8,"#8a5cc2"],[16,8,"#8a5cc2"],[0,16,"#8a5cc2"]].forEach(([dx,dy,c])=>svgEl("ellipse",{cx:240+dx,cy:215+dy,rx:16,ry:14,fill:c,stroke:"#fff","stroke-width":1.5},pansy));
+svgEl("circle",{cx:240,cy:217,r:8,fill:"#F0E442",stroke:"#2b2140","stroke-width":1.5},pansy);
+const rl=svgEl("text",{x:240,y:320,"text-anchor":"middle","font-size":20,fill:"#fff","font-weight":"bold"},R);
+function mark(key){ if(progress[key]) return; progress[key]=true; updateRing(true); }
+function updateRing(fromAction){
+  const n=KEYS.filter(k=>progress[k[0]]).length, all=n===KEYS.length;
+  moonGlow.setAttribute("opacity",(0.08+0.4*n/KEYS.length).toFixed(2));
+  MUSH.forEach(({glow,cap,t,k})=>{ const on=k<n; cap.setAttribute("fill",on?MCOL[k]:"#5b5470"); glow.setAttribute("opacity",on?.35:0); t.textContent=on?"✔":"?"; t.setAttribute("fill",on&&(k===4||k===5||k===6)?"#2b2140":"#fff"); });
+  pansy.setAttribute("opacity",all?1:0);
+  rl.textContent=n+" of "+KEYS.length+" mushrooms lit";
+  $id("ringRead").textContent="🍄 Fairy lights: "+n+" of "+KEYS.length;
+  const pc=$id("payoffCard");
+  if(all){ pc.innerHTML="<h3>🌸 Your fairy ring is glowing!</h3><p>Wonderful! A magic flower has bloomed in the middle of your fairy ring. You met Shakespeare, fixed Puck’s mix-ups, and learned to speak like it’s 400 years ago. As Puck might say: Lord, what a clever mortal thou art!</p>";
+    if(fromAction){ confetti(40); beep([523.25,659.25,783.99,1046.5,1318.5]); } }
+  else pc.innerHTML="<h3>🍄 Light the fairy ring!</h3><p>Each activity lights a mushroom: "+KEYS.map(k=>(progress[k[0]]?"✔ ":"○ ")+k[1]).join(", ")+".</p>";
+  ReadAloud.mark(pc);
+}
+
+/* ---------- INIT ---------- */
+$$("#shakespeare .card2, #athens .card2, #fairies .card2, #actors .card2, #ending .card2, .sec-help, .grownups, .hook-text").forEach(n=>n.classList.add("readable"));
+sortStart(); showStep(); orderBuild(); showScene(false); updateRing(false);
+ReadAloud.markAll();
+})();
+</script>
+</body>
+</html>
