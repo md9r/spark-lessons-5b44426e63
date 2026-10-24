@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#3a2b6e">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Henry VIII — Spark Lessons</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- color-blind-safe theme (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e9eef5 0%,#f4efe6 50%,#eaf3ea 100%)}
+  header h1{color:#3b4a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--blue)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+  .chip{background:#fff;color:var(--ink);border:4px solid #888;box-shadow:none;padding:10px 14px;font-size:19px;min-height:56px;display:flex;align-items:center;gap:8px}
+  .chip .num{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;color:#000;font-weight:900;border:2px solid #222}
+  .chip.on{background:#2b2140;color:#fff;border-color:#2b2140}
+  .chip.on::after{content:" ✔"}
+  .zoom-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .zoom-row button{font-size:18px;padding:10px 14px;min-height:52px}
+  .zoom-row .z-on{outline:4px solid var(--gold);outline-offset:2px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  .pin{cursor:pointer}
+  .map-caption{margin-top:10px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px 14px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  .round-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .round-row .r-on{outline:4px solid var(--gold);outline-offset:2px}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+  /* ---- saints lessons ---- */
+  nav a:nth-child(7){background:#8b2c00} nav a:nth-child(8){background:#8a5a00} nav a:nth-child(9){background:#444}
+  .meet svg{flex:0 0 280px}
+  .tl-dot{min-height:56px;font-weight:bold;font-size:19px}
+  .tl-dot.active::before{content:"📍 "}
+  .tl-nav{align-items:center;gap:10px}
+  .tl-card{border-color:var(--theme)}
+  .tl-card h3{color:var(--theme)}
+  .tl-dot{border-color:var(--theme)} .tl-dot.active{background:var(--theme)}
+  .step-count{font-weight:bold;font-size:20px;align-self:center}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .stepc{background:#fff;border-radius:18px;padding:14px;border-top:12px solid var(--theme)}
+  .stepc .lvl{display:inline-block;font-size:16px;font-weight:bold;background:#2b2140;color:#fff;border-radius:999px;padding:2px 10px}
+  .stepc h3{margin:6px 0 4px;font-size:23px}
+  .stepc p{margin:0 0 6px}
+  .be-like{margin-top:12px}
+  svg text{font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif}
+  .pin:focus{outline:none} .pin:focus circle.dot,.pin:focus rect.dot{stroke:#E6A800;stroke-width:5}
+
+  :root{ --theme:#8b1e3f }
+  body{background:linear-gradient(180deg,#f8eef0 0%,#fbf6ea 50%,#eef3f0 100%)}
+  header h1{color:#6b1530;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  .card2{border-left-color:var(--theme)}
+  .card2 p{font-size:21px}
+  .hook{border-radius:24px;padding:22px;text-align:center;background:#3a1020;color:#fff;border:4px solid #fff}
+  .hook h2{margin:0 0 8px;font-size:clamp(26px,4.5vw,38px);color:#ffd84a}
+  .hook p{font-size:22px}
+  .big-btn{font-size:23px;min-height:70px;padding:14px 26px;background:#E6A800;color:#2b2140}
+  .reveal{max-width:640px;margin:14px auto 0;background:#fbf0d0;color:#2b2140;border-radius:14px;border:4px solid #B86E00;padding:0 20px;max-height:0;overflow:hidden;transition:max-height .9s,padding .9s;text-align:left;border-width:0}
+  .reveal.open{border-width:4px}
+  .reveal.open{max-height:900px;padding:16px 20px}
+  #hookCrown{width:180px;height:auto;display:block;margin:6px auto}
+  .note{background:#f4f6fa;border:3px dashed #3b4a6b;border-radius:14px;padding:12px 14px;margin-top:12px}
+  .gentle{border-left-color:#3b4a6b !important;background:#f4f6fa}
+  .sec-help{font-size:21px}
+  /* dress up */
+  .dress{display:flex;gap:20px;flex-wrap:wrap;align-items:flex-start}
+  .dress svg{flex:0 0 300px;max-width:100%;background:#fff;border-radius:18px;border:4px solid var(--theme)}
+  .dress-side{flex:1 1 320px}
+  .dress-btns{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+  .dress-btns button{background:#fff;color:var(--ink);border:4px solid #9aa5b8;min-height:64px;text-align:left;box-shadow:none}
+  .dress-btns button[aria-pressed="true"]{border-color:var(--theme);background:#f8eef0}
+  .dress-btns button[aria-pressed="true"]::after{content:" ✔"}
+  .part{opacity:0;transition:opacity .5s}
+  .part.on{opacity:1}
+  /* sorter (feast) */
+  .sorter{background:#fff;border-radius:20px;border:4px solid var(--theme);padding:16px;text-align:center}
+  .sort-item{font-size:clamp(24px,4vw,32px);font-weight:bold;margin:10px auto 14px;min-height:90px;display:flex;align-items:center;justify-content:center;gap:12px;background:#f8eef0;border-radius:16px;padding:12px;max-width:640px}
+  .sort-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+  .sort-btns button{font-size:22px;min-height:76px;min-width:240px}
+  #inBtn{background:#007a5a} #outBtn{background:#0072B2}
+  .bins{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;text-align:left}
+  .bin{border-radius:16px;padding:10px 12px;min-height:90px;border:4px dashed}
+  .bin h4{margin:0 0 6px;font-size:20px}
+  .bin.in{border-color:#007a5a;background:#e6f5ef} .bin.out{border-color:#0072B2;background:#e8f3fb}
+  .bin span{display:inline-block;background:#fff;border-radius:999px;padding:4px 10px;margin:3px;font-size:16px;border:2px solid #9aa5b8}
+  .sort-fb{font-weight:bold;font-size:20px;margin-top:12px;min-height:30px}
+  @media (max-width:600px){.bins{grid-template-columns:1fr}.sort-btns button{min-width:0;width:100%}}
+  /* dive */
+  .sea-wrap{background:#fff;border-radius:18px;border:4px solid #0b3d66;padding:6px}
+  .sea-wrap svg{width:100%;height:auto;display:block;border-radius:12px}
+  .mound{cursor:pointer} .mound:focus{outline:none} .mound:focus ellipse.m{stroke:#E6A800;stroke-width:5}
+  /* queens */
+  .queens{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+  .qcard{background:#fff;border-radius:18px;border:4px solid #9aa5b8;padding:14px;cursor:pointer;min-height:150px}
+  .qcard .qn{font-size:24px;font-weight:bold;margin:4px 0}
+  .qcard .qnum{display:inline-flex;width:36px;height:36px;border-radius:50%;background:var(--theme);color:#fff;align-items:center;justify-content:center;font-weight:bold}
+  .qcard .qf{display:none;margin:6px 0 0;font-size:20px}
+  .qcard .tap{font-size:16px;color:#555}
+  .qcard.met{border-color:var(--theme);background:#f8eef0}
+  .qcard.met .qf{display:block} .qcard.met .tap{display:none}
+  .qcard.met .qn::after{content:" ✔"}
+  /* family tree */
+  .tree{background:#fff;border-radius:20px;border:4px solid var(--theme);padding:16px;text-align:center}
+  .tnode{display:inline-block;background:#fbf0d0;border:4px solid #B86E00;border-radius:16px;padding:10px 16px;font-weight:bold;font-size:22px}
+  .tlines{height:34px;position:relative;margin:0 auto;max-width:760px}
+  .tlines::before{content:"";position:absolute;left:50%;top:0;height:17px;border-left:4px solid #2b2140}
+  .tlines::after{content:"";position:absolute;left:16.6%;right:16.6%;top:17px;height:17px;border:4px solid #2b2140;border-bottom:none}
+  .tslots{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:760px;margin:0 auto}
+  .tslot{background:#f4f6fa;border:4px dashed #3b4a6b;border-radius:16px;padding:10px;min-height:150px;cursor:pointer;font-size:18px;display:flex;flex-direction:column;justify-content:center}
+  .tslot .who{font-size:22px;font-weight:bold;min-height:32px}
+  .tslot.done{border-style:solid;border-color:#007a5a;background:#e6f5ef;cursor:default}
+  .tslot.oops{animation:shake .4s}
+  .tchips{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+  .tchips button{font-size:22px;min-height:64px;min-width:170px;background:#fff;color:var(--ink);border:4px solid #9aa5b8;box-shadow:none}
+  .tchips button.sel{border-color:#0072B2;background:#e8f3fb;outline:4px solid #E6A800}
+  .tchips button.sel::before{content:"👉 "}
+  .tchips button:disabled{opacity:.35}
+  @media (max-width:640px){.tslots{grid-template-columns:1fr}.tlines{display:none}}
+  /* payoff */
+  .payoff{background:linear-gradient(180deg,#3a1020,#6b1530);color:#fff;border-radius:22px;padding:18px;text-align:center}
+  #crown{width:min(440px,100%);height:auto;display:block;margin:0 auto}
+  .readout{font-size:22px;font-weight:bold;margin:6px 0 10px}
+  nav a:nth-child(10){background:#0b3d66} nav a:nth-child(11){background:#6a3d9a} nav a:nth-child(12){background:#00788a} nav a:nth-child(13){background:#8b1e3f}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>👑 Henry VIII 👑</h1>
+  <p>The Tudor king of England · Born 1491 · King 1509–1547</p>
+</header>
+<nav>
+  <a href="#hook">👑 Start</a>
+  <a href="#who">🌹 Who Was He?</a>
+  <a href="#young">🎾 Sporty Prince</a>
+  <a href="#tudor">🏰 Tudor Life</a>
+  <a href="#ship">⚓ Mary Rose</a>
+  <a href="#church">⛪ A Big Change</a>
+  <a href="#queens">👸 Six Queens</a>
+  <a href="#tree">🌳 Family Tree</a>
+  <a href="#timeline">⏳ Timeline</a>
+  <a href="#older">🕯️ Older Henry</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#payoff">💎 My Crown</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+<section id="hook" class="hook">
+  <svg id="hookCrown" viewBox="0 0 200 140" aria-hidden="true"></svg>
+  <h2>Imagine you are 17 years old… and tomorrow you become KING!</h2>
+  <p class="hook-text">You love sports. You love music. You love big parties. And now a whole country is yours to lead. That really happened to a young prince named Henry, more than 500 years ago!</p>
+  <button class="big-btn" id="tryCrown" aria-expanded="false">👑 Try on the crown</button>
+  <div class="reveal" id="reveal" aria-live="polite">
+    <p style="font-size:21px">In <b>1509</b>, Henry became <b>King Henry VIII</b> of England. (VIII means “the eighth.”)</p>
+    <p style="font-size:21px">He was a king of <b>feasts, horses, music, and ships</b>. He also made some <b>very big changes</b> to England.</p>
+    <p style="font-size:20px">💎 Finish activities to add jewels to your own <b>Tudor crown</b>!</p>
+  </div>
+</section>
+
+<section id="who">
+  <h2>🌹 Who Was Henry VIII?</h2>
+  <div class="grid">
+    <div class="card2"><h3>👶 A Royal Baby</h3><p>Henry was born on <b>June 28, 1491</b>, at Greenwich Palace, near London.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>👨‍👩‍👦 His Family</h3><p>His dad was <b>King Henry VII</b>. His mom was <b>Queen Elizabeth of York</b>. Their family name was <b>Tudor</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>🌹 Two Roses Become One</h3><p>Before the Tudors, two families fought over the crown for years. One used a <b>red rose</b> as a badge. The other used a <b>white rose</b>. Henry's mom and dad came from the two sides. So the Tudors joined the roses into one: the <b>Tudor rose</b>!</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>👦 The Second Son</h3><p>Henry had a big brother named <b>Arthur</b>. Arthur was supposed to be the next king. Sadly, Arthur got sick and died in <b>1502</b>. Now Henry would be king one day.</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>👑 King at 17</h3><p>In <b>1509</b>, his father died. Henry became king. He was only <b>17 years old</b>!</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>⏳ A Long Time as King</h3><p>Henry ruled England for almost <b>38 years</b>, until <b>1547</b>.</p></div>
+  </div>
+</section>
+
+<section id="young">
+  <h2>🎾 A Sporty, Musical Prince</h2>
+  <p class="sec-help">Young Henry was tall, strong, and full of energy. People said he was one of the most exciting princes in Europe.</p>
+  <div class="grid">
+    <div class="card2"><h3>🏇 Jousting</h3><p>Henry loved <b>jousting</b>. Two riders in armor raced toward each other on horses. Each tried to hit the other with a long wooden pole called a <b>lance</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>🎾 Tennis</h3><p>He played <b>“real tennis,”</b> an old kind of indoor tennis. People still play real tennis at <b>Hampton Court Palace</b> today!</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>🏹 Archery and Hunting</h3><p>He was a strong <b>archer</b>. He also loved to go hunting on horseback.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>🎵 Music</h3><p>Henry played the <b>lute</b>, the <b>recorder</b>, and keyboard instruments. He sang, and he even <b>wrote songs</b>! One of his songs, <b>“Pastime with Good Company,”</b> is still sung today.</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>📚 A Smart Prince</h3><p>Henry loved books. He could read and speak <b>Latin</b> and <b>French</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>📏 Very Tall</h3><p>His suits of armor still exist. They show he was <b>over six feet tall</b>. That was very tall for his time!</p></div>
+  </div>
+  <div class="note readable"><b>🎶 Fact or legend?</b> Some people say Henry wrote a famous old song called <b>“Greensleeves.”</b> That is only a <b>legend</b>. Experts think it was written after he died.</div>
+</section>
+
+<section id="tudor">
+  <h2>🏰 Tudor Life</h2>
+  <div class="grid">
+    <div class="card2"><h3>🏰 Hampton Court Palace</h3><p>This huge palace sits by the <b>River Thames</b>. Henry got it from his helper, <b>Cardinal Wolsey</b>, around 1529. Then he made it even bigger. You can visit it today!</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>🍗 Giant Kitchens</h3><p>The palace kitchens were enormous. Lots of cooks worked there to feed <b>hundreds of people</b> every day.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>👘 Fancy Clothes</h3><p>Rich Tudors wore <b>velvet, silk, fur, and jewels</b>. There were even laws about who could wear what! <b>Purple silk</b> was only for the king and his family.</p></div>
+  </div>
+
+  <h3 style="margin-top:22px">🤴 Dress the King!</h3>
+  <p class="sec-help dress-help">Tap each button to dress the king the Tudor way.</p>
+  <div class="dress">
+    <svg id="kingSvg" viewBox="0 0 300 380" role="img" aria-label="A drawing of a Tudor king that you can dress up"></svg>
+    <div class="dress-side">
+      <div class="dress-btns" id="dressBtns"></div>
+      <div class="card2 readable" id="dressCap" style="margin-top:12px"><p>Tap a button to add something to the king's outfit.</p></div>
+    </div>
+  </div>
+
+  <h3 style="margin-top:26px">🍽️ Henry's Feast: Yes or Not Yet?</h3>
+  <p class="sec-help sort-help">Some foods and things we have today did <b>not</b> reach England until after Henry's time. Would it be at Henry's feast?</p>
+  <div class="sorter">
+    <div class="step-count" id="sortCount"></div>
+    <div class="sort-item readable" id="sortItem" aria-live="polite"></div>
+    <div class="sort-btns">
+      <button id="inBtn">🍗 Yes, at the feast!</button>
+      <button id="outBtn">🚫 Not yet!</button>
+    </div>
+    <div class="sort-fb readable" id="sortFb" aria-live="polite"></div>
+    <div class="bins">
+      <div class="bin in"><h4>🍗 At Henry's feast</h4><div id="binIn"></div></div>
+      <div class="bin out"><h4>🚫 Not yet in Henry's England</h4><div id="binOut"></div></div>
+    </div>
+    <button id="sortAgain" style="background:var(--teal);margin-top:12px;display:none">🔁 Play again</button>
+  </div>
+</section>
+
+<section id="ship">
+  <h2>⚓ Henry's Navy and the Mary Rose</h2>
+  <div class="grid">
+    <div class="card2" style="border-left-color:#0072B2"><h3>⚓ A Bigger Navy</h3><p>Henry wanted England to be strong at sea. He built many new <b>warships</b>. Some people call him the <b>“father of the English navy.”</b></p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>🚢 The Mary Rose</h3><p>The <b>Mary Rose</b> was one of his favorite ships. It was launched in <b>1511</b>, when Henry was a young king.</p></div>
+    <div class="card2 gentle"><h3>🌊 A Sad Day</h3><p>In <b>1545</b>, the Mary Rose sank during a battle with French ships near <b>Portsmouth</b>. Henry was watching from the shore. Most of the sailors could not be saved. It was a very sad day.</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>🤿 Found Again!</h3><p>The ship lay under the sea for over 400 years. In <b>1982</b>, divers lifted it up! Today you can see it in a museum in <b>Portsmouth</b>.</p></div>
+  </div>
+  <h3 style="margin-top:22px">🤿 Dive for Treasures!</h3>
+  <p class="sec-help dive-help">Divers found thousands of things from the ship. Tap the sandy mounds to find 5 treasures.</p>
+  <div class="sea-wrap"><svg id="seaSvg" viewBox="0 0 900 420" role="img" aria-label="The seabed with five sandy mounds hiding treasures from the Mary Rose"></svg></div>
+  <div class="card2 readable" id="diveCap" style="margin-top:10px;border-left-color:#0072B2"><h3>🤿 Ready to dive?</h3><p>Tap a mound with a question mark. Found: 0 of 5</p></div>
+</section>
+
+<section id="church">
+  <h2>⛪ A Very Big Change</h2>
+  <p class="sec-help">This part of Henry's story is about the Church. It is still very important to many families today.</p>
+  <div class="grid">
+    <div class="card2"><h3>⛪ A Catholic Country</h3><p>When Henry became king, England was a <b>Catholic</b> country. The <b>Pope</b> in Rome was the leader of the Church.</p></div>
+    <div class="card2" style="border-left-color:var(--gold)"><h3>🏅 Defender of the Faith</h3><p>In 1521, Henry wrote a book that defended Catholic teaching. The Pope thanked him with a special title: <b>“Defender of the Faith.”</b></p></div>
+    <div class="card2" style="border-left-color:var(--teal)"><h3>👶 Wishing for a Son</h3><p>Henry and Queen Catherine had a daughter named <b>Mary</b>. But Henry badly wanted a <b>son</b> to be king after him.</p></div>
+    <div class="card2" style="border-left-color:var(--orange)"><h3>🙅 The Pope Says No</h3><p>Henry wanted to marry someone new. He asked the Pope to say that his marriage to Catherine did not count. The Pope said <b>no</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--purple)"><h3>✂️ A Split</h3><p>So Henry broke away from the Pope. In <b>1534</b>, a new law said the <b>king</b> was head of the Church in England. It became known as the <b>Church of England</b>.</p></div>
+    <div class="card2" style="border-left-color:var(--green)"><h3>💬 Let's Talk</h3><p>This was a huge change, and it was hard for many people. Catholics and members of the Church of England still see it in different ways. It's a great thing to talk about with your family.</p></div>
+  </div>
+</section>
+
+<section id="queens">
+  <h2>👸 Henry's Six Queens</h2>
+  <div class="card2 readable gentle" id="queensIntro"><p>Henry was married <b>six times</b>. Some of his marriages ended, and life at his court could be hard and even dangerous. Each queen was a real person with her own story. Tap each card to meet her!</p></div>
+  <p class="sec-help" style="margin-top:12px">💡 Memory trick: <b>three Catherines, two Annes, and one Jane</b>!</p>
+  <div class="queens" id="queenGrid"></div>
+  <div class="card2 readable" id="queenCap" style="margin-top:12px;border-left-color:var(--gold)"><p>Queens met: 0 of 6</p></div>
+</section>
+
+<section id="tree">
+  <h2>🌳 Build the Family Tree</h2>
+  <p class="sec-help tree-help">Henry had three children. <b>All three became rulers of England!</b> Tap a name, then tap the box where it belongs. Read the clues!</p>
+  <div class="tree">
+    <div class="tnode">👑 King Henry VIII</div>
+    <div class="tlines" aria-hidden="true"></div>
+    <div class="tslots" id="tslots"></div>
+    <div class="tchips" id="tchips"></div>
+    <div class="card2 readable" id="treeCap" style="text-align:left;border-left-color:var(--gold)"><p>Tap a name to pick it up.</p></div>
+  </div>
+</section>
+
+<section id="timeline">
+  <h2>⏳ Henry's Timeline</h2>
+  <p class="tl-help">Tap a year, or use the arrows. Reach the end to earn a jewel!</p>
+  <div id="tl"></div>
+</section>
+
+<section id="older">
+  <h2>🕯️ Henry Gets Older</h2>
+  <p class="sec-help">The young, sporty king did not stay that way. Here is the rest of his story, told gently.</p>
+  <div class="grid">
+    <div class="card2 gentle"><h3>🏇 A Bad Fall</h3><p>In <b>1536</b>, Henry fell from his horse while jousting. After that, his <b>leg hurt</b> for the rest of his life.</p></div>
+    <div class="card2 gentle"><h3>🪑 Slowing Down</h3><p>He could not play sports anymore. But he still ate huge meals. He grew much bigger, and walking became hard.</p></div>
+    <div class="card2 gentle"><h3>😠 Grumpy and Hard to Be Around</h3><p>Henry was often sick and in pain. He became <b>grumpy</b> and easily upset. People at his court had to be very careful around him.</p></div>
+    <div class="card2 gentle"><h3>🕯️ The End of His Reign</h3><p>Henry died in <b>January 1547</b>, when he was 55. His 9-year-old son became <b>King Edward VI</b>.</p></div>
+  </div>
+  <div class="card2 readable" style="margin-top:12px;border-left-color:var(--green)"><h3>💭 Think About It</h3><p>When you feel sick or hurt, is it harder to be kind? What helps you stay kind on a bad day?</p></div>
+</section>
+
+<section id="quiz">
+  <h2>❓ Quiz Challenge</h2>
+  <p>Finish the quiz to earn a jewel! Each question is read aloud with its choices.</p>
+  <div id="quizBox"></div>
+  <h3 style="margin-top:22px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<section id="payoff">
+  <h2>💎 Fill Your Tudor Crown</h2>
+  <div class="payoff">
+    <svg id="crown" viewBox="0 0 420 300" role="img" aria-label="A Tudor crown that fills with gold and jewels as you finish activities"></svg>
+    <div class="readout" id="crownRead" aria-live="polite"></div>
+    <div class="card2 readable" id="payoffCard" style="color:var(--ink);border-left-color:#E6A800;text-align:left"></div>
+  </div>
+</section>
+
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>Who Henry VIII was (born 1491; king 1509–1547, at 17), the Tudor family and the Tudor rose, and his love of sport, music, and learning.</li>
+      <li>Tudor daily life at court (Hampton Court, feasts, clothing laws), what foods had not yet reached England, and his navy and the <i>Mary Rose</i>.</li>
+      <li>The break with Rome in simple, neutral terms; his six queens by name; and his three children, who all became monarchs (Edward VI, Mary I, Elizabeth I).</li>
+    </ul>
+    <h3>Level and time</h3><p>Written for a young 8-year-old (short sentences, one idea per card), with read-aloud on every card. About <b>15–20 minutes</b>; easy to split into two sittings (life, Tudor life, and the ship; then the Church, queens, family tree, and quiz).</p>
+    <h3>What was softened (for you to discuss if and when you choose)</h3>
+    <ul>
+      <li><b>Two queens were executed:</b> Anne Boleyn (1536) and Catherine Howard (1542). The lesson says only that “some marriages ended” and court life “could be hard and even dangerous.” His marriages to Catherine of Aragon and Anne of Cleves were annulled (declared invalid) rather than ended by divorce in the modern sense; Jane Seymour died after childbirth; Catherine Parr outlived him.</li>
+      <li><b>St. Thomas More</b> (his former Lord Chancellor) and <b>St. John Fisher</b> were executed in 1535 for refusing to accept Henry as head of the Church in England; both were canonized in 1935. Others who resisted the changes, including Carthusian monks, also died.</li>
+      <li><b>The dissolution of the monasteries</b> (1536–1541): Henry closed the monasteries, convents, and friaries of England and Wales and took their lands and wealth. The 1536 northern uprising called the <i>Pilgrimage of Grace</i> was partly a protest against this.</li>
+      <li>The <i>Mary Rose</i> had a crew of roughly 400–500; most were lost, with commonly cited estimates of fewer than about 40 survivors. The lesson says only that “most of the sailors could not be saved.”</li>
+      <li>Henry's later years included ruthless treatment of perceived enemies; the lesson describes this only as being “grumpy and hard to be around.”</li>
+    </ul>
+    <h3>Accuracy notes</h3>
+    <ul>
+      <li>No quotations are attributed to Henry. “Pastime with Good Company” survives in the early-Tudor <i>Henry VIII Manuscript</i> with his name attached; “Greensleeves” is a later Elizabethan tune and the Henry attribution is a legend.</li>
+      <li>Henry kept many Catholic beliefs and practices all his life (e.g., the Six Articles, 1539); the Act of Supremacy was 1534. The Catholic Church never recognized the annulment. Mary I restored ties with Rome (1553–58); Elizabeth I broke them again. “Defender of the Faith” (granted by Pope Leo X in 1521) still appears on British coins as “F D” / “FID DEF.”</li>
+      <li>The ship's-dog name “Hatch” was given by modern researchers. Height “over six feet” is based on his surviving armour (Royal Armouries). Hampton Court's current real-tennis court is a later rebuild on the site Henry used.</li>
+      <li>The “red rose / white rose” badges (Lancaster and York) are a simplification; the name “Wars of the Roses” came later.</li>
+    </ul>
+    <h3>Follow-up activity</h3><p>Draw your own family tree with three generations, or design a Tudor-style family badge (like the Tudor rose) using two symbols that stand for two sides of your family. Talk about what each symbol means.</p>
+  </div>
+</section>
+</main>
+<footer>Made for curious historians 👑 · All drawings made just for this page · Works offline</footer>
+<script>
+(function(){
+"use strict";
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    t=t.replace(/\bHenry VIII\b/g,"Henry the Eighth").replace(/\bHenry VII\b/g,"Henry the Seventh").replace(/\bEdward VI\b/g,"Edward the Sixth").replace(/\bMary I\b/g,"Mary the First").replace(/\bElizabeth I\b/g,"Elizabeth the First").replace(/\bVIII means\b/g,"V I I I means");
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- sound + confetti ---------- */
+let actx=null;
+function beep(notes,type){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; notes.forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f; const t=t0+i*0.1;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.18,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32); }); }catch(e){} }
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS=["👑","🌹","💎","⭐","✨","🏰","🎵"];
+function confetti(n){ for(let i=0;i<n;i++){ const s=document.createElement("div"); s.className="confetti"; s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s"; document.body.appendChild(s); setTimeout(()=>s.remove(),4200); } }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function makeQuiz(box, QUIZ, praise){
+  let qi=0, score=0;
+  function renderQ(){
+    const item=QUIZ[qi]; ReadAloud.stop();
+    box.innerHTML='<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div><div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+    const qEl=box.querySelector(".q-text"); qEl.dataset.say=item.q+" Is it: "+item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ")+"?"; ReadAloud.mark(qEl);
+    const ans=box.querySelector(".answers"), fb=box.querySelector(".feedback");
+    item.a.forEach((txt,i)=>{ const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+      b.addEventListener("click",()=>{ [...ans.children].forEach(x=>x.disabled=true);
+        if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+        else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+        ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+        const next=document.createElement("button"); next.style.background="var(--purple)"; next.textContent=qi<QUIZ.length-1?"Next question ➡":"See my score 🏆";
+        next.addEventListener("click",()=>{ qi++; qi<QUIZ.length?renderQ():renderEnd(); }); fb.after(next); });
+      ans.appendChild(b); });
+  }
+  function renderEnd(){
+    ReadAloud.stop(); const stars="⭐".repeat(score)+"☆".repeat(QUIZ.length-score);
+    const msg=score===QUIZ.length?praise:score>=Math.ceil(QUIZ.length*0.6)?"Awesome job! 🎉":score>=2?"Nice work! Explore more and try again! 📜":"Good try! Explore and try again! 💪";
+    box.innerHTML='<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+    const c=box.querySelector(".celebrate"); c.dataset.say="You got "+score+" out of "+QUIZ.length+"! "+msg; ReadAloud.mark(c);
+    const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--teal)"; again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+    const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); box.appendChild(wrap); confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+  }
+  renderQ();
+}
+
+/* ---------- TIMELINE ---------- */
+function makeTimeline(root, EVENTS){
+  let i=0;
+  root.innerHTML='<div class="tl-track" role="list"></div><div class="tl-card readable" aria-live="polite"><div class="big"></div><div><h3></h3><p></p></div></div>'+
+    '<div class="tl-nav"><button class="tl-prev" style="background:#666">◀ Earlier</button><span class="step-count tl-count"></span><button class="tl-next" style="background:var(--theme)">Later ▶</button></div>';
+  const track=root.querySelector(".tl-track"), card=root.querySelector(".tl-card"), prev=root.querySelector(".tl-prev"), next=root.querySelector(".tl-next"), count=root.querySelector(".tl-count");
+  EVENTS.forEach((e,k)=>{ const b=document.createElement("button"); b.className="tl-dot"; b.textContent=e.year; b.setAttribute("aria-label",e.year+": "+e.title);
+    b.addEventListener("click",()=>show(k,true)); track.appendChild(b); });
+  function show(k,speak){
+    i=k; const e=EVENTS[k]; ReadAloud.stopIf(card);
+    [...track.children].forEach((b,j)=>{ b.classList.toggle("active",j===k); b.setAttribute("aria-current",j===k?"true":"false"); });
+    card.querySelector(".big").textContent=e.icon; card.querySelector("h3").textContent=e.year+" — "+e.title; card.querySelector("p").textContent=e.text;
+    prev.disabled=k===0; next.disabled=k===EVENTS.length-1; count.textContent=(k+1)+" of "+EVENTS.length;
+    const b=track.children[k]; track.scrollLeft=b.offsetLeft-track.clientWidth/2+b.offsetWidth/2;
+    ReadAloud.mark(card); if(speak) ReadAloud.speakEl(card);
+  }
+  prev.addEventListener("click",()=>{ if(i>0) show(i-1,true); });
+  next.addEventListener("click",()=>{ if(i<EVENTS.length-1) show(i+1,true); });
+  show(0,false);
+  return {show};
+}
+
+/* ---------- MATCHING GAME ---------- */
+function makeMatch(o){ // o: {left,right,status,pairs:[{id,l,r,tip}], doneMsg, onDone}
+  let selL=null, selR=null, matched=0;
+  const N=o.pairs.length;
+  function build(){
+    selL=selR=null; matched=0; ReadAloud.stop();
+    o.left.innerHTML=""; o.right.innerHTML="";
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="L";
+      c.innerHTML='<span>'+p.l+'</span>'; o.left.appendChild(c); ReadAloud.mark(c); });
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard name-card readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="R";
+      c.innerHTML='<span>'+p.r+'</span>'; o.right.appendChild(c); ReadAloud.mark(c); });
+    o.status.textContent="Matched: 0 of "+N; o.status.style.color=""; o.status.classList.add("readable"); ReadAloud.mark(o.status);
+    if(o.onReset) o.onReset();
+  }
+  function pick(c){
+    if(c.classList.contains("done")) return;
+    if(c.dataset.side==="L"){ if(selL) selL.classList.remove("sel"); selL = selL===c?null:c; if(selL) c.classList.add("sel"); }
+    else { if(selR) selR.classList.remove("sel"); selR = selR===c?null:c; if(selR) c.classList.add("sel"); }
+    if(selL && selR){
+      const a=selL,b=selR; selL=selR=null; a.classList.remove("sel"); b.classList.remove("sel");
+      const p=o.pairs.find(x=>x.id===a.dataset.id);
+      if(a.dataset.id===b.dataset.id){
+        a.classList.add("done"); b.classList.add("done"); matched++; beep(HAPPY);
+        o.status.textContent="✔ Yes! "+p.tip+" ("+matched+" of "+N+")"; o.status.style.color="var(--blue)";
+        if(matched===N){ o.status.textContent=o.doneMsg; confetti(24); if(o.onDone) o.onDone(); }
+        ReadAloud.mark(o.status); setTimeout(()=>ReadAloud.speakEl(o.status),0);
+      } else {
+        [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+        o.status.textContent="✘ Not quite — read it again and try another one!"; o.status.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(o.status);
+      }
+    }
+  }
+  [o.left,o.right].forEach(col=>{
+    col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+    col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard")&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+  });
+  build();
+  return {build};
+}
+
+/* ---------- FUN FACTS ---------- */
+function makeFacts(strip, FACTS){
+  FACTS.forEach(([front,back])=>{ const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+    d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+    const flip=()=>d.classList.toggle("flipped");
+    d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+    d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+    strip.appendChild(d); ReadAloud.mark(d); });
+}
+
+/* ---------- a soft bell sound ---------- */
+function bell(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; [[392,0.16],[784,0.07],[1176,0.04],[1568,0.02]].forEach(([f,a])=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type="sine"; o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(a,t0+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t0+1.8); o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0+1.9); }); }catch(e){} }
+
+function projector(lon0,lon1,lat0,lat1,W,H){ return (lon,lat)=>[ +((lon-lon0)/(lon1-lon0)*W).toFixed(1), +((lat1-lat)/(lat1-lat0)*H).toFixed(1) ]; }
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs,parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+
+const $id=id=>document.getElementById(id), $$=q=>[...document.querySelectorAll(q)];
+const progress={hook:false,dress:false,feast:false,dive:false,queens:false,tree:false,timeline:false,quiz:false};
+
+/* ---------- HOOK CROWN ART ---------- */
+(function(){ const s=$id("hookCrown");
+  svgEl("polygon",{points:"20,120 20,40 60,80 100,20 140,80 180,40 180,120",fill:"#E6A800",stroke:"#fff","stroke-width":4},s);
+  svgEl("rect",{x:20,y:100,width:160,height:22,fill:"#B86E00",stroke:"#fff","stroke-width":3},s);
+  [[20,40,"#0072B2"],[100,20,"#D55E00"],[180,40,"#009E73"]].forEach(([x,y,c])=>svgEl("circle",{cx:x,cy:y,r:10,fill:c,stroke:"#fff","stroke-width":3},s));
+  [60,100,140].forEach((x,i)=>svgEl("circle",{cx:x,cy:111,r:7,fill:["#56B4E9","#CC79A7","#F0E442"][i],stroke:"#fff","stroke-width":2},s));
+})();
+$id("tryCrown").addEventListener("click",()=>{
+  const r=$id("reveal"), open=!r.classList.contains("open"); r.classList.toggle("open",open);
+  $id("tryCrown").setAttribute("aria-expanded",open?"true":"false");
+  $id("tryCrown").textContent=open?"👑 Take the crown off":"👑 Try on the crown";
+  if(open){ beep([392,523.25,659.25,783.99]); ReadAloud.speakEl(r); mark("hook"); }
+});
+
+/* ---------- DRESS THE KING ---------- */
+const K=$id("kingSvg");
+svgEl("rect",{width:300,height:380,fill:"#fbf6ea"},K);
+svgEl("rect",{x:0,y:330,width:300,height:50,fill:"#d9c7a3"},K);
+// base figure: legs, simple tunic, head
+svgEl("rect",{x:118,y:250,width:26,height:90,rx:8,fill:"#f2e6c9",stroke:"#2b2140","stroke-width":2},K);
+svgEl("rect",{x:156,y:250,width:26,height:90,rx:8,fill:"#f2e6c9",stroke:"#2b2140","stroke-width":2},K);
+svgEl("path",{d:"M105 140 Q150 125 195 140 L205 260 L95 260 Z",fill:"#e8e2d4",stroke:"#2b2140","stroke-width":2},K);
+svgEl("rect",{x:138,y:112,width:24,height:22,fill:"#f1c9a5"},K);
+svgEl("ellipse",{cx:150,cy:88,rx:32,ry:36,fill:"#f1c9a5",stroke:"#2b2140","stroke-width":2},K);
+svgEl("path",{d:"M122 96 Q150 140 178 96 Q176 120 150 126 Q124 120 122 96 Z",fill:"#b5651d"},K); // beard
+svgEl("circle",{cx:139,cy:84,r:3,fill:"#2b2140"},K); svgEl("circle",{cx:161,cy:84,r:3,fill:"#2b2140"},K);
+svgEl("path",{d:"M142 102 Q150 107 158 102",fill:"none",stroke:"#2b2140","stroke-width":2},K);
+svgEl("rect",{x:118,y:250,width:64,height:30,fill:"#a33a5a",stroke:"#2b2140","stroke-width":2},K);
+const PARTS={};
+function part(id){ const g=svgEl("g",{class:"part",id:"p-"+id},K); PARTS[id]=g; return g; }
+let g=part("robe");
+svgEl("path",{d:"M60 150 Q100 125 125 138 L120 300 L55 300 Z",fill:"#8b1e3f",stroke:"#2b2140","stroke-width":2},g);
+svgEl("path",{d:"M240 150 Q200 125 175 138 L180 300 L245 300 Z",fill:"#8b1e3f",stroke:"#2b2140","stroke-width":2},g);
+svgEl("path",{d:"M60 150 Q100 125 125 138 L118 300 L100 300 L104 150 Z",fill:"#7a5c3a",stroke:"#2b2140","stroke-width":1.5},g);
+svgEl("path",{d:"M240 150 Q200 125 175 138 L182 300 L200 300 L196 150 Z",fill:"#7a5c3a",stroke:"#2b2140","stroke-width":1.5},g);
+g=part("sleeves");
+[[78,190],[222,190]].forEach(([x,y])=>{ svgEl("ellipse",{cx:x,cy:y,rx:26,ry:44,fill:"#E6A800",stroke:"#2b2140","stroke-width":2},g);
+  [-14,0,14].forEach(dy=>svgEl("line",{x1:x-10,y1:y+dy-8,x2:x+10,y2:y+dy+8,stroke:"#fff","stroke-width":4},g)); });
+g=part("chain");
+svgEl("path",{d:"M112 140 Q150 205 188 140",fill:"none",stroke:"#E6A800","stroke-width":9,"stroke-dasharray":"10 4"},g);
+svgEl("circle",{cx:150,cy:186,r:12,fill:"#E6A800",stroke:"#2b2140","stroke-width":2},g);
+g=part("hat");
+svgEl("ellipse",{cx:150,cy:58,rx:44,ry:12,fill:"#2b2140"},g);
+svgEl("rect",{x:116,y:40,width:68,height:20,rx:6,fill:"#2b2140"},g);
+svgEl("path",{d:"M178 46 Q215 20 205 62 Q195 40 178 50 Z",fill:"#fff",stroke:"#9aa5b8","stroke-width":2},g);
+[130,150,170].forEach(x=>svgEl("circle",{cx:x,cy:52,r:3.5,fill:"#E6A800"},g));
+g=part("shoes");
+svgEl("path",{d:"M108 335 L148 335 Q152 352 140 352 L104 352 Q98 344 108 335 Z",fill:"#2b2140"},g);
+svgEl("path",{d:"M152 335 L192 335 Q202 344 196 352 L160 352 Q148 352 152 335 Z",fill:"#2b2140"},g);
+const DRESS=[
+ {id:"hat",b:"🎩 Feathered cap",t:"A flat velvet cap with a white feather and gold trim. Tudor men loved fancy hats!"},
+ {id:"sleeves",b:"✨ Puffy sleeves",t:"Big puffy sleeves with little slits, so a different fabric could peek through. This was very fashionable."},
+ {id:"robe",b:"🧥 Fur-trimmed robe",t:"A heavy robe with fur trim. Its wide shoulders made the king look big and strong."},
+ {id:"chain",b:"⛓️ Gold chain",t:"A heavy gold chain showed everyone how rich and important the wearer was."},
+ {id:"shoes",b:"👞 Wide-toed shoes",t:"Soft, flat shoes with wide, square toes were in fashion in Henry's time."}
+];
+const dressed=new Set();
+DRESS.forEach(d=>{ const b=document.createElement("button"); b.textContent=d.b; b.setAttribute("aria-pressed","false"); b.dataset.id=d.id;
+  b.addEventListener("click",()=>{ const on=!PARTS[d.id].classList.contains("on"); PARTS[d.id].classList.toggle("on",on); b.setAttribute("aria-pressed",on?"true":"false");
+    if(on) dressed.add(d.id); else dressed.delete(d.id);
+    const all=dressed.size===DRESS.length, c=$id("dressCap");
+    c.innerHTML="<h3>"+d.b+(on?" ✔":" (taken off)")+"</h3><p>"+(on?d.t:"Tap it again to put it back on.")+"</p><p><b>Outfit: "+dressed.size+" of "+DRESS.length+"</b>"+(all?" 👑 The king is ready! Now he looks like his famous painting by Hans Holbein.":"")+"</p>";
+    ReadAloud.mark(c); ReadAloud.speakEl(c); beep(on?[523.25,659.25]:[392]); if(all){ confetti(16); mark("dress"); } });
+  $id("dressBtns").appendChild(b); });
+
+/* ---------- FEAST SORT ---------- */
+const ITEMS=[
+ {t:"Meat pies",i:"🥧",in:true,why:"Tudor cooks baked meat inside thick pastry pies."},
+ {t:"Potatoes",i:"🥔",in:false,why:"Potatoes came from the Americas. People in England did not eat them until after Henry's time."},
+ {t:"Chocolate",i:"🍫",in:false,why:"Chocolate did not come to England until about 100 years after Henry."},
+ {t:"Roast peacock",i:"🦚",in:true,why:"Fancy feasts sometimes served peacock or swan to amaze the guests!"},
+ {t:"Eating with a fork",i:"🍴",in:false,why:"People ate with knives, spoons, and fingers. Forks were very rare in England then."},
+ {t:"Gingerbread",i:"🍪",in:true,why:"Tudor people loved sweet, spicy gingerbread."},
+ {t:"Tomatoes",i:"🍅",in:false,why:"Tomatoes came from the Americas. English people did not eat them until much later."},
+ {t:"Marzipan sculptures",i:"🏰",in:true,why:"Cooks shaped sweet almond paste, called marchpane, into amazing shapes like castles!"},
+ {t:"Pizza",i:"🍕",in:false,why:"No pizza for Henry! Pizza as we know it came much, much later."},
+ {t:"Deer meat from a hunt",i:"🦌",in:true,why:"Henry loved hunting, and deer meat, called venison, was a royal treat."}
+];
+let order=[], si=0, sRight=0;
+function sortStart(){ order=shuffle(ITEMS.slice()); si=0; sRight=0; $id("binIn").innerHTML=""; $id("binOut").innerHTML="";
+  $id("sortFb").textContent=""; $id("sortAgain").style.display="none"; $id("inBtn").disabled=false; $id("outBtn").disabled=false; sortShow(); }
+function sortShow(){ const it=order[si]; const el=$id("sortItem");
+  el.innerHTML='<span aria-hidden="true">'+it.i+'</span><span>'+it.t+'</span>'; el.dataset.say=it.t+". Would it be at Henry's feast, or not yet?"; ReadAloud.mark(el);
+  $id("sortCount").textContent="Card "+(si+1)+" of "+order.length+" · Correct: "+sRight; }
+function sortAnswer(sayIn){ const it=order[si], ok=sayIn===it.in, fb=$id("sortFb");
+  if(ok){ sRight++; beep(HAPPY); } else beep(SAD,"square");
+  fb.textContent=(ok?"✔ Yes! ":"✘ Not quite. ")+it.t+(it.in?": at the feast! ":": not yet! ")+it.why;
+  fb.style.color=ok?"var(--green)":"var(--red)"; ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+  const chip=document.createElement("span"); chip.textContent=(ok?"✔ ":"✘→ ")+it.i+" "+it.t; $id(it.in?"binIn":"binOut").appendChild(chip);
+  si++;
+  if(si<order.length) sortShow();
+  else { $id("inBtn").disabled=true; $id("outBtn").disabled=true; const el=$id("sortItem");
+    el.innerHTML="<span>🏆 Done! "+sRight+" of "+order.length+" right.</span>"; el.dataset.say="Done! You got "+sRight+" of "+order.length+" right. What a Tudor feast!";
+    ReadAloud.mark(el); $id("sortCount").textContent="All "+order.length+" cards sorted"; $id("sortAgain").style.display="inline-block"; confetti(24); mark("feast");
+    fb.textContent+=" 🏆 All sorted! What a Tudor feast!"; ReadAloud.mark(fb); }
+}
+$id("inBtn").addEventListener("click",()=>sortAnswer(true));
+$id("outBtn").addEventListener("click",()=>sortAnswer(false));
+$id("sortAgain").addEventListener("click",sortStart);
+
+/* ---------- DIVE ---------- */
+const S=$id("seaSvg");
+const grad=svgEl("linearGradient",{id:"seaG",x1:0,y1:0,x2:0,y2:1},svgEl("defs",{},S));
+svgEl("stop",{offset:"0","stop-color":"#9fd3ee"},grad); svgEl("stop",{offset:"1","stop-color":"#0b4f7a"},grad);
+svgEl("rect",{width:900,height:420,fill:"url(#seaG)"},S);
+[[120,60],[420,40],[700,80],[300,140],[620,170]].forEach(([x,y])=>svgEl("circle",{cx:x,cy:y,r:6,fill:"none",stroke:"#fff","stroke-width":2,opacity:.7},S));
+svgEl("path",{d:"M0 330 Q150 300 300 325 T600 320 T900 315 L900 420 L0 420 Z",fill:"#d9c7a3"},S);
+// wreck timbers
+svgEl("path",{d:"M300 320 Q450 250 610 318",fill:"none",stroke:"#6b4a2a","stroke-width":14,"stroke-linecap":"round"},S);
+[340,390,440,490,540,580].forEach(x=>svgEl("line",{x1:x,y1:318,x2:x+6,y2:276,stroke:"#6b4a2a","stroke-width":9,"stroke-linecap":"round"},S));
+svgEl("path",{d:"M60 340 q10 -40 0 -80 M80 345 q-12 -36 4 -70",fill:"none",stroke:"#009E73","stroke-width":5},S);
+svgEl("path",{d:"M820 335 q10 -40 0 -80 M840 340 q-12 -36 4 -70",fill:"none",stroke:"#009E73","stroke-width":5},S);
+const fish=svgEl("g",{},S); svgEl("ellipse",{cx:200,cy:200,rx:22,ry:11,fill:"#E6A800"},fish); svgEl("polygon",{points:"178,200 162,190 162,210",fill:"#E6A800"},fish); svgEl("circle",{cx:212,cy:197,r:2.5,fill:"#2b2140"},fish);
+const TREAS=[
+ {x:130,y:365,i:"🐕",n:"The ship's dog",t:"Divers found the bones of a small dog. Museum experts named him Hatch, because he was found near a little door called a hatch."},
+ {x:300,y:372,i:"🏹",n:"Longbows",t:"More than 100 wooden longbows! Archers were an important part of the crew."},
+ {x:460,y:380,i:"🎻",n:"Music",t:"A fiddle and pipes. Sailors played music on board, just like Henry loved to do."},
+ {x:620,y:372,i:"🪮",n:"Tiny combs",t:"Little wooden combs. Some were for getting rid of head lice. Yuck!"},
+ {x:780,y:366,i:"👞",n:"Leather shoes",t:"Lots of leather shoes. They help experts learn about the sailors who wore them."}
+];
+const found=new Set();
+TREAS.forEach((tr,k)=>{ const g=svgEl("g",{class:"mound",tabindex:0,role:"button","aria-label":"Sandy mound "+(k+1)},S);
+  svgEl("ellipse",{class:"m",cx:tr.x,cy:tr.y,rx:58,ry:26,fill:"#c2a878",stroke:"#8a6d3b","stroke-width":3},g);
+  const tx=svgEl("text",{x:tr.x,y:tr.y+10,"text-anchor":"middle","font-size":30,"font-weight":"bold",fill:"#2b2140"},g); tx.textContent="?";
+  const go=()=>{ found.add(k); tx.textContent=tr.i; tx.setAttribute("font-size",38); g.setAttribute("aria-label","Found: "+tr.n);
+    const c=$id("diveCap"); c.innerHTML="<h3>"+tr.i+" "+tr.n+" ✔</h3><p>"+tr.t+"</p><p><b>Found: "+found.size+" of "+TREAS.length+"</b>"+(found.size===TREAS.length?" 💎 You found them all!":"")+"</p>";
+    ReadAloud.mark(c); ReadAloud.speakEl(c); beep([659.25,783.99]); if(found.size===TREAS.length){ confetti(16); mark("dive"); } };
+  g.addEventListener("click",go); g.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); } }); });
+
+/* ---------- QUEENS ---------- */
+const QUEENS=[
+ {n:"Catherine of Aragon",i:"🇪🇸",f:"A princess from Spain. When Henry was away at war in 1513, she was left in charge of England. She was the mother of Mary."},
+ {n:"Anne Boleyn",i:"📖",f:"She grew up partly in France. She loved books, music, and fashion. She was the mother of Elizabeth."},
+ {n:"Jane Seymour",i:"👶",f:"She was the mother of Edward, the son Henry had wished for. Sadly, she became sick and died soon after. Henry later chose to be buried next to her."},
+ {n:"Anne of Cleves",i:"🤝",f:"She came from a land in Germany. Their marriage ended after about six months, but they stayed friendly. Henry treated her like a sister. She lived the longest of all six queens."},
+ {n:"Catherine Howard",i:"💃",f:"She was young and lively. She loved music and dancing."},
+ {n:"Catherine Parr",i:"✍️",f:"She was a clever writer. She was the first queen of England to publish a book under her own name. She helped Henry's three children spend time together as a family."}
+];
+const met=new Set();
+QUEENS.forEach((q,k)=>{ const d=document.createElement("div"); d.className="qcard readable"; d.tabIndex=0; d.setAttribute("role","button");
+  d.innerHTML='<span class="qnum">'+(k+1)+'</span><div class="qn">'+q.i+' '+q.n+'</div><p class="tap no-read">👆 Tap to meet her</p><p class="qf">'+q.f+'</p>';
+  d.dataset.say="Queen number "+(k+1)+": "+q.n+". Tap to meet her.";
+  const meet=()=>{ d.classList.add("met"); d.dataset.say="Queen number "+(k+1)+": "+q.n+". "+q.f; d.setAttribute("aria-label",q.n+". "+q.f);
+    if(!met.has(k)){ met.add(k); beep([523.25,659.25]); }
+    $id("queenCap").innerHTML="<p><b>Queens met: "+met.size+" of 6</b>"+(met.size===6?" 👑 You met all six queens! Three Catherines, two Annes, and one Jane.":"")+"</p>"; ReadAloud.mark($id("queenCap"));
+    if(met.size===6){ confetti(16); mark("queens"); } };
+  d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) meet(); });
+  d.addEventListener("keydown",e=>{ if(e.target===d&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); meet(); ReadAloud.speakEl(d); } });
+  $id("queenGrid").appendChild(d); ReadAloud.mark(d); });
+
+/* ---------- FAMILY TREE ---------- */
+const KIDS=[
+ {id:"mary",n:"Mary I",clue:"Daughter of Catherine of Aragon. Born 1516. Became queen in 1553.",done:"Mary I! She was Henry's oldest child. She became queen in 1553."},
+ {id:"eliz",n:"Elizabeth I",clue:"Daughter of Anne Boleyn. Born 1533. Ruled for 44 years!",done:"Elizabeth I! She ruled from 1558 to 1603, one of England's most famous rulers."},
+ {id:"edw",n:"Edward VI",clue:"Son of Jane Seymour. Born 1537. Became king at just 9 years old!",done:"Edward VI! He became king in 1547, when Henry died."}
+];
+let selKid=null, placed=0;
+function treeBuild(){ selKid=null; placed=0; $id("tslots").innerHTML=""; $id("tchips").innerHTML="";
+  KIDS.forEach(kid=>{ const s=document.createElement("div"); s.className="tslot"; s.setAttribute("role","button"); s.tabIndex=0; s.dataset.id=kid.id;
+    s.innerHTML='<div class="who">❓</div><div>'+kid.clue+'</div>';
+    const drop=()=>{ if(s.classList.contains("done")) return; const c=$id("treeCap");
+      if(!selKid){ c.innerHTML="<p>🔎 Clue: "+kid.clue+" Tap a name button first, then tap this box.</p>"; ReadAloud.mark(c); ReadAloud.speakEl(c); return; }
+      if(selKid.dataset.id===kid.id){ s.classList.add("done"); s.querySelector(".who").textContent="✔ "+kid.n; selKid.disabled=true; selKid.classList.remove("sel"); selKid=null; placed++;
+        c.innerHTML="<p>✔ "+kid.done+" ("+placed+" of 3)"+(placed===3?" 🌳 Tree complete! All three of Henry's children became rulers of England.":"")+"</p>"; beep(HAPPY);
+        if(placed===3){ confetti(20); mark("tree"); } }
+      else { s.classList.add("oops"); setTimeout(()=>s.classList.remove("oops"),450); c.innerHTML="<p>✘ Not that box. Read the clue again and try another box!</p>"; beep(SAD,"square"); }
+      ReadAloud.mark(c); ReadAloud.speakEl(c); };
+    s.addEventListener("click",drop); s.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); drop(); } });
+    $id("tslots").appendChild(s); });
+  shuffle(KIDS).forEach(kid=>{ const b=document.createElement("button"); b.textContent="👑 "+kid.n; b.dataset.id=kid.id;
+    b.addEventListener("click",()=>{ $$("#tchips button").forEach(x=>x.classList.remove("sel")); selKid=b; b.classList.add("sel");
+      const c=$id("treeCap"); c.innerHTML="<p>👉 You picked "+kid.n+". Now tap the box with the right clue.</p>"; ReadAloud.mark(c); ReadAloud.speakEl(c); });
+    $id("tchips").appendChild(b); });
+}
+
+/* ---------- TIMELINE ---------- */
+const EVENTS=[
+ {year:"1485",icon:"🌹",title:"The Tudors Begin",text:"Henry's father wins the crown and becomes King Henry VII, the first Tudor king."},
+ {year:"1491",icon:"👶",title:"Henry Is Born",text:"Baby Henry is born on June 28 at Greenwich Palace."},
+ {year:"1502",icon:"💔",title:"Big Brother Arthur Dies",text:"Prince Arthur dies. Now Henry is next in line to be king."},
+ {year:"1509",icon:"👑",title:"King at 17",text:"Henry becomes King Henry VIII. He marries Catherine of Aragon."},
+ {year:"1511",icon:"🚢",title:"The Mary Rose",text:"Henry's warship, the Mary Rose, is launched."},
+ {year:"1516",icon:"👧",title:"Princess Mary",text:"Henry's daughter Mary is born."},
+ {year:"1521",icon:"🏅",title:"Defender of the Faith",text:"The Pope gives Henry the title Defender of the Faith."},
+ {year:"1533",icon:"👧",title:"Princess Elizabeth",text:"Henry's daughter Elizabeth is born."},
+ {year:"1534",icon:"⛪",title:"The Church of England",text:"A new law says the king is head of the Church in England."},
+ {year:"1537",icon:"👦",title:"Prince Edward",text:"Henry's son Edward is born."},
+ {year:"1545",icon:"🌊",title:"The Mary Rose Sinks",text:"The Mary Rose sinks in a battle near Portsmouth."},
+ {year:"1547",icon:"🕯️",title:"Henry Dies",text:"Henry dies at 55. His son becomes King Edward VI."},
+ {year:"1982",icon:"🤿",title:"The Ship Comes Up",text:"Divers lift the Mary Rose from the seabed."},
+ {year:"Today",icon:"🏰",title:"Visit!",text:"You can visit Hampton Court Palace and see the Mary Rose in Portsmouth."}
+];
+makeTimeline($id("tl"),EVENTS);
+$id("tl").addEventListener("click",()=>{ const c=$id("tl").querySelector(".tl-count").textContent; if(c.startsWith(EVENTS.length+" ")) mark("timeline"); });
+
+/* ---------- QUIZ ---------- */
+makeQuiz($id("quizBox"),[
+ {q:"How old was Henry when he became king?",a:["7","17","70"],c:1,yes:"Right! He became king in 1509, at 17.",no:"He was 17 when he became king in 1509."},
+ {q:"What was the name of Henry's famous warship?",a:["The Mary Rose","The Mayflower","The Titanic"],c:0,yes:"Yes! The Mary Rose. You can still see it today.",no:"It was the Mary Rose. Divers lifted it up in 1982."},
+ {q:"Which food was NOT at Henry's feasts?",a:["Meat pies","Gingerbread","Potatoes"],c:2,yes:"Correct! Potatoes came later.",no:"Potatoes! They hadn't reached England yet."},
+ {q:"How many queens did Henry marry?",a:["Six","Two","Four"],c:0,yes:"Yes! Three Catherines, two Annes, and one Jane.",no:"Six! Three Catherines, two Annes, and one Jane."},
+ {q:"What did all three of Henry's children become?",a:["Painters","Rulers of England","Sailors"],c:1,yes:"Right! Edward, Mary, and Elizabeth all ruled England.",no:"They all became rulers of England: Edward, Mary, and Elizabeth."},
+ {q:"Why did Henry break away from the Pope?",a:["He lost a game of tennis","He wanted a new palace","The Pope would not end his first marriage"],c:2,yes:"Yes. Henry wanted a new marriage and a son, and the Pope said no.",no:"The Pope would not end his first marriage, so Henry broke away."}
+],"Perfect score! You're a true Tudor expert! 👑");
+$id("quizBox").addEventListener("click",()=>{ if($id("quizBox").querySelector(".celebrate")) mark("quiz"); });
+
+makeFacts($id("factsStrip"),[
+ ["🛡️ Giant armor","You can still see Henry's suits of armor in museums, like the Tower of London."],
+ ["🪙 On the coins","British coins still have the letters F D, for Defender of the Faith!"],
+ ["🐕 A dog named Hatch","The Mary Rose ship's dog is now one of the museum's most famous crew members."],
+ ["🎾 Still playing","People still play real tennis at Hampton Court Palace, where Henry played."],
+ ["🎵 A royal songwriter","Henry's song Pastime with Good Company is still sung by choirs today."],
+ ["🌹 Spot the rose","The Tudor rose is still a symbol of England. Look for it on buildings and badges!"]
+]);
+
+/* ---------- PAYOFF CROWN ---------- */
+const KEYS=[["hook","Try on the crown"],["dress","Dress the king"],["feast","Sort the feast"],["dive","Find 5 ship treasures"],["queens","Meet all 6 queens"],["tree","Finish the family tree"],["timeline","Reach the end of the timeline"],["quiz","Finish the quiz"]];
+const C=$id("crown");
+const CROWN="70,240 70,110 125,170 170,80 210,140 250,80 295,170 350,110 350,240";
+const cdefs=svgEl("defs",{},C); const clip=svgEl("clipPath",{id:"fillClip"},cdefs); const clipR=svgEl("rect",{x:0,y:240,width:420,height:0},clip);
+svgEl("polygon",{points:CROWN,fill:"#5b5470",stroke:"#fff","stroke-width":4},C);
+svgEl("polygon",{points:CROWN,fill:"#E6A800","clip-path":"url(#fillClip)"},C);
+svgEl("polygon",{points:CROWN,fill:"none",stroke:"#fff","stroke-width":4},C);
+svgEl("rect",{x:70,y:200,width:280,height:40,fill:"none",stroke:"#fff","stroke-width":3},C);
+const GEMPOS=[[70,110],[170,80],[250,80],[350,110],[105,220],[155,220],[265,220],[315,220]];
+const GEMCOL=["#0072B2","#D55E00","#009E73","#CC79A7","#56B4E9","#F0E442","#E69F00","#7a1f3d"];
+const GEMS=GEMPOS.map(([x,y],k)=>{ const c=svgEl("circle",{cx:x,cy:y,r:16,fill:"#3b3550",stroke:"#fff","stroke-width":3},C); const t=svgEl("text",{x,y:y+6,"text-anchor":"middle","font-size":17,"font-weight":"bold",fill:"#fff"},C); t.textContent="?"; return {c,t,k}; });
+const rose=svgEl("g",{opacity:0},C);
+for(let i=0;i<5;i++){ const a=(i*72-90)*Math.PI/180; svgEl("circle",{cx:210+15*Math.cos(a),cy:220+15*Math.sin(a),r:11,fill:"#C24E00",stroke:"#fff","stroke-width":1.5},rose); }
+for(let i=0;i<5;i++){ const a=(i*72-54)*Math.PI/180; svgEl("circle",{cx:210+8*Math.cos(a),cy:220+8*Math.sin(a),r:7,fill:"#fff"},rose); }
+svgEl("circle",{cx:210,cy:220,r:5,fill:"#E6A800"},rose);
+const cl=svgEl("text",{x:210,y:285,"text-anchor":"middle","font-size":20,fill:"#fff","font-weight":"bold"},C);
+function mark(key){ if(progress[key]) return; progress[key]=true; updateCrown(true); }
+function updateCrown(fromAction){
+  const n=KEYS.filter(k=>progress[k[0]]).length, all=n===KEYS.length;
+  clipR.setAttribute("y",(240-160*n/KEYS.length).toFixed(1)); clipR.setAttribute("height",(160*n/KEYS.length).toFixed(1));
+  GEMS.forEach(({c,t,k})=>{ const on=k<n; c.setAttribute("fill",on?GEMCOL[k]:"#3b3550"); t.textContent=on?"✔":"?"; t.setAttribute("fill",on&&(k===5||k===4)?"#2b2140":"#fff"); });
+  rose.setAttribute("opacity",all?1:0);
+  cl.textContent=n+" of "+KEYS.length+" jewels";
+  $id("crownRead").textContent="💎 Jewels earned: "+n+" of "+KEYS.length;
+  const pc=$id("payoffCard");
+  if(all){ pc.innerHTML="<h3>👑 Your Tudor crown is complete!</h3><p>Great job! You learned about a king of feasts, horses, music, and ships. Henry VIII made some of the biggest changes in England's history. Like every real person, he had good sides and hard sides. And his three children all became rulers of England. Now <b>you</b> know his story!</p>";
+    if(fromAction){ confetti(40); beep([523.25,659.25,783.99,1046.5,1318.5]); } }
+  else pc.innerHTML="<h3>💎 Fill your crown!</h3><p>Each activity adds a jewel: "+KEYS.map(k=>(progress[k[0]]?"✔ ":"○ ")+k[1]).join(", ")+".</p>";
+  ReadAloud.mark(pc);
+}
+
+/* ---------- INIT ---------- */
+$$("#who .card2, #young .card2, #tudor .card2, #ship .card2, #church .card2, #older .card2, .sec-help, .tl-help, .grownups, .hook-text").forEach(n=>n.classList.add("readable"));
+treeBuild(); sortStart(); updateCrown(false);
+ReadAloud.markAll();
+})();
+</script>
+</body>
+</html>
