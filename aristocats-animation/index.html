@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#1f3b63">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How They Animated The Aristocats — Spark Lessons</title>
+<style>
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- color-blind-safe theme (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e9eef5 0%,#f4efe6 50%,#eaf3ea 100%)}
+  header h1{color:#3b4a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--blue)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+  .chip{background:#fff;color:var(--ink);border:4px solid #888;box-shadow:none;padding:10px 14px;font-size:19px;min-height:56px;display:flex;align-items:center;gap:8px}
+  .chip .num{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;color:#000;font-weight:900;border:2px solid #222}
+  .chip.on{background:#2b2140;color:#fff;border-color:#2b2140}
+  .chip.on::after{content:" ✔"}
+  .zoom-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .zoom-row button{font-size:18px;padding:10px 14px;min-height:52px}
+  .zoom-row .z-on{outline:4px solid var(--gold);outline-offset:2px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  .pin{cursor:pointer}
+  .map-caption{margin-top:10px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px 14px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  .round-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .round-row .r-on{outline:4px solid var(--gold);outline-offset:2px}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+  /* ---- saints lessons ---- */
+  nav a:nth-child(7){background:#8b2c00} nav a:nth-child(8){background:#8a5a00} nav a:nth-child(9){background:#444}
+  .meet svg{flex:0 0 280px}
+  .tl-dot{min-height:56px;font-weight:bold;font-size:19px}
+  .tl-dot.active::before{content:"📍 "}
+  .tl-nav{align-items:center;gap:10px}
+  .tl-card{border-color:var(--theme)}
+  .tl-card h3{color:var(--theme)}
+  .tl-dot{border-color:var(--theme)} .tl-dot.active{background:var(--theme)}
+  .step-count{font-weight:bold;font-size:20px;align-self:center}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .stepc{background:#fff;border-radius:18px;padding:14px;border-top:12px solid var(--theme)}
+  .stepc .lvl{display:inline-block;font-size:16px;font-weight:bold;background:#2b2140;color:#fff;border-radius:999px;padding:2px 10px}
+  .stepc h3{margin:6px 0 4px;font-size:23px}
+  .stepc p{margin:0 0 6px}
+  .be-like{margin-top:12px}
+  svg text{font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif}
+  .pin:focus{outline:none} .pin:focus circle.dot,.pin:focus rect.dot{stroke:#E6A800;stroke-width:5}
+
+  :root{ --theme:#1f3b63 }
+  body{background:linear-gradient(180deg,#f3ece0 0%,#eef1f8 50%,#f6eef3 100%)}
+  header h1{color:#1f3b63;text-shadow:3px 3px 0 #fff,5px 5px 0 #E69F00}
+  .card2{border-left-color:var(--theme)}
+  .card2 p{font-size:21px}
+  .hook{border-radius:24px;padding:22px;text-align:center;background:#1b2440;color:#fff;border:4px solid #fff}
+  .hook h2{margin:0 0 8px;font-size:clamp(26px,4.5vw,38px);color:#F0E442}
+  .hook p{font-size:22px}
+  .big-btn{font-size:23px;min-height:70px;padding:14px 26px;background:#E69F00;color:#2b2140}
+  .reveal{max-width:640px;margin:14px auto 0;background:#eef1f8;color:#2b2140;border-radius:14px;border:0 solid #0072B2;padding:0 20px;max-height:0;overflow:hidden;transition:max-height .9s,padding .9s;text-align:left}
+  .reveal.open{max-height:1000px;padding:16px 20px;border-width:4px}
+  #hookArt{width:min(460px,100%);height:auto;display:block;margin:6px auto;border-radius:16px}
+  .sec-help{font-size:21px}
+  .gentle{border-left-color:#3b4a6b !important;background:#f4f6fa}
+  /* flipbook */
+  .flipbox{background:#fff;border-radius:20px;border:4px solid var(--theme);padding:14px;text-align:center}
+  #flipSvg{width:min(620px,100%);height:auto;display:block;margin:0 auto;border-radius:14px;touch-action:none;cursor:grab;background:#fffdf6;border:3px solid #c9bfa8}
+  .flip-count{font-size:22px;font-weight:bold;margin:8px 0}
+  .row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:8px 0}
+  .row button{min-height:64px;font-size:20px}
+  #flipPrev,#flipNext{background:#3b4a6b;min-width:130px}
+  #onionBtn{background:#fff;color:var(--ink);border:4px solid #0072B2}
+  #onionBtn[aria-pressed="true"]{background:#dceefa}
+  #onionBtn[aria-pressed="true"]::after{content:" ✔"}
+  .speed{background:#fff;color:var(--ink);border:4px solid #9aa5b8;min-width:200px}
+  .speed.on{border-color:#009E73;background:#e6f5ef}
+  .speed.on::before{content:"▶ "}
+  .speed small{display:block;font-size:16px;font-weight:normal}
+  #flipStop{background:#D55E00}
+  input[type=range]{width:min(560px,92%);height:44px;accent-color:#0072B2}
+  /* tween */
+  .tweenbox{background:#fff;border-radius:20px;border:4px solid #009E73;padding:14px;text-align:center}
+  .panels{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+  .panel{background:#fffdf6;border:3px solid #c9bfa8;border-radius:14px;padding:6px}
+  .panel svg{width:100%;height:auto;display:block}
+  .panel .lab{font-size:17px;font-weight:bold;margin-top:4px}
+  .panel.q{border-style:dashed;border-color:#009E73}
+  .panel.q.filled{border-style:solid;background:#e6f5ef}
+  .opts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .opts button{background:#fff;color:var(--ink);border:4px solid #9aa5b8;padding:6px;box-shadow:none;min-height:90px}
+  .opts button svg{width:100%;height:auto;display:block;pointer-events:none}
+  .opts button.right{border-color:#009E73;background:#e6f5ef}
+  .opts button.wrong{border-color:#D55E00;background:#fbe9de}
+  .opts button .ol{font-size:18px;font-weight:bold}
+  #tweenNext{background:#009E73;display:none;margin-top:10px}
+  /* cel lab */
+  .lab-wrap{display:grid;grid-template-columns:2fr 1fr;gap:12px;align-items:start}
+  .stagebox{background:#fff;border-radius:18px;border:4px solid #1b2440;padding:6px}
+  #celSvg{width:100%;height:auto;display:block;border-radius:12px}
+  .stack{background:#fff;border-radius:18px;border:4px solid #9aa5b8;padding:10px}
+  .stack h4{margin:0 0 6px;font-size:19px}
+  .stack ol{list-style:none;padding:0;margin:0}
+  .stack li{border:3px solid #9aa5b8;border-radius:10px;padding:6px 8px;margin:5px 0;font-size:17px;background:#f7f7f7}
+  .stack li.on{border-color:#0072B2;background:#dceefa;font-weight:bold}
+  .stack li.on::after{content:" ✔"}
+  #celNext{background:#0072B2;margin-top:10px;min-height:66px;font-size:21px}
+  @media (max-width:760px){.lab-wrap{grid-template-columns:1fr}}
+  /* order */
+  .order-pool{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:10px 0}
+  .order-pool button{background:#fff;color:var(--ink);border:4px solid #9aa5b8;min-height:76px;text-align:left;box-shadow:none;font-size:19px}
+  .order-pool button.oops{animation:shake .4s}
+  .order-list{list-style:none;padding:0;margin:10px 0;counter-reset:st}
+  .order-list li{background:#e6f5ef;border:3px solid #007a5a;border-radius:14px;padding:10px 14px;margin:6px 0;font-size:20px;counter-increment:st}
+  .order-list li::before{content:counter(st)". ✔ ";font-weight:bold}
+  .match-cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .match-cols>div{display:flex;flex-direction:column;gap:10px}
+  .mcard span{font-size:21px}
+  /* payoff */
+  .payoff{background:linear-gradient(180deg,#121a30,#1f3b63);color:#fff;border-radius:22px;padding:18px;text-align:center}
+  #reel{width:min(560px,100%);height:auto;display:block;margin:0 auto}
+  .readout{font-size:22px;font-weight:bold;margin:6px 0 10px}
+  #playMovie{background:#E69F00;color:#2b2140;display:none;margin:6px auto 10px;min-height:66px;font-size:22px}
+  nav a:nth-child(10){background:#0b3d66} nav a:nth-child(11){background:#8a2c62} nav a:nth-child(12){background:#00788a}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>🎬 How They Drew The Aristocats 🐱</h1>
+  <p>How a 1970 cartoon movie was made by hand, one drawing at a time</p>
+</header>
+<nav>
+  <a href="#hook">🐱 Start</a>
+  <a href="#movie">🎬 The Movie</a>
+  <a href="#moving">👀 How Drawings Move</a>
+  <a href="#flipbook">📖 Flipbook</a>
+  <a href="#tween">✏️ In-Betweens</a>
+  <a href="#steps">🛠️ How They Made It</a>
+  <a href="#team">👥 Who Does What</a>
+  <a href="#cels">🎨 Cel Lab</a>
+  <a href="#order">📋 Put in Order</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#payoff">🎞️ Film Strip</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+<section id="hook" class="hook">
+  <svg id="hookArt" viewBox="0 0 420 240" role="img" aria-label="A drawing of an orange cat on a stage"></svg>
+  <h2>How do you make a drawing MOVE?</h2>
+  <p class="hook-text">A drawing on paper can’t move. It just sits there. So how did artists make cartoon cats run, jump, and dance? Let’s find out!</p>
+  <button class="big-btn" id="hookGo" aria-expanded="false">✨ Make the cat jump!</button>
+  <div class="reveal" id="reveal" aria-live="polite">
+    <p style="font-size:21px">That jump was <b>24 different drawings</b>, shown in just <b>one second</b>! That’s the secret of cartoons.</p>
+    <p style="font-size:21px">In 1970, Disney made a cartoon movie called <b>The Aristocats</b>. Every cat in it was drawn <b>by hand</b>, with a pencil, on paper. Let’s see how they did it!</p>
+    <p style="font-size:20px">🎞️ Finish activities to fill up your own <b>film strip</b>!</p>
+  </div>
+</section>
+
+<section id="movie">
+  <h2>🎬 The Movie</h2>
+  <div class="grid">
+    <div class="card2"><h3>🐱 A Movie About Cats</h3><p><b>The Aristocats</b> is a cartoon movie about a mother cat and her three kittens in Paris, France, long ago. They get lost, and a friendly alley cat helps them get home.</p></div>
+    <div class="card2" style="border-left-color:#E69F00"><h3>📅 Made in 1970</h3><p>It was made by <b>Walt Disney Productions</b>. It came to movie theaters in <b>December 1970</b>. That’s more than 50 years ago!</p></div>
+    <div class="card2" style="border-left-color:#009E73"><h3>👍 Walt Said Yes</h3><p><b>Walt Disney</b> saw early drawings and said yes to the idea. That was shortly before he died, in <b>December 1966</b>.</p></div>
+    <div class="card2" style="border-left-color:#0072B2"><h3>🎬 His Team Carried On</h3><p>It was the <b>first</b> Disney cartoon movie made completely after Walt died. The director was <b>Wolfgang Reitherman</b>. His friends called him <b>“Woolie.”</b></p></div>
+    <div class="card2" style="border-left-color:#CC79A7"><h3>👴 The “Nine Old Men”</h3><p>Walt’s top animators had a funny nickname: the <b>“Nine Old Men.”</b> Several of them worked on this movie. Woolie, the director, was one of them too!</p></div>
+    <div class="card2" style="border-left-color:#D55E00"><h3>✏️ A Giant Job</h3><p>The studio said about <b>250 people</b> worked on it for almost <b>4 years</b>. They made about <b>325,000 drawings</b>!</p></div>
+    <div class="card2" style="border-left-color:#56B4E9"><h3>🚫 No Stripes, Please!</h3><p>The alley cat hero was first going to have <b>tabby stripes</b>. But the director remembered how hard the tiger’s stripes were to animate in <b>The Jungle Book</b>. Stripes would have to be drawn on every single drawing! So they left them off.</p></div>
+  </div>
+</section>
+
+<section id="moving">
+  <h2>👀 How Drawings Move</h2>
+  <div class="grid">
+    <div class="card2"><h3>👀 A Trick on Your Eyes</h3><p>A cartoon is lots of <b>still pictures</b>, shown very fast, one after another. Your eyes and brain blend them together. So it looks like they are moving!</p></div>
+    <div class="card2" style="border-left-color:#E69F00"><h3>🎞️ 24 Frames a Second</h3><p>Movie film shows <b>24 pictures every second</b>. Each picture is called a <b>frame</b>.</p></div>
+    <div class="card2" style="border-left-color:#009E73"><h3>✌️ Drawing “On Twos”</h3><p>24 drawings for every second is a LOT! So animators often showed each drawing for <b>2 frames</b>. That’s <b>12 drawings</b> a second. They call it drawing <b>“on twos.”</b></p></div>
+    <div class="card2" style="border-left-color:#D55E00"><h3>⚡ “On Ones” for Fast Moves</h3><p>For a quick move, twos can look too slow. So animators drew a new picture for <b>every</b> frame. That’s called <b>“on ones.”</b></p></div>
+  </div>
+  <h3 id="flipbook" style="margin-top:22px">📖 Try It: The Flipbook</h3>
+  <p class="sec-help flip-help">This is our own cat, Pip. Here are 24 drawings of Pip jumping. Tap the picture, or drag across it, to flip through the drawings. Then try the speed buttons. Which speed looks smoothest?</p>
+  <div class="flipbox">
+    <svg id="flipSvg" viewBox="0 0 420 240" role="img" aria-label="Flipbook of a cat jumping. Tap or drag to flip."></svg>
+    <div class="flip-count" id="flipCount" aria-live="polite">Drawing 1 of 24</div>
+    <input type="range" id="flipRange" min="0" max="23" value="0" aria-label="Choose a drawing">
+    <div class="row">
+      <button id="flipPrev">◀ Back</button>
+      <button id="flipNext">Next ▶</button>
+      <button id="onionBtn" aria-pressed="false">🧅 Onion skin</button>
+    </div>
+    <div class="row">
+      <button class="speed" data-step="1">⚡ On ones<small>24 drawings a second</small></button>
+      <button class="speed" data-step="2">✌️ On twos<small>12 drawings a second</small></button>
+      <button class="speed" data-step="6">🐢 Choppy<small>Only 4 drawings a second</small></button>
+      <button id="flipStop">⏹ Stop</button>
+    </div>
+    <div class="card2 readable" id="flipCap" style="text-align:left;border-left-color:#0072B2"><p>Tap a speed button to play the jump. Try at least two speeds!</p></div>
+  </div>
+</section>
+
+<section id="tween">
+  <h2>✏️ Draw the In-Between</h2>
+  <div class="grid">
+    <div class="card2"><h3>🔑 Key Poses</h3><p>A top animator drew the <b>most important poses</b> first, like the start and end of a move. These are called <b>keys</b>.</p></div>
+    <div class="card2" style="border-left-color:#009E73"><h3>➰ The In-Betweens</h3><p>Then helpers called <b>in-betweeners</b> drew the drawings in the <b>middle</b>, so the move looks smooth.</p></div>
+    <div class="card2" style="border-left-color:#0072B2"><h3>🧅 Onion Skin</h3><p>Animation paper is thin. Artists could see the drawing underneath, like the thin skin of an onion! That helped them draw the next pose. Try the 🧅 button on the flipbook.</p></div>
+  </div>
+  <p class="sec-help tween-help">Now you are the in-betweener! Look at the first key and the last key. Which drawing goes in the middle?</p>
+  <div class="tweenbox">
+    <div class="step-count" id="tweenCount"></div>
+    <div class="panels" id="tweenPanels"></div>
+    <div class="opts" id="tweenOpts"></div>
+    <div class="card2 readable" id="tweenCap" style="text-align:left;margin-top:10px;border-left-color:#009E73"></div>
+    <button id="tweenNext">Next one ▶</button>
+  </div>
+</section>
+
+<section id="steps">
+  <h2>🛠️ How They Made It, Step by Step</h2>
+  <div class="grid">
+    <div class="card2"><h3>📋 1. Story First</h3><p>Story artists drew the whole movie like a giant comic strip, called a <b>storyboard</b>. It helped everyone plan each scene.</p></div>
+    <div class="card2" style="border-left-color:#E69F00"><h3>🎤 2. Voices Next</h3><p>Actors recorded the voices <b>before</b> the drawing began. Then the animators made the mouths match the words. In this movie, the cats were even based on their voice actors’ personalities!</p></div>
+    <div class="card2" style="border-left-color:#009E73"><h3>🐈 3. Designing the Cats</h3><p>An artist named <b>Ken Anderson</b> spent about <b>18 months</b> working out how the characters should look.</p></div>
+    <div class="card2" style="border-left-color:#0072B2"><h3>🔑 4. Key Poses</h3><p>Top animators drew the key poses. Four famous ones led the animation: <b>Milt Kahl</b>, <b>Frank Thomas</b>, <b>Ollie Johnston</b>, and <b>John Lounsbery</b>.</p></div>
+    <div class="card2" style="border-left-color:#CC79A7"><h3>🎞️ 5. Pencil Test</h3><p>The rough pencil drawings were filmed in black and white. Animators watched the test to check the movement before anything was finished.</p></div>
+    <div class="card2" style="border-left-color:#56B4E9"><h3>🧹 6. Clean-Up and In-Betweens</h3><p>Clean-up artists traced neat lines over the rough drawings. In-betweeners drew the drawings in the middle.</p></div>
+    <div class="card2" style="border-left-color:#D55E00"><h3>📠 7. The Copy Machine</h3><p>Long ago, artists traced every line onto clear plastic with ink, by hand. But by this movie, a <b>Xerox</b> copy machine printed the drawings right onto clear sheets called <b>cels</b>. Disney first did this for a whole movie with <b>One Hundred and One Dalmatians</b>, in 1961.</p></div>
+    <div class="card2" style="border-left-color:#E69F00"><h3>✏️ A Sketchy Look</h3><p>The copied lines look a bit <b>sketchy</b>, like pencil lines. That’s why cartoons from this time have black, scribbly-looking outlines. Look for them when you watch!</p></div>
+    <div class="card2" style="border-left-color:#009E73"><h3>🎨 8. Paint on the Back</h3><p>Painters painted the colors on the <b>back</b> of each cel. That way, the black lines stay neat on top. The studio mixed its own paints, about <b>200 colors</b> for this movie!</p></div>
+    <div class="card2" style="border-left-color:#0072B2"><h3>🖌️ 9. Backgrounds</h3><p>Background artists painted the streets, rooms, and skies with thin, watery paint. One of them, <b>Al Dempster</b>, had spent a month painting in Paris. The studio said they made about <b>900</b> backgrounds!</p></div>
+    <div class="card2" style="border-left-color:#CC79A7"><h3>📷 10. Click, Click, Click</h3><p>Each cel was laid on its background, with glass on top to hold it flat. A special camera took <b>one picture at a time</b>: one frame, then the next, then the next.</p></div>
+    <div class="card2" style="border-left-color:#D55E00"><h3>🎵 11. Music and Sound</h3><p>Songs, music, and sound effects were added. Then the movie went to theaters, just before Christmas, 1970!</p></div>
+  </div>
+</section>
+
+<section id="team">
+  <h2>👥 Who Does What?</h2>
+  <p class="sec-help">It took a big team to make a cartoon movie! Tap a job, then tap what that person does.</p>
+  <div class="match-cols"><div id="mLeft"></div><div id="mRight"></div></div>
+  <div class="card2 readable" id="mStatus" style="margin-top:12px;border-left-color:#E69F00"></div>
+</section>
+
+<section id="cels">
+  <h2>🎨 The Cel Lab: Build One Frame</h2>
+  <p class="sec-help cel-help">Let’s make ONE frame of a cartoon, the way it was done in 1970. Tap “Next step” to add each layer.</p>
+  <div class="lab-wrap">
+    <div class="stagebox"><svg id="celSvg" viewBox="0 0 420 260" role="img" aria-label="Building one cartoon frame, layer by layer"></svg></div>
+    <div class="stack"><h4>📚 Layers (top to bottom)</h4><ol id="stackList"></ol></div>
+  </div>
+  <div class="card2 readable" id="celCap" style="margin-top:10px;border-left-color:#0072B2"></div>
+  <button id="celNext">Next step ▶</button>
+</section>
+
+<section id="order">
+  <h2>📋 Put the Steps in Order</h2>
+  <p class="sec-help order-help">How was a cartoon movie made? Tap what happens <b>first</b>, then what comes next, all the way to the end.</p>
+  <ol class="order-list" id="orderList"></ol>
+  <div class="order-pool" id="orderPool"></div>
+  <div class="card2 readable" id="orderCap" style="border-left-color:#E69F00"><p>Step 1 of 8: What happens first?</p></div>
+</section>
+
+<section id="quiz">
+  <h2>❓ Quiz Challenge</h2>
+  <p>Finish the quiz to fill a frame! Each question is read aloud with its choices.</p>
+  <div id="quizBox"></div>
+  <h3 style="margin-top:22px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<section id="payoff">
+  <h2>🎞️ Fill Your Film Strip</h2>
+  <div class="payoff">
+    <svg id="reel" viewBox="0 0 480 320" role="img" aria-label="A film strip with seven frames that fill in as you finish activities, above a little movie screen"></svg>
+    <div class="readout" id="reelRead" aria-live="polite"></div>
+    <button id="playMovie">▶ Play my cartoon!</button>
+    <div class="card2 readable" id="payoffCard" style="color:var(--ink);border-left-color:#E69F00;text-align:left"></div>
+  </div>
+</section>
+
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>How hand-drawn (cel) animation works: persistence of vision, 24 frames per second, animating “on twos” versus “on ones,” key poses and in-betweens, onion-skinning.</li>
+      <li>The production pipeline of a late-1960s Disney feature: storyboard, voice recording, character design, key animation, pencil test, clean-up and in-betweening, xerographic transfer to cels, painting on the reverse of the cel, background painting, and frame-by-frame photography on an animation (rostrum) camera.</li>
+      <li>Background on <i>The Aristocats</i> (Walt Disney Productions, US release 24 December 1970; premiere 11 December 1970), directed by Wolfgang Reitherman.</li>
+    </ul>
+    <h3>Level and time</h3><p>Written for a young 8-year-old (short sentences, one idea per card), with read-aloud on every card. About <b>15–20 minutes</b>; easy to split (the movie and how drawings move; then the activities, quiz, and film strip).</p>
+    <h3>Copyright note</h3><p>No images, frames, or character designs from the film are used. “Pip” and every drawing here are original SVG art made for this page; the film is mentioned by name only. A great follow-up is to watch the film together and look for the things in this lesson.</p>
+    <h3>Accuracy notes and sources</h3>
+    <ul>
+      <li><b>Film facts</b> (Walt Disney Productions; Reitherman directing and co-producing with Winston Hibler; Walt approving the project from Ken Anderson’s preliminary sketches shortly before his death on 15 December 1966; animation starting after <i>The Jungle Book</i> was finished; Anderson’s 18 months of character design; characters patterned on the voice actors; O’Malley’s tabby stripes dropped because of the trouble animating Shere Khan; Maurice Chevalier singing the title song; <i>Robin Hood</i> (1973) reusing dance animation from this film) are from Wikipedia’s articles on <i>The Aristocats</i> and <i>Robin Hood</i>. The stripes story is also discussed by Disney animator Andreas Deja on his blog.</li>
+      <li><b>“First made completely after Walt’s death”</b> comes from the studio’s production notes (reprinted by Blu-ray.com). The project itself began earlier (as an idea for a live-action TV show, starting in 1962), so the lesson says Walt approved it and it was <i>made</i> after his death.</li>
+      <li><b>Animators:</b> the AFI Catalog credits Milt Kahl, Frank Thomas, Ollie Johnston, and John Lounsbery as directing animators, and Eric Larson as a character animator; Reitherman was also one of the Nine Old Men. Wikipedia says “five” of the Nine Old Men worked on it; because counts differ depending on whether Reitherman is included, the lesson says “several.”</li>
+      <li><b>Production numbers</b> (about 250 people, nearly four years, about 325,000 drawings, about 900 backgrounds, about 200 studio-mixed colors) are from the studio’s production notes, not independent sources, so they are given as “about” and attributed to the studio.</li>
+      <li><b>Xerography:</b> used for <i>The Aristocats</i> per the production notes and Deja; Ub Iwerks adapted it for Disney; <i>One Hundred and One Dalmatians</i> (1961) was the first feature to use it throughout (Wikipedia, <i>Traditional animation</i>).</li>
+      <li><b>Backgrounds:</b> in a 1972 interview (posted on The Animation Guild blog), background artist Al Dempster says they painted with “thin, wash-type poster color,” and that on <i>The Aristocats</i> a Xerox line was also used on backgrounds. His month painting in Paris is from the production notes.</li>
+      <li><b>General technique</b> (24 fps, twos and ones, storyboards, voices first, pencil tests, peg holes, painting the reverse of the cel, glass platen, animation camera, the word “cel” from celluloid, digital ink and paint at Disney by <i>The Rescuers Down Under</i>, 1990) is from Wikipedia’s <i>Traditional animation</i> article. In real productions these steps overlapped (backgrounds were painted alongside the animation, for example); the order game shows the usual flow.</li>
+      <li><b>Left out because we could not confirm them well:</b> the exact running time (sources say 78 or 79 minutes), the production notes’ frame count (it doesn’t match its own running time), and any claim that <i>The Aristocats</i> itself reused older animation.</li>
+      <li><b>Softened:</b> in the film, the butler drugs the cats and takes them away to get the inheritance; the lesson says only that the cats “get lost.”</li>
+    </ul>
+    <h3>Follow-up activity</h3><p><b>Make a sticky-note flipbook:</b> draw a ball bouncing on 12 sticky notes, a little lower or higher each page, then flip! Next, draw just the first and last pose of a cat’s tail swish, and fill in the middle drawings yourself, like a real in-betweener.</p>
+  </div>
+</section>
+</main>
+<footer>Made for young readers 🐱 · All drawings made just for this page · Works offline</footer>
+<script>
+(function(){
+"use strict";
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    t=t.replace(/[✔✘]/g," ").replace(/\bcels\b/gi,"cells").replace(/\bcel\b/gi,"cell");
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- sound + confetti ---------- */
+let actx=null;
+function beep(notes,type){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; notes.forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f; const t=t0+i*0.1;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.18,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32); }); }catch(e){} }
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS=["🐱","🎬","✏️","🎨","⭐","🎞️","✨"];
+function confetti(n){ for(let i=0;i<n;i++){ const s=document.createElement("div"); s.className="confetti"; s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s"; document.body.appendChild(s); setTimeout(()=>s.remove(),4200); } }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function makeQuiz(box, QUIZ, praise){
+  let qi=0, score=0;
+  function renderQ(){
+    const item=QUIZ[qi]; ReadAloud.stop();
+    box.innerHTML='<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div><div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+    const qEl=box.querySelector(".q-text"); qEl.dataset.say=item.q+" Is it: "+item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ")+"?"; ReadAloud.mark(qEl);
+    const ans=box.querySelector(".answers"), fb=box.querySelector(".feedback");
+    item.a.forEach((txt,i)=>{ const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+      b.addEventListener("click",()=>{ [...ans.children].forEach(x=>x.disabled=true);
+        if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+        else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+        ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+        const next=document.createElement("button"); next.style.background="var(--purple)"; next.textContent=qi<QUIZ.length-1?"Next question ➡":"See my score 🏆";
+        next.addEventListener("click",()=>{ qi++; qi<QUIZ.length?renderQ():renderEnd(); }); fb.after(next); });
+      ans.appendChild(b); });
+  }
+  function renderEnd(){
+    ReadAloud.stop(); const stars="⭐".repeat(score)+"☆".repeat(QUIZ.length-score);
+    const msg=score===QUIZ.length?praise:score>=Math.ceil(QUIZ.length*0.6)?"Awesome job! 🎉":score>=2?"Nice work! Explore more and try again! 📜":"Good try! Explore and try again! 💪";
+    box.innerHTML='<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+    const c=box.querySelector(".celebrate"); c.dataset.say="You got "+score+" out of "+QUIZ.length+"! "+msg; ReadAloud.mark(c);
+    const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--teal)"; again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+    const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); box.appendChild(wrap); confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+  }
+  renderQ();
+}
+
+/* ---------- TIMELINE ---------- */
+function makeTimeline(root, EVENTS){
+  let i=0;
+  root.innerHTML='<div class="tl-track" role="list"></div><div class="tl-card readable" aria-live="polite"><div class="big"></div><div><h3></h3><p></p></div></div>'+
+    '<div class="tl-nav"><button class="tl-prev" style="background:#666">◀ Earlier</button><span class="step-count tl-count"></span><button class="tl-next" style="background:var(--theme)">Later ▶</button></div>';
+  const track=root.querySelector(".tl-track"), card=root.querySelector(".tl-card"), prev=root.querySelector(".tl-prev"), next=root.querySelector(".tl-next"), count=root.querySelector(".tl-count");
+  EVENTS.forEach((e,k)=>{ const b=document.createElement("button"); b.className="tl-dot"; b.textContent=e.year; b.setAttribute("aria-label",e.year+": "+e.title);
+    b.addEventListener("click",()=>show(k,true)); track.appendChild(b); });
+  function show(k,speak){
+    i=k; const e=EVENTS[k]; ReadAloud.stopIf(card);
+    [...track.children].forEach((b,j)=>{ b.classList.toggle("active",j===k); b.setAttribute("aria-current",j===k?"true":"false"); });
+    card.querySelector(".big").textContent=e.icon; card.querySelector("h3").textContent=e.year+" — "+e.title; card.querySelector("p").textContent=e.text;
+    prev.disabled=k===0; next.disabled=k===EVENTS.length-1; count.textContent=(k+1)+" of "+EVENTS.length;
+    const b=track.children[k]; track.scrollLeft=b.offsetLeft-track.clientWidth/2+b.offsetWidth/2;
+    ReadAloud.mark(card); if(speak) ReadAloud.speakEl(card);
+  }
+  prev.addEventListener("click",()=>{ if(i>0) show(i-1,true); });
+  next.addEventListener("click",()=>{ if(i<EVENTS.length-1) show(i+1,true); });
+  show(0,false);
+  return {show};
+}
+
+/* ---------- MATCHING GAME ---------- */
+function makeMatch(o){ // o: {left,right,status,pairs:[{id,l,r,tip}], doneMsg, onDone}
+  let selL=null, selR=null, matched=0;
+  const N=o.pairs.length;
+  function build(){
+    selL=selR=null; matched=0; ReadAloud.stop();
+    o.left.innerHTML=""; o.right.innerHTML="";
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="L";
+      c.innerHTML='<span>'+p.l+'</span>'; o.left.appendChild(c); ReadAloud.mark(c); });
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard name-card readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="R";
+      c.innerHTML='<span>'+p.r+'</span>'; o.right.appendChild(c); ReadAloud.mark(c); });
+    o.status.textContent="Matched: 0 of "+N; o.status.style.color=""; o.status.classList.add("readable"); ReadAloud.mark(o.status);
+    if(o.onReset) o.onReset();
+  }
+  function pick(c){
+    if(c.classList.contains("done")) return;
+    if(c.dataset.side==="L"){ if(selL) selL.classList.remove("sel"); selL = selL===c?null:c; if(selL) c.classList.add("sel"); }
+    else { if(selR) selR.classList.remove("sel"); selR = selR===c?null:c; if(selR) c.classList.add("sel"); }
+    if(selL && selR){
+      const a=selL,b=selR; selL=selR=null; a.classList.remove("sel"); b.classList.remove("sel");
+      const p=o.pairs.find(x=>x.id===a.dataset.id);
+      if(a.dataset.id===b.dataset.id){
+        a.classList.add("done"); b.classList.add("done"); matched++; beep(HAPPY);
+        o.status.textContent="✔ Yes! "+p.tip+" ("+matched+" of "+N+")"; o.status.style.color="var(--blue)";
+        if(matched===N){ o.status.textContent=o.doneMsg; confetti(24); if(o.onDone) o.onDone(); }
+        ReadAloud.mark(o.status); setTimeout(()=>ReadAloud.speakEl(o.status),0);
+      } else {
+        [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+        o.status.textContent="✘ Not quite — read it again and try another one!"; o.status.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(o.status);
+      }
+    }
+  }
+  [o.left,o.right].forEach(col=>{
+    col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+    col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard")&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+  });
+  build();
+  return {build};
+}
+
+/* ---------- FUN FACTS ---------- */
+function makeFacts(strip, FACTS){
+  FACTS.forEach(([front,back])=>{ const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+    d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+    const flip=()=>d.classList.toggle("flipped");
+    d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+    d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+    strip.appendChild(d); ReadAloud.mark(d); });
+}
+
+/* ---------- a soft bell sound ---------- */
+function bell(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; [[392,0.16],[784,0.07],[1176,0.04],[1568,0.02]].forEach(([f,a])=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type="sine"; o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(a,t0+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t0+1.8); o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0+1.9); }); }catch(e){} }
+
+function projector(lon0,lon1,lat0,lat1,W,H){ return (lon,lat)=>[ +((lon-lon0)/(lon1-lon0)*W).toFixed(1), +((lat1-lat)/(lat1-lat0)*H).toFixed(1) ]; }
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs,parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+
+const $id=id=>document.getElementById(id), $$=q=>[...document.querySelectorAll(q)];
+const progress={hook:false,flip:false,tween:false,team:false,cel:false,order:false,quiz:false};
+
+/* ---------- PIP THE CAT (original drawing) ---------- */
+const INK="#2b2140", FUR="#E69F00", FUR2="#B8790A", MUZ="#FBE3B0";
+const LEGS={stand:[[24,30],[-22,30]],crouch:[[32,24],[-30,24]],push:[[40,10],[-50,22]],tuck:[[28,18],[-14,22]],reach:[[44,24],[-42,6]]};
+function styleFor(mode,fill){
+  if(mode==="color") return {fill:fill,stroke:INK,"stroke-width":3,"stroke-linejoin":"round"};
+  if(mode==="paint") return {fill:fill,stroke:"none"};
+  if(mode==="pencil") return {fill:"none",stroke:"#6b6e7e","stroke-width":1.8,"stroke-linejoin":"round"};
+  if(mode==="onion") return {fill:"none",stroke:"#0072B2","stroke-width":2.2,"stroke-linejoin":"round"};
+  return {fill:"none",stroke:"#141414","stroke-width":2.4,"stroke-linejoin":"round"}; // line (Xerox)
+}
+function leg(g,sx,sy,ex,ey,st){ const mx=(sx+ex)/2,my=(sy+ey)/2,len=Math.hypot(ex-sx,ey-sy),ang=Math.atan2(ey-sy,ex-sx)*180/Math.PI;
+  svgEl("ellipse",Object.assign({cx:mx.toFixed(1),cy:my.toFixed(1),rx:(len/2+5).toFixed(1),ry:5.5,transform:"rotate("+ang.toFixed(1)+" "+mx.toFixed(1)+" "+my.toFixed(1)+")"},st),g); }
+function tail(g,th,st){ const a=th*Math.PI/180, P0=[-30,-4], P2=[-30-36*Math.sin(a),-4-36*Math.cos(a)];
+  const nx=Math.cos(a), ny=-Math.sin(a); const P1=[(P0[0]+P2[0])/2+nx*9,(P0[1]+P2[1])/2+ny*9];
+  const L=[],R=[]; for(let i=0;i<=10;i++){ const s=i/10, q=1-s;
+    const x=q*q*P0[0]+2*q*s*P1[0]+s*s*P2[0], y=q*q*P0[1]+2*q*s*P1[1]+s*s*P2[1];
+    const dx=2*q*(P1[0]-P0[0])+2*s*(P2[0]-P1[0]), dy=2*q*(P1[1]-P0[1])+2*s*(P2[1]-P1[1]); const d=Math.hypot(dx,dy)||1;
+    const w=5*(1-0.4*s); L.push([x-dy/d*w,y+dx/d*w]); R.unshift([x+dy/d*w,y-dx/d*w]); }
+  svgEl("path",Object.assign({d:"M"+L.concat(R).map(p=>p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" L")+" Z"},st),g); }
+function drawCat(parent,o){
+  const mode=o.mode||"color", x=o.x||0, y=o.y||0, rot=o.rot||0, sx=o.sx||1, sy=o.sy||1;
+  const g=svgEl("g",{transform:"translate("+x.toFixed(1)+" "+y.toFixed(1)+") rotate("+rot.toFixed(1)+") scale("+sx.toFixed(3)+" "+sy.toFixed(3)+")"},parent);
+  if(o.op!==undefined) g.setAttribute("opacity",o.op);
+  const main=styleFor(mode,FUR), dark=styleFor(mode,FUR2), muz=styleFor(mode,MUZ);
+  const L=LEGS[o.legs||"stand"];
+  leg(g,26,8,L[0][0]+6,L[0][1],dark); leg(g,-18,8,L[1][0]+6,L[1][1],dark);
+  tail(g,o.tail===undefined?50:o.tail,main);
+  leg(g,20,8,L[0][0],L[0][1],main); leg(g,-24,8,L[1][0],L[1][1],main);
+  svgEl("ellipse",Object.assign({cx:0,cy:0,rx:34,ry:18},main),g);
+  const h=svgEl("g",{transform:"translate(32 -16) rotate("+(o.head||0)+")"},g);
+  svgEl("polygon",Object.assign({points:"-12,-5 -9,-25 1,-13"},main),h);
+  svgEl("polygon",Object.assign({points:"2,-13 11,-25 14,-4"},main),h);
+  svgEl("circle",Object.assign({cx:0,cy:0,r:15},main),h);
+  svgEl("ellipse",Object.assign({cx:8,cy:6,rx:7,ry:5},muz),h);
+  if(mode!=="paint"){
+    const ink=mode==="color"?INK:main.stroke, eye=o.eye||"open";
+    if(eye==="open") svgEl("ellipse",{cx:5,cy:-3,rx:2.6,ry:3.8,fill:ink},h);
+    else if(eye==="half"){ svgEl("ellipse",{cx:5,cy:-2,rx:2.6,ry:1.6,fill:ink},h); svgEl("path",{d:"M1 -3.6 L9 -3.6",stroke:ink,"stroke-width":2,"stroke-linecap":"round"},h); }
+    else if(eye==="closed") svgEl("path",{d:"M1 -3 Q5 0.5 9 -3",fill:"none",stroke:ink,"stroke-width":2,"stroke-linecap":"round"},h);
+    else { svgEl("circle",{cx:5,cy:-3,r:5.5,fill:"#fff",stroke:ink,"stroke-width":1.5},h); svgEl("circle",{cx:6,cy:-3,r:2.5,fill:ink},h); }
+    svgEl("path",{d:"M12 2 L17 2 L14.5 5 Z",fill:mode==="color"?"#CC79A7":"none",stroke:ink,"stroke-width":1.2},h);
+    svgEl("path",{d:"M15 9 L29 6 M15 10 L29 12",stroke:ink,"stroke-width":1,fill:"none"},h);
+  }
+  if(mode==="pencil"){ const c=g.cloneNode(true); c.setAttribute("opacity",.35); c.setAttribute("transform",g.getAttribute("transform")+" translate(1.2 0.8)"); parent.appendChild(c); }
+  return g;
+}
+/* the 24-drawing jump */
+const GROUND=200;
+function P(t){
+  if(t<0.25){ const k=t/0.25, legs=k>0.3?"crouch":"stand", sy=1-0.15*k, sx=1+0.1*k; return {x:70,y:GROUND-(legs==="crouch"?24:30)*sy,sx,sy,legs,tail:50+30*k,rot:0}; }
+  if(t<0.75){ const k=(t-0.25)/0.5, e=1-4*k*(1-k), sy=1+0.1*e, sx=1/sy;
+    return {x:70+280*k,y:GROUND-30-110*4*k*(1-k),rot:-22+44*k,sx,sy,legs:k<0.25?"push":k<0.7?"tuck":"reach",tail:110-90*k}; }
+  if(t<0.875){ const k=(t-0.75)/0.125, sy=1-0.2*(1-k), sx=1+0.12*(1-k); return {x:350,y:GROUND-24*sy,sx,sy,legs:"crouch",tail:20+30*k,rot:0}; }
+  return {x:350,y:GROUND-30,legs:"stand",tail:50,rot:0};
+}
+const FRAMES=[...Array(24)].map((_,i)=>P(i/24));
+function scene(svg,withSky){
+  if(withSky){ svgEl("rect",{width:420,height:240,rx:16,fill:"#1b2440"},svg);
+    [[40,30],[120,50],[220,22],[300,44],[390,26],[170,80]].forEach(([x,y])=>svgEl("circle",{cx:x,cy:y,r:2.2,fill:"#fff"},svg));
+    svgEl("circle",{cx:370,cy:58,r:24,fill:"#F0E442"},svg);
+    svgEl("rect",{x:0,y:GROUND,width:420,height:40,fill:"#6b4a3a"},svg); svgEl("rect",{x:0,y:GROUND,width:420,height:6,fill:"#8b6a52"},svg); }
+  else { svgEl("line",{x1:10,y1:GROUND,x2:410,y2:GROUND,stroke:"#9a8f7a","stroke-width":3},svg); }
+}
+
+/* ---------- HOOK ---------- */
+const HK=$id("hookArt"); scene(HK,true); const hookCat=svgEl("g",{},HK); drawCat(hookCat,FRAMES[0]);
+let hookTimer=null;
+function hookJump(){ clearInterval(hookTimer); let i=0; hookTimer=setInterval(()=>{ hookCat.innerHTML=""; drawCat(hookCat,FRAMES[Math.min(i,23)]); i++;
+  if(i>34){ clearInterval(hookTimer); hookCat.innerHTML=""; drawCat(hookCat,FRAMES[0]); } },1000/24); }
+$id("hookGo").addEventListener("click",()=>{ const r=$id("reveal"); r.classList.add("open"); $id("hookGo").setAttribute("aria-expanded","true");
+  $id("hookGo").textContent="✨ Jump again!"; hookJump(); beep([523.25,659.25,783.99]); ReadAloud.mark(r); ReadAloud.speakEl(r); mark("hook"); });
+
+/* ---------- FLIPBOOK ---------- */
+const FS=$id("flipSvg"); scene(FS,false);
+const onionG=svgEl("g",{},FS), flipG=svgEl("g",{},FS);
+const flipLabel=svgEl("text",{x:410,y:228,"text-anchor":"end","font-size":15,fill:"#6b6e7e"},FS);
+let fi=0, onion=false, playT=null; const speedsUsed=new Set();
+function showFrame(i){ fi=(i+24)%24; flipG.innerHTML=""; onionG.innerHTML="";
+  if(onion&&fi>0) drawCat(onionG,Object.assign({mode:"onion",op:.6},FRAMES[fi-1]));
+  drawCat(flipG,FRAMES[fi]); $id("flipCount").textContent="Drawing "+(fi+1)+" of 24"; $id("flipRange").value=fi;
+  flipLabel.textContent=(onion&&fi>0)?"blue = the drawing before":""; }
+function stopPlay(){ clearInterval(playT); playT=null; $$(".speed").forEach(b=>b.classList.remove("on")); }
+const SPEEDS={1:"On ones: a new drawing for every frame, 24 a second. Super smooth!",2:"On twos: each drawing is shown for 2 frames, so 12 drawings a second. Still smooth, and half the drawing work!",6:"Choppy: only 4 drawings a second. See how jumpy it looks? That’s why animators need lots of drawings."};
+$$(".speed").forEach(b=>b.addEventListener("click",()=>{ stopPlay(); b.classList.add("on"); const step=+b.dataset.step; let tick=0;
+  playT=setInterval(()=>{ showFrame(Math.floor(tick/step)*step%24); tick++; if(tick>=72) stopPlay(); },1000/24);
+  speedsUsed.add(step); const c=$id("flipCap");
+  c.innerHTML="<p>"+SPEEDS[step]+(speedsUsed.size>=2&&!progress.flip?" 🎉 You tried two speeds. Great animator eyes!":"")+"</p>"; ReadAloud.mark(c); ReadAloud.speakEl(c);
+  if(speedsUsed.size>=2) mark("flip"); }));
+$id("flipStop").addEventListener("click",stopPlay);
+$id("flipPrev").addEventListener("click",()=>{ stopPlay(); showFrame(fi-1); });
+$id("flipNext").addEventListener("click",()=>{ stopPlay(); showFrame(fi+1); });
+$id("flipRange").addEventListener("input",e=>{ stopPlay(); showFrame(+e.target.value); });
+$id("onionBtn").addEventListener("click",()=>{ onion=!onion; $id("onionBtn").setAttribute("aria-pressed",onion); showFrame(fi);
+  const c=$id("flipCap"); c.innerHTML="<p>"+(onion?"Onion skin is on. The faint blue cat is the drawing before. See how each drawing moves just a little bit?":"Onion skin is off.")+"</p>"; ReadAloud.mark(c); ReadAloud.speakEl(c); });
+let dragX=null, dragged=false;
+FS.addEventListener("pointerdown",e=>{ stopPlay(); dragX=e.clientX; dragged=false; try{FS.setPointerCapture(e.pointerId);}catch(_){} });
+FS.addEventListener("pointermove",e=>{ if(dragX===null) return; const step=FS.getBoundingClientRect().width/30, d=e.clientX-dragX;
+  if(Math.abs(d)>=step){ const n=Math.trunc(d/step); showFrame(Math.max(0,Math.min(23,fi+n))); dragX+=n*step; dragged=true; } });
+FS.addEventListener("pointerup",()=>{ dragX=null; });
+FS.addEventListener("click",()=>{ if(!dragged){ stopPlay(); showFrame(fi+1); } dragged=false; });
+
+/* ---------- IN-BETWEEN GAME ---------- */
+const STAND={x:200,y:170,legs:"stand"};
+const ROUNDS=[
+ {name:"Tail swish",vb:"110 90 200 120",a:{tail:105},c:{tail:-5},opts:[{tail:50},{tail:105},{tail:175}],ok:0,
+  yes:"Yes! The tail is halfway between the two keys. Swish!",no:"Look at the tail. The middle drawing should be halfway between the first and the last."},
+ {name:"Blink",vb:"205 120 70 50",a:{eye:"open"},c:{eye:"closed"},opts:[{eye:"half"},{eye:"wide"},{eye:"open"}],ok:0,
+  yes:"Right! A half-closed eye goes between open and closed. Blink!",no:"Between open and closed, the eye should be half closed."},
+ {name:"Look up",vb:"170 95 120 90",a:{head:28},c:{head:-28},opts:[{head:28},{head:0},{head:-70}],ok:1,
+  yes:"Yes! First looking down, then straight ahead, then up.",no:"The head goes from looking down to looking up. In the middle, it looks straight ahead."},
+ {name:"Jump",vb:"0 0 420 230",jump:true,a:FRAMES[5],c:FRAMES[12],opts:[FRAMES[21],FRAMES[8],FRAMES[0]],ok:1,
+  yes:"Great! Halfway up the jump goes between crouching and the top.",no:"The cat starts crouched and ends at the top of the jump. The middle drawing is halfway up."}
+];
+let ri=0, rDone=false;
+function catSvg(r,pose){ const s=document.createElementNS(SVGNS,"svg"); s.setAttribute("viewBox",r.vb); s.setAttribute("aria-hidden","true");
+  if(r.jump) scene(s,false); else svgEl("line",{x1:0,y1:200,x2:420,y2:200,stroke:"#9a8f7a","stroke-width":3},s);
+  drawCat(s,r.jump?pose:Object.assign({},STAND,pose)); return s; }
+function tweenRound(){ const r=ROUNDS[ri]; rDone=false; $id("tweenNext").style.display="none";
+  $id("tweenCount").textContent="Drawing "+(ri+1)+" of "+ROUNDS.length+": "+r.name;
+  const P=$id("tweenPanels"); P.innerHTML="";
+  [["Key 1 (start)",r.a],["? Middle",null],["Key 2 (end)",r.c]].forEach(([lab,pose],k)=>{ const d=document.createElement("div"); d.className="panel"+(k===1?" q":""); if(k===1) d.id="qPanel";
+    if(pose) d.appendChild(catSvg(r,pose)); else { const s=document.createElementNS(SVGNS,"svg"); s.setAttribute("viewBox",r.vb); s.setAttribute("aria-hidden","true");
+      const vb=r.vb.split(" ").map(Number); const t=svgEl("text",{x:vb[0]+vb[2]/2,y:vb[1]+vb[3]*0.62,"text-anchor":"middle","font-size":vb[3]*0.45,fill:"#009E73","font-weight":"bold"},s); t.textContent="?"; d.appendChild(s); }
+    const l=document.createElement("div"); l.className="lab"; l.textContent=lab; d.appendChild(l); P.appendChild(d); });
+  const O=$id("tweenOpts"); O.innerHTML="";
+  shuffle(r.opts.map((p,k)=>({p,k}))).forEach(({p,k},n)=>{ const b=document.createElement("button"); b.appendChild(catSvg(r,p));
+    const l=document.createElement("div"); l.className="ol"; l.textContent="Choice "+["A","B","C"][n]; b.appendChild(l); b.setAttribute("aria-label","Choice "+["A","B","C"][n]);
+    b.addEventListener("click",()=>{ if(rDone) return; const c=$id("tweenCap");
+      if(k===r.ok){ rDone=true; b.classList.add("right"); l.textContent="✔ "+l.textContent; const q=$id("qPanel"); q.classList.add("filled"); q.replaceChild(catSvg(r,p),q.firstChild);
+        beep(HAPPY); confetti(10); c.innerHTML="<p>✔ "+r.yes+(ri===ROUNDS.length-1?" 🏆 You drew all the in-betweens!":"")+"</p>";
+        $id("tweenNext").style.display="inline-block"; $id("tweenNext").textContent=ri<ROUNDS.length-1?"Next one ▶":"🔁 Play again";
+        if(ri===ROUNDS.length-1) mark("tween"); }
+      else { b.classList.add("wrong"); l.textContent="✘ "+l.textContent; beep(SAD,"square"); c.innerHTML="<p>✘ Not quite. "+r.no+"</p>"; }
+      ReadAloud.mark(c); ReadAloud.speakEl(c); });
+    O.appendChild(b); });
+  const c=$id("tweenCap"); c.innerHTML="<p>"+r.name+": which drawing goes in the middle? Tap A, B, or C.</p>"; ReadAloud.mark(c);
+}
+$id("tweenNext").addEventListener("click",()=>{ ri=(ri+1)%ROUNDS.length; tweenRound(); ReadAloud.speakEl($id("tweenCap")); });
+
+/* ---------- WHO DOES WHAT ---------- */
+makeMatch({left:$id("mLeft"),right:$id("mRight"),status:$id("mStatus"),
+ pairs:[
+  {id:"story",l:"📋 Story artist",r:"Draws the movie like a comic strip",tip:"Story artists made the storyboards."},
+  {id:"voice",l:"🎤 Voice actor",r:"Records how the characters talk",tip:"The voices were recorded before the animation."},
+  {id:"key",l:"🔑 Key animator",r:"Draws the most important poses",tip:"Key animators drew the big poses that tell the story."},
+  {id:"inb",l:"➰ In-betweener",r:"Draws the middle drawings",tip:"In-betweeners filled in the drawings between the keys."},
+  {id:"clean",l:"🧹 Clean-up artist",r:"Traces neat lines over rough drawings",tip:"Clean-up artists made the rough drawings tidy."},
+  {id:"paint",l:"🎨 Cel painter",r:"Paints colors on the back of each cel",tip:"Painting the back keeps the black lines neat on top."},
+  {id:"bg",l:"🖌️ Background painter",r:"Paints the streets, rooms, and skies",tip:"The cats move in front of the painted backgrounds."},
+  {id:"cam",l:"📷 Camera operator",r:"Takes one picture of each frame",tip:"One frame at a time, click, click, click!"}
+ ],
+ doneMsg:"🏆 All 8 matched! It takes a big team to make a cartoon!",
+ onDone:()=>mark("team")});
+
+/* ---------- CEL LAB ---------- */
+const CS=$id("celSvg");
+const desk=svgEl("rect",{width:420,height:260,rx:12,fill:"#d9c3a0"},CS);
+const defs=svgEl("defs",{},CS);
+const blur=svgEl("filter",{id:"wash"},defs); svgEl("feGaussianBlur",{stdDeviation:1.4},blur);
+const pat=svgEl("pattern",{id:"checker",width:20,height:20,patternUnits:"userSpaceOnUse"},defs);
+svgEl("rect",{width:20,height:20,fill:"#f4f7fb"},pat); svgEl("rect",{width:10,height:10,fill:"#e2e8f0"},pat); svgEl("rect",{x:10,y:10,width:10,height:10,fill:"#e2e8f0"},pat);
+const sky=svgEl("linearGradient",{id:"sky",x1:0,y1:0,x2:0,y2:1},defs); svgEl("stop",{offset:0,"stop-color":"#22325e"},sky); svgEl("stop",{offset:1,"stop-color":"#5a6f9e"},sky);
+const BG=svgEl("g",{opacity:0},CS);
+svgEl("rect",{x:20,y:20,width:380,height:220,fill:"url(#sky)"},BG);
+const bgw=svgEl("g",{filter:"url(#wash)"},BG);
+svgEl("circle",{cx:330,cy:62,r:20,fill:"#f3e9a6"},bgw);
+svgEl("path",{d:"M20 150 L60 150 L60 120 L100 100 L140 120 L140 150 L170 150 L170 110 L230 110 L230 150 L260 150 L260 95 L300 125 L300 150 L400 150 L400 240 L20 240 Z",fill:"#4c5a7e"},bgw);
+svgEl("rect",{x:200,y:88,width:10,height:24,fill:"#4c5a7e"},bgw);
+[[75,126],[115,124],[185,122],[275,128],[340,160]].forEach(([x,y])=>svgEl("rect",{x,y,width:10,height:12,fill:"#e9c46a",opacity:.8},bgw));
+svgEl("rect",{x:20,y:200,width:380,height:40,fill:"#7d5c4a"},bgw);
+svgEl("path",{d:"M20 200 L400 200",stroke:"#2b2140","stroke-width":1.4,opacity:.7},BG);
+const PAPER=svgEl("g",{opacity:0},CS);
+svgEl("rect",{x:40,y:14,width:340,height:232,fill:"#fbf8ef",stroke:"#b9b29f","stroke-width":2},PAPER);
+[170,210,250].forEach((x,k)=>svgEl(k===1?"circle":"rect",k===1?{cx:x,cy:28,r:6,fill:"#d9c3a0"}:{x:x-10,y:24,width:20,height:8,rx:4,fill:"#d9c3a0"},PAPER));
+drawCat(PAPER,Object.assign({mode:"pencil"},STAND));
+const CEL=svgEl("g",{opacity:0},CS);
+const celSheet=svgEl("rect",{x:30,y:14,width:360,height:232,fill:"url(#checker)",stroke:"#9aa5b8","stroke-width":2},CEL);
+const celFlip=svgEl("g",{},CEL);
+const paintG=svgEl("g",{opacity:0},celFlip); drawCat(paintG,Object.assign({mode:"paint"},STAND));
+const lineG=svgEl("g",{},celFlip); drawCat(lineG,Object.assign({mode:"line"},STAND));
+const backLabel=svgEl("text",{x:210,y:240,"text-anchor":"middle","font-size":16,"font-weight":"bold",fill:"#D55E00",opacity:0},CS); backLabel.textContent="BACK of the cel (flipped over)";
+const GLASS=svgEl("g",{opacity:0},CS);
+svgEl("rect",{x:14,y:8,width:392,height:244,fill:"#dff3ff",opacity:.12,stroke:"#ffffff","stroke-width":4},GLASS);
+svgEl("path",{d:"M40 240 L140 20 L170 20 L70 240 Z",fill:"#fff",opacity:.18},GLASS);
+const FLASH=svgEl("rect",{width:420,height:260,fill:"#fff",opacity:0},CS);
+const camTxt=svgEl("text",{x:210,y:44,"text-anchor":"middle","font-size":26,"font-weight":"bold",fill:"#F0E442",stroke:"#2b2140","stroke-width":1,opacity:0},CS);
+function flash(){ FLASH.setAttribute("opacity",.9); setTimeout(()=>FLASH.setAttribute("opacity",0),180); }
+const LAYERS=["🪟 Glass","🎞️ Cel (paint on the back)","🖌️ Painted background"];
+const CEL_STEPS=[
+ {cap:"Let’s build one frame! Tap “Next step” to begin.",show:[],stack:[]},
+ {cap:"Step 1: The painted background. An artist paints the scene with thin, watery paint. It’s a city at night, with rooftops and a moon.",show:["bg"],stack:[2]},
+ {cap:"Step 2: The animator’s pencil drawing of our cat, Pip, on paper. The holes at the top fit onto pegs, so every drawing lines up exactly.",show:["paper"],stack:[2]},
+ {cap:"Step 3: The Xerox machine! Flash! It copies the pencil lines onto a clear plastic sheet called a cel. The lines come out black and a little sketchy.",show:["cel"],stack:[2],fx:"flash"},
+ {cap:"Step 4: Flip the cel over. Painters paint the colors on the BACK, inside the lines.",show:["cel","paint","back"],stack:[2]},
+ {cap:"Step 5: Flip it back. From the front, the colors are under the neat black lines. Pip is ready!",show:["cel","paint"],stack:[2]},
+ {cap:"Step 6: Lay the cel on top of the background. A sheet of glass presses everything flat.",show:["bg","cel","paint","glass"],stack:[0,1,2]},
+ {cap:"Step 7: Click! The camera takes ONE picture. That’s one frame of the movie. The camera took 24 pictures for every second of the movie. Wow!",show:["bg","cel","paint","glass"],stack:[0,1,2],fx:"camera"}
+];
+let cs=0;
+function celShow(speak){ const s=CEL_STEPS[cs], has=k=>s.show.includes(k);
+  BG.setAttribute("opacity",has("bg")?1:0); PAPER.setAttribute("opacity",has("paper")?1:0);
+  CEL.setAttribute("opacity",has("cel")?1:0); celSheet.setAttribute("opacity",has("bg")?0:1);
+  paintG.setAttribute("opacity",has("paint")?1:0); GLASS.setAttribute("opacity",has("glass")?1:0);
+  celFlip.setAttribute("transform",has("back")?"translate(420 0) scale(-1 1)":""); lineG.setAttribute("opacity",has("back")?.45:1); backLabel.setAttribute("opacity",has("back")?1:0);
+  camTxt.setAttribute("opacity",0); if(s.fx) flash();
+  if(s.fx==="camera"){ camTxt.textContent="📷 CLICK! 1 frame"; camTxt.setAttribute("opacity",1); beep([880,660]); confetti(18); mark("cel"); }
+  $id("stackList").innerHTML=LAYERS.map((t,k)=>'<li class="'+(s.stack.includes(k)?"on":"")+'">'+t+"</li>").join("");
+  const c=$id("celCap"); c.innerHTML="<p>"+s.cap+"</p>"; ReadAloud.mark(c); if(speak) ReadAloud.speakEl(c);
+  $id("celNext").textContent=cs<CEL_STEPS.length-1?"Next step ▶":"🔁 Build it again"; }
+$id("celNext").addEventListener("click",()=>{ cs=cs<CEL_STEPS.length-1?cs+1:0; celShow(true); });
+
+/* ---------- ORDER ---------- */
+const EVENTS=[
+ "Write the story and draw the storyboards",
+ "Record the actors’ voices",
+ "Design the characters and plan each scene",
+ "Animators draw the key poses",
+ "Film a pencil test to check the movement",
+ "Clean up the lines and draw the in-betweens",
+ "Copy the drawings onto cels and paint the backs",
+ "Photograph each cel on its background, one frame at a time"
+];
+let oNext=0;
+function orderBuild(){ oNext=0; $id("orderList").innerHTML=""; $id("orderPool").innerHTML="";
+  shuffle(EVENTS.map((t,k)=>({t,k}))).forEach(({t,k})=>{ const b=document.createElement("button"); b.textContent=t; b.dataset.k=k;
+    b.addEventListener("click",()=>{ const c=$id("orderCap");
+      if(k===oNext){ const li=document.createElement("li"); li.textContent=t; $id("orderList").appendChild(li); b.remove(); oNext++; beep(HAPPY);
+        c.innerHTML=oNext<EVENTS.length?"<p>✔ Yes! "+t+". Step "+(oNext+1)+" of 8: What comes next?</p>":"<p>✔ "+t+". 🏆 You put all the steps in order! (In real life, some steps happened at the same time. The backgrounds were painted while the animators drew.)</p>";
+        if(oNext===EVENTS.length){ confetti(24); mark("order"); } }
+      else { b.classList.add("oops"); setTimeout(()=>b.classList.remove("oops"),450); beep(SAD,"square"); c.innerHTML="<p>✘ Not yet! That comes later. What comes "+(oNext===0?"first":"next")+"?</p>"; }
+      ReadAloud.mark(c); ReadAloud.speakEl(c); });
+    $id("orderPool").appendChild(b); });
+}
+
+/* ---------- QUIZ + FACTS ---------- */
+makeQuiz($id("quizBox"),[
+ {q:"How many frames does movie film show every second?",a:["12","24","100"],c:1,yes:"Right! 24 frames every second.",no:"Movie film shows 24 frames every second."},
+ {q:"What does drawing “on twos” mean?",a:["Each drawing is shown for 2 frames","Two artists share one pencil","The movie is 2 hours long"],c:0,yes:"Yes! Each drawing shows for 2 frames, so 12 drawings a second.",no:"On twos means each drawing is shown for 2 frames."},
+ {q:"What did the Xerox machine do?",a:["Painted the backgrounds","Copied the drawings onto clear cels","Recorded the voices"],c:1,yes:"Correct! It copied the pencil lines onto clear plastic cels.",no:"It copied the drawings onto clear plastic cels."},
+ {q:"Which side of the cel got the paint?",a:["The front","The back","Neither side"],c:1,yes:"Yes! The back, so the black lines stay neat on top.",no:"The paint went on the back, so the lines stay neat on top."},
+ {q:"What does an in-betweener draw?",a:["The movie posters","The backgrounds","The middle drawings between key poses"],c:2,yes:"Right! In-betweeners draw the middle drawings.",no:"In-betweeners draw the middle drawings, between the key poses."},
+ {q:"Why didn’t the alley cat get stripes?",a:["Stripes are hard and slow to draw on every drawing","Cats never have stripes","They ran out of orange paint"],c:0,yes:"Yes! Every stripe would have to be drawn again and again.",no:"Stripes would have to be drawn on every single drawing. That’s a lot of work!"},
+ {q:"Who directed The Aristocats?",a:["Leonardo da Vinci","Wolfgang Reitherman","Walt Disney"],c:1,yes:"Correct! Woolie Reitherman directed it, after Walt died.",no:"It was Wolfgang “Woolie” Reitherman."}
+],"Perfect score! You’re a real animator! 🌟");
+$id("quizBox").addEventListener("click",()=>{ if($id("quizBox").querySelector(".celebrate")) mark("quiz"); });
+makeFacts($id("factsStrip"),[
+ ["📠 The copy expert","The Xerox copying method was set up at Disney by Ub Iwerks. He was the artist who helped create Mickey Mouse!"],
+ ["🎤 A famous singer","A famous French singer, Maurice Chevalier, sang the movie’s title song."],
+ ["♻️ Dance moves, reused","A few years later, the Disney movie Robin Hood (1973) reused some dance animation from The Aristocats!"],
+ ["🎞️ Why “cel”?","Cel is short for celluloid. That was the clear material the first sheets were made from."],
+ ["📍 Pegs keep it straight","Animation paper and cels have holes that fit onto pegs. That keeps every drawing lined up exactly."],
+ ["💻 Computers take over","In 1990, The Rescuers Down Under was the first Disney movie colored completely on computers, instead of painted cels."]
+]);
+
+/* ---------- PAYOFF: FILM STRIP ---------- */
+const KEYS=[["hook","Make the cat jump"],["flip","Try two flipbook speeds"],["tween","Draw 4 in-betweens"],["team","Match the team jobs"],["cel","Build a cel frame"],["order","Put the steps in order"],["quiz","Finish the quiz"]];
+const R=$id("reel");
+svgEl("rect",{width:480,height:320,rx:18,fill:"#121a30"},R);
+svgEl("rect",{x:10,y:12,width:460,height:96,fill:"#2b2b2b"},R);
+for(let k=0;k<23;k++){ svgEl("rect",{x:16+k*20,y:17,width:10,height:8,rx:2,fill:"#121a30"},R); svgEl("rect",{x:16+k*20,y:95,width:10,height:8,rx:2,fill:"#121a30"},R); }
+const FR=[];
+for(let k=0;k<7;k++){ const fx=18+k*64; const g=svgEl("g",{},R);
+  const bgR=svgEl("rect",{x:fx,y:30,width:60,height:60,rx:3,fill:"#4a4a55"},g);
+  const art=svgEl("g",{transform:"translate("+(fx-2)+" 34) scale(0.152)",opacity:0},g); scene(art,false); drawCat(art,FRAMES[[0,5,8,12,16,19,23][k]]);
+  const q=svgEl("text",{x:fx+30,y:68,"text-anchor":"middle","font-size":22,fill:"#ddd","font-weight":"bold"},g); q.textContent="?";
+  const ck=svgEl("text",{x:fx+54,y:86,"text-anchor":"end","font-size":13,fill:"#007a5a","font-weight":"bold"},g);
+  FR.push({bgR,art,q,ck}); }
+svgEl("rect",{x:86,y:124,width:308,height:178,rx:6,fill:"#fffdf6",stroke:"#E69F00","stroke-width":5},R);
+const screen=svgEl("g",{transform:"translate(90 128) scale(0.714)"},R);
+const scrBg=svgEl("g",{},screen); scene(scrBg,true); const scrCat=svgEl("g",{},screen);
+const curtain=svgEl("rect",{x:90,y:128,width:300,height:170,fill:"#8a2c62"},R);
+const ctext=svgEl("text",{x:240,y:220,"text-anchor":"middle","font-size":20,fill:"#fff","font-weight":"bold"},R);
+let movieT=null;
+$id("playMovie").addEventListener("click",()=>{ clearInterval(movieT); curtain.setAttribute("opacity",0); ctext.textContent=""; let i=0;
+  movieT=setInterval(()=>{ scrCat.innerHTML=""; drawCat(scrCat,FRAMES[i%24]); i++; if(i>=72){ clearInterval(movieT); } },1000/24);
+  beep([392,523.25,659.25,783.99]); const c=$id("payoffCard"); ReadAloud.speakEl(c); });
+function mark(key){ if(progress[key]) return; progress[key]=true; updateReel(true); }
+function updateReel(fromAction){
+  const n=KEYS.filter(k=>progress[k[0]]).length, all=n===KEYS.length;
+  FR.forEach(({bgR,art,q,ck},k)=>{ const on=k<n; bgR.setAttribute("fill",on?"#fffdf6":"#4a4a55"); art.setAttribute("opacity",on?1:0); q.textContent=on?"":"?"; ck.textContent=on?"✔":""; });
+  ctext.textContent=all?"🎬 Your cartoon is ready!":n+" of "+KEYS.length+" frames";
+  $id("reelRead").textContent="🎞️ Frames filled: "+n+" of "+KEYS.length;
+  $id("playMovie").style.display=all?"inline-block":"none";
+  const pc=$id("payoffCard");
+  if(all){ pc.innerHTML="<h3>🎬 Your film strip is full!</h3><p>Amazing! You flipped a flipbook, drew in-betweens, built a cel, and learned how a whole team made The Aristocats by hand. Tap “Play my cartoon” to watch Pip jump on the big screen!</p>";
+    if(fromAction){ confetti(40); beep([523.25,659.25,783.99,1046.5,1318.5]); } }
+  else pc.innerHTML="<h3>🎞️ Fill the film strip!</h3><p>Each activity fills one frame: "+KEYS.map(k=>(progress[k[0]]?"✔ ":"○ ")+k[1]).join(", ")+".</p>";
+  ReadAloud.mark(pc);
+}
+
+/* ---------- INIT ---------- */
+$$("#movie .card2, #moving .card2, #tween .card2, #steps .card2, .sec-help, .grownups, .hook-text").forEach(n=>n.classList.add("readable"));
+showFrame(0); tweenRound(); celShow(false); orderBuild(); updateReel(false);
+ReadAloud.markAll();
+})();
+</script>
+</body>
+</html>
