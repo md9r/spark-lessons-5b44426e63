@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow">
+<!-- spark-app-meta -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Spark Lessons">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#0b3d66">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="icon" type="image/png" href="../icon-192.png">
+<!-- /spark-app-meta -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The President’s Team — Spark Lessons</title>
+<style>
+
+  :root{
+    --ink:#2b2140; --cream:#fff8ec; --gold:#f5b700; --red:#ef476f; --teal:#06a2a8;
+    --blue:#3a86ff; --purple:#8338ec; --green:#2fb36d; --orange:#fb8500;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif;color:var(--ink);
+    background:linear-gradient(180deg,#ffe8c2 0%,#ffd6e0 35%,#d8e7ff 70%,#d9f7e8 100%);font-size:20px;line-height:1.5}
+  header{text-align:center;padding:24px 16px 8px}
+  header h1{font-size:clamp(34px,6vw,60px);margin:0;color:var(--purple);text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  header p{font-size:22px;margin:6px 0 0}
+  nav{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:10px;background:rgba(255,255,255,.85);backdrop-filter:blur(4px);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+  nav a{text-decoration:none;color:#fff;font-weight:bold;padding:8px 14px;border-radius:999px;font-size:18px}
+  nav a:nth-child(1){background:var(--purple)} nav a:nth-child(2){background:var(--blue)}
+  nav a:nth-child(3){background:var(--teal)} nav a:nth-child(4){background:var(--orange)}
+  nav a:nth-child(5){background:var(--red)} nav a:nth-child(6){background:var(--green)}
+  main{max-width:1050px;margin:0 auto;padding:12px}
+  section{background:var(--cream);border-radius:28px;padding:24px;margin:24px 0;box-shadow:0 6px 0 rgba(43,33,64,.15);border:4px solid #fff}
+  section h2{font-size:clamp(28px,4.5vw,40px);margin:0 0 12px}
+  .emoji{font-size:1.2em}
+  button{font-family:inherit;font-size:20px;font-weight:bold;border:none;border-radius:16px;padding:12px 20px;cursor:pointer;color:#fff;background:var(--blue);box-shadow:0 4px 0 rgba(0,0,0,.25);transition:transform .08s}
+  button:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.25)}
+  button:disabled{opacity:.5;cursor:default}
+  /* Meet */
+  .meet{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+  .meet svg{flex:0 0 260px;max-width:100%}
+  .meet .facts{flex:1 1 340px}
+  .facts ul{padding-left:0;list-style:none;margin:0}
+  .facts li{background:#fff;border-radius:14px;padding:10px 14px;margin:8px 0;border-left:8px solid var(--gold)}
+  .facts li:nth-child(2n){border-left-color:var(--teal)}
+  .facts li:nth-child(3n){border-left-color:var(--red)}
+  .bubble{background:#fff;border:3px dashed var(--purple);border-radius:20px;padding:12px 16px;margin-top:10px;font-style:italic}
+  /* Timeline */
+  .tl-track{display:flex;gap:10px;overflow-x:auto;padding:10px 4px 18px;position:relative;scroll-snap-type:x mandatory}
+  .tl-dot{flex:0 0 auto;scroll-snap-align:start;border-radius:18px;padding:10px 14px;background:#fff;border:4px solid var(--blue);color:var(--ink);font-size:22px;box-shadow:0 4px 0 rgba(0,0,0,.15)}
+  .tl-dot.active{background:var(--blue);color:#fff}
+  .tl-card{display:flex;gap:18px;align-items:center;background:#fff;border-radius:22px;padding:18px;border:4px solid var(--blue);min-height:150px}
+  .tl-card .big{font-size:70px;flex:0 0 auto}
+  .tl-card h3{margin:0 0 6px;font-size:28px;color:var(--blue)}
+  .tl-card p{margin:0}
+  .tl-nav{display:flex;justify-content:space-between;margin-top:12px}
+  /* Quiz */
+  .q-progress{font-weight:bold;color:var(--red)}
+  .q-text{font-size:26px;font-weight:bold;margin:10px 0 14px}
+  .answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+  .answers button{background:#fff;color:var(--ink);border:3px solid var(--purple);text-align:left}
+  .answers button.right{background:var(--green);color:#fff;border-color:var(--green)}
+  .answers button.wrong{background:var(--red);color:#fff;border-color:var(--red)}
+  .feedback{font-size:24px;font-weight:bold;min-height:40px;margin:12px 0}
+  .celebrate{text-align:center;font-size:28px}
+  .celebrate .stars{font-size:60px}
+  /* Fun facts */
+  .facts-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+  .ff{border-radius:20px;padding:16px;color:#fff;font-size:19px;cursor:pointer;min-height:150px;box-shadow:0 5px 0 rgba(0,0,0,.2);position:relative}
+  .ff .front{font-size:22px;font-weight:bold}
+  .ff .back{display:none}
+  .ff.flipped .front{display:none}.ff.flipped .back{display:block}
+  .ff:nth-child(6n+1){background:var(--purple)}.ff:nth-child(6n+2){background:var(--teal)}
+  .ff:nth-child(6n+3){background:var(--orange)}.ff:nth-child(6n+4){background:var(--red)}
+  .ff:nth-child(6n+5){background:var(--blue)}.ff:nth-child(6n+6){background:var(--green)}
+  .confetti{position:fixed;top:-20px;font-size:28px;pointer-events:none;z-index:99;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+  /* Read aloud */
+  .readable{position:relative;cursor:pointer;padding-right:52px !important}
+  .spk{position:absolute;top:6px;right:8px;width:38px;height:38px;border-radius:50%;background:#fff;border:2px solid var(--purple);display:flex;align-items:center;justify-content:center;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.15);user-select:none;-webkit-user-select:none}
+  .ff .spk{border-color:#fff}
+  .readable.speaking{outline:5px solid var(--gold);outline-offset:3px;animation:pulse 1s ease-in-out infinite alternate}
+  .readable.speaking .spk{background:var(--gold);transform:scale(1.15)}
+  @keyframes pulse{from{box-shadow:0 0 0 0 rgba(245,183,0,.6)}to{box-shadow:0 0 18px 6px rgba(245,183,0,.6)}}
+  body.read-off .spk, body.no-speech .spk, body.no-speech #readToggle{display:none}
+  body.read-off .readable, body.no-speech .readable{cursor:auto;padding-right:16px !important}
+  body.no-speech .ff, body.read-off .ff{cursor:pointer}
+  #readToggle{font-size:18px;padding:8px 14px;border-radius:999px;background:var(--ink);box-shadow:none}
+  body.read-off #readToggle{background:#888}
+  footer{text-align:center;padding:20px;font-size:16px;color:#555}
+  @media (max-width:600px){body{font-size:18px} section{padding:16px}.tl-card{flex-direction:column;text-align:center}}
+  /* ---- color-blind-safe theme (Okabe–Ito based) ---- */
+  :root{ --blue:#0072B2; --orange:#B86E00; --teal:#00788a; --green:#007a5a; --red:#C24E00; --purple:#6a3d9a; --gold:#E6A800 }
+  body{background:linear-gradient(180deg,#e9eef5 0%,#f4efe6 50%,#eaf3ea 100%)}
+  header h1{color:#3b4a6b;text-shadow:3px 3px 0 #fff,5px 5px 0 var(--gold)}
+  nav a{font-size:17px;padding:10px 13px}
+  .spk{width:44px;height:44px;font-size:22px}
+  .readable{padding-right:58px !important}
+  .home-link{display:inline-block;margin-bottom:8px;background:#fff;color:#2b2140;text-decoration:none;font-weight:bold;font-size:20px;padding:10px 18px;border-radius:999px;border:3px solid #6a3d9a;box-shadow:0 3px 0 rgba(0,0,0,.15)}
+  .answers button{min-height:56px}
+  .answers button.right{background:var(--blue);border-color:var(--blue)}
+  .answers button.wrong{background:var(--red);border-color:var(--red)}
+  .card2{background:#fff;border-radius:18px;padding:16px;border-left:10px solid var(--blue)}
+  .card2 h3{margin:0 0 6px;font-size:23px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px}
+  .chip{background:#fff;color:var(--ink);border:4px solid #888;box-shadow:none;padding:10px 14px;font-size:19px;min-height:56px;display:flex;align-items:center;gap:8px}
+  .chip .num{display:inline-flex;width:30px;height:30px;border-radius:50%;align-items:center;justify-content:center;color:#000;font-weight:900;border:2px solid #222}
+  .chip.on{background:#2b2140;color:#fff;border-color:#2b2140}
+  .chip.on::after{content:" ✔"}
+  .zoom-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+  .zoom-row button{font-size:18px;padding:10px 14px;min-height:52px}
+  .zoom-row .z-on{outline:4px solid var(--gold);outline-offset:2px}
+  /* map */
+  .map-wrap{background:#fff;border-radius:18px;border:4px solid #3b4a6b;padding:6px}
+  .pin{cursor:pointer}
+  .map-caption{margin-top:10px}
+  /* matching */
+  .match{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;align-items:start}
+  @media (max-width:700px){.match{grid-template-columns:1fr}}
+  .match-col{display:grid;gap:10px}
+  .mcard{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px 14px;cursor:pointer;min-height:64px;display:flex;align-items:center;gap:10px;font-size:19px}
+  .mcard.sel{border-color:var(--blue);box-shadow:0 0 0 4px rgba(0,114,178,.3);background:#e8f3fb}
+  .mcard.sel::before{content:"👉";font-size:24px}
+  .mcard.done{border-color:var(--blue);background:#e8f3fb;cursor:default}
+  .mcard.done::after{content:" ✔";font-weight:bold;color:var(--blue);font-size:24px}
+  .mcard.oops{animation:shake .4s}
+  @keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .name-card{font-weight:bold}
+  .match-status{font-size:22px;font-weight:bold;min-height:36px;margin:10px 0}
+  .round-row{display:flex;gap:10px;flex-wrap:wrap;margin:8px 0}
+  .round-row .r-on{outline:4px solid var(--gold);outline-offset:2px}
+  .grownups{background:#fff;border-radius:18px;padding:18px;border:4px dashed #444}
+  .grownups h3{margin:12px 0 4px;font-size:21px}
+  .grownups p,.grownups ul{margin:0 0 6px}
+  /* ---- saints lessons ---- */
+  nav a:nth-child(7){background:#8b2c00} nav a:nth-child(8){background:#8a5a00} nav a:nth-child(9){background:#444}
+  .meet svg{flex:0 0 280px}
+  .tl-dot{min-height:56px;font-weight:bold;font-size:19px}
+  .tl-dot.active::before{content:"📍 "}
+  .tl-nav{align-items:center;gap:10px}
+  .tl-card{border-color:var(--theme)}
+  .tl-card h3{color:var(--theme)}
+  .tl-dot{border-color:var(--theme)} .tl-dot.active{background:var(--theme)}
+  .step-count{font-weight:bold;font-size:20px;align-self:center}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+  .stepc{background:#fff;border-radius:18px;padding:14px;border-top:12px solid var(--theme)}
+  .stepc .lvl{display:inline-block;font-size:16px;font-weight:bold;background:#2b2140;color:#fff;border-radius:999px;padding:2px 10px}
+  .stepc h3{margin:6px 0 4px;font-size:23px}
+  .stepc p{margin:0 0 6px}
+  .be-like{margin-top:12px}
+  svg text{font-family:"Trebuchet MS","Segoe UI",Verdana,sans-serif}
+  .pin:focus{outline:none} .pin:focus circle.dot,.pin:focus rect.dot{stroke:#E6A800;stroke-width:5}
+
+  
+  :root{ --theme:#0b3d66 }
+  body{background:linear-gradient(180deg,#e8f0f8 0%,#f4eef8 50%,#eef6f0 100%)}
+  header h1{color:#0b3d66;text-shadow:3px 3px 0 #fff,5px 5px 0 #E69F00}
+  .card2{border-left-color:var(--theme)}
+  .card2 p{font-size:21px}
+  .hook{border-radius:24px;padding:22px;text-align:center;background:#0b2748;color:#fff;border:4px solid #fff}
+  .hook h2{margin:0 0 8px;font-size:clamp(26px,4.5vw,38px);color:#F0E442}
+  .hook p{font-size:22px}
+  .big-btn{font-size:23px;min-height:70px;padding:14px 26px;background:#E69F00;color:#2b2140}
+  .reveal{max-width:640px;margin:14px auto 0;background:#eef4fa;color:#2b2140;border-radius:14px;border:0 solid #0072B2;padding:0 20px;max-height:0;overflow:hidden;transition:max-height .9s,padding .9s;text-align:left}
+  .reveal.open{max-height:1000px;padding:16px 20px;border-width:4px}
+  #hookArt{width:min(460px,100%);height:auto;display:block;margin:6px auto;border-radius:16px}
+  .sec-help{font-size:21px}
+  .dept-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+  .dept{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px;text-align:left;cursor:pointer;min-height:110px;box-shadow:0 4px 0 rgba(0,0,0,.12);color:var(--ink);font:inherit}
+  .dept.on{border-color:#0072B2;background:#dceefa}
+  .dept .ico{font-size:28px}
+  .dept h4{margin:4px 0;font-size:20px}
+  .dept p{margin:0;font-size:17px}
+  .callbox{background:#fff;border-radius:20px;border:4px solid #009E73;padding:14px;text-align:center}
+  .problem{font-size:clamp(20px,3.2vw,26px);font-weight:bold;background:#e6f5ef;border-radius:14px;padding:14px;margin:8px 0 12px;min-height:80px}
+  .choices{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+  .choices button{background:#fff;color:var(--ink);border:4px solid #9aa5b8;min-height:72px;font-size:19px;box-shadow:none;text-align:left}
+  .choices button.right{border-color:#009E73;background:#e6f5ef}
+  .choices button.wrong{border-color:#D55E00;background:#fbe9de}
+  #callNext{background:#009E73;display:none;margin-top:10px}
+  .tablebox{background:#fff;border-radius:20px;border:4px solid #0b3d66;padding:12px;text-align:center}
+  #tableSvg{width:min(640px,100%);height:auto;display:block;margin:0 auto;background:#f7fafc;border-radius:14px;border:3px solid #c9bfa8}
+  .seat-pool{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-top:10px}
+  .seat-pool button{background:#fff;color:var(--ink);border:3px solid #9aa5b8;min-height:64px;font-size:17px;box-shadow:none}
+  .seat-pool button.used{opacity:.35;pointer-events:none}
+  .then-now{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .then-now .card2{margin:0}
+  @media (max-width:700px){.then-now{grid-template-columns:1fr}}
+  .join-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:12px 0}
+  .join-step{background:#fff;border:4px solid #9aa5b8;border-radius:16px;padding:12px;text-align:center;opacity:.45;transform:scale(.96);transition:.25s}
+  .join-step.on{opacity:1;border-color:#0072B2;background:#dceefa;transform:scale(1)}
+  .join-step .n{font-size:28px}
+  .join-step h4{margin:4px 0;font-size:18px}
+  #joinNext{background:#0072B2;min-height:64px;font-size:21px}
+  .order-pool{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:10px 0}
+  .order-pool button{background:#fff;color:var(--ink);border:4px solid #9aa5b8;min-height:72px;text-align:left;box-shadow:none;font-size:18px}
+  .order-pool button.oops{animation:shake .4s}
+  .order-list{list-style:none;padding:0;margin:10px 0;counter-reset:st}
+  .order-list li{background:#e6f5ef;border:3px solid #007a5a;border-radius:14px;padding:10px 14px;margin:6px 0;font-size:19px;counter-increment:st}
+  .order-list li::before{content:counter(st)". ✔ ";font-weight:bold}
+  .payoff{background:linear-gradient(180deg,#0b2748,#0b3d66);color:#fff;border-radius:22px;padding:18px;text-align:center}
+  #seal{width:min(480px,100%);height:auto;display:block;margin:0 auto}
+  .readout{font-size:22px;font-weight:bold;margin:6px 0 10px}
+  nav a:nth-child(10){background:#0b3d66} nav a:nth-child(11){background:#8a2c62} nav a:nth-child(12){background:#00788a}
+</style>
+</head>
+<body>
+<header>
+  <a class="home-link" href="../index.html">🏠 All lessons</a>
+  <h1>🇺🇸 The President’s Team</h1>
+  <p>Meet the Cabinet — the helpers who run big parts of the United States government</p>
+</header>
+<nav>
+  <a href="#hook">⭐ Start</a>
+  <a href="#what">🧠 What Is It?</a>
+  <a href="#depts">🏛️ 15 Departments</a>
+  <a href="#call">📞 Who to Call</a>
+  <a href="#table">🪑 Build the Table</a>
+  <a href="#then">📜 Then &amp; Now</a>
+  <a href="#join">🤝 How to Join</a>
+  <a href="#line">📋 Who’s Next</a>
+  <a href="#quiz">❓ Quiz</a>
+  <a href="#payoff">🎖️ Finish</a>
+  <a href="#grownups">👪 Grown-ups</a>
+  <button id="readToggle" aria-pressed="true" title="Turn reading out loud on or off">🔊 Read aloud: ON</button>
+</nav>
+<main>
+<section id="hook" class="hook">
+  <svg id="hookArt" viewBox="0 0 460 240" role="img" aria-label="A long table with empty chairs in a blue room"></svg>
+  <h2>Who helps the President?</h2>
+  <p class="hook-text">One person cannot run a whole country alone. The President of the United States has a special team of helpers. Can you guess what that team is called?</p>
+  <button class="big-btn" id="hookGo" aria-expanded="false">✨ Open the Cabinet doors!</button>
+  <div class="reveal" id="reveal" aria-live="polite">
+    <p style="font-size:21px">That team is called the <b>Cabinet</b>! Each person in the Cabinet leads a big part of the government, called a <b>department</b>.</p>
+    <p style="font-size:21px">They meet with the President, give advice, and help carry out the laws. Let’s meet them!</p>
+    <p style="font-size:20px">🎖️ Finish activities to fill the seats at the Cabinet table!</p>
+  </div>
+</section>
+
+<section id="what">
+  <h2>🧠 What Is the Cabinet?</h2>
+  <div class="grid">
+    <div class="card2"><h3>👥 A Team of Advisers</h3><p>The Cabinet is the group of people who lead the big <b>executive departments</b>. They give the President advice and run their departments day to day.</p></div>
+    <div class="card2" style="border-left-color:#E69F00"><h3>📜 The Constitution Hint</h3><p>The U.S. Constitution talks about <b>“executive Departments”</b> and says the President can ask their leaders for written opinions. But it never uses the word <b>“Cabinet.”</b> That name came later, from custom!</p></div>
+    <div class="card2" style="border-left-color:#009E73"><h3>🇺🇸 The Vice President Too</h3><p>Today, the <b>Vice President</b> is part of the Cabinet as well. The Vice President is ready to become President if needed, and also helps lead the Senate.</p></div>
+    <div class="card2" style="border-left-color:#CC79A7"><h3>🗳️ Senate Says Yes</h3><p>The President <b>picks</b> (nominates) each department head. Then the <b>Senate</b> must agree. The Constitution calls this <b>“advice and consent.”</b></p></div>
+  </div>
+</section>
+
+<section id="depts">
+  <h2>🏛️ The 15 Departments</h2>
+  <p class="sec-help depts-help">There are <b>15</b> executive departments. Tap a card to hear what that team does. (We do not name the people who hold the jobs — just the jobs themselves!)</p>
+  <div class="dept-grid" id="deptGrid"></div>
+  <div class="card2 readable" id="deptCap" style="margin-top:12px;border-left-color:#0072B2"><p>Tap any department to learn about it. Try at least 5!</p></div>
+</section>
+
+<section id="call">
+  <h2>📞 Who Should the President Call?</h2>
+  <p class="sec-help call-help">A problem pops up! Which Cabinet member should the President call for help?</p>
+  <div class="callbox">
+    <div class="step-count" id="callCount"></div>
+    <div class="problem readable" id="callProblem" aria-live="polite"></div>
+    <div class="choices" id="callChoices"></div>
+    <div class="card2 readable" id="callCap" style="text-align:left;margin-top:10px;border-left-color:#009E73"></div>
+    <button id="callNext">Next problem ▶</button>
+  </div>
+</section>
+
+<section id="table">
+  <h2>🪑 Build the Cabinet Table</h2>
+  <p class="sec-help table-help">Seat the team! Tap a chair on the table, then tap the matching job from the list. Fill all 15 seats (the Vice President’s seat is already there as a guest).</p>
+  <div class="tablebox">
+    <svg id="tableSvg" viewBox="0 0 640 360" role="img" aria-label="A cabinet table with empty seats to fill"></svg>
+    <div class="seat-pool" id="seatPool"></div>
+    <div class="card2 readable" id="tableCap" style="text-align:left;margin-top:10px;border-left-color:#0b3d66"><p>Tap an empty chair, then tap its department.</p></div>
+  </div>
+</section>
+
+<section id="then">
+  <h2>📜 Then and Now</h2>
+  <div class="then-now">
+    <div class="card2"><h3>🏛️ Washington’s First Cabinet</h3><p>President <b>George Washington</b> started with just <b>four</b> helpers:</p>
+      <ul style="font-size:20px;margin:8px 0 0 18px">
+        <li><b>Thomas Jefferson</b> — Secretary of State</li>
+        <li><b>Alexander Hamilton</b> — Secretary of the Treasury</li>
+        <li><b>Henry Knox</b> — Secretary of War</li>
+        <li><b>Edmund Randolph</b> — Attorney General</li>
+      </ul>
+      <p style="margin-top:10px">That was in the early 1790s. The country was brand new!</p>
+    </div>
+    <div class="card2" style="border-left-color:#E69F00"><h3>🇺🇸 Today’s Cabinet</h3><p>Today there are <b>15</b> executive departments, plus the Vice President. New departments were added as the country grew — for things like schools, roads, energy, veterans, and keeping people safe after hard times.</p>
+      <p>The newest big one is <b>Homeland Security</b>, created in <b>2002</b>.</p>
+    </div>
+  </div>
+  <div class="card2" style="margin-top:12px;border-left-color:#0072B2"><h3>⚔️ A Name That Changed</h3><p>Washington’s “Secretary of War” job later became part of what we call the <b>Department of Defense</b>. That is still the name written in the law. Starting in <b>2025</b>, leaders also began using <b>“Department of War”</b> as another name for the same team. Both names mean the department that runs the armed forces.</p></div>
+</section>
+
+<section id="join">
+  <h2>🤝 How Someone Joins the Cabinet</h2>
+  <p class="sec-help join-help">Watch the steps. Tap “Next step” to move through how a Cabinet member gets the job.</p>
+  <div class="join-steps" id="joinSteps"></div>
+  <div class="card2 readable" id="joinCap" style="border-left-color:#0072B2"></div>
+  <button id="joinNext">Next step ▶</button>
+</section>
+
+<section id="line">
+  <h2>📋 Who’s Next in Line?</h2>
+  <p class="sec-help line-help">If the President cannot serve, someone else steps in. Put these jobs in the right order of succession. (The first three are not Cabinet members!)</p>
+  <ol class="order-list" id="orderList"></ol>
+  <div class="order-pool" id="orderPool"></div>
+  <div class="card2 readable" id="orderCap" style="border-left-color:#E69F00"><p>Step 1 of 6: Who is first in line after the President?</p></div>
+</section>
+
+<section id="quiz">
+  <h2>❓ Quiz Challenge</h2>
+  <p>Finish the quiz to fill a seat! Each question is read aloud with its choices.</p>
+  <div id="quizBox"></div>
+  <h3 style="margin-top:22px">⭐ Fun Facts (tap a card to flip!)</h3>
+  <div class="facts-strip" id="factsStrip"></div>
+</section>
+
+<section id="payoff">
+  <h2>🎖️ Fill the Cabinet Seats</h2>
+  <div class="payoff">
+    <svg id="seal" viewBox="0 0 480 300" role="img" aria-label="A cabinet table whose seats light up as you finish activities"></svg>
+    <div class="readout" id="sealRead" aria-live="polite"></div>
+    <div class="card2 readable" id="payoffCard" style="color:var(--ink);border-left-color:#E69F00;text-align:left"></div>
+  </div>
+</section>
+
+<section id="grownups">
+  <h2>👪 For Grown-ups</h2>
+  <div class="grownups">
+    <h3>What this teaches</h3>
+    <ul>
+      <li>What the U.S. Cabinet is: the Vice President plus the heads of the 15 executive departments.</li>
+      <li>That the Constitution mentions “executive Departments” (Article II, Section 2 opinion clause) and Senate “advice and consent” for appointments, but never uses the word “Cabinet.”</li>
+      <li>Kid-friendly roles for each of the 15 departments; Washington’s first Cabinet of four; how a nominee is confirmed; a simplified line of presidential succession.</li>
+    </ul>
+    <h3>Level and time</h3><p>Written for a young 8-year-old. About <b>15–20 minutes</b>. Easy to split (what the Cabinet is + the 15 departments; then the games and quiz).</p>
+    <h3>Nonpartisan note</h3><p>This lesson names <b>no current officeholders</b> and takes no political position. Historical names (Washington, Jefferson, Hamilton, Knox, Randolph) appear only in the founding story.</p>
+    <h3>Accuracy notes and sources</h3>
+    <ul>
+      <li><b>15 departments and titles</b> follow 5 U.S.C. § 101 and USAGov / White House cabinet structure: State, Treasury, Defense, Justice (Attorney General), Interior, Agriculture, Commerce, Labor, Health and Human Services, Housing and Urban Development, Transportation, Energy, Education, Veterans Affairs, Homeland Security.</li>
+      <li><b>Defense / War naming (as of November 2026):</b> The statutory name remains the Department of Defense / Secretary of Defense (National Security Act framework; succession lists on USAGov still say Secretary of Defense). Executive Order 14347 (5 September 2025) authorized “Department of War” / “Secretary of War” as a <i>secondary title</i>. Official defense.gov pages currently style the department and secretary that way. A full statutory rename would need Congress; as of this writing, that change was still being debated (e.g. in NDAA discussions) and is not treated here as complete. The lesson therefore teaches both names for the same department and explains the dual naming in this grown-ups note.</li>
+      <li><b>Constitution:</b> Art. II, § 2 (opinion clause and Appointments Clause / advice and consent). National Constitution Center and Mount Vernon digital encyclopedia for the “Cabinet” as a custom and for Washington’s first four (Jefferson–State, Hamilton–Treasury, Knox–War, Randolph–Attorney General). Mount Vernon notes Madison popularized the word “cabinet” for the meetings.</li>
+      <li><b>Succession:</b> USAGov order after the President: Vice President, Speaker of the House, President pro tempore of the Senate, then the Cabinet secretaries in the order their departments were created, beginning with the Secretary of State. The lesson’s order game uses the first six of that line (VP through Attorney General) to keep it short.</li>
+      <li><b>Homeland Security</b> created in 2002 (after the September 11, 2001 attacks) — National Constitution Center.</li>
+      <li><b>Left out / hedged:</b> Cabinet-rank officials who are not department heads (e.g. White House Chief of Staff, UN Ambassador) — the lesson sticks to the 15 departments + VP. Exact meeting schedules, recess appointments, and acting secretaries. Any claim that Congress has finished renaming Defense to War.</li>
+    </ul>
+    <h3>Follow-up</h3><p>Look up a department’s kid page together (many have “for kids” or “about” sections). Or draw your own Cabinet table and invent a fair classroom rule each “secretary” would help with.</p>
+  </div>
+</section>
+</main>
+<footer>Made for young readers 🇺🇸 · No current politicians named · Works offline</footer>
+<script>
+(function(){
+"use strict";
+/* ---------- READ ALOUD MODULE ---------- */
+window.ReadAloud = (function(){
+  const synth = ("speechSynthesis" in window && "SpeechSynthesisUtterance" in window) ? window.speechSynthesis : null;
+  let enabled = !!synth, current = null, token = 0, voice = null;
+  if(!synth) document.body.classList.add("no-speech");
+  function pickVoice(){
+    if(!synth) return;
+    const vs = synth.getVoices().filter(v=>/^en([-_]|$)/i.test(v.lang));
+    if(!vs.length) return;
+    const prefs = [/samantha/i,/google us english/i,/aria/i,/jenny/i,/zira/i,/karen/i,/moira/i,/serena/i,/google uk english female/i,/female/i];
+    for(const re of prefs){ const v = vs.find(v=>re.test(v.name)); if(v){ voice=v; return; } }
+    voice = vs.find(v=>/en[-_]US/i.test(v.lang)) || vs[0];
+  }
+  if(synth){ pickVoice(); if(typeof synth.addEventListener==="function") synth.addEventListener("voiceschanged", pickVoice); else synth.onvoiceschanged = pickVoice; }
+  const EMOJI = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}\u{1F3FB}-\u{1F3FF}\u200D\uFE0F\u20E3\u2B05\u27A1\u2B06\u2B07]/gu;
+  function clean(t){
+    t=t.replace(/[✔✘]/g," ");
+    return t.replace(EMOJI," ").replace(/\s+([.,!?;:])/g,"$1").replace(/([.!?])\s*[.]+/g,"$1").replace(/\s+/g," ").replace(/^[\s.,;:!?]+/,"").trim();
+  }
+  function textOf(el){
+    if(el.dataset.say) return clean(el.dataset.say);
+    const c = el.cloneNode(true);
+    c.querySelectorAll(".spk,.no-read").forEach(n=>n.remove());
+    if(el.classList.contains("ff")){ const hide = c.querySelector(el.classList.contains("flipped")?".front":".back"); if(hide) hide.remove(); }
+    c.querySelectorAll("h1,h2,h3,p,div,li").forEach(n=>{
+      const t = n.textContent.trim();
+      if(t && /[A-Za-z0-9]/.test(t) && !/[.!?:]$/.test(t)) n.appendChild(document.createTextNode(". "));
+      else n.appendChild(document.createTextNode(" "));
+    });
+    return clean(c.textContent);
+  }
+  function clearHL(){ document.querySelectorAll(".readable.speaking").forEach(n=>n.classList.remove("speaking")); }
+  function stop(){ token++; current=null; clearHL(); if(synth) synth.cancel(); }
+  function speakEl(el){
+    if(!synth || !enabled || !el) return;
+    const text = textOf(el); if(!text) return;
+    stop();
+    const my = ++token;
+    const u = new SpeechSynthesisUtterance(text);
+    u.rate = 0.9; u.pitch = 1.05; u.lang = voice ? voice.lang : "en-US";
+    if(voice) u.voice = voice;
+    const done = ()=>{ if(my===token){ current=null; clearHL(); } };
+    u.onend = done; u.onerror = done;
+    current = el; el.classList.add("speaking");
+    // tiny delay helps some browsers (Chrome/Safari) after cancel()
+    setTimeout(()=>{ if(my===token){ if(synth.paused) synth.resume(); synth.speak(u); } }, 60);
+  }
+  function mark(el){
+    if(!el || !synth) return;
+    el.classList.add("readable");
+    if(!el.querySelector(":scope > .spk")){
+      const s = document.createElement("span");
+      s.className="spk"; s.textContent="🔊"; s.setAttribute("role","button"); s.setAttribute("aria-label","Read this card out loud"); s.tabIndex=0;
+      el.appendChild(s);
+    }
+  }
+  function markAll(){ document.querySelectorAll(".readable").forEach(mark); }
+  // Card taps: ignore taps on real controls inside a card (buttons, inputs, links), except the speaker icon.
+  document.addEventListener("click", e=>{
+    if(!synth || !enabled) return;
+    const el = e.target.closest(".readable"); if(!el) return;
+    const ctrl = e.target.closest("button,input,a,select,label");
+    if(ctrl && el.contains(ctrl)) return;
+    const onSpk = !!e.target.closest(".spk");
+    // fun-fact card body tap flips it (its own handler ran first) -> always read the newly shown side
+    if(el.classList.contains("ff") && !onSpk){ speakEl(el); return; }
+    if(current===el){ stop(); return; }   // pressing the same card again stops it
+    speakEl(el);
+  });
+  document.addEventListener("keydown", e=>{
+    if((e.key==="Enter"||e.key===" ") && e.target.classList && e.target.classList.contains("spk")){
+      e.preventDefault(); e.stopPropagation(); const el=e.target.closest(".readable");
+      if(current===el) stop(); else speakEl(el);
+    }
+  }, true);
+  function setEnabled(on){
+    enabled = on && !!synth;
+    document.body.classList.toggle("read-off", !on);
+    const b = document.getElementById("readToggle");
+    if(b){ b.textContent = on ? "🔊 Read aloud: ON" : "🔇 Read aloud: OFF"; b.setAttribute("aria-pressed", on?"true":"false"); }
+    if(!on) stop();
+  }
+  const tb = document.getElementById("readToggle");
+  if(tb) tb.addEventListener("click", ()=>setEnabled(!enabled));
+  return {speakEl, stop, stopIf(el){ if(current===el) stop(); }, mark, markAll, setEnabled, get supported(){ return !!synth; }};
+})();
+
+
+/* ---------- sound + confetti ---------- */
+let actx=null;
+function beep(notes,type){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; notes.forEach((f,i)=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type=type||"triangle"; o.frequency.value=f; const t=t0+i*0.1;
+  g.gain.setValueAtTime(0.0001,t); g.gain.exponentialRampToValueAtTime(0.18,t+0.02); g.gain.exponentialRampToValueAtTime(0.0001,t+0.3); o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+0.32); }); }catch(e){} }
+const HAPPY=[523.25,659.25,783.99,1046.5], SAD=[329.63,261.63];
+const CHEERS=["🇺🇸","🏛️","⭐","✨","🎖️","📜","🔔"];
+function confetti(n){ for(let i=0;i<n;i++){ const s=document.createElement("div"); s.className="confetti"; s.textContent=CHEERS[Math.floor(Math.random()*CHEERS.length)];
+  s.style.left=(Math.random()*100)+"vw"; s.style.animationDuration=(2+Math.random()*2)+"s"; document.body.appendChild(s); setTimeout(()=>s.remove(),4200); } }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function makeQuiz(box, QUIZ, praise){
+  let qi=0, score=0;
+  function renderQ(){
+    const item=QUIZ[qi]; ReadAloud.stop();
+    box.innerHTML='<div class="q-progress">Question '+(qi+1)+' of '+QUIZ.length+' · Score: '+score+'</div><div class="q-text">'+item.q+'</div><div class="answers"></div><div class="feedback" aria-live="polite"></div>';
+    const qEl=box.querySelector(".q-text"); qEl.dataset.say=item.q+" Is it: "+item.a.map((t,i)=>["A","B","C","D"][i]+", "+t).join(". ")+"?"; ReadAloud.mark(qEl);
+    const ans=box.querySelector(".answers"), fb=box.querySelector(".feedback");
+    item.a.forEach((txt,i)=>{ const b=document.createElement("button"); b.textContent=["A","B","C","D"][i]+") "+txt;
+      b.addEventListener("click",()=>{ [...ans.children].forEach(x=>x.disabled=true);
+        if(i===item.c){ score++; b.classList.add("right"); b.textContent="✔ "+b.textContent; fb.textContent="✅ "+item.yes; fb.style.color="var(--blue)"; beep(HAPPY); confetti(12); }
+        else { b.classList.add("wrong"); b.textContent="✘ "+b.textContent; const r=ans.children[item.c]; r.classList.add("right"); r.textContent="✔ "+r.textContent; fb.textContent="🤔 "+item.no; fb.style.color="var(--red)"; beep(SAD,"square"); }
+        ReadAloud.mark(fb); ReadAloud.speakEl(fb);
+        const next=document.createElement("button"); next.style.background="var(--purple)"; next.textContent=qi<QUIZ.length-1?"Next question ➡":"See my score 🏆";
+        next.addEventListener("click",()=>{ qi++; qi<QUIZ.length?renderQ():renderEnd(); }); fb.after(next); });
+      ans.appendChild(b); });
+  }
+  function renderEnd(){
+    ReadAloud.stop(); const stars="⭐".repeat(score)+"☆".repeat(QUIZ.length-score);
+    const msg=score===QUIZ.length?praise:score>=Math.ceil(QUIZ.length*0.6)?"Awesome job! 🎉":score>=2?"Nice work! Explore more and try again! 📜":"Good try! Explore and try again! 💪";
+    box.innerHTML='<div class="celebrate"><div class="stars">'+stars+'</div><p>You got <b>'+score+' out of '+QUIZ.length+'</b>!</p><p>'+msg+'</p></div>';
+    const c=box.querySelector(".celebrate"); c.dataset.say="You got "+score+" out of "+QUIZ.length+"! "+msg; ReadAloud.mark(c);
+    const again=document.createElement("button"); again.textContent="🔁 Play again"; again.style.background="var(--teal)"; again.addEventListener("click",()=>{ qi=0; score=0; renderQ(); });
+    const wrap=document.createElement("div"); wrap.style.textAlign="center"; wrap.appendChild(again); box.appendChild(wrap); confetti(score*8+10); beep([392,493.88,587.33,783.99]);
+  }
+  renderQ();
+}
+
+/* ---------- TIMELINE ---------- */
+function makeTimeline(root, EVENTS){
+  let i=0;
+  root.innerHTML='<div class="tl-track" role="list"></div><div class="tl-card readable" aria-live="polite"><div class="big"></div><div><h3></h3><p></p></div></div>'+
+    '<div class="tl-nav"><button class="tl-prev" style="background:#666">◀ Earlier</button><span class="step-count tl-count"></span><button class="tl-next" style="background:var(--theme)">Later ▶</button></div>';
+  const track=root.querySelector(".tl-track"), card=root.querySelector(".tl-card"), prev=root.querySelector(".tl-prev"), next=root.querySelector(".tl-next"), count=root.querySelector(".tl-count");
+  EVENTS.forEach((e,k)=>{ const b=document.createElement("button"); b.className="tl-dot"; b.textContent=e.year; b.setAttribute("aria-label",e.year+": "+e.title);
+    b.addEventListener("click",()=>show(k,true)); track.appendChild(b); });
+  function show(k,speak){
+    i=k; const e=EVENTS[k]; ReadAloud.stopIf(card);
+    [...track.children].forEach((b,j)=>{ b.classList.toggle("active",j===k); b.setAttribute("aria-current",j===k?"true":"false"); });
+    card.querySelector(".big").textContent=e.icon; card.querySelector("h3").textContent=e.year+" — "+e.title; card.querySelector("p").textContent=e.text;
+    prev.disabled=k===0; next.disabled=k===EVENTS.length-1; count.textContent=(k+1)+" of "+EVENTS.length;
+    const b=track.children[k]; track.scrollLeft=b.offsetLeft-track.clientWidth/2+b.offsetWidth/2;
+    ReadAloud.mark(card); if(speak) ReadAloud.speakEl(card);
+  }
+  prev.addEventListener("click",()=>{ if(i>0) show(i-1,true); });
+  next.addEventListener("click",()=>{ if(i<EVENTS.length-1) show(i+1,true); });
+  show(0,false);
+  return {show};
+}
+
+/* ---------- MATCHING GAME ---------- */
+function makeMatch(o){ // o: {left,right,status,pairs:[{id,l,r,tip}], doneMsg, onDone}
+  let selL=null, selR=null, matched=0;
+  const N=o.pairs.length;
+  function build(){
+    selL=selR=null; matched=0; ReadAloud.stop();
+    o.left.innerHTML=""; o.right.innerHTML="";
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="L";
+      c.innerHTML='<span>'+p.l+'</span>'; o.left.appendChild(c); ReadAloud.mark(c); });
+    shuffle(o.pairs).forEach(p=>{ const c=document.createElement("div"); c.className="mcard name-card readable"; c.tabIndex=0; c.setAttribute("role","button"); c.dataset.id=p.id; c.dataset.side="R";
+      c.innerHTML='<span>'+p.r+'</span>'; o.right.appendChild(c); ReadAloud.mark(c); });
+    o.status.textContent="Matched: 0 of "+N; o.status.style.color=""; o.status.classList.add("readable"); ReadAloud.mark(o.status);
+    if(o.onReset) o.onReset();
+  }
+  function pick(c){
+    if(c.classList.contains("done")) return;
+    if(c.dataset.side==="L"){ if(selL) selL.classList.remove("sel"); selL = selL===c?null:c; if(selL) c.classList.add("sel"); }
+    else { if(selR) selR.classList.remove("sel"); selR = selR===c?null:c; if(selR) c.classList.add("sel"); }
+    if(selL && selR){
+      const a=selL,b=selR; selL=selR=null; a.classList.remove("sel"); b.classList.remove("sel");
+      const p=o.pairs.find(x=>x.id===a.dataset.id);
+      if(a.dataset.id===b.dataset.id){
+        a.classList.add("done"); b.classList.add("done"); matched++; beep(HAPPY);
+        o.status.textContent="✔ Yes! "+p.tip+" ("+matched+" of "+N+")"; o.status.style.color="var(--blue)";
+        if(matched===N){ o.status.textContent=o.doneMsg; confetti(24); if(o.onDone) o.onDone(); }
+        ReadAloud.mark(o.status); setTimeout(()=>ReadAloud.speakEl(o.status),0);
+      } else {
+        [a,b].forEach(x=>{ x.classList.add("oops"); setTimeout(()=>x.classList.remove("oops"),450); });
+        o.status.textContent="✘ Not quite — read it again and try another one!"; o.status.style.color="var(--red)"; beep(SAD,"square"); ReadAloud.mark(o.status);
+      }
+    }
+  }
+  [o.left,o.right].forEach(col=>{
+    col.addEventListener("click",e=>{ if(e.target.closest(".spk")) return; const c=e.target.closest(".mcard"); if(c) pick(c); });
+    col.addEventListener("keydown",e=>{ if(e.target.classList.contains("mcard")&&(e.key==="Enter"||e.key===" ")){ e.preventDefault(); pick(e.target); } });
+  });
+  build();
+  return {build};
+}
+
+/* ---------- FUN FACTS ---------- */
+function makeFacts(strip, FACTS){
+  FACTS.forEach(([front,back])=>{ const d=document.createElement("div"); d.className="ff readable"; d.tabIndex=0; d.setAttribute("role","button");
+    d.innerHTML='<div class="front">'+front+'<div class="no-read" style="font-size:16px;font-weight:normal;margin-top:10px">👆 tap to flip</div></div><div class="back">'+back+'</div>';
+    const flip=()=>d.classList.toggle("flipped");
+    d.addEventListener("click",e=>{ if(!e.target.closest(".spk")) flip(); });
+    d.addEventListener("keydown",e=>{ if(e.target!==d) return; if(e.key==="Enter"||e.key===" "){ e.preventDefault(); flip(); ReadAloud.speakEl(d); } });
+    strip.appendChild(d); ReadAloud.mark(d); });
+}
+
+/* ---------- a soft bell sound ---------- */
+function bell(){ try{ const AC=window.AudioContext||window.webkitAudioContext; if(!AC) return; if(!actx) actx=new AC(); if(actx.state==="suspended") actx.resume();
+  const t0=actx.currentTime; [[392,0.16],[784,0.07],[1176,0.04],[1568,0.02]].forEach(([f,a])=>{ const o=actx.createOscillator(),g=actx.createGain(); o.type="sine"; o.frequency.value=f;
+  g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(a,t0+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t0+1.8); o.connect(g); g.connect(actx.destination); o.start(t0); o.stop(t0+1.9); }); }catch(e){} }
+
+function projector(lon0,lon1,lat0,lat1,W,H){ return (lon,lat)=>[ +((lon-lon0)/(lon1-lon0)*W).toFixed(1), +((lat1-lat)/(lat1-lat0)*H).toFixed(1) ]; }
+const SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag,attrs,parent){ const e=document.createElementNS(SVGNS,tag); for(const k in attrs) e.setAttribute(k,attrs[k]); if(parent) parent.appendChild(e); return e; }
+
+
+
+const $id=id=>document.getElementById(id), $$=q=>[...document.querySelectorAll(q)];
+const progress={hook:false,depts:false,call:false,table:false,join:false,order:false,quiz:false};
+
+const DEPTS=[
+ {id:"state",ico:"🌍",name:"State",title:"Secretary of State",job:"Works with other countries and U.S. embassies around the world."},
+ {id:"treas",ico:"💰",name:"Treasury",title:"Secretary of the Treasury",job:"Takes care of the government’s money, taxes, and the dollar."},
+ {id:"def",ico:"🛡️",name:"Defense",title:"Secretary of Defense (also called Secretary of War)",job:"Runs the armed forces — Army, Navy, Air Force, Marines, and more. Legal name: Defense. Also called War since 2025."},
+ {id:"ag",ico:"⚖️",name:"Justice",title:"Attorney General",job:"The nation’s top lawyer. Leads the Department of Justice and helps enforce federal laws."},
+ {id:"int",ico:"🏞️",name:"Interior",title:"Secretary of the Interior",job:"Looks after public lands, national parks, and wildlife."},
+ {id:"agri",ico:"🌽",name:"Agriculture",title:"Secretary of Agriculture",job:"Helps farmers and ranchers, and programs about food and forests."},
+ {id:"com",ico:"🏪",name:"Commerce",title:"Secretary of Commerce",job:"Helps American businesses, trade, and counting the people (the census)."},
+ {id:"lab",ico:"🛠️",name:"Labor",title:"Secretary of Labor",job:"Looks out for workers — pay rules, safety, and job training."},
+ {id:"hhs",ico:"🏥",name:"Health & Human Services",title:"Secretary of Health and Human Services",job:"Helps with health, medicines, and programs that care for families."},
+ {id:"hud",ico:"🏠",name:"Housing & Urban Development",title:"Secretary of Housing and Urban Development",job:"Works on housing and helping cities and towns."},
+ {id:"dot",ico:"✈️",name:"Transportation",title:"Secretary of Transportation",job:"Roads, bridges, airports, trains, and making travel safer."},
+ {id:"doe",ico:"⚡",name:"Energy",title:"Secretary of Energy",job:"Energy, power plants, science labs, and keeping nuclear materials safe."},
+ {id:"ed",ico:"📚",name:"Education",title:"Secretary of Education",job:"Helps schools and students across the country."},
+ {id:"va",ico:"🎖️",name:"Veterans Affairs",title:"Secretary of Veterans Affairs",job:"Cares for people who served in the military, and their families."},
+ {id:"dhs",ico:"🛂",name:"Homeland Security",title:"Secretary of Homeland Security",job:"Helps keep the country safe from big dangers, and includes things like border protection and disaster help. Newest department (2002)."}
+];
+
+/* ---------- HOOK ART ---------- */
+(function(){
+  const s=$id("hookArt");
+  svgEl("rect",{width:460,height:240,rx:16,fill:"#163a66"},s);
+  svgEl("rect",{x:40,y:70,width:380,height:90,rx:40,fill:"#6b4a2e"},s);
+  svgEl("ellipse",{cx:230,cy:115,rx:160,ry:28,fill:"#8b5a2b"},s);
+  for(let i=0;i<8;i++){
+    const x=70+i*45;
+    svgEl("rect",{x:x,y:150,width:22,height:36,rx:4,fill:"#c4a574"},s);
+    svgEl("circle",{cx:x+11,cy:145,r:12,fill:"#e8d5b0",stroke:"#fff","stroke-width":2,"stroke-dasharray":"3 3"},s);
+  }
+  svgEl("text",{x:230,y:40,"text-anchor":"middle","font-size":18,fill:"#F0E442","font-weight":"bold"},s).textContent="Cabinet Room — seats waiting!";
+})();
+
+$id("hookGo").addEventListener("click",()=>{
+  const r=$id("reveal"); r.classList.add("open"); $id("hookGo").setAttribute("aria-expanded","true");
+  $id("hookGo").textContent="✨ Open again!";
+  beep([523.25,659.25,783.99]); ReadAloud.mark(r); ReadAloud.speakEl(r); mark("hook");
+});
+
+/* ---------- DEPARTMENTS ---------- */
+const seen=new Set();
+const grid=$id("deptGrid");
+DEPTS.forEach(d=>{
+  const b=document.createElement("button"); b.className="dept"; b.type="button";
+  b.innerHTML='<div class="ico">'+d.ico+'</div><h4>'+d.name+'</h4><p>'+d.title+'</p>';
+  b.addEventListener("click",()=>{
+    b.classList.add("on"); seen.add(d.id);
+    const c=$id("deptCap");
+    c.innerHTML="<p><b>"+d.ico+" "+d.title+"</b> — "+d.job+(seen.size>=5&&!progress.depts?" 🎉 You checked 5 departments!":"")+"</p>";
+    ReadAloud.mark(c); ReadAloud.speakEl(c);
+    if(seen.size>=5) mark("depts");
+  });
+  grid.appendChild(b);
+});
+
+/* ---------- WHO TO CALL ---------- */
+const CALLS=[
+ {q:"A huge storm hits the coast. Families need emergency help and shelters.",ok:"dhs",opts:["dhs","ed","treas"],yes:"Yes — Homeland Security helps with big disasters and keeping people safe.",no:"Think about who helps in a national emergency."},
+ {q:"Farmers need advice about crops after a dry summer.",ok:"agri",opts:["agri","dot","va"],yes:"Right — Agriculture helps farmers and food.",no:"Who works with farms and food?"},
+ {q:"The President will meet leaders from another country next week.",ok:"state",opts:["state","lab","hud"],yes:"Correct — State works with other countries.",no:"Which department talks to other countries?"},
+ {q:"Bridges and airports need safety checks.",ok:"dot",opts:["dot","doe","int"],yes:"Yes — Transportation handles roads, bridges, and airports.",no:"Think travel: roads, planes, trains."},
+ {q:"Schools across the country need new reading tools.",ok:"ed",opts:["ed","com","ag"],yes:"Great — Education helps schools and students.",no:"Which department is about schools?"},
+ {q:"A national park’s trails need care, and wildlife needs protection.",ok:"int",opts:["int","hhs","lab"],yes:"Yes — Interior looks after public lands and parks.",no:"Who takes care of national parks?"},
+ {q:"Soldiers coming home need hospitals and benefits.",ok:"va",opts:["va","treas","com"],yes:"Right — Veterans Affairs cares for people who served.",no:"Who helps military veterans?"},
+ {q:"The government must collect taxes and keep the dollar strong.",ok:"treas",opts:["treas","dhs","ed"],yes:"Yes — Treasury handles the government’s money.",no:"Who takes care of money and taxes?"}
+];
+let ci=0, cDone=false;
+function callRound(){
+  const r=CALLS[ci]; cDone=false; $id("callNext").style.display="none";
+  $id("callCount").textContent="Problem "+(ci+1)+" of "+CALLS.length;
+  $id("callProblem").innerHTML="<p>"+r.q+"</p>"; ReadAloud.mark($id("callProblem"));
+  const box=$id("callChoices"); box.innerHTML="";
+  shuffle(r.opts.map(id=>DEPTS.find(d=>d.id===id))).forEach(d=>{
+    const b=document.createElement("button");
+    b.textContent=d.ico+" "+d.title;
+    b.addEventListener("click",()=>{
+      if(cDone) return;
+      const c=$id("callCap");
+      if(d.id===r.ok){
+        cDone=true; b.classList.add("right"); b.textContent="✔ "+b.textContent; beep(HAPPY); confetti(8);
+        c.innerHTML="<p>✔ "+r.yes+(ci===CALLS.length-1?" 🏆 All problems solved!":"")+"</p>";
+        $id("callNext").style.display="inline-block";
+        $id("callNext").textContent=ci<CALLS.length-1?"Next problem ▶":"🔁 Play again";
+        if(ci===CALLS.length-1) mark("call");
+      } else {
+        b.classList.add("wrong"); b.textContent="✘ "+b.textContent; beep(SAD,"square");
+        c.innerHTML="<p>✘ Not that one. "+r.no+"</p>";
+      }
+      ReadAloud.mark(c); ReadAloud.speakEl(c);
+    });
+    box.appendChild(b);
+  });
+  $id("callCap").innerHTML="<p>Tap the best department for this problem.</p>"; ReadAloud.mark($id("callCap"));
+}
+$id("callNext").addEventListener("click",()=>{ ci=(ci+1)%CALLS.length; callRound(); ReadAloud.speakEl($id("callProblem")); });
+
+/* ---------- BUILD THE TABLE ---------- */
+const TS=$id("tableSvg");
+svgEl("rect",{width:640,height:360,rx:12,fill:"#e8eef6"},TS);
+svgEl("ellipse",{cx:320,cy:180,rx:210,ry:70,fill:"#6b4a2e",stroke:"#4a3018","stroke-width":4},TS);
+svgEl("ellipse",{cx:320,cy:180,rx:170,ry:48,fill:"#8b5a2b"},TS);
+const vpG=svgEl("g",{},TS);
+svgEl("circle",{cx:320,cy:70,r:28,fill:"#F0E442",stroke:"#0b3d66","stroke-width":3},vpG);
+svgEl("text",{x:320,y:76,"text-anchor":"middle","font-size":13,"font-weight":"bold",fill:"#0b3d66"},vpG).textContent="VP";
+svgEl("text",{x:320,y:48,"text-anchor":"middle","font-size":12,fill:"#0b3d66"},TS).textContent="Vice President";
+const seats=[];
+DEPTS.forEach((d,i)=>{
+  const ang=-Math.PI/2 + (i+0.5)*(2*Math.PI/15);
+  const x=320+Math.cos(ang)*250, y=180+Math.sin(ang)*115;
+  const g=svgEl("g",{"data-id":d.id,style:"cursor:pointer"},TS);
+  const c=svgEl("circle",{cx:x,cy:y,r:26,fill:"#fff",stroke:"#9aa5b8","stroke-width":3,"stroke-dasharray":"4 3"},g);
+  const t=svgEl("text",{x:x,y:y+5,"text-anchor":"middle","font-size":11,fill:"#6b6e7e"},g); t.textContent="?";
+  seats.push({d,g,c,t,x,y,filled:false});
+});
+let pickSeat=null, filled=0;
+seats.forEach(s=>{
+  s.g.addEventListener("click",()=>{
+    if(s.filled) return;
+    pickSeat=s;
+    seats.forEach(x=>x.c.setAttribute("stroke",x.filled?"#009E73":"#9aa5b8"));
+    s.c.setAttribute("stroke","#0072B2"); s.c.setAttribute("stroke-width","5");
+    const cap=$id("tableCap"); cap.innerHTML="<p>Seat picked! Now tap <b>"+s.d.name+"</b> in the list below.</p>";
+    ReadAloud.mark(cap); ReadAloud.speakEl(cap);
+  });
+});
+const pool=$id("seatPool");
+shuffle(DEPTS.slice()).forEach(d=>{
+  const b=document.createElement("button"); b.textContent=d.ico+" "+d.name; b.dataset.id=d.id;
+  b.addEventListener("click",()=>{
+    const cap=$id("tableCap");
+    if(!pickSeat){ cap.innerHTML="<p>First tap an empty chair on the table.</p>"; ReadAloud.mark(cap); ReadAloud.speakEl(cap); return; }
+    if(d.id!==pickSeat.d.id){ b.classList.add("oops"); setTimeout(()=>b.classList.remove("oops"),400); beep(SAD,"square");
+      cap.innerHTML="<p>✘ That seat is for <b>"+pickSeat.d.name+"</b>.</p>"; ReadAloud.mark(cap); ReadAloud.speakEl(cap); return; }
+    pickSeat.filled=true; filled++;
+    pickSeat.c.setAttribute("fill","#dceefa"); pickSeat.c.setAttribute("stroke","#009E73");
+    pickSeat.c.removeAttribute("stroke-dasharray"); pickSeat.c.setAttribute("stroke-width","3");
+    pickSeat.t.textContent=d.ico; pickSeat.t.setAttribute("font-size","18"); pickSeat.t.setAttribute("fill","#0b3d66");
+    b.classList.add("used"); pickSeat=null; beep(HAPPY);
+    cap.innerHTML="<p>✔ "+d.title+" is seated! ("+filled+" of 15)</p>";
+    if(filled===15){ confetti(28); mark("table"); cap.innerHTML="<p>✔ 🏆 The whole Cabinet table is full!</p>"; }
+    ReadAloud.mark(cap); ReadAloud.speakEl(cap);
+  });
+  pool.appendChild(b);
+});
+
+/* ---------- JOIN SEQUENCE ---------- */
+const JOINS=[
+ {n:"1️⃣",h:"Nominate",p:"The President chooses a person for the job and sends the name to the Senate."},
+ {n:"2️⃣",h:"Hearing",p:"A Senate committee asks the person questions in a public meeting called a hearing."},
+ {n:"3️⃣",h:"Senate Vote",p:"The full Senate votes. This is the Constitution’s “advice and consent.”"},
+ {n:"4️⃣",h:"Sworn In",p:"If the Senate says yes, the person takes an oath and starts the job!"}
+];
+let ji=0;
+const js=$id("joinSteps");
+JOINS.forEach((s,i)=>{
+  const d=document.createElement("div"); d.className="join-step"+(i===0?" on":""); d.id="js"+i;
+  d.innerHTML='<div class="n">'+s.n+'</div><h4>'+s.h+'</h4>';
+  js.appendChild(d);
+});
+function showJoin(speak){
+  $$(".join-step").forEach((el,i)=>el.classList.toggle("on",i<=ji));
+  const s=JOINS[ji], c=$id("joinCap");
+  c.innerHTML="<p><b>"+s.h+":</b> "+s.p+(ji===JOINS.length-1?" 🎉 That’s how someone joins the Cabinet!":"")+"</p>";
+  ReadAloud.mark(c); if(speak) ReadAloud.speakEl(c);
+  $id("joinNext").textContent=ji<JOINS.length-1?"Next step ▶":"🔁 Watch again";
+  if(ji===JOINS.length-1) mark("join");
+}
+$id("joinNext").addEventListener("click",()=>{
+  if(ji<JOINS.length-1) ji++; else ji=0;
+  showJoin(true);
+});
+showJoin(false);
+
+/* ---------- SUCCESSION ORDER ---------- */
+const LINE=[
+ "Vice President",
+ "Speaker of the House",
+ "President pro tempore of the Senate",
+ "Secretary of State",
+ "Secretary of the Treasury",
+ "Secretary of Defense"
+];
+let oNext=0;
+function orderBuild(){
+  oNext=0; $id("orderList").innerHTML=""; $id("orderPool").innerHTML="";
+  shuffle(LINE.map((t,k)=>({t,k}))).forEach(({t,k})=>{
+    const b=document.createElement("button"); b.textContent=t; b.dataset.k=k;
+    b.addEventListener("click",()=>{
+      const c=$id("orderCap");
+      if(k===oNext){
+        const li=document.createElement("li"); li.textContent=t; $id("orderList").appendChild(li); b.remove(); oNext++; beep(HAPPY);
+        c.innerHTML=oNext<LINE.length?"<p>✔ Yes! "+t+". Step "+(oNext+1)+" of 6: Who’s next?</p>":"<p>✔ "+t+". 🏆 You know the first six in line! After that come more Cabinet secretaries, in the order their departments were created.</p>";
+        if(oNext===LINE.length){ confetti(20); mark("order"); }
+      } else {
+        b.classList.add("oops"); setTimeout(()=>b.classList.remove("oops"),450); beep(SAD,"square");
+        c.innerHTML="<p>✘ Not yet. Who comes "+(oNext===0?"first":"next")+"?</p>";
+      }
+      ReadAloud.mark(c); ReadAloud.speakEl(c);
+    });
+    $id("orderPool").appendChild(b);
+  });
+}
+
+/* ---------- QUIZ + FACTS ---------- */
+makeQuiz($id("quizBox"),[
+ {q:"How many executive departments are there today?",a:["4","15","50"],c:1,yes:"Right — 15 executive departments!",no:"There are 15 executive departments."},
+ {q:"Does the Constitution use the word “Cabinet”?",a:["Yes, many times","No — it talks about executive departments instead","Only in the Bill of Rights"],c:1,yes:"Correct! The word Cabinet came from custom.",no:"The Constitution never says “Cabinet.” It talks about executive departments."},
+ {q:"Who must agree after the President nominates a Cabinet member?",a:["The Supreme Court","The Senate","All 50 governors"],c:1,yes:"Yes — the Senate gives advice and consent.",no:"The Senate must confirm the nomination."},
+ {q:"What is the head of the Justice Department called?",a:["Secretary of Justice","Attorney General","Chief Judge"],c:1,yes:"Right — Attorney General!",no:"It’s the Attorney General."},
+ {q:"Who was Washington’s Secretary of the Treasury?",a:["Alexander Hamilton","Henry Knox","Edmund Randolph"],c:0,yes:"Yes — Alexander Hamilton.",no:"It was Alexander Hamilton."},
+ {q:"Which department is the newest?",a:["State","Homeland Security","Treasury"],c:1,yes:"Correct — Homeland Security, created in 2002.",no:"Homeland Security is the newest (2002)."},
+ {q:"Who is first in line if the President cannot serve?",a:["Secretary of State","Vice President","Speaker of the House"],c:1,yes:"Yes — the Vice President.",no:"The Vice President is first."}
+],"Cabinet expert! You know the President’s team! 🌟");
+$id("quizBox").addEventListener("click",()=>{ if($id("quizBox").querySelector(".celebrate")) mark("quiz"); });
+makeFacts($id("factsStrip"),[
+ ["📜 No “Cabinet” in the Constitution","Article II lets the President ask department leaders for written opinions — but the word “Cabinet” is not in the Constitution."],
+ ["🪑 Four chairs at first","Washington’s first Cabinet had only four people: State, Treasury, War, and the Attorney General."],
+ ["🛡️ Defense and War","The Department of Defense is the legal name. Since 2025 it is also called the Department of War. Same team, two names."],
+ ["🛂 Brand new in 2002","Homeland Security is the newest executive department, created after the September 11, 2001 attacks."],
+ ["⚖️ Not a “Secretary”","The head of Justice is called the Attorney General, not a Secretary."],
+ ["📋 A long line","After the Vice President and two congressional leaders, Cabinet secretaries follow in the order their departments were created."]
+]);
+
+/* ---------- PAYOFF ---------- */
+const KEYS=[["hook","Open the Cabinet doors"],["depts","Learn 5 departments"],["call","Solve the call problems"],["table","Fill the Cabinet table"],["join","Watch how someone joins"],["order","Put succession in order"],["quiz","Finish the quiz"]];
+const SE=$id("seal");
+svgEl("rect",{width:480,height:300,rx:18,fill:"#0b2748"},SE);
+svgEl("ellipse",{cx:240,cy:160,rx:150,ry:50,fill:"#6b4a2e"},SE);
+const FR=[];
+for(let k=0;k<7;k++){
+  const ang=-Math.PI/2+k*(2*Math.PI/7), x=240+Math.cos(ang)*170, y=150+Math.sin(ang)*100;
+  const g=svgEl("g",{},SE);
+  const c=svgEl("circle",{cx:x,cy:y,r:22,fill:"#4a4a55",stroke:"#9aa5b8","stroke-width":2},g);
+  const t=svgEl("text",{x:x,y:y+5,"text-anchor":"middle","font-size":14,fill:"#ddd","font-weight":"bold"},g); t.textContent="?";
+  FR.push({c,t});
+}
+svgEl("text",{x:240,y:168,"text-anchor":"middle","font-size":16,fill:"#F0E442","font-weight":"bold"},SE).textContent="Cabinet Table";
+
+function mark(key){ if(progress[key]) return; progress[key]=true; updateSeal(true); }
+function updateSeal(fromAction){
+  const n=KEYS.filter(k=>progress[k[0]]).length, all=n===KEYS.length;
+  FR.forEach(({c,t},k)=>{ const on=k<n; c.setAttribute("fill",on?"#F0E442":"#4a4a55"); t.textContent=on?"✔":"?"; t.setAttribute("fill",on?"#0b3d66":"#ddd"); });
+  $id("sealRead").textContent="🎖️ Seats filled: "+n+" of "+KEYS.length;
+  const pc=$id("payoffCard");
+  if(all){ pc.innerHTML="<h3>🇺🇸 The Cabinet table is full!</h3><p>You met the departments, practiced who to call, built the table, and learned how someone joins. You’re ready to teach a friend about the President’s team!</p>";
+    if(fromAction){ confetti(40); beep([523.25,659.25,783.99,1046.5]); } }
+  else pc.innerHTML="<h3>🎖️ Fill the seats!</h3><p>"+KEYS.map(k=>(progress[k[0]]?"✔ ":"○ ")+k[1]).join(", ")+".</p>";
+  ReadAloud.mark(pc);
+}
+
+/* ---------- INIT ---------- */
+$$("#what .card2, #then .card2, .sec-help, .grownups, .hook-text").forEach(n=>n.classList.add("readable"));
+callRound(); orderBuild(); updateSeal(false);
+ReadAloud.markAll();
+})();
+</script>
+</body>
+</html>
